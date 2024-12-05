@@ -1,0 +1,10 @@
+[
+	{
+		"key": "product",
+		"name": "Product"
+	},
+	{
+		"key": "sales",
+		"name": "Sales"
+	}
+]

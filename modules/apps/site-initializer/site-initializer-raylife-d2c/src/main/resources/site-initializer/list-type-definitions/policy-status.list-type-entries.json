@@ -1,0 +1,27 @@
+[
+	{
+		"key": "declined",
+		"name": "Declined",
+		"type": "string"
+	},
+	{
+		"key": "executed",
+		"name": "Executed",
+		"type": "string"
+	},
+	{
+		"key": "expired",
+		"name": "Expired",
+		"type": "string"
+	},
+	{
+		"key": "inApplication",
+		"name": "In Application",
+		"type": "string"
+	},
+	{
+		"key": "renewed",
+		"name": "Renewed",
+		"type": "string"
+	}
+]
