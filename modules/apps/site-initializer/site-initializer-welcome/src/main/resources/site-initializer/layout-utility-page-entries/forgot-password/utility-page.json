@@ -1,6 +1,0 @@
-{
-	"defaultTemplate": false,
-	"externalReferenceCode": "LFR-FORGOT-PASSWORD",
-	"name": "Forgot Password",
-	"type": "ForgotPassword"
-}
