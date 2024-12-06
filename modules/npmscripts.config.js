@@ -16,25 +16,13 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
-					'@liferay/accessibility-menu-web': {
-						'/': '*',
-					},
-					'@liferay/accessibility-settings-state-web': {
-						'/': '*',
-					},
 					'@liferay/address-web': {
 						'/': '*',
 					},
 					'@liferay/amd-loader': {
 						'/': '*',
 					},
-					'@liferay/analytics-reports-js-components-web': {
-						'/': '*',
-					},
 					'@liferay/asset-categories-item-selector-web': {
-						'/': '*',
-					},
-					'@liferay/content-dashboard-web': {
 						'/': '*',
 					},
 					'@liferay/cookies-banner-web': {
@@ -137,21 +125,9 @@ module.exports = {
 					'@liferay/layout-js-components-web': {
 						'/': '*',
 					},
-					'@liferay/map-common': {
-						'/': '*',
-					},
-					'@liferay/map-google-maps': {
-						'/': '*',
-					},
-					'@liferay/map-openstreetmap': {
-						'/': '*',
-					},
 					'@liferay/multi-factor-authentication-fido2-web': {
 						'/': '*',
 						'base64-js': '*',
-					},
-					'@liferay/object-js-components-web': {
-						'/': '*',
 					},
 					'@liferay/portal-workflow-instance-tracker-web': {
 						'/': '*',
@@ -160,12 +136,6 @@ module.exports = {
 						'/': '*',
 					},
 					'asset-taglib': {
-						'/': '*',
-					},
-					'commerce-frontend-js': {
-						'/': '*',
-					},
-					'commerce-organization-web': {
 						'/': '*',
 					},
 					'data-engine-js-components-web': {
@@ -267,12 +237,6 @@ module.exports = {
 						'@clayui/toolbar': '*',
 						'@clayui/tooltip': '*',
 						'@clayui/upper-toolbar': '*',
-					},
-					'item-selector-taglib': {
-						'/': '*',
-					},
-					'item-selector-web': {
-						'/': '*',
 					},
 					'social-bookmarks-taglib': {
 						'/': '*',

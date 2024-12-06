@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "text",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Text",
-	"thumbnailPath": "thumbnail.png",
-	"type": "component"
-}

@@ -1,9 +1,0 @@
-[#attempt]
-	[#assign countries = restClient.get("/headless-admin-address/v1.0/countries/by-name/spain").name]
-[#recover]
-	[#assign countries = [] /]
-[/#attempt]
-
-<div class="select-input">
-	text
-</div>

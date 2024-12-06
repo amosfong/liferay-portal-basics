@@ -1,4 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:portal-store:portal-store-test-util")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}

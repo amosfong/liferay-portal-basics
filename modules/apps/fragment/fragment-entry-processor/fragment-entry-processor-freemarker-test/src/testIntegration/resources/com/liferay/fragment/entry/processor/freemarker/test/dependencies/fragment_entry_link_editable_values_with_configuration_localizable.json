@@ -1,8 +1,0 @@
-{
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
-		"headingAppliedStyle": {
-			"en_US": "dark",
-			"es_ES": "light"
-		}
-	}
-}

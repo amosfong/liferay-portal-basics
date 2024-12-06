@@ -1,9 +1,0 @@
-{
-	"contentSubtype": {
-		"subtypeId": 0
-	},
-	"contentType": {
-		"className": "com.liferay.portal.kernel.repository.model.FileEntry"
-	},
-	"name": "Display Page Template Two"
-}

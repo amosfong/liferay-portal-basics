@@ -1,4 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}
