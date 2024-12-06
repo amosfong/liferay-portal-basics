@@ -1,5 +1,0 @@
-if (!ctx._source.containsKey("tasks")) {
-	ctx._source["tasks"] = [];
-}
-
-ctx._source.tasks.add(params.task);
