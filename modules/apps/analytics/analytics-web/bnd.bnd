@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Analytics Web
-Bundle-SymbolicName: com.liferay.analytics.web
-Bundle-Version: 4.0.26
-Web-ContextPath: /analytics-web
