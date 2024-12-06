@@ -1,4 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}
