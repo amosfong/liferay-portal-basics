@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Calendar Web
-Bundle-SymbolicName: com.liferay.calendar.web
-Bundle-Version: 5.0.104
-Liferay-JS-Config: /META-INF/resources/js/legacy/config.js
-Web-ContextPath: /calendar-web
--dsannotations-options: inherit
