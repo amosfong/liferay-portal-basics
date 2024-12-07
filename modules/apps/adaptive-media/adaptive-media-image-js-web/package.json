@@ -1,8 +1,0 @@
-{
-	"name": "adaptive-media-image-js-web",
-	"scripts": {
-		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
-	},
-	"version": "5.0.19"
-}
