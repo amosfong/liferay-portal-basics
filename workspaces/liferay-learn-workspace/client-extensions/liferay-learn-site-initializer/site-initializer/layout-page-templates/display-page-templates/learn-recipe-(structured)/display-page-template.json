@@ -1,9 +1,0 @@
-{
-	"contentSubtype": {
-		"subtypeKey": "LEARN-RECIPE-STRUCTURED"
-	},
-	"contentType": {
-		"className": "com.liferay.journal.model.JournalArticle"
-	},
-	"name": "Learn Recipe Structured"
-}
