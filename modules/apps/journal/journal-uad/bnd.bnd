@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Journal UAD
-Bundle-SymbolicName: com.liferay.journal.uad
-Bundle-Version: 8.0.3
--dsannotations-options: inherit
