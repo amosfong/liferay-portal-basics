@@ -1,4 +1,0 @@
-dependencies {
-	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testImplementation project(":core:petra:petra-string")
-}

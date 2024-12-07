@@ -1,8 +1,0 @@
-@default = "assertAccessible"
-definition {
-
-	function assertAccessible(locator1) {
-		selenium.assertAccessible(${locator1});
-	}
-
-}
