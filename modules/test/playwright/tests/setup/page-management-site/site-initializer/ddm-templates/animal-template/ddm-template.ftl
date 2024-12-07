@@ -1,1 +1,0 @@
-<div class="animal-template-name">${Name.getData()}</div>

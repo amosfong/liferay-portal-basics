@@ -1,8 +1,0 @@
-@default = "assertAlertNotPresent"
-definition {
-
-	function assertAlertNotPresent() {
-		selenium.assertAlertNotPresent();
-	}
-
-}
