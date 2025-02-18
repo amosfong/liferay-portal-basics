@@ -14,7 +14,6 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -135,8 +134,8 @@ public class FragmentRendererControllerImpl
 		}
 
 		if (fragmentRendererContext.isEditMode()) {
-			return _layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(
-				unsyncStringWriter.toString());
+			//return _layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(
+			//	unsyncStringWriter.toString());
 		}
 
 		return unsyncStringWriter.toString();
@@ -232,8 +231,5 @@ public class FragmentRendererControllerImpl
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
 
 }
