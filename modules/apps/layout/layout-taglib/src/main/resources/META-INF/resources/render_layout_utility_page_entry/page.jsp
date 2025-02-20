@@ -32,11 +32,7 @@ RenderLayoutUtilityPageEntryDisplayContext renderLayoutUtilityPageEntryDisplayCo
 			/>
 		</liferay-util:buffer>
 
-		<%
-		LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor = ServletContextUtil.getLayoutAdaptiveMediaProcessor();
-		%>
-
-		<%= layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(content) %>
+		<%= content %>
 
 	<%
 	}
