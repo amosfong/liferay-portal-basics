@@ -397,7 +397,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		inputTemplateNode.addAttribute(
 			"selectFromDocumentLibrary", selectFromDocumentLibrary);
-
+/*
 		if (selectFromDocumentLibrary &&
 			Validator.isNotNull(allowedFileExtensions)) {
 
@@ -419,7 +419,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 							httpServletRequest),
 						fragmentEntryLink.getNamespace() + "selectFileEntry",
 						customFileItemSelectorCriterion)));
-		}
+		}*/
 	}
 
 	private void _addInputTemplateNodeAttributes(
@@ -973,9 +973,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	@Reference
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;
