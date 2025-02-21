@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.workflow.internal.dto.v1_0.util;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,10 +73,6 @@ public class ObjectReviewedUtil {
 	}
 
 	private static String _toResourceType(String entryClassName) {
-		if (Objects.equals(entryClassName, BlogsEntry.class.getName())) {
-			return "BlogPosting";
-		}
-
 		if (Objects.equals(entryClassName, MBDiscussion.class.getName())) {
 			return "Comment";
 		}

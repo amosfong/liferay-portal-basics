@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.rich.text;
 
-import com.liferay.ai.creator.openai.manager.AICreatorOpenAIManager;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
@@ -119,12 +118,6 @@ public class RichTextDDMFormFieldTemplateContextContributor
 				).put(
 					"liferay-ui:input-editor:name",
 					ddmFormFieldRenderingContext.getName()
-				).put(
-					"liferay-ui:input-editor:showAICreator",
-					_aiCreatorOpenAIManager.isAICreatorToolbarEnabled(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),
-						ddmFormFieldRenderingContext.getPortletNamespace())
 				).build(),
 				themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
@@ -181,9 +174,6 @@ public class RichTextDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RichTextDDMFormFieldTemplateContextContributor.class);
-
-	@Reference
-	private AICreatorOpenAIManager _aiCreatorOpenAIManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

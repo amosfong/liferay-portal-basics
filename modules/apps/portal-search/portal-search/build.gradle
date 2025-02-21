@@ -38,7 +38,6 @@ dependencies {
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testImplementation project(":apps:blogs:blogs-api")
 	testImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-process")
