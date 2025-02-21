@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Library Preview Image
-Bundle-SymbolicName: com.liferay.document.library.preview.image
-Bundle-Version: 3.0.38
-Web-ContextPath: /document-library-preview-image
