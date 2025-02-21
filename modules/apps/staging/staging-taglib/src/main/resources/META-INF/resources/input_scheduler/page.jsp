@@ -235,25 +235,7 @@
 						<clay:row
 							cssClass="clearfix pt-3 weekdays"
 						>
-
-							<%
-							Weekday[] weekdaysArray = Weekday.values();
-
-							Collections.rotate(Arrays.asList(weekdaysArray), -cal.getFirstDayOfWeek());
-
-							for (Weekday weekday : weekdaysArray) {
-							%>
-
-								<clay:col
-									md="3"
-								>
-									<aui:input inlineLabel="right" label="<%= days[weekday.getCalendarWeekday() - 1] %>" name='<%= "weeklyDayPos" + weekday.getCalendarWeekday() %>' type="checkbox" value="<%= _getWeeklyDayPos(request, weekday.getCalendarWeekday(), recurrence) %>" />
-								</clay:col>
-
-							<%
-							}
-							%>
-
+							// deleted
 						</clay:row>
 					</td>
 				</tr>
