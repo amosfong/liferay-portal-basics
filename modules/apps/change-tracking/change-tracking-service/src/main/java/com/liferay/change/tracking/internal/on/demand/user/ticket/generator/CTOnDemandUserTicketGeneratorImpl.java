@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -88,20 +87,6 @@ public class CTOnDemandUserTicketGeneratorImpl
 		if (user == null) {
 			return null;
 		}
-
-		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-			CTOnDemandUserConstants.
-				AUDIT_EVENT_TYPE_CT_ON_DEMAND_USER_TICKET_GENERATED,
-			CTCollection.class.getName(), ctCollectionId, null);
-
-		auditMessage.setAdditionalInfo(
-			JSONUtil.put(
-				"companyId", ctCollection.getCompanyId()
-			).put(
-				"onDemandUserId", user.getUserId()
-			));
-
-		_auditRouter.route(auditMessage);
 
 		return _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), CTCollection.class.getName(), ctCollectionId,
