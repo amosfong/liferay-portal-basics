@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -87,9 +86,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 				consumer.accept(
 					new DLFileEntryWorkflowedModelResourcePermissionLogic(
 						modelResourcePermission));
-
-				_sharingModelResourcePermissionConfigurator.configure(
-					modelResourcePermission, consumer);
 
 				consumer.accept(
 					(permissionChecker, name, fileEntry, actionId) -> {
@@ -192,10 +188,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 	private ServiceTrackerList
 		<ModelResourcePermissionFactory.ModelResourcePermissionConfigurator>
 			_serviceTrackerList;
-
-	@Reference
-	private SharingModelResourcePermissionConfigurator
-		_sharingModelResourcePermissionConfigurator;
 
 	@Reference
 	private StagingPermission _stagingPermission;
