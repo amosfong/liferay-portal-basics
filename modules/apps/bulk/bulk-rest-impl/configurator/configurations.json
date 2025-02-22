@@ -1,7 +1,0 @@
-{
-	"com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration~bulk": {
-		"graphQLEnabled": false,
-		"path": "/bulk",
-		"restEnabled": true
-	}
-}
