@@ -1,6 +1,0 @@
-dependencies {
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/test")
-}
