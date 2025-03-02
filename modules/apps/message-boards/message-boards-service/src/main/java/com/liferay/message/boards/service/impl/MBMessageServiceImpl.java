@@ -49,13 +49,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.export.RSSExporter;
-import com.liferay.rss.model.SyndContent;
-import com.liferay.rss.model.SyndEntry;
-import com.liferay.rss.model.SyndFeed;
-import com.liferay.rss.model.SyndLink;
-import com.liferay.rss.model.SyndModelFactory;
-import com.liferay.rss.util.RSSUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -975,83 +968,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String displayStyle, String feedURL, String entryURL,
 		List<MBMessage> messages, ThemeDisplay themeDisplay) {
 
-		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
-
-		syndFeed.setDescription(description);
-
-		List<SyndEntry> syndEntries = new ArrayList<>();
-
-		syndFeed.setEntries(syndEntries);
-
-		for (MBMessage message : messages) {
-			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
-
-			if (message.isAnonymous()) {
-				syndEntry.setAuthor(
-					_language.get(themeDisplay.getLocale(), "anonymous"));
-			}
-			else {
-				syndEntry.setAuthor(_portal.getUserName(message));
-			}
-
-			SyndContent syndContent = _syndModelFactory.createSyndContent();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
-
-			String value = null;
-
-			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-				value = StringUtil.shorten(
-					_htmlParser.extractText(message.getBody()),
-					PropsValues.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH,
-					StringPool.BLANK);
-			}
-			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-				value = StringPool.BLANK;
-			}
-			else if (message.isFormatBBCode()) {
-				value = BBCodeTranslatorUtil.getHTML(message.getBody());
-
-				value = MBUtil.replaceMessageBodyPaths(themeDisplay, value);
-			}
-			else {
-				value = message.getBody();
-			}
-
-			syndContent.setValue(value);
-
-			syndEntry.setDescription(syndContent);
-
-			String link = entryURL + "&messageId=" + message.getMessageId();
-
-			syndEntry.setLink(link);
-
-			syndEntry.setPublishedDate(message.getCreateDate());
-			syndEntry.setTitle(message.getSubject());
-			syndEntry.setUpdatedDate(message.getModifiedDate());
-			syndEntry.setUri(link);
-
-			syndEntries.add(syndEntry);
-		}
-
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndFeed.setLinks(syndLinks);
-
-		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
-
-		syndLinks.add(selfSyndLink);
-
-		selfSyndLink.setHref(feedURL);
-		selfSyndLink.setRel("self");
-
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(name);
-		syndFeed.setUri(feedURL);
-
-		return _rssExporter.export(syndFeed);
+		return "";
 	}
 
 	@Reference(
@@ -1091,11 +1008,5 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RSSExporter _rssExporter;
-
-	@Reference
-	private SyndModelFactory _syndModelFactory;
 
 }

@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.rss.util.RSSUtil;
 
 import java.util.Map;
 
@@ -125,18 +124,6 @@ public class MBGroupServiceSettings {
 	@Settings.Property(name = "rssDelta")
 	public int getRSSDelta() {
 		return _typedSettings.getIntegerValue("rssDelta");
-	}
-
-	@Settings.Property(name = "rssDisplayStyle")
-	public String getRSSDisplayStyle() {
-		return _typedSettings.getValue(
-			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
-	}
-
-	@Settings.Property(name = "rssFeedType")
-	public String getRSSFeedType() {
-		return _typedSettings.getValue(
-			"rssFeedType", RSSUtil.getFeedType(RSSUtil.ATOM, 1.0));
 	}
 
 	public boolean isAllowAnonymousPosting() {

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.rss.util.RSSUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -123,15 +122,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		feed.setTargetPortletId(targetPortletId);
 		feed.setContentField(contentField);
-
-		if (Validator.isNull(feedFormat)) {
-			feed.setFeedFormat(RSSUtil.FORMAT_DEFAULT);
-			feed.setFeedVersion(RSSUtil.VERSION_DEFAULT);
-		}
-		else {
-			feed.setFeedFormat(feedFormat);
-			feed.setFeedVersion(feedVersion);
-		}
 
 		feed.setExpandoBridgeAttributes(serviceContext);
 
@@ -365,15 +355,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		feed.setTargetPortletId(targetPortletId);
 		feed.setContentField(contentField);
-
-		if (Validator.isNull(feedFormat)) {
-			feed.setFeedFormat(RSSUtil.FORMAT_DEFAULT);
-			feed.setFeedVersion(RSSUtil.VERSION_DEFAULT);
-		}
-		else {
-			feed.setFeedFormat(feedFormat);
-			feed.setFeedVersion(feedVersion);
-		}
 
 		feed.setExpandoBridgeAttributes(serviceContext);
 
