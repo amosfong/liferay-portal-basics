@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_6_1;
 
-import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -240,7 +239,7 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 		Document document = _parseDocument(html);
 
 		for (Element imgElement : document.select("img:not(picture > img)")) {
-			if (!imgElement.hasAttr(
+			/*if (!imgElement.hasAttr(
 					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 
 				long fileEntryId = _getDLFileEntryId(
@@ -251,7 +250,7 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 						AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
 						String.valueOf(fileEntryId));
 				}
-			}
+			}*/
 		}
 
 		if (html.contains("<html>") || html.contains("<head>")) {

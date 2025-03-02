@@ -12,7 +12,6 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
-import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
@@ -65,12 +64,6 @@ public class ServletContextUtil {
 
 	public static InfoListRendererRegistry getInfoListRendererRegistry() {
 		return _infoListRendererRegistrySnapshot.get();
-	}
-
-	public static LayoutAdaptiveMediaProcessor
-		getLayoutAdaptiveMediaProcessor() {
-
-		return _layoutAdaptiveMediaProcessorSnapshot.get();
 	}
 
 	public static LayoutClassedModelUsagesHelper
@@ -152,9 +145,6 @@ public class ServletContextUtil {
 	private static final Snapshot<InfoListRendererRegistry>
 		_infoListRendererRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, InfoListRendererRegistry.class);
-	private static final Snapshot<LayoutAdaptiveMediaProcessor>
-		_layoutAdaptiveMediaProcessorSnapshot = new Snapshot<>(
-			ServletContextUtil.class, LayoutAdaptiveMediaProcessor.class);
 	private static final Snapshot<LayoutClassedModelUsagesHelper>
 		_layoutClassedModelUsagesHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutClassedModelUsagesHelper.class);
