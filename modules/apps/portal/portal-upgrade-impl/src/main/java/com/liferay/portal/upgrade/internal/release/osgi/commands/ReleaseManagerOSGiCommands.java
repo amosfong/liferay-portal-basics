@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
 
-import com.liferay.gogo.shell.logging.TeeLoggingUtil;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,21 +62,18 @@ public class ReleaseManagerOSGiCommands implements OSGiCommands {
 			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
-		TeeLoggingUtil.runWithTeeLogging(
-			() -> {
-				try {
-					_upgradeExecutor.execute(
-						BundleUtil.getBundle(
-							_bundleContext, bundleSymbolicName),
-						upgradeInfos);
-				}
-				catch (Throwable throwable) {
-					_log.error(
-						"Failed upgrade process for module ".concat(
-							bundleSymbolicName),
-						throwable);
-				}
-			});
+		try {
+			_upgradeExecutor.execute(
+				BundleUtil.getBundle(
+					_bundleContext, bundleSymbolicName),
+				upgradeInfos);
+		}
+		catch (Throwable throwable) {
+			_log.error(
+				"Failed upgrade process for module ".concat(
+					bundleSymbolicName),
+				throwable);
+		}
 
 		return null;
 	}
@@ -94,13 +90,12 @@ public class ReleaseManagerOSGiCommands implements OSGiCommands {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
 
-		TeeLoggingUtil.runWithTeeLogging(
-			() -> _upgradeExecutor.executeUpgradeInfos(
-				BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
-				releaseGraphManager.getUpgradeInfos(
-					ReleaseManagerUtil.getSchemaVersionString(
-						_releaseLocalService.fetchRelease(bundleSymbolicName)),
-					toVersionString)));
+		_upgradeExecutor.executeUpgradeInfos(
+			BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
+			releaseGraphManager.getUpgradeInfos(
+				ReleaseManagerUtil.getSchemaVersionString(
+					_releaseLocalService.fetchRelease(bundleSymbolicName)),
+				toVersionString));
 
 		return null;
 	}
@@ -109,8 +104,7 @@ public class ReleaseManagerOSGiCommands implements OSGiCommands {
 	public String executeAll() {
 		Set<String> upgradeThrewExceptionBundleSymbolicNames = new HashSet<>();
 
-		TeeLoggingUtil.runWithTeeLogging(
-			() -> executeAll(upgradeThrewExceptionBundleSymbolicNames));
+		executeAll(upgradeThrewExceptionBundleSymbolicNames);
 
 		if (upgradeThrewExceptionBundleSymbolicNames.isEmpty()) {
 			return "All modules were successfully upgraded";

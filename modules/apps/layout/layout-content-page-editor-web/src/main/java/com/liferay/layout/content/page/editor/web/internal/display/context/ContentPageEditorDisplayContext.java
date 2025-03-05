@@ -5,8 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
-import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -274,9 +272,6 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +
 						"/add_stepper_fragment_entry_link")
-			).put(
-				"assetCategoryTreeNodeItemSelectorURL",
-				_getAssetCategoryTreeNodeItemSelectorURL()
 			).put(
 				"autoExtendSessionEnabled",
 				_pageEditorConfiguration.autoExtendSessionEnabled()
@@ -1106,20 +1101,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return infoItemSelectorURL.toString();
-	}
-
-	private String _getAssetCategoryTreeNodeItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			new AssetCategoryTreeNodeItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new AssetCategoryTreeNodeItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectAssetCategoryTreeNode",
-				itemSelectorCriterion));
 	}
 
 	private Map<String, Object> _getAvailableLanguages() {

@@ -5,7 +5,6 @@
 
 package com.liferay.journal.internal.upgrade.v6_1_1;
 
-import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -53,74 +52,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			_addJournalContentSearchLayoutClassedModelUsages(
 				layoutClassedModelUsageTypes, resourcePrimKeysMap);
 
-			_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-				layoutClassedModelUsageTypes, resourcePrimKeysMap);
-
 			_addJournalContentPortletPreferencesLayoutClassedModelUsages(
 				layoutClassedModelUsageTypes, resourcePrimKeysMap);
 
 			_addDefaultLayoutClassedModelUsages(resourcePrimKeysMap);
 		}
-	}
-
-	private void _addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-			Map<Long, Integer> layoutClassedModelUsageTypes,
-			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
-		throws Exception {
-
-		String sql = StringBundler.concat(
-			"select distinct Layout.groupId, AssetEntry.companyId, ",
-			"AssetEntry.classPK, PortletPreferences.plid, ",
-			"PortletPreferences.portletId from PortletPreferences inner join ",
-			"Layout on Layout.plid = PortletPreferences.plid inner join ",
-			"(select SUBSTR(value, INSTR(value, '<asset-entry-uuid>') + ",
-			"LENGTH('<asset-entry-uuid>'), INSTR(value, ",
-			"'</asset-entry-uuid>') - (INSTR(value, '<asset-entry-uuid>') + ",
-			"LENGTH('<asset-entry-uuid>'))) uuid, portletPreferencesId from ",
-			"(select COALESCE(NULLIF(CAST_TEXT(largeValue), ''), smallValue) ",
-			"as value, portletPreferencesId from PortletPreferenceValue where ",
-			"name = 'assetEntryXml') innerTemp where value like ",
-			"'%<asset-entry-type>com.liferay.journal.model.JournalArticle%' ",
-			"or value like '%<asset-entry-type></asset-entry-type>%' or value ",
-			"like '%<asset-entry>%$NEW_LINE$%<asset-entry-type/>%') temp on ",
-			"PortletPreferences.ownerId = ", PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			" and PortletPreferences.ownerType = ",
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			" and PortletPreferences.portletId like '",
-			AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			"%' and PortletPreferences.portletPreferencesId = ",
-			"temp.portletPreferencesId and ",
-			"PortletPreferences.portletPreferencesId in (select ",
-			"portletPreferencesId from PortletPreferenceValue where name = ",
-			"'selectionStyle' and smallValue = 'manual') inner join ",
-			"AssetEntry on AssetEntry.classUuid = temp.uuid and ",
-			"AssetEntry.classNameId = ",
-			_classNameLocalService.getClassNameId(
-				JournalArticle.class.getName()),
-			" and AssetEntry.visible = [$TRUE$] where not exists (select 1 ",
-			"from LayoutClassedModelUsage where ",
-			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
-			"LayoutClassedModelUsage.classNameId = ",
-			_classNameLocalService.getClassNameId(
-				JournalArticle.class.getName()),
-			" and LayoutClassedModelUsage.containerKey = ",
-			"PortletPreferences.portletId and ",
-			"LayoutClassedModelUsage.containerType = ",
-			_classNameLocalService.getClassNameId(Portlet.class.getName()),
-			" and LayoutClassedModelUsage.plid = PortletPreferences.plid) and ",
-			"not exists (select 1 from LayoutClassedModelUsage where ",
-			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
-			"LayoutClassedModelUsage.classNameId = ",
-			_classNameLocalService.getClassNameId(
-				JournalArticle.class.getName()),
-			" and LayoutClassedModelUsage.containerKey is null and ",
-			"LayoutClassedModelUsage.containerType = 0 and ",
-			"LayoutClassedModelUsage.plid = 0 )");
-
-		_addPortletPreferencesLayoutClassedModelUsages(
-			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,
-			"manual selection asset publisher", "classUuid", "classNameId",
-			"visible");
 	}
 
 	private void _addDefaultLayoutClassedModelUsages(
