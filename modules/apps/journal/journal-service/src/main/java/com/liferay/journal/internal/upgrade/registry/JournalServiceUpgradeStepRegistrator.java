@@ -10,7 +10,6 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.kernel.store.Store;
@@ -99,7 +98,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -212,14 +210,6 @@ public class JournalServiceUpgradeStepRegistrator
 			"1.1.5", "1.1.6",
 			new AssetDisplayPageEntryUpgradeProcess(
 				_assetDisplayPageEntryLocalService, _companyLocalService));
-
-		registry.register(
-			"1.1.6", "1.1.7",
-			new DiscussionSubscriptionClassNameUpgradeProcess(
-				_classNameLocalService, _subscriptionLocalService,
-				JournalArticle.class.getName(),
-				DiscussionSubscriptionClassNameUpgradeProcess.DeletionMode.
-					UPDATE));
 
 		registry.register(
 			"1.1.7", "1.1.8",
@@ -557,9 +547,6 @@ public class JournalServiceUpgradeStepRegistrator
 
 	@Reference(target = "(default=true)")
 	private Store _store;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;

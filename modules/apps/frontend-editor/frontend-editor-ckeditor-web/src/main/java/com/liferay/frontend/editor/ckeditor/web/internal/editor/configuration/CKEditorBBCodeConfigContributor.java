@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
-import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -60,8 +59,6 @@ public class CKEditorBBCodeConfigContributor
 				"/message_boards/"
 		).put(
 			"lang", _getLangJSONObject(inputEditorTaglibAttributes)
-		).put(
-			"newThreadURL", MBThreadConstants.NEW_THREAD_URL
 		).put(
 			"removePlugins",
 			"bidi,codemirror,div,elementspath,forms,indentblock,keystrokes," +

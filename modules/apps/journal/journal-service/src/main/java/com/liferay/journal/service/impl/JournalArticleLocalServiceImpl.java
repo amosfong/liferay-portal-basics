@@ -198,7 +198,6 @@ import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
@@ -4648,9 +4647,6 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public void subscribe(long userId, long groupId, long articleId)
 		throws PortalException {
-
-		_subscriptionLocalService.addSubscription(
-			userId, groupId, JournalArticle.class.getName(), articleId);
 	}
 
 	/**
@@ -4666,9 +4662,6 @@ public class JournalArticleLocalServiceImpl
 	public void subscribeStructure(
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException {
-
-		_subscriptionLocalService.addSubscription(
-			userId, groupId, DDMStructure.class.getName(), ddmStructureId);
 	}
 
 	/**
@@ -4683,9 +4676,6 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public void unsubscribe(long userId, long groupId, long articleId)
 		throws PortalException {
-
-		_subscriptionLocalService.deleteSubscription(
-			userId, JournalArticle.class.getName(), articleId);
 	}
 
 	/**
@@ -4701,9 +4691,6 @@ public class JournalArticleLocalServiceImpl
 	public void unsubscribeStructure(
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException {
-
-		_subscriptionLocalService.deleteSubscription(
-			userId, DDMStructure.class.getName(), ddmStructureId);
 	}
 
 	/**
@@ -8524,9 +8511,6 @@ public class JournalArticleLocalServiceImpl
 	private ResourceLocalService _resourceLocalService;
 
 	private ServiceTrackerList<TransformerListener> _serviceTrackerList;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;

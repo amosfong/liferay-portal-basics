@@ -38,7 +38,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:layout:layout-utility-page-api")
-	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-lock:portal-lock-api")
 	compileOnly project(":apps:portal-search:portal-search-api")

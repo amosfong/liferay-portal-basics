@@ -64,7 +64,6 @@ import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
@@ -822,9 +821,6 @@ public class JournalFolderLocalServiceImpl
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderId = groupId;
 		}
-
-		_subscriptionLocalService.addSubscription(
-			userId, groupId, JournalFolder.class.getName(), folderId);
 	}
 
 	@Override
@@ -834,9 +830,6 @@ public class JournalFolderLocalServiceImpl
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderId = groupId;
 		}
-
-		_subscriptionLocalService.deleteSubscription(
-			userId, JournalFolder.class.getName(), folderId);
 	}
 
 	@Override
@@ -1569,9 +1562,6 @@ public class JournalFolderLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;

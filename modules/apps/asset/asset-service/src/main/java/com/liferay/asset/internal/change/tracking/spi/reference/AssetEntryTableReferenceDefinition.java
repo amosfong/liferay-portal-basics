@@ -13,14 +13,12 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.model.LayoutClassedModelUsageTable;
-import com.liferay.message.boards.model.MBDiscussionTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.model.RatingsStatsTable;
 import com.liferay.social.kernel.model.SocialActivitySetTable;
-import com.liferay.subscription.model.SubscriptionTable;
 import com.liferay.trash.model.TrashEntryTable;
 import com.liferay.trash.model.TrashVersionTable;
 
@@ -49,18 +47,6 @@ public class AssetEntryTableReferenceDefinition
 				).and(
 					AssetEntryTable.INSTANCE.classPK.eq(
 						AssetDisplayPageEntryTable.INSTANCE.classPK)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				MBDiscussionTable.INSTANCE
-			).innerJoinON(
-				AssetEntryTable.INSTANCE,
-				AssetEntryTable.INSTANCE.classNameId.eq(
-					MBDiscussionTable.INSTANCE.classNameId
-				).and(
-					AssetEntryTable.INSTANCE.classPK.eq(
-						MBDiscussionTable.INSTANCE.classPK)
 				)
 			)
 		).referenceInnerJoin(
@@ -107,21 +93,6 @@ public class AssetEntryTableReferenceDefinition
 				).and(
 					AssetEntryTable.INSTANCE.classPK.eq(
 						SocialActivitySetTable.INSTANCE.classPK)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				SubscriptionTable.INSTANCE
-			).innerJoinON(
-				AssetEntryTable.INSTANCE,
-				AssetEntryTable.INSTANCE.companyId.eq(
-					SubscriptionTable.INSTANCE.companyId
-				).and(
-					AssetEntryTable.INSTANCE.classNameId.eq(
-						SubscriptionTable.INSTANCE.classNameId)
-				).and(
-					AssetEntryTable.INSTANCE.classPK.eq(
-						SubscriptionTable.INSTANCE.classPK)
 				)
 			)
 		).referenceInnerJoin(
