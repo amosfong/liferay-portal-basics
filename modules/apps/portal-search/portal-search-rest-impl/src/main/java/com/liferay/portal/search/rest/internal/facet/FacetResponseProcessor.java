@@ -11,9 +11,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -225,26 +222,12 @@ public class FacetResponseProcessor {
 	private String _getTypeDisplayName(
 		String className, long companyId, Locale locale) {
 
-		if (className.startsWith(
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassName(className);
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					companyId, className);
-
-			if (objectDefinition != null) {
-				return objectDefinition.getLabel(locale);
-			}
-		}
-		else {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (assetRendererFactory != null) {
-				return assetRendererFactory.getTypeName(locale);
-			}
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getTypeName(locale);
 		}
 
 		return null;
@@ -464,9 +447,6 @@ public class FacetResponseProcessor {
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private Searcher _searcher;

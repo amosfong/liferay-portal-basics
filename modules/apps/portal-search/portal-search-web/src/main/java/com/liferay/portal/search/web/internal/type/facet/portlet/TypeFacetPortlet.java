@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -85,9 +84,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	@Reference
 	protected Portal portal;
 
 	@Reference
@@ -108,7 +104,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
-				objectDefinitionLocalService,
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest),
 				searchableAssetClassNamesProvider);

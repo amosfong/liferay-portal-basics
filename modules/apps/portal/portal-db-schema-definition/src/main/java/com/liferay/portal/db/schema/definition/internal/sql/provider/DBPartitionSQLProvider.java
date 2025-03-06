@@ -45,8 +45,6 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 		super(dbType);
 
-		_objectSQLProvider = new ObjectSQLProvider(companyId, db);
-
 		_partitionName = DBPartitionUtil.getPartitionName(companyId);
 
 		if ((_partitionIndexesSQL == null) || (_partitionTablesSQL == null)) {
@@ -58,12 +56,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 	@Override
 	public String getIndexesSQL() {
-		return StringUtil.replace(
-			StringBundler.concat(
-				_partitionIndexesSQL, StringPool.NEW_LINE,
-				_objectSQLProvider.getIndexesSQL()),
-			" on ",
-			StringBundler.concat(" on ", _partitionName, StringPool.PERIOD));
+		return _partitionIndexesSQL;
 	}
 
 	@Override
@@ -76,12 +69,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 		return StringBundler.concat(
 			_getCreatePartitionSQL(),
-			StringUtil.replace(
-				_partitionTablesSQL + StringPool.NEW_LINE +
-					_objectSQLProvider.getTablesSQL(),
-				"create table ",
-				StringBundler.concat(
-					"create table ", _partitionName, StringPool.PERIOD)),
+			_partitionTablesSQL,
 			_getViewsSQL(), rulesSQLSupplier.get());
 	}
 
@@ -213,7 +201,6 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	private static String _partitionTablesSQL;
 	private static Set<List<String>> _rulesTableColumn;
 
-	private final ObjectSQLProvider _objectSQLProvider;
 	private final String _partitionName;
 
 }

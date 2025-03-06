@@ -14,7 +14,6 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeEntryLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
-import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -209,9 +208,7 @@ public class ListTypeEntryLocalServiceImpl
 			_listTypeDefinitionPersistence.findByPrimaryKey(
 				listTypeEntry.getListTypeDefinitionId());
 
-		if (listTypeDefinition.isSystem() &&
-			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
-
+		if (listTypeDefinition.isSystem()) {
 			return listTypeEntryPersistence.update(listTypeEntry);
 		}
 

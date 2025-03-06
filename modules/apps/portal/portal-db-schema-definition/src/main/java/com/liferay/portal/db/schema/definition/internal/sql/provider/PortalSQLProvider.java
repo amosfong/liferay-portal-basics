@@ -16,23 +16,16 @@ public class PortalSQLProvider extends BaseSQLProvider {
 
 	public PortalSQLProvider(DBType dbType) throws Exception {
 		super(dbType);
-
-		_objectSQLProvider = new ObjectSQLProvider(
-			PortalInstancePool.getDefaultCompanyId(), db);
 	}
 
 	@Override
 	public String getIndexesSQL() {
-		return super.getIndexesSQL() + StringPool.NEW_LINE +
-			_objectSQLProvider.getIndexesSQL();
+		return super.getIndexesSQL();
 	}
 
 	@Override
 	public String getTablesSQL() {
-		return super.getTablesSQL() + StringPool.NEW_LINE +
-			_objectSQLProvider.getTablesSQL();
+		return super.getTablesSQL();
 	}
-
-	private final ObjectSQLProvider _objectSQLProvider;
 
 }

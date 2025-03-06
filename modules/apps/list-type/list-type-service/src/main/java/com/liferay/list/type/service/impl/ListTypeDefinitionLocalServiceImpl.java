@@ -13,8 +13,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
-import com.liferay.object.definition.util.ObjectDefinitionUtil;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -104,14 +102,6 @@ public class ListTypeDefinitionLocalServiceImpl
 			"Only allowed bundles can delete system list type definitions",
 			listTypeDefinition.isSystem());
 
-		int count =
-			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(
-				listTypeDefinition.getListTypeDefinitionId());
-
-		if (count > 0) {
-			throw new RequiredListTypeDefinitionException();
-		}
-
 		_resourceLocalService.deleteResource(
 			listTypeDefinition, ResourceConstants.SCOPE_INDIVIDUAL);
 
@@ -151,9 +141,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinitionPersistence.findByPrimaryKey(
 				listTypeDefinitionId);
 
-		if (!listTypeDefinition.isSystem() ||
-			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
-
+		if (!listTypeDefinition.isSystem()) {
 			listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
 		}
 
@@ -263,9 +251,6 @@ public class ListTypeDefinitionLocalServiceImpl
 
 	@Reference
 	private ListTypeEntryPersistence _listTypeEntryPersistence;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

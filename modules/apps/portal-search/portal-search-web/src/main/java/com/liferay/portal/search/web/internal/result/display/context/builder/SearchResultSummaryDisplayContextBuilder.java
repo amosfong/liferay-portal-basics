@@ -11,9 +11,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -234,15 +231,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 	public SearchResultSummaryDisplayContextBuilder setLocale(Locale locale) {
 		_locale = locale;
-
-		return this;
-	}
-
-	public SearchResultSummaryDisplayContextBuilder
-		setObjectDefinitionLocalService(
-			ObjectDefinitionLocalService objectDefinitionLocalService) {
-
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 
 		return this;
 	}
@@ -798,20 +786,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 		String modelResource = _resourceActions.getModelResource(
 			_themeDisplay.getLocale(), className);
 
-		if (className.startsWith(
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					_themeDisplay.getCompanyId(), className);
-
-			if (objectDefinition != null) {
-				modelResource = objectDefinition.getLabel(
-					_themeDisplay.getLocale());
-			}
-		}
-
 		if (!Validator.isBlank(modelResource)) {
 			searchResultSummaryDisplayContext.setModelResource(modelResource);
 			searchResultSummaryDisplayContext.setModelResourceVisible(true);
@@ -1152,7 +1126,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private Language _language;
 	private com.liferay.portal.kernel.search.Document _legacyDocument;
 	private Locale _locale;
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private PortletURLFactory _portletURLFactory;
 	private RenderRequest _renderRequest;
 	private RenderResponse _renderResponse;

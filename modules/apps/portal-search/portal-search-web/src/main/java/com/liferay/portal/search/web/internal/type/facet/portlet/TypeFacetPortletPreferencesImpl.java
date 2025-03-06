@@ -5,9 +5,6 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -29,13 +26,11 @@ public class TypeFacetPortletPreferencesImpl
 	extends BasePortletPreferences implements TypeFacetPortletPreferences {
 
 	public TypeFacetPortletPreferencesImpl(
-		ObjectDefinitionLocalService objectDefinitionLocalService,
 		PortletPreferences portletPreferences,
 		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider) {
 
 		super(portletPreferences);
 
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;
 	}
 
@@ -119,23 +114,9 @@ public class TypeFacetPortletPreferencesImpl
 		String modelResource = ResourceActionsUtil.getModelResource(
 			locale, className);
 
-		if (className.startsWith(
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					companyId, className);
-
-			if (objectDefinition != null) {
-				modelResource = objectDefinition.getLabel(locale);
-			}
-		}
-
 		return new KeyValuePair(className, modelResource);
 	}
 
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final SearchableAssetClassNamesProvider
 		_searchableAssetClassNamesProvider;
 

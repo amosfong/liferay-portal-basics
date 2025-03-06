@@ -7,9 +7,6 @@ package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -211,21 +208,6 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			if (assetRendererFactory != null) {
 				typeName = assetRendererFactory.getTypeName(
 					_themeDisplay.getLocale());
-			}
-			else if (className.startsWith(
-						ObjectDefinitionConstants.
-							CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
-
-				ObjectDefinition objectDefinition =
-					ObjectDefinitionLocalServiceUtil.
-						fetchObjectDefinitionByClassName(
-							_themeDisplay.getCompanyId(), className);
-
-				if (objectDefinition == null) {
-					continue;
-				}
-
-				typeName = objectDefinition.getLabel(_themeDisplay.getLocale());
 			}
 
 			assetTypesTypeNames.put(className, typeName);

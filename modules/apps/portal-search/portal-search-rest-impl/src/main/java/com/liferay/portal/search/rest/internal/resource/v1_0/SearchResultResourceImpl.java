@@ -8,9 +8,6 @@ package com.liferay.portal.search.rest.internal.resource.v1_0;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -146,9 +143,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		if (entryClassName.equals(Layout.class.getName())) {
 			return _layoutLocalService.fetchLayout(entryClassPK);
 		}
-		else if (entryClassName.startsWith(ObjectDefinition.class.getName())) {
-			return _objectEntryLocalService.fetchObjectEntry(entryClassPK);
-		}
 
 		return null;
 	}
@@ -208,10 +202,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private String _getDTOClassName(String entryClassName) {
-		if (entryClassName.startsWith(ObjectDefinition.class.getName())) {
-			return ObjectEntry.class.getName();
-		}
-
 		return entryClassName;
 	}
 
@@ -314,9 +304,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private boolean _isObjectToDTOEntryClassName(String entryClassName) {
-		if (entryClassName.equals(Layout.class.getName()) ||
-			entryClassName.startsWith(ObjectDefinition.class.getName())) {
-
+		if (entryClassName.equals(Layout.class.getName())) {
 			return true;
 		}
 
@@ -701,9 +689,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Searcher _searcher;

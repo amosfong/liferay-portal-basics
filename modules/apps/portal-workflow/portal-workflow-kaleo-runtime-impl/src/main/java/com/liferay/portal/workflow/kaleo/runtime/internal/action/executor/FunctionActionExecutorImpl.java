@@ -6,8 +6,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -56,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ActionExecutor.class
 )
 public class FunctionActionExecutorImpl
-	implements ActionExecutor, CompanyScoped {
+	implements ActionExecutor {
 
 	public static final String KEY = "actionExecutorLanguage";
 
@@ -76,11 +74,6 @@ public class FunctionActionExecutorImpl
 	@Override
 	public String getActionExecutorKey() {
 		return _actionExecutorKey;
-	}
-
-	@Override
-	public long getAllowedCompanyId() {
-		return _companyId;
 	}
 
 	@Activate
@@ -230,10 +223,6 @@ public class FunctionActionExecutorImpl
 
 		String dtoClassName = assetRenderer.getClassName();
 
-		if (assetObjectSerializable instanceof ObjectEntry) {
-			dtoClassName = ObjectEntry.class.getName();
-		}
-
 		DTOConverter<Serializable, Serializable> dtoConverter =
 			(DTOConverter<Serializable, Serializable>)
 				_dtoConverterRegistry.getDTOConverter(dtoClassName);
@@ -262,19 +251,6 @@ public class FunctionActionExecutorImpl
 
 		JSONObject entryDTOJSONObject = _jsonFactory.createJSONObject(
 			dtoSerializable.toString());
-
-		if (!(assetObjectSerializable instanceof ObjectEntry)) {
-			return entryDTOJSONObject;
-		}
-
-		JSONObject propertiesJSONObject = entryDTOJSONObject.getJSONObject(
-			"properties");
-
-		for (String key : propertiesJSONObject.keySet()) {
-			entryDTOJSONObject.put(key, propertiesJSONObject.get(key));
-		}
-
-		entryDTOJSONObject.remove("properties");
 
 		return entryDTOJSONObject;
 	}

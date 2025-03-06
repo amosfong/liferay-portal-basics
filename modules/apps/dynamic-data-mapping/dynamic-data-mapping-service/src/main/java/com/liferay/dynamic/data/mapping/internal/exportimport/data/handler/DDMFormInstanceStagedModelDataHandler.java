@@ -19,8 +19,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -83,17 +81,8 @@ public class DDMFormInstanceStagedModelDataHandler
 		element.addAttribute(
 			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
 
-		if (StringUtil.equals(ddmStructure.getStorageType(), "object")) {
-			portletDataContext.addZipEntry(
-				settingsDDMFormValuesPath,
-				_addObjectDefinitionExternalReferenceCode(
-					_jsonFactory.createJSONObject(
-						ddmFormInstance.getSettings())));
-		}
-		else {
-			portletDataContext.addZipEntry(
-				settingsDDMFormValuesPath, ddmFormInstance.getSettings());
-		}
+		portletDataContext.addZipEntry(
+			settingsDDMFormValuesPath, ddmFormInstance.getSettings());
 
 		portletDataContext.addClassedModel(
 			element, ExportImportPathUtil.getModelPath(ddmFormInstance),
@@ -167,13 +156,6 @@ public class DDMFormInstanceStagedModelDataHandler
 			portletDataContext.getZipEntryAsString(
 				element.attributeValue("settings-ddm-form-values-path"));
 
-		if (StringUtil.equals(
-				importedDDMFormInstance.getStorageType(), "object")) {
-
-			serializedSettingsDDMFormValues = _addObjectDefinitionId(
-				_jsonFactory.createJSONObject(serializedSettingsDDMFormValues));
-		}
-
 		_ddmFormInstanceLocalService.updateFormInstance(
 			importedDDMFormInstance.getFormInstanceId(),
 			importedDDMFormInstance.getStructureId(),
@@ -194,65 +176,6 @@ public class DDMFormInstanceStagedModelDataHandler
 		getStagedModelRepository() {
 
 		return _stagedModelRepository;
-	}
-
-	private String _addObjectDefinitionExternalReferenceCode(
-			JSONObject jsonObject)
-		throws Exception {
-
-		JSONObject fieldValueJSONObject = _getFieldValueJSONObject(
-			jsonObject.getJSONArray("fieldValues"), "objectDefinitionId");
-
-		if (fieldValueJSONObject == null) {
-			return jsonObject.toString();
-		}
-
-		JSONArray valueJSONArray = _jsonFactory.createJSONArray(
-			fieldValueJSONObject.getString("value"));
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				valueJSONArray.getLong(0));
-
-		if (objectDefinition == null) {
-			return jsonObject.toString();
-		}
-
-		return jsonObject.put(
-			"objectDefinitionExternalReferenceCode",
-			objectDefinition.getExternalReferenceCode()
-		).toString();
-	}
-
-	private String _addObjectDefinitionId(JSONObject jsonObject) {
-		String objectDefinitionExternalReferenceCode = jsonObject.getString(
-			"objectDefinitionExternalReferenceCode");
-
-		jsonObject.remove("objectDefinitionExternalReferenceCode");
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode,
-					CompanyThreadLocal.getCompanyId());
-
-		if (objectDefinition == null) {
-			return jsonObject.toString();
-		}
-
-		JSONObject fieldValueJSONObject = _getFieldValueJSONObject(
-			jsonObject.getJSONArray("fieldValues"), "objectDefinitionId");
-
-		if (fieldValueJSONObject == null) {
-			return jsonObject.toString();
-		}
-
-		fieldValueJSONObject.put(
-			"value",
-			JSONUtil.put(
-				String.valueOf(objectDefinition.getObjectDefinitionId())));
-
-		return jsonObject.toString();
 	}
 
 	private JSONObject _getFieldValueJSONObject(
@@ -280,9 +203,6 @@ public class DDMFormInstanceStagedModelDataHandler
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"

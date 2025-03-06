@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
-import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -139,12 +138,6 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			ListUtil.fromCollection(
 				_serviceTrackerMap.getService(actionExecutorKey)),
 			actionExecutor -> {
-				if (actionExecutor instanceof CompanyScoped) {
-					CompanyScoped companyScoped = (CompanyScoped)actionExecutor;
-
-					return companyScoped.isAllowedCompany(companyId);
-				}
-
 				return true;
 			});
 	}

@@ -22,5 +22,4 @@ dependencies {
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testImplementation project(":apps:list-type:list-type-api")
-	testImplementation project(":apps:object:object-api")
 }
