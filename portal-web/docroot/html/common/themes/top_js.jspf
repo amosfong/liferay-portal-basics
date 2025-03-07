@@ -222,14 +222,10 @@
 			getCanonicalURL: function () {
 
 				<%
-				LayoutSEOLinkManager layoutSEOLinkManager = LayoutSEOLinkManagerUtil.getLayoutSEOLinkManager();
-
 				String completeURL = PortalUtil.getCurrentCompleteURL(request);
-
-				LayoutSEOLink layoutSEOLink = layoutSEOLinkManager.getCanonicalLayoutSEOLink(layout, themeDisplay.getLocale(), PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false), themeDisplay);
 				%>
 
-				return '<%= HtmlUtil.escapeJS(layoutSEOLink.getHref()) %>';
+				return '<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false) %>';
 			},
 			getCDNBaseURL: function () {
 				return '<%= themeDisplay.getCDNBaseURL() %>';

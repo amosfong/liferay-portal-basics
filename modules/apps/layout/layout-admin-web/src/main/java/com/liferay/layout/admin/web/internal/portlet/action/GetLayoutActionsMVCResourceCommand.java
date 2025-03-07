@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.translation.security.permission.TranslationPermission;
-import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.Collections;
 
@@ -66,7 +64,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
-			_layoutConverterRegistry, themeDisplay, _translationPermission);
+			_layoutConverterRegistry, themeDisplay);
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
@@ -79,8 +77,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 			new LayoutActionDropdownItemsProvider(
 				_portal.getHttpServletRequest(resourceRequest),
 				layoutActionsHelper, layoutsAdminDisplayContext,
-				_portal.getLiferayPortletResponse(resourceResponse),
-				_translationURLProvider);
+				_portal.getLiferayPortletResponse(resourceResponse));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
@@ -104,11 +101,5 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationPermission _translationPermission;
-
-	@Reference
-	private TranslationURLProvider _translationURLProvider;
 
 }

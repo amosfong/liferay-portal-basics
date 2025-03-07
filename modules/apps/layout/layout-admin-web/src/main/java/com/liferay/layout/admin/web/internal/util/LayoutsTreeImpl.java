@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -94,7 +93,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			":Pagination");
 
 		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
-			_layoutConverterRegistry, themeDisplay, _translationPermission);
+			_layoutConverterRegistry, themeDisplay);
 
 		String paginationJSON = SessionClicks.get(
 			httpServletRequest.getSession(), key, _jsonFactory.getNullJSON());
@@ -606,8 +605,5 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private Staging _staging;
-
-	@Reference
-	private TranslationPermission _translationPermission;
 
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.List;
 import java.util.Objects;
@@ -58,9 +57,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_translationURLProvider =
-			(TranslationURLProvider)httpServletRequest.getAttribute(
-				TranslationURLProvider.class.getName());
 	}
 
 	@Override
@@ -81,35 +77,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "convert-to-content-page"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "exportTranslation");
-				dropdownItem.putData(
-					"exportTranslationURL",
-					PortletURLBuilder.create(
-						_translationURLProvider.getExportTranslationURL(
-							_themeDisplay.getScopeGroupId(),
-							PortalUtil.getClassNameId(Layout.class),
-							RequestBackedPortletURLFactoryUtil.create(
-								httpServletRequest))
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"backURLTitle",
-						() -> {
-							PortletDisplay portletDisplay =
-								_themeDisplay.getPortletDisplay();
-
-							return portletDisplay.getPortletDisplayName();
-						}
-					).buildString());
-				dropdownItem.setDisabled(false);
-				dropdownItem.setIcon("upload");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "export-for-translations"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
@@ -393,6 +360,5 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
-	private final TranslationURLProvider _translationURLProvider;
 
 }

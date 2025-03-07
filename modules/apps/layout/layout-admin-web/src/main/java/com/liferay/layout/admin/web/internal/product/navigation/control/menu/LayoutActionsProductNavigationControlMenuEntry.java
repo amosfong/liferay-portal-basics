@@ -22,7 +22,6 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.io.IOException;
 
@@ -75,7 +74,7 @@ public class LayoutActionsProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
-			_layoutConverterRegistry, themeDisplay, _translationPermission);
+			_layoutConverterRegistry, themeDisplay);
 
 		httpServletRequest.setAttribute(
 			LayoutAdminWebKeys.LAYOUT_ACTIONS_DISPLAY_CONTEXT,
@@ -142,8 +141,5 @@ public class LayoutActionsProductNavigationControlMenuEntry
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;
-
-	@Reference
-	private TranslationPermission _translationPermission;
 
 }

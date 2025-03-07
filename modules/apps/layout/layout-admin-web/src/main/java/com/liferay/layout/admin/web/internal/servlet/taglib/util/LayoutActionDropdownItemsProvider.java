@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.List;
 import java.util.Objects;
@@ -58,14 +57,12 @@ public class LayoutActionDropdownItemsProvider {
 		HttpServletRequest httpServletRequest,
 		LayoutActionsHelper layoutActionsHelper,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
-		LiferayPortletResponse liferayPortletResponse,
-		TranslationURLProvider translationURLProvider) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
-		_translationURLProvider = translationURLProvider;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -85,11 +82,6 @@ public class LayoutActionDropdownItemsProvider {
 							_isEditable(layout) &&
 							_layoutActionsHelper.isShowConfigureAction(layout),
 						_getEditLayoutActionUnsafeConsumer(layout)
-					).add(
-						() -> _layoutActionsHelper.isShowTranslateAction(
-							layout),
-						_getAutomaticTranslateLayoutActionUnsafeConsumer(
-							draftLayout, layout)
 					).add(
 						_getPreviewLayoutActionUnsafeConsumer(
 							draftLayout, layout)
@@ -149,18 +141,6 @@ public class LayoutActionDropdownItemsProvider {
 					).addContext(
 						_getCopyLayoutWithPermissionsActionUnsafeConsumer(
 							layout)
-					).add(
-						() ->
-							_layoutActionsHelper.isShowExportTranslationAction(
-								layout),
-						_getExportForTranslationLayoutActionUnsafeConsumer(
-							draftLayout, layout)
-					).add(
-						() ->
-							_layoutActionsHelper.isShowImportTranslationAction(
-								layout),
-						_getImportTranslationLayoutActionUnsafeConsumer(
-							draftLayout, layout)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -199,43 +179,6 @@ public class LayoutActionDropdownItemsProvider {
 					0, layout.getPlid(), layout.isPrivateLayout()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "add-page"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getAutomaticTranslateLayoutActionUnsafeConsumer(
-			Layout draftLayout, Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				PortletURLBuilder.create(
-					_translationURLProvider.getTranslateURL(
-						_themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						BeanPropertiesUtil.getLong(
-							draftLayout, "plid", layout.getPlid()),
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest))
-				).setRedirect(
-					_layoutsAdminDisplayContext.getRedirect()
-				).setPortletResource(
-					() -> {
-						PortletDisplay portletDisplay =
-							_themeDisplay.getPortletDisplay();
-
-						return portletDisplay.getId();
-					}
-				).setParameter(
-					"backURLTitle",
-					LanguageUtil.get(_themeDisplay.getLocale(), "pages")
-				).setParameter(
-					"segmentsExperienceId",
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(layout.getPlid())
-				).buildString());
-			dropdownItem.setIcon("automatic-translate");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "translate"));
 		};
 	}
 
@@ -476,73 +419,6 @@ public class LayoutActionDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getExportForTranslationLayoutActionUnsafeConsumer(
-			Layout draftLayout, Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				PortletURLBuilder.create(
-					_translationURLProvider.getExportTranslationURL(
-						layout.getGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						BeanPropertiesUtil.getLong(
-							draftLayout, "plid", layout.getPlid()),
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest))
-				).setRedirect(
-					_layoutsAdminDisplayContext.getRedirect()
-				).setPortletResource(
-					() -> {
-						PortletDisplay portletDisplay =
-							_themeDisplay.getPortletDisplay();
-
-						return portletDisplay.getId();
-					}
-				).setParameter(
-					"backURLTitle",
-					LanguageUtil.get(_themeDisplay.getLocale(), "pages")
-				).buildString());
-			dropdownItem.setIcon("upload");
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_httpServletRequest, "export-for-translation"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getImportTranslationLayoutActionUnsafeConsumer(
-			Layout draftLayout, Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				PortletURLBuilder.create(
-					_translationURLProvider.getImportTranslationURL(
-						layout.getGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						BeanPropertiesUtil.getLong(
-							draftLayout, "plid", layout.getPlid()),
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest))
-				).setRedirect(
-					_layoutsAdminDisplayContext.getRedirect()
-				).setPortletResource(
-					() -> {
-						PortletDisplay portletDisplay =
-							_themeDisplay.getPortletDisplay();
-
-						return portletDisplay.getId();
-					}
-				).setParameter(
-					"backURLTitle",
-					LanguageUtil.get(_themeDisplay.getLocale(), "pages")
-				).buildString());
-			dropdownItem.setIcon("download");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "import-translation"));
-		};
-	}
-
 	private String _getLayoutConversionPreviewURL(Layout layout) {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
@@ -744,6 +620,5 @@ public class LayoutActionDropdownItemsProvider {
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
-	private final TranslationURLProvider _translationURLProvider;
 
 }

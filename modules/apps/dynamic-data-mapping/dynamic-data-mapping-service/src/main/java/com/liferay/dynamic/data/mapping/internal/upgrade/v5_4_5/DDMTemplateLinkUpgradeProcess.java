@@ -6,7 +6,6 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -24,13 +23,6 @@ public class DDMTemplateLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String compositeClassName = ResourceActionsUtil.getCompositeModelName(
-			JournalArticle.class.getName(), DDMTemplate.class.getName());
-
-		runSQL(
-			"delete from DDMTemplateLink where classNameId = " +
-				_classNameLocalService.getClassNameId(compositeClassName) +
-					" and classPK not in (select id_ from JournalArticle)");
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

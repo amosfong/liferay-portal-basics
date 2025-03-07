@@ -55,7 +55,6 @@ import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -212,30 +211,6 @@ public class DDMStructureLocalServiceImpl
 		}
 		else {
 			structureKey = StringUtil.toUpperCase(structureKey.trim());
-		}
-
-		if (classNameId == _classNameLocalService.getClassNameId(
-				JournalArticle.class)) {
-
-			long parentStructureLayoutId = 0;
-
-			if (parentStructureId > 0) {
-				DDMStructure ddmStructure = fetchDDMStructure(
-					parentStructureId);
-
-				parentStructureLayoutId =
-					ddmStructure.getDefaultDDMStructureLayoutId();
-			}
-
-			ddmForm = _ddmDataDefinitionConverter.convertDDMFormDataDefinition(
-				ddmForm, parentStructureId, parentStructureLayoutId);
-
-			if (ddmFormLayout != null) {
-				ddmFormLayout =
-					_ddmDataDefinitionConverter.
-						convertDDMFormLayoutDataDefinition(
-							ddmForm, ddmFormLayout);
-			}
 		}
 
 		_validateExternalReferenceCode(

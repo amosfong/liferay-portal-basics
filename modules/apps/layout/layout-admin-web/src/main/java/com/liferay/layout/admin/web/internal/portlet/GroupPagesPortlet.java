@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.translation.security.permission.TranslationPermission;
-import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.io.IOException;
 
@@ -206,7 +204,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
-				_layoutConverterRegistry, themeDisplay, _translationPermission);
+				_layoutConverterRegistry, themeDisplay);
 
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
@@ -220,8 +218,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 					new LayoutActionDropdownItemsProvider(
 						_portal.getHttpServletRequest(renderRequest),
 						layoutActionsHelper, layoutsAdminDisplayContext,
-						_portal.getLiferayPortletResponse(renderResponse),
-						_translationURLProvider);
+						_portal.getLiferayPortletResponse(renderResponse));
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER,
@@ -246,9 +243,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutUtilityPageEntryDisplayContext.class.getName(),
 				new LayoutUtilityPageEntryDisplayContext(
 					renderRequest, renderResponse));
-			renderRequest.setAttribute(
-				TranslationURLProvider.class.getName(),
-				_translationURLProvider);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
@@ -327,11 +321,5 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationPermission _translationPermission;
-
-	@Reference
-	private TranslationURLProvider _translationURLProvider;
 
 }

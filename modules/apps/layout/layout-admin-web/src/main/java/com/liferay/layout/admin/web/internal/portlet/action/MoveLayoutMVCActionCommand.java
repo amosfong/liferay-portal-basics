@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Iterator;
 
@@ -86,7 +85,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			}
 
 			LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
-				_layoutConverterRegistry, themeDisplay, _translationPermission);
+				_layoutConverterRegistry, themeDisplay);
 
 			LiferayPortletRequest liferayPortletRequest =
 				_portal.getLiferayPortletRequest(actionRequest);
@@ -146,8 +145,5 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationPermission _translationPermission;
 
 }

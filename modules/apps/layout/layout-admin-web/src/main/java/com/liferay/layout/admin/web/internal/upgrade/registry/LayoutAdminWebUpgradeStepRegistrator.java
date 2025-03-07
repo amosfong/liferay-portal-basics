@@ -5,9 +5,7 @@
 
 package com.liferay.layout.admin.web.internal.upgrade.registry;
 
-import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_0.LayoutUpgradeProcess;
-import com.liferay.layout.admin.web.internal.upgrade.v_1_0_1.LayoutTypeUpgradeProcess;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_2.LayoutSetTypeSettingsUpgradeProcess;
 import com.liferay.layout.admin.web.internal.upgrade.v_1_0_3.LayoutTemplateIdUpgradeProcess;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -33,10 +31,6 @@ public class LayoutAdminWebUpgradeStepRegistrator
 		registry.register("0.0.1", "1.0.0", new LayoutUpgradeProcess());
 
 		registry.register(
-			"1.0.0", "1.0.1",
-			new LayoutTypeUpgradeProcess(_journalArticleResourceLocalService));
-
-		registry.register(
 			"1.0.1", "1.0.2",
 			new LayoutSetTypeSettingsUpgradeProcess(
 				_groupLocalService, _layoutSetLocalService));
@@ -47,10 +41,6 @@ public class LayoutAdminWebUpgradeStepRegistrator
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

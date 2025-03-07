@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
-import com.liferay.translation.constants.TranslationActionKeys;
-import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +44,10 @@ public class LayoutActionsHelper {
 
 	public LayoutActionsHelper(
 		LayoutConverterRegistry layoutConverterRegistry,
-		ThemeDisplay themeDisplay,
-		TranslationPermission translationPermission) {
+		ThemeDisplay themeDisplay) {
 
 		_layoutConverterRegistry = layoutConverterRegistry;
 		_themeDisplay = themeDisplay;
-		_translationPermission = translationPermission;
 	}
 
 	public boolean isShowAddChildPageAction(Layout layout)
@@ -328,18 +324,6 @@ public class LayoutActionsHelper {
 	}
 
 	private boolean _hasTranslatePermission() {
-		long scopeGroupId = _themeDisplay.getScopeGroupId();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
-			if (_translationPermission.contains(
-					_themeDisplay.getPermissionChecker(), scopeGroupId,
-					LanguageUtil.getLanguageId(locale),
-					TranslationActionKeys.TRANSLATE)) {
-
-				return true;
-			}
-		}
-
 		return false;
 	}
 
@@ -374,6 +358,5 @@ public class LayoutActionsHelper {
 
 	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final ThemeDisplay _themeDisplay;
-	private final TranslationPermission _translationPermission;
 
 }

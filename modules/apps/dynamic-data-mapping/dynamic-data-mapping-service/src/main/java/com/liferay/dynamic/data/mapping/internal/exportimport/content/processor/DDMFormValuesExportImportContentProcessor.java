@@ -18,10 +18,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
-import com.liferay.journal.exception.NoSuchArticleException;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -74,9 +70,6 @@ public class DDMFormValuesExportImportContentProcessor
 			new FileEntryExportDDMFormFieldValueTransformer(
 				portletDataContext, stagedModel, exportReferencedContent));
 		ddmFormValuesTransformer.addTransformer(
-			new JournalArticleExportDDMFormFieldValueTransformer(
-				portletDataContext, stagedModel, exportReferencedContent));
-		ddmFormValuesTransformer.addTransformer(
 			new LayoutExportDDMFormFieldValueTransformer(
 				portletDataContext, stagedModel));
 
@@ -96,9 +89,6 @@ public class DDMFormValuesExportImportContentProcessor
 
 		ddmFormValuesTransformer.addTransformer(
 			new FileEntryImportDDMFormFieldValueTransformer(
-				portletDataContext, stagedModel));
-		ddmFormValuesTransformer.addTransformer(
-			new JournalArticleImportDDMFormFieldValueTransformer(
 				portletDataContext, stagedModel));
 		ddmFormValuesTransformer.addTransformer(
 			new LayoutImportDDMFormFieldValueTransformer(portletDataContext));
@@ -129,9 +119,6 @@ public class DDMFormValuesExportImportContentProcessor
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -349,199 +336,6 @@ public class DDMFormValuesExportImportContentProcessor
 			).put(
 				"uuid", fileEntry.getUuid()
 			).toString();
-		}
-
-		private final PortletDataContext _portletDataContext;
-		private final StagedModel _stagedModel;
-
-	}
-
-	private class JournalArticleExportDDMFormFieldValueTransformer
-		implements DDMFormFieldValueTransformer {
-
-		public JournalArticleExportDDMFormFieldValueTransformer(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			boolean exportReferencedContent) {
-
-			_portletDataContext = portletDataContext;
-			_stagedModel = stagedModel;
-			_exportReferencedContent = exportReferencedContent;
-		}
-
-		@Override
-		public String getFieldType() {
-			return JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE;
-		}
-
-		@Override
-		public void transform(DDMFormFieldValue ddmFormFieldValue)
-			throws PortalException {
-
-			Value value = ddmFormFieldValue.getValue();
-
-			for (Locale locale : value.getAvailableLocales()) {
-				String valueString = value.getString(locale);
-
-				JSONObject jsonObject = null;
-
-				try {
-					jsonObject = _jsonFactory.createJSONObject(valueString);
-				}
-				catch (JSONException jsonException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsonException);
-					}
-
-					continue;
-				}
-
-				long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
-				String className = GetterUtil.getString(
-					jsonObject.get("className"));
-
-				if ((classPK == 0) ||
-					!className.equals(JournalArticle.class.getName())) {
-
-					continue;
-				}
-
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchLatestArticle(classPK);
-
-				if (journalArticle == null) {
-					continue;
-				}
-
-				jsonObject.put(
-					"groupId", journalArticle.getGroupId()
-				).put(
-					"uuid", journalArticle.getUuid()
-				);
-
-				value.addString(locale, jsonObject.toString());
-
-				boolean disposableDependency = _hasNotExportableStatus(
-					journalArticle, journalArticle.getStatus());
-
-				if (_exportReferencedContent && !disposableDependency) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						_portletDataContext, _stagedModel, journalArticle,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-				}
-				else {
-					String referenceType =
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY;
-
-					if (disposableDependency) {
-						referenceType =
-							PortletDataContext.
-								REFERENCE_TYPE_DEPENDENCY_DISPOSABLE;
-					}
-
-					Element entityElement =
-						_portletDataContext.getExportDataElement(_stagedModel);
-
-					_portletDataContext.addReferenceElement(
-						_stagedModel, entityElement, journalArticle,
-						referenceType, true);
-				}
-			}
-		}
-
-		private final boolean _exportReferencedContent;
-		private final PortletDataContext _portletDataContext;
-		private final StagedModel _stagedModel;
-
-	}
-
-	private class JournalArticleImportDDMFormFieldValueTransformer
-		implements DDMFormFieldValueTransformer {
-
-		public JournalArticleImportDDMFormFieldValueTransformer(
-			PortletDataContext portletDataContext, StagedModel stagedModel) {
-
-			_portletDataContext = portletDataContext;
-			_stagedModel = stagedModel;
-		}
-
-		@Override
-		public String getFieldType() {
-			return JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE;
-		}
-
-		@Override
-		public void transform(DDMFormFieldValue ddmFormFieldValue)
-			throws PortalException {
-
-			Value value = ddmFormFieldValue.getValue();
-
-			for (Locale locale : value.getAvailableLocales()) {
-				String valueString = value.getString(locale);
-
-				JSONObject jsonObject = null;
-
-				try {
-					jsonObject = _jsonFactory.createJSONObject(valueString);
-				}
-				catch (JSONException jsonException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsonException);
-					}
-
-					continue;
-				}
-
-				JournalArticle journalArticle = fetchJournalArticle(jsonObject);
-
-				if (journalArticle == null) {
-					continue;
-				}
-
-				jsonObject.put("classPK", journalArticle.getResourcePrimKey());
-
-				value.addString(locale, jsonObject.toString());
-			}
-		}
-
-		protected JournalArticle fetchJournalArticle(JSONObject jsonObject)
-			throws PortalException {
-
-			long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
-
-			Map<Long, Long> classPKs =
-				(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class);
-
-			long newClassPK = MapUtil.getLong(classPKs, classPK, classPK);
-
-			if (newClassPK > 0) {
-				try {
-					return _journalArticleLocalService.getLatestArticle(
-						newClassPK);
-				}
-				catch (NoSuchArticleException noSuchArticleException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to find journal article with primary key " +
-								newClassPK,
-							noSuchArticleException);
-					}
-				}
-			}
-
-			// Legacy import
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-
-			Map<Long, Long> groupIds =
-				(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
-					Group.class);
-
-			groupId = MapUtil.getLong(groupIds, groupId, groupId);
-
-			return _journalArticleLocalService.
-				fetchJournalArticleByUuidAndGroupId(uuid, groupId);
 		}
 
 		private final PortletDataContext _portletDataContext;

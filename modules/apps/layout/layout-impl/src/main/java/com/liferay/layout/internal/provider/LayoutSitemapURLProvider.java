@@ -23,7 +23,6 @@ import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
-import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.util.HashSet;
 import java.util.List;
@@ -144,17 +143,6 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		throws PortalException {
 
 		Set<Locale> availableLocales = new HashSet<>();
-
-		InfoItemLanguagesProvider<Layout> infoItemLanguagesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemLanguagesProvider.class, Layout.class.getName());
-
-		for (String availableLanguageId :
-				infoItemLanguagesProvider.getAvailableLanguageIds(layout)) {
-
-			availableLocales.add(
-				LocaleUtil.fromLanguageId(availableLanguageId));
-		}
 
 		return availableLocales;
 	}

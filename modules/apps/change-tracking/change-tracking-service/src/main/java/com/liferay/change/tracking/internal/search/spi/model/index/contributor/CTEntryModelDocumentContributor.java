@@ -12,9 +12,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleLocalization;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -190,24 +187,6 @@ public class CTEntryModelDocumentContributor
 
 			groupId = groupedModel.getGroupId();
 		}
-		else if (model instanceof JournalArticleLocalization) {
-			JournalArticleLocalization journalArticleLocalization =
-				(JournalArticleLocalization)model;
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollectionId)) {
-
-				JournalArticle journalArticle =
-					_journalArticleLocalService.getJournalArticle(
-						journalArticleLocalization.getArticlePK());
-
-				groupId = journalArticle.getGroupId();
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
-		}
 		else {
 			Map<String, Object> modelAttributes = model.getModelAttributes();
 
@@ -379,9 +358,6 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private Language _language;

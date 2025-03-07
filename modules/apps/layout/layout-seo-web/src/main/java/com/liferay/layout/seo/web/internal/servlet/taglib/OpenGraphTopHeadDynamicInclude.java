@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -390,25 +389,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return siteAvailableLocales;
 		}
 
-		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemLanguagesProvider.class, Layout.class.getName());
-
-		if (infoItemLanguagesProvider == null) {
-			return siteAvailableLocales;
-		}
-
-		Set<Locale> availableLocales = new HashSet<>();
-
-		for (String languageId :
-				infoItemLanguagesProvider.getAvailableLanguageIds(layout)) {
-
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		availableLocales.add(siteDefaultLocale);
-
-		return availableLocales;
+		return siteAvailableLocales;
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValues(

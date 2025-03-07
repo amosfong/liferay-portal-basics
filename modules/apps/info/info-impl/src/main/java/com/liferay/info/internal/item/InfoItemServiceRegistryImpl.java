@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,7 +405,7 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 			InfoItemFieldValuesUpdater.class, InfoItemFormProvider.class,
 			InfoItemFormVariationsProvider.class,
 			InfoItemFriendlyURLProvider.class, InfoItemFriendlyURLUpdater.class,
-			InfoItemIdentifierTranslator.class, InfoItemLanguagesProvider.class,
+			InfoItemIdentifierTranslator.class,
 			InfoItemObjectProvider.class, InfoItemObjectVariationProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
 			InfoItemScopeProvider.class, InfoItemStatusProvider.class,
