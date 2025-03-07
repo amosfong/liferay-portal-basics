@@ -9,8 +9,6 @@ import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
-import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
-import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -264,33 +262,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			DDMStructureLayout.class);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			_deDataDefinitionFieldLinkLocalService.
-				deleteDEDataDefinitionFieldLinks(
-					ddmStructureClassNameId, ddmStructure.getStructureId());
-
-			List<DDMStructureVersion> ddmStructureVersions =
-				_ddmStructureVersionLocalService.getStructureVersions(
-					ddmStructure.getStructureId());
-
-			for (DDMStructureVersion ddmStructureVersion :
-					ddmStructureVersions) {
-
-				List<DDMStructureLayout> ddmStructureLayouts =
-					_ddmStructureLayoutLocalService.getStructureLayouts(
-						ddmStructure.getGroupId(),
-						ddmStructure.getClassNameId(),
-						ddmStructureVersion.getStructureVersionId());
-
-				for (DDMStructureLayout ddmStructureLayout :
-						ddmStructureLayouts) {
-
-					_deDataDefinitionFieldLinkLocalService.
-						deleteDEDataDefinitionFieldLinks(
-							ddmStructureLayoutClassNameId,
-							ddmStructureLayout.getStructureLayoutId());
-				}
-			}
-
 			_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 				ddmStructure.getStructureId());
 		}
@@ -414,28 +385,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			for (Element ddmStructureElement : ddmStructureElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmStructureElement);
-			}
-
-			for (Element ddmStructureElement : ddmStructureElements) {
-				List<Element> deDataDefinitionFieldLinkElements =
-					portletDataContext.getReferenceDataElements(
-						ddmStructureElement, DEDataDefinitionFieldLink.class,
-						null);
-
-				for (Element deDataDefinitionFieldLinkElement :
-						deDataDefinitionFieldLinkElements) {
-
-					String path =
-						deDataDefinitionFieldLinkElement.attributeValue("path");
-
-					DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-						(DEDataDefinitionFieldLink)
-							portletDataContext.getZipEntryAsObject(
-								deDataDefinitionFieldLinkElement, path);
-
-					StagedModelDataHandlerUtil.importStagedModel(
-						portletDataContext, deDataDefinitionFieldLink);
-				}
 			}
 
 			// Importing DDM structure default values
@@ -839,10 +788,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private DEDataDefinitionFieldLinkLocalService
-		_deDataDefinitionFieldLinkLocalService;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

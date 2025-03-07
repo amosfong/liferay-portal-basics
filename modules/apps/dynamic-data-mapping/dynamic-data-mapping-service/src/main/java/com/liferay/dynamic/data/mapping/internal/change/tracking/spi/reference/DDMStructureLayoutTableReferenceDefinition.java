@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.data.engine.model.DEDataDefinitionFieldLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
@@ -30,11 +29,7 @@ public class DDMStructureLayoutTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<DDMStructureLayoutTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.classNameReference(
-			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
-			DEDataDefinitionFieldLinkTable.INSTANCE.classPK,
-			DDMStructureLayout.class
-		).systemEventReference(
+		childTableReferenceInfoBuilder.systemEventReference(
 			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
 			DDMStructureLayout.class
 		);

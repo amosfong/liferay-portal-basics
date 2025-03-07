@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.internal.model.listener;
 
-import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -51,28 +50,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			return;
 		}
 
-		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
-			_portal.getClassNameId(DDMStructure.class),
-			ddmStructure.getStructureId());
-
-		List<DDMStructureVersion> ddmStructureVersions =
-			_ddmStructureVersionLocalService.getStructureVersions(
-				ddmStructure.getStructureId());
-
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			List<DDMStructureLayout> ddmStructureLayouts =
-				_ddmStructureLayoutLocalService.getStructureLayouts(
-					ddmStructure.getGroupId(), classNameId,
-					ddmStructureVersion.getStructureVersionId());
-
-			for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
-				_deDataDefinitionFieldLinkLocalService.
-					deleteDEDataDefinitionFieldLinks(
-						_portal.getClassNameId(DDMStructureLayout.class),
-						ddmStructureLayout.getStructureLayoutId());
-			}
-		}
-
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 			ddmStructure.getStructureId());
 	}
@@ -85,10 +62,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-
-	@Reference
-	private DEDataDefinitionFieldLinkLocalService
-		_deDataDefinitionFieldLinkLocalService;
 
 	@Reference
 	private Portal _portal;

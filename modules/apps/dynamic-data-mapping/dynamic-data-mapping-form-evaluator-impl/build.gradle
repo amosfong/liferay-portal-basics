@@ -11,5 +11,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-expression")
-	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
