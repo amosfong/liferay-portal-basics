@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
-import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -504,10 +503,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		String fileName = fileEntry.getFileName();
 
-		if (fileEntry.isInTrash()) {
-			fileName = _trashHelper.getOriginalTitle(fileEntry.getFileName());
-		}
-
 		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
 
 		sb.append(StringPool.SLASH);
@@ -549,8 +544,5 @@ public class DLURLHelperImpl implements DLURLHelper {
 	private ServiceTrackerMap
 		<DLFileVersionURLProvider.Type, DLFileVersionURLProvider>
 			_serviceTrackerMap;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.webserver.WebServerServlet;
-import com.liferay.trash.TrashHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -604,10 +603,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		String fileName = fileEntry.getFileName();
 
-		if (fileEntry.isInTrash()) {
-			fileName = _trashHelper.getOriginalTitle(fileEntry.getTitle());
-		}
-
 		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
 
 		sb.append(StringPool.SLASH);
@@ -837,9 +832,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -355,29 +354,6 @@ public class FolderStagedModelDataHandler
 
 			throw portletDataException;
 		}
-
-		if (folder instanceof LiferayFolder) {
-			LiferayFolder liferayFolder = (LiferayFolder)folder;
-
-			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
-
-			if (dlFolder.isInTrash() ||
-				_trashHelper.isInTrashContainer(dlFolder)) {
-
-				PortletDataException portletDataException =
-					new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-
-				portletDataException.setStagedModelDisplayName(
-					folder.getName());
-				portletDataException.setStagedModelClassName(
-					folder.getModelClassName());
-				portletDataException.setStagedModelClassPK(
-					GetterUtil.getString(folder.getFolderId()));
-
-				throw portletDataException;
-			}
-		}
 	}
 
 	private void _exportFolderFileEntryTypes(
@@ -519,8 +495,5 @@ public class FolderStagedModelDataHandler
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

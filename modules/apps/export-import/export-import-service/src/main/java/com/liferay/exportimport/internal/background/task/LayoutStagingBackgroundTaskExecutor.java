@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.io.File;
 import java.io.Serializable;
@@ -104,8 +103,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 					ExportImportThreadLocal.setInitialLayoutStagingInProcess(
 						true);
-
-					_trashEntryLocalService.deleteEntries(sourceGroupId, true);
 				}
 			}
 
@@ -262,9 +259,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 	@Reference
 	private StagingLocalService _stagingLocalService;
-
-	@Reference
-	private TrashEntryLocalService _trashEntryLocalService;
 
 	private class LayoutStagingImportCallable
 		implements Callable<MissingReferences> {

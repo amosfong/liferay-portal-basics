@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.trash.TrashHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,10 +40,6 @@ public class DLFolderModelDocumentContributor
 
 		String title = dlFolder.getName();
 
-		if (dlFolder.isInTrash()) {
-			title = trashHelper.getOriginalTitle(title);
-		}
-
 		document.addText(Field.TITLE, title);
 
 		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
@@ -58,9 +53,6 @@ public class DLFolderModelDocumentContributor
 					" indexed successfully");
 		}
 	}
-
-	@Reference
-	protected TrashHelper trashHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderModelDocumentContributor.class);

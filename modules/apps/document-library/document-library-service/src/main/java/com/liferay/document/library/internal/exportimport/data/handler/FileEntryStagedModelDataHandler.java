@@ -83,7 +83,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
-import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -172,10 +171,6 @@ public class FileEntryStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(FileEntry fileEntry) {
-		if (fileEntry.isInTrash()) {
-			return _trashHelper.getOriginalTitle(fileEntry.getTitle());
-		}
-
 		return fileEntry.getTitle();
 	}
 
@@ -495,12 +490,6 @@ public class FileEntryStagedModelDataHandler
 						fileEntry.getDisplayDate(),
 						fileEntry.getExpirationDate(),
 						fileEntry.getReviewDate(), serviceContext);
-
-					if (fileEntry.isInTrash()) {
-						importedFileEntry =
-							_dlTrashService.moveFileEntryToTrash(
-								importedFileEntry.getFileEntryId());
-					}
 				}
 				else {
 					FileVersion latestExistingFileVersion =
@@ -701,15 +690,6 @@ public class FileEntryStagedModelDataHandler
 
 		if ((existingFileEntry == null) || !existingFileEntry.isInTrash()) {
 			return;
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			DLFileEntry.class.getName());
-
-		if (trashHandler.isRestorable(existingFileEntry.getFileEntryId())) {
-			trashHandler.restoreTrashEntry(
-				portletDataContext.getUserId(fileEntry.getUserUuid()),
-				existingFileEntry.getFileEntryId());
 		}
 	}
 
@@ -1303,8 +1283,5 @@ public class FileEntryStagedModelDataHandler
 
 	private ServiceTrackerList<DLPluggableContentDataHandler<?>>
 		_serviceTrackerList;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

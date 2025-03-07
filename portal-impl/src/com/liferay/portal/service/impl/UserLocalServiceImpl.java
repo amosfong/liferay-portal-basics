@@ -109,7 +109,6 @@ import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
-import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -1805,10 +1804,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void checkLockout(User user) throws PortalException {
-		if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-			return;
-		}
-
 		doCheckLockout(user, user.getPasswordPolicy());
 	}
 
@@ -1889,10 +1884,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void checkPasswordExpired(User user) throws PortalException {
-		if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-			return;
-		}
-
 		doCheckPasswordExpired(user, user.getPasswordPolicy());
 	}
 
@@ -1916,31 +1907,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			serviceContext, "autoPassword");
 
 		if (autoPassword) {
-			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"When LDAP password policy is enabled, it is ",
-							"possible that portal generated passwords will ",
-							"not match the LDAP policy. Using RegExpToolkit ",
-							"to generate new password."));
-				}
-
-				RegExpToolkit regExpToolkit = new RegExpToolkit();
-
-				String password = regExpToolkit.generate(null);
-
-				serviceContext.setAttribute("passwordUnencrypted", password);
-
-				PasswordModificationThreadLocal.setPasswordModified(true);
-				PasswordModificationThreadLocal.setPasswordUnencrypted(
-					password);
-
-				user.setPassword(PasswordEncryptorUtil.encrypt(password));
-				user.setPasswordEncrypted(true);
-				user.setPasswordUnencrypted(password);
-			}
-
 			user.setPasswordModifiedDate(new Date());
 			user.setPasswordModified(true);
 
@@ -5286,25 +5252,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = userPersistence.update(user);
 		}
 		catch (ModelListenerException modelListenerException) {
-			Throwable throwable = modelListenerException.getCause();
-
-			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-				String msg = GetterUtil.getString(throwable.getMessage());
-
-				String[] errorPasswordHistoryKeywords =
-					LDAPSettingsUtil.getErrorPasswordHistoryKeywords(
-						user.getCompanyId());
-
-				for (String errorPasswordHistoryKeyword :
-						errorPasswordHistoryKeywords) {
-
-					if (msg.contains(errorPasswordHistoryKeyword)) {
-						throw new UserPasswordException.MustNotBeRecentlyUsed(
-							userId);
-					}
-				}
-			}
-
 			throw new UserPasswordException.MustComplyWithModelListeners(
 				userId, modelListenerException);
 		}
@@ -6387,38 +6334,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				return Authenticator.DNE;
 			}
-
-			// Let LDAP handle max failure event
-
-			if (!LDAPSettingsUtil.isPasswordPolicyEnabled(companyId)) {
-				PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-				user = userPersistence.fetchByPrimaryKey(user.getUserId());
-
-				int failedLoginAttempts = user.getFailedLoginAttempts();
-
-				int maxFailures = passwordPolicy.getMaxFailure();
-
-				if ((failedLoginAttempts >= maxFailures) &&
-					(maxFailures != 0)) {
-
-					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-						AuthPipeline.onMaxFailuresByEmailAddress(
-							PropsKeys.AUTH_MAX_FAILURES, companyId,
-							user.getEmailAddress(), headerMap, parameterMap);
-					}
-					else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-						AuthPipeline.onMaxFailuresByScreenName(
-							PropsKeys.AUTH_MAX_FAILURES, companyId,
-							user.getScreenName(), headerMap, parameterMap);
-					}
-					else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-						AuthPipeline.onMaxFailuresByUserId(
-							PropsKeys.AUTH_MAX_FAILURES, companyId,
-							user.getUserId(), headerMap, parameterMap);
-					}
-				}
-			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -7360,16 +7275,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Check password policy to see if the is account locked out or if the
 		// password is expired
-
-		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-			user = doCheckLockout(user, passwordPolicy);
-
-			if (!PasswordModificationThreadLocal.isPasswordModified()) {
-				user = doCheckPasswordExpired(user, passwordPolicy);
-			}
-		}
 
 		return user;
 	}

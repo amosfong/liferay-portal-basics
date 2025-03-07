@@ -23,7 +23,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:layout:layout-utility-page-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
-	compileOnly project(":apps:redirect:redirect-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")

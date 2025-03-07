@@ -50,7 +50,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,10 +106,6 @@ public class DLFileEntryModelDocumentContributor
 			document.addKeyword(Field.STATUS, dlFileVersion.getStatus());
 
 			String title = dlFileEntry.getTitle();
-
-			if (dlFileEntry.isInTrash()) {
-				title = _trashHelper.getOriginalTitle(title);
-			}
 
 			document.addText(Field.TITLE, title);
 			document.addText(
@@ -431,8 +426,5 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private TextExtractor _textExtractor;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

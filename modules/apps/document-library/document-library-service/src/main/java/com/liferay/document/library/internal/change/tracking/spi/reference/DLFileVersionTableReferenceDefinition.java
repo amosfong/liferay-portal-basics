@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.trash.model.TrashVersionTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -144,22 +143,6 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.fileEntryId.eq(
 						DLFileVersionTable.INSTANCE.fileEntryId)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				TrashVersionTable.INSTANCE
-			).innerJoinON(
-				DLFileVersionTable.INSTANCE,
-				DLFileVersionTable.INSTANCE.fileVersionId.eq(
-					TrashVersionTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					TrashVersionTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(
-						DLFileEntry.class.getName())
 				)
 			)
 		);

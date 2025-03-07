@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auto.login.internal.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.internal.request.header.constants.RequestHeaderAutoLoginConstants;
-import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -78,18 +77,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		}
 
 		User user = null;
-
-		if (isLDAPImportEnabled(companyId)) {
-			try {
-				user = _ldapUserImporter.importUser(
-					companyId, StringPool.BLANK, screenName);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
 
 		if (user == null) {
 			user = _userLocalService.getUserByScreenName(companyId, screenName);
@@ -175,9 +162,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private LDAPUserImporter _ldapUserImporter;
 
 	@Reference
 	private Portal _portal;

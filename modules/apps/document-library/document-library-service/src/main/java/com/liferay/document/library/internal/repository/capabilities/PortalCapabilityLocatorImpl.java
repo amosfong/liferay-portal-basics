@@ -32,9 +32,6 @@ import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
-import com.liferay.trash.TrashHelper;
-import com.liferay.trash.service.TrashEntryLocalService;
-import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -156,8 +153,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLAppServiceAdapter.create(documentRepository),
 			DLFileEntryServiceAdapter.create(documentRepository),
 			DLFolderServiceAdapter.create(documentRepository),
-			RepositoryServiceAdapter.create(documentRepository),
-			_trashEntryLocalService, _trashHelper, _trashVersionLocalService);
+			RepositoryServiceAdapter.create(documentRepository));
 	}
 
 	@Override
@@ -230,15 +226,6 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		new RepositoryEntryConverter();
 	private ProcessorCapability _reusingProcessorCapability;
 	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
-
-	@Reference
-	private TrashEntryLocalService _trashEntryLocalService;
-
-	@Reference
-	private TrashHelper _trashHelper;
-
-	@Reference
-	private TrashVersionLocalService _trashVersionLocalService;
 
 	private class PortalCapabilityCacheRegistryItem
 		implements CacheRegistryItem {

@@ -67,8 +67,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
-import com.liferay.redirect.provider.RedirectProvider;
-import com.liferay.redirect.tracker.RedirectNotFoundTracker;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -140,7 +138,6 @@ public class FriendlyURLServlet extends HttpServlet {
 				groupFriendlyURL, companyId, group, locale);
 
 		String layoutFriendlyURL = null;
-		Redirect redirectProviderRedirect = null;
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			layoutFriendlyURL = path.substring(pos);
@@ -148,15 +145,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			if (StringUtil.endsWith(layoutFriendlyURL, CharPool.SLASH)) {
 				layoutFriendlyURL = layoutFriendlyURL.substring(
 					0, layoutFriendlyURL.length() - 1);
-			}
-
-			redirectProviderRedirect = _getRedirectProviderRedirect(
-				group.getGroupId(), httpServletRequest, layoutFriendlyURL);
-
-			if ((redirectProviderRedirect != null) &&
-				!_isSkipRedirect(httpServletRequest)) {
-
-				return redirectProviderRedirect;
 			}
 		}
 		else {
@@ -259,13 +247,6 @@ public class FriendlyURLServlet extends HttpServlet {
 							PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
 						throw new NoSuchLayoutException();
-					}
-
-					if ((redirectProviderRedirect != null) &&
-						!LayoutPermissionUtil.containsLayoutUpdatePermission(
-							permissionChecker, layout)) {
-
-						return redirectProviderRedirect;
 					}
 				}
 
@@ -380,14 +361,6 @@ public class FriendlyURLServlet extends HttpServlet {
 						redirectLayout, Portal.PATH_MAIN);
 
 					return new Redirect(redirect);
-				}
-
-				RedirectNotFoundTracker currentRedirectNotFoundTracker =
-					_redirectNotFoundTrackerSnapshot.get();
-
-				if (currentRedirectNotFoundTracker != null) {
-					currentRedirectNotFoundTracker.trackURL(
-						group, _normalizeFriendlyURL(layoutFriendlyURL));
 				}
 
 				if (Validator.isNotNull(
@@ -983,35 +956,6 @@ public class FriendlyURLServlet extends HttpServlet {
 		return requestURI.substring(_pathInfoOffset, pos);
 	}
 
-	private Redirect _getRedirectProviderRedirect(
-		long groupId, HttpServletRequest httpServletRequest,
-		String layoutFriendlyURL) {
-
-		RedirectProvider redirectProvider = _redirectProviderSnapshot.get();
-
-		if ((redirectProvider == null) ||
-			LiferayWindowState.isExclusive(httpServletRequest) ||
-			LiferayWindowState.isPopUp(httpServletRequest)) {
-
-			return null;
-		}
-
-		HttpServletRequest originalHttpServletRequest =
-			portal.getOriginalServletRequest(httpServletRequest);
-
-		RedirectProvider.Redirect redirect = redirectProvider.getRedirect(
-			groupId, _normalizeFriendlyURL(layoutFriendlyURL),
-			_normalizeFriendlyURL(originalHttpServletRequest.getRequestURI()),
-			httpServletRequest.getHeader(HttpHeaders.USER_AGENT));
-
-		if (redirect == null) {
-			return null;
-		}
-
-		return new Redirect(
-			redirect.getDestinationURL(), true, redirect.isPermanent());
-	}
-
 	private String _getRequestURI(HttpServletRequest httpServletRequest) {
 		String contextPath = portal.getPathContext();
 		String requestURI = httpServletRequest.getRequestURI();
@@ -1179,14 +1123,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);
-
-	private static final Snapshot<RedirectNotFoundTracker>
-		_redirectNotFoundTrackerSnapshot = new Snapshot<>(
-			FriendlyURLServlet.class, RedirectNotFoundTracker.class, null,
-			true);
-	private static final Snapshot<RedirectProvider> _redirectProviderSnapshot =
-		new Snapshot<>(
-			FriendlyURLServlet.class, RedirectProvider.class, null, true);
 
 	private String _friendlyURLPathPrefix;
 	private int _pathInfoOffset;

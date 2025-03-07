@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.redirect.matcher.UserAgentMatcher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,10 +58,7 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			if (!_layoutSEODynamicRenderingConfiguration.enabled() ||
-				!_userAgentMatcher.isCrawlerUserAgent(
-					httpServletRequest.getHeader(HttpHeaders.USER_AGENT))) {
-
+			if (!_layoutSEODynamicRenderingConfiguration.enabled()) {
 				return false;
 			}
 
@@ -196,8 +192,5 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 
 	private LayoutSEODynamicRenderingConfiguration
 		_layoutSEODynamicRenderingConfiguration;
-
-	@Reference
-	private UserAgentMatcher _userAgentMatcher;
 
 }
