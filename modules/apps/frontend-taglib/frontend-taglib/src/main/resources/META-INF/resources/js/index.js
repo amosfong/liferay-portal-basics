@@ -4,7 +4,6 @@
  */
 
 export {default as ResourceSelector} from '../resource_selector/ResourceSelector';
-export {default as DiffVersionComparator} from './diff_version_comparator/index';
 export {default as PortletOptionsDropdownPropsTransformer} from './icon_options/PortletOptionsDropdownPropsTransformer';
 export {default as LogoSelector} from './logo_selector/LogoSelector';
 export {default as SidePanelListenersInitializer} from './side_panel_content/SidePanelListenersInitializer';
