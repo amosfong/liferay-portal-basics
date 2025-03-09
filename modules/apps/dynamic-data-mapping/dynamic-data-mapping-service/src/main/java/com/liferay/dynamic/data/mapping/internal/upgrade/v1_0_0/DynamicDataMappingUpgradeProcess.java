@@ -102,7 +102,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -152,7 +151,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		ResourceActions resourceActions,
 		ResourceLocalService resourceLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		Store store, ViewCountEntryLocalService viewCountEntryLocalService) {
+		Store store) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
@@ -172,7 +171,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		_resourceLocalService = resourceLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_store = store;
-		_viewCountEntryLocalService = viewCountEntryLocalService;
 
 		_dlFolderModelPermissions = ModelPermissionsFactory.create(
 			_DLFOLDER_GROUP_PERMISSIONS, _DLFOLDER_GUEST_PERMISSIONS,
@@ -1663,7 +1661,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private Map<String, String> _templateModelResourceNames;
 	private final Map<Long, String> _templateResourceClassNames =
 		new HashMap<>();
-	private final ViewCountEntryLocalService _viewCountEntryLocalService;
 
 	private static class DateDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
@@ -2285,11 +2282,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			assetEntry.setPriority(priority);
 
 			_assetEntryLocalService.updateAssetEntry(assetEntry);
-
-			_viewCountEntryLocalService.incrementViewCount(
-				companyId,
-				_classNameLocalService.getClassNameId(AssetEntry.class),
-				entryId, viewCount);
 		}
 
 		protected long addDDMDLFolder() throws Exception {
@@ -2353,11 +2345,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			dlFileEntry.setCustom1ImageId(custom1ImageId);
 			dlFileEntry.setCustom2ImageId(custom2ImageId);
 			dlFileEntry.setManualCheckInRequired(manualCheckInRequired);
-
-			_viewCountEntryLocalService.incrementViewCount(
-				dlFileEntry.getCompanyId(),
-				_classNameLocalService.getClassNameId(DLFileEntry.class),
-				dlFileEntry.getFileEntryId(), readCount);
 
 			return dlFileEntry;
 		}

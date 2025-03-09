@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import java.text.ParseException;
 
@@ -114,12 +113,6 @@ public class AssetEntryDocumentContributor
 				assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 				assetEntry.getGroupId()),
 			true, true);
-		document.addNumber(
-			"viewCount",
-			_viewCountEntryLocalService.getViewCount(
-				assetEntry.getCompanyId(),
-				_classNameLocalService.getClassNameId(AssetEntry.class),
-				assetEntry.getPrimaryKey()));
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
@@ -137,8 +130,5 @@ public class AssetEntryDocumentContributor
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }
