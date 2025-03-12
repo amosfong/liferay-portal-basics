@@ -51,12 +51,6 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 						/>
 					</div>
 				</c:if>
-
-				<liferay-portal-workflow:status
-					showStatusLabel="<%= false %>"
-					status="<%= layoutPageTemplateEntry.getStatus() %>"
-					statusMessage="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>"
-				/>
 			</clay:content-row>
 		</div>
 

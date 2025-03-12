@@ -51,8 +51,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,9 +107,6 @@ public class DDMFormInstanceLocalServiceImpl
 
 		DDMFormInstance updatedDDMFormInstance =
 			ddmFormInstancePersistence.update(ddmFormInstance);
-
-		_updateWorkflowDefinitionLink(
-			ddmFormInstance, settingsDDMFormValues, serviceContext);
 
 		if (GetterUtil.getBoolean(
 				serviceContext.getAttribute("addResources"), true)) {
@@ -247,11 +242,6 @@ public class DDMFormInstanceLocalServiceImpl
 		if (_ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
 			_ddmStructureLocalService.deleteStructure(structureId);
 		}
-
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),
-			DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId(), 0);
 
 		// See LPS-97208 and
 		// DDMFormInstanceRecordSearchTest#testBasicSearchWithGuestUser.
@@ -565,16 +555,6 @@ public class DDMFormInstanceLocalServiceImpl
 		return ddmStructureVersion.getStructureVersionId();
 	}
 
-	private String _getWorkflowDefinition(DDMFormValues ddmFormValues)
-		throws PortalException {
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			DDMFormInstanceFactory.create(
-				DDMFormInstanceSettings.class, ddmFormValues);
-
-		return ddmFormInstanceSettings.workflowDefinition();
-	}
-
 	private String _serialize(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
@@ -637,11 +617,6 @@ public class DDMFormInstanceLocalServiceImpl
 		DDMFormInstance updatedDDMFormInstance =
 			ddmFormInstancePersistence.update(ddmFormInstance);
 
-		if (status != WorkflowConstants.STATUS_DRAFT) {
-			_updateWorkflowDefinitionLink(
-				ddmFormInstance, settingsDDMFormValues, serviceContext);
-		}
-
 		long ddmStructureVersionId = _getStructureVersionId(ddmStructureId);
 
 		if (updateVersion) {
@@ -678,36 +653,6 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
 
 		_ddmFormInstanceVersionPersistence.update(ddmFormInstanceVersion);
-	}
-
-	private void _updateWorkflowDefinitionLink(
-			DDMFormInstance formInstance, DDMFormValues settingsDDMFormValues,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		String workflowDefinition = _getWorkflowDefinition(
-			settingsDDMFormValues);
-
-		String latestWorkflowDefinition = "";
-
-		if (Validator.isNotNull(workflowDefinition) &&
-			!workflowDefinition.equals("no-workflow")) {
-
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.fetchKaleoDefinition(
-					workflowDefinition, serviceContext);
-
-			if (kaleoDefinition != null) {
-				latestWorkflowDefinition =
-					workflowDefinition + StringPool.AT +
-						kaleoDefinition.getVersion();
-			}
-		}
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			formInstance.getGroupId(), DDMFormInstance.class.getName(),
-			formInstance.getFormInstanceId(), 0, latestWorkflowDefinition);
 	}
 
 	private void _validate(
@@ -785,9 +730,6 @@ public class DDMFormInstanceLocalServiceImpl
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 	@Reference
-	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
-
-	@Reference
 	private MailService _mailService;
 
 	@Reference
@@ -795,9 +737,5 @@ public class DDMFormInstanceLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 }
