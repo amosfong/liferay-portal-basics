@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -370,7 +369,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 				LayoutStructureUtil.getLayoutStructure(
 					masterLayoutPageTemplateEntry.getGroupId(),
 					masterLayoutPageTemplateEntry.getPlid(),
-					SegmentsExperienceConstants.KEY_DEFAULT);
+					"DEFAULT");
 
 			return (DropZoneLayoutStructureItem)
 				masterLayoutStructure.getDropZoneLayoutStructureItem();

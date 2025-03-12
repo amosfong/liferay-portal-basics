@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.IOException;
 
@@ -79,8 +78,7 @@ public class LayoutActionsProductNavigationControlMenuEntry
 		httpServletRequest.setAttribute(
 			LayoutAdminWebKeys.LAYOUT_ACTIONS_DISPLAY_CONTEXT,
 			new LayoutActionsDisplayContext(
-				httpServletRequest, layoutActionsHelper,
-				_segmentsExperienceLocalService));
+				httpServletRequest, layoutActionsHelper));
 
 		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
@@ -135,9 +133,6 @@ public class LayoutActionsProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutContentModelResourcePermission _modelResourcePermission;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;

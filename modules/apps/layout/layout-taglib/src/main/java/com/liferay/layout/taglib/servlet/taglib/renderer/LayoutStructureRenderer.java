@@ -36,7 +36,6 @@ import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -1082,10 +1081,7 @@ public class LayoutStructureRenderer {
 		jspWriter.write(String.valueOf(_themeDisplay.getPlid()));
 		jspWriter.write(
 			"\"><input name=\"segmentsExperienceId\" type=\"hidden\" value=\"");
-		jspWriter.write(
-			String.valueOf(
-				SegmentsExperienceUtil.getSegmentsExperienceId(
-					_httpServletRequest)));
+		jspWriter.write(String.valueOf(0));
 		jspWriter.write("\">");
 
 		if (SessionErrors.contains(

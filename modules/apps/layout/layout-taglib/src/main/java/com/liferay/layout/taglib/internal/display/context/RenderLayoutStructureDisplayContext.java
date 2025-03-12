@@ -69,8 +69,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -270,8 +268,6 @@ public class RenderLayoutStructureDisplayContext {
 			defaultFragmentRendererContext.setPreviewType(_getPreviewType());
 			defaultFragmentRendererContext.setPreviewVersion(
 				_getPreviewVersion());
-			defaultFragmentRendererContext.setSegmentsEntryIds(
-				_getSegmentsEntryIds());
 		}
 
 		if (LayoutStructureItemUtil.hasAncestor(
@@ -983,7 +979,7 @@ public class RenderLayoutStructureDisplayContext {
 				layoutStructureRulesHelper.processLayoutStructureRules(
 					_themeDisplay.getScopeGroupId(), _layoutStructure,
 					_themeDisplay.getPermissionChecker(),
-					_getSegmentsEntryIds());
+					new long[0]);
 
 		_layoutStructureRulesResult = layoutStructureRulesResult;
 
@@ -1055,24 +1051,6 @@ public class RenderLayoutStructureDisplayContext {
 			_httpServletRequest, "previewVersion");
 
 		return _previewVersion;
-	}
-
-	private long[] _getSegmentsEntryIds() {
-		if (_segmentsEntryIds != null) {
-			return _segmentsEntryIds;
-		}
-
-		SegmentsEntryRetriever segmentsEntryRetriever =
-			ServletContextUtil.getSegmentsEntryRetriever();
-
-		RequestContextMapper requestContextMapper =
-			ServletContextUtil.getRequestContextMapper();
-
-		_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
-			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-			requestContextMapper.map(_httpServletRequest), new long[0]);
-
-		return _segmentsEntryIds;
 	}
 
 	private String _getValue(
@@ -1153,7 +1131,6 @@ public class RenderLayoutStructureDisplayContext {
 	private Long _previewClassPK;
 	private Integer _previewType;
 	private String _previewVersion;
-	private long[] _segmentsEntryIds;
 	private final boolean _showPreview;
 	private final Set<String> _themeColorsCssClasses;
 	private final ThemeDisplay _themeDisplay;

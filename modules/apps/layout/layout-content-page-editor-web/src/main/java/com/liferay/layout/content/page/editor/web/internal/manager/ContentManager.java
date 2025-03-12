@@ -97,9 +97,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
-import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
@@ -166,7 +163,7 @@ public class ContentManager {
 			uniqueLayoutClassedModelUsageKeys);
 		_getLayoutMappedLayoutDisplayPageObjectProviders(
 			LayoutStructureUtil.getLayoutStructure(
-				groupId, plid, SegmentsExperienceConstants.KEY_DEFAULT),
+				groupId, plid, "DEFAULT"),
 			layoutDisplayPageObjectProviders,
 			uniqueLayoutClassedModelUsageKeys);
 
@@ -1237,12 +1234,6 @@ public class ContentManager {
 	private PortletRegistry _portletRegistry;
 
 	@Reference
-	private RequestContextMapper _requestContextMapper;
-
-	@Reference
 	private ResourceActions _resourceActions;
-
-	@Reference
-	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

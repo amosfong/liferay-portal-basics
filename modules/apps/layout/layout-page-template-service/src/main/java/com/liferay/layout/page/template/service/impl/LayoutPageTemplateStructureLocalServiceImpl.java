@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Date;
 import java.util.List;
@@ -205,9 +204,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		_checkUnlockedLayout(plid);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				plid);
+		long defaultSegmentsExperienceId = 0;
 
 		return layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -243,9 +240,6 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	@Reference
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

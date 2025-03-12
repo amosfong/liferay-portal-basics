@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
 
@@ -128,9 +127,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				themeDisplay.setLocale(locale);
 				themeDisplay.setRequest(httpServletRequest);
 
-				long segmentsExperienceId =
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid());
+				long segmentsExperienceId = 0;
 
 				String content = StringPool.BLANK;
 
@@ -238,8 +235,5 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

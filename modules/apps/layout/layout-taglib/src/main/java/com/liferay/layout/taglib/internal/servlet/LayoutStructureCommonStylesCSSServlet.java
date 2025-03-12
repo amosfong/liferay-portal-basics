@@ -11,7 +11,6 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.responsive.ViewportSize;
-import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -150,9 +149,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(),
-				SegmentsExperienceUtil.getSegmentsExperienceId(
-					httpServletRequest));
+				layout.getPlid(), 0);
 
 		if (layoutStructure == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

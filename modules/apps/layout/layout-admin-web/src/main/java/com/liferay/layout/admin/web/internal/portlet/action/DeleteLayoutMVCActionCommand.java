@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.exception.RequiredSegmentsExperienceException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -179,18 +178,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();
 
-			if (throwable instanceof
-					RequiredSegmentsExperienceException.
-						MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments) {
+			hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, throwable.getClass());
-			}
-			else {
-				hideDefaultErrorMessage(actionRequest);
-
-				LayoutExceptionRequestHandlerUtil.handleException(
-					actionRequest, actionResponse, exception);
-			}
+			LayoutExceptionRequestHandlerUtil.handleException(
+				actionRequest, actionResponse, exception);
 		}
 	}
 

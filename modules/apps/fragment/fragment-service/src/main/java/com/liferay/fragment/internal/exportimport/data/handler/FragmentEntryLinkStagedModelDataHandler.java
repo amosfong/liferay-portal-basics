@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.segments.model.SegmentsExperience;
 
 import java.util.Map;
 
@@ -238,17 +237,6 @@ public class FragmentEntryLinkStagedModelDataHandler
 		importedFragmentEntryLink.setOriginalFragmentEntryLinkId(
 			originalFragmentEntryLinkId);
 		importedFragmentEntryLink.setFragmentEntryId(fragmentEntryId);
-
-		Map<Long, Long> segmentsExperienceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				SegmentsExperience.class);
-
-		importedFragmentEntryLink.setSegmentsExperienceId(
-			MapUtil.getLong(
-				segmentsExperienceIds,
-				fragmentEntryLink.getSegmentsExperienceId(),
-				fragmentEntryLink.getSegmentsExperienceId()));
-
 		importedFragmentEntryLink.setClassPK(referenceClassPK);
 		importedFragmentEntryLink.setPlid(referenceClassPK);
 		importedFragmentEntryLink.setHtml(

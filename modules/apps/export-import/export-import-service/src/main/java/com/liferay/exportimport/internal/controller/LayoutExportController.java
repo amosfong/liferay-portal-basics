@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 
 import java.io.File;
@@ -314,7 +313,7 @@ public class LayoutExportController implements ExportController {
 
 		if (Objects.equals(portletDataContext.getType(), "layout-set")) {
 			portletDataContext.addDeletionSystemEventStagedModelTypes(
-				new StagedModelType(SegmentsExperience.class, Layout.class));
+				new StagedModelType(Layout.class));
 		}
 
 		_deletionSystemEventExporter.exportDeletionSystemEvents(

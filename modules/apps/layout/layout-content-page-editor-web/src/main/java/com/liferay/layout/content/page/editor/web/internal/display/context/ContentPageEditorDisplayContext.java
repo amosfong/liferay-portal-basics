@@ -110,17 +110,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.model.SegmentsExperimentRel;
-import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.staging.StagingGroupHelper;
@@ -179,12 +168,7 @@ public class ContentPageEditorDisplayContext {
 		LayoutSetLocalService layoutSetLocalService,
 		PageEditorConfiguration pageEditorConfiguration, Portal portal,
 		PortletRequest portletRequest, PortletURLFactory portletURLFactory,
-		RenderResponse renderResponse,
-		SegmentsConfigurationProvider segmentsConfigurationProvider,
-		SegmentsExperienceManager segmentsExperienceManager,
-		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
-		SegmentsEntryService segmentsEntryService, Staging staging,
+		RenderResponse renderResponse, Staging staging,
 		StagingGroupHelper stagingGroupHelper,
 		StyleBookEntryLocalService styleBookEntryLocalService,
 		UserLocalService userLocalService,
@@ -211,11 +195,6 @@ public class ContentPageEditorDisplayContext {
 		this.portal = portal;
 		_portletURLFactory = portletURLFactory;
 		this.renderResponse = renderResponse;
-		_segmentsConfigurationProvider = segmentsConfigurationProvider;
-		_segmentsExperienceManager = segmentsExperienceManager;
-		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
-		_segmentsExperimentRelLocalService = segmentsExperimentRelLocalService;
-		_segmentsEntryService = segmentsEntryService;
 		_staging = staging;
 		_styleBookEntryLocalService = styleBookEntryLocalService;
 		_userLocalService = userLocalService;
@@ -278,8 +257,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"availableLanguages", _getAvailableLanguages()
 			).put(
-				"availableSegmentsEntries", _getAvailableSegmentsEntries()
-			).put(
 				"availableViewportSizes", _getAvailableViewportSizes()
 			).put(
 				"changeMasterLayoutURL",
@@ -311,9 +288,7 @@ public class ContentPageEditorDisplayContext {
 				"defaultLanguageId",
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
-				"defaultSegmentsExperienceId",
-				segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-					themeDisplay.getPlid())
+				"defaultSegmentsExperienceId", 0
 			).put(
 				"defaultStyleBookEntryImagePreviewURL",
 				() -> {
@@ -354,10 +329,6 @@ public class ContentPageEditorDisplayContext {
 				"duplicateItemURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/duplicate_item")
-			).put(
-				"duplicateSegmentsExperienceURL",
-				getFragmentEntryActionURL(
-					"/layout_content_page_editor/duplicate_segments_experience")
 			).put(
 				"editFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
@@ -553,7 +524,7 @@ public class ContentPageEditorDisplayContext {
 					return group.isPrivateLayoutsEnabled();
 				}
 			).put(
-				"isSegmentationEnabled", _isSegmentationEnabled()
+				"isSegmentationEnabled", false
 			).put(
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
@@ -643,14 +614,8 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/restore_collection_display_config")
 			).put(
-				"saveVariantSegmentsExperienceURL",
-				getSaveVariantSegmentsExperienceURL()
-			).put(
 				"searchContainerPageMaxDelta",
 				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA
-			).put(
-				"segmentsConfigurationURL",
-				_getSegmentsCompanyConfigurationURL()
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(
@@ -738,15 +703,6 @@ public class ContentPageEditorDisplayContext {
 				"updateRuleURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_rule")
-			).put(
-				"updateSegmentsExperiencePriorityURL",
-				getFragmentEntryActionURL(
-					"/layout_content_page_editor" +
-						"/update_segments_experience_priority")
-			).put(
-				"updateSegmentsExperienceURL",
-				getFragmentEntryActionURL(
-					"/layout_content_page_editor/update_segments_experience")
 			).put(
 				"videoItemSelectorURL", _getVideoItemSelectorURL()
 			).put(
@@ -837,8 +793,6 @@ public class ContentPageEditorDisplayContext {
 				}
 			).put(
 				"restrictedItemIds", _getRestrictedItemIds()
-			).put(
-				"segmentsExperienceId", getSegmentsExperienceId()
 			).build()
 		).build();
 	}
@@ -850,21 +804,6 @@ public class ContentPageEditorDisplayContext {
 	public String getPublishURL() {
 		return getFragmentEntryActionURL(
 			"/layout_content_page_editor/publish_layout");
-	}
-
-	public String getSaveVariantSegmentsExperienceURL() {
-		String portletId = _getPortletId(httpServletRequest);
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		return PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(portletId)
-		).setActionName(
-			"/layout_content_page_editor/save_variant_segments_experience"
-		).setParameter(
-			"segmentsExperienceId", getSegmentsExperienceId()
-		).buildString();
 	}
 
 	public List<Map<String, Object>> getSidebarPanels() {
@@ -887,10 +826,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isSingleSegmentsExperienceMode() {
-		return _isSegmentsExperimentVariant();
 	}
 
 	public boolean isWorkflowEnabled() {
@@ -998,41 +933,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected long getSegmentsExperienceId() {
-		if (_segmentsExperienceId != null) {
-			return _segmentsExperienceId;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		UnicodeProperties unicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		// LPS-131416
-
-		_segmentsExperienceId = GetterUtil.getLong(
-			unicodeProperties.getProperty("segmentsExperienceId"), -1);
-
-		if (_segmentsExperienceId != -1) {
-			SegmentsExperience segmentsExperience =
-				segmentsExperienceLocalService.fetchSegmentsExperience(
-					_segmentsExperienceId);
-
-			if (segmentsExperience != null) {
-				_segmentsExperienceId =
-					segmentsExperience.getSegmentsExperienceId();
-			}
-			else {
-				_segmentsExperienceId = -1L;
-			}
-		}
-
-		if (_segmentsExperienceId == -1) {
-			_segmentsExperienceId =
-				_segmentsExperienceManager.getSegmentsExperienceId(
-					httpServletRequest);
-		}
-
-		return _segmentsExperienceId;
+		return 0;
 	}
 
 	protected List<Map<String, Object>> getSidebarPanels(int layoutType) {
@@ -1079,8 +980,6 @@ public class ContentPageEditorDisplayContext {
 	protected final Portal portal;
 	protected final PortletRequest portletRequest;
 	protected final RenderResponse renderResponse;
-	protected final SegmentsExperienceLocalService
-		segmentsExperienceLocalService;
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
 
@@ -1120,38 +1019,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return availableLanguages;
-	}
-
-	private Map<String, Object> _getAvailableSegmentsEntries() {
-		Map<String, Object> availableSegmentsEntries = new HashMap<>();
-
-		List<SegmentsEntry> segmentsEntries =
-			_segmentsEntryService.getSegmentsEntries(
-				stagingGroupHelper.getStagedPortletGroupId(
-					getGroupId(), SegmentsPortletKeys.SEGMENTS));
-
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			availableSegmentsEntries.put(
-				String.valueOf(segmentsEntry.getSegmentsEntryId()),
-				HashMapBuilder.<String, Object>put(
-					"name", segmentsEntry.getName(themeDisplay.getLocale())
-				).put(
-					"segmentsEntryId",
-					String.valueOf(segmentsEntry.getSegmentsEntryId())
-				).build());
-		}
-
-		availableSegmentsEntries.put(
-			String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
-			HashMapBuilder.<String, Object>put(
-				"name",
-				SegmentsEntryConstants.getDefaultSegmentsEntryName(
-					themeDisplay.getLocale())
-			).put(
-				"segmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
-			).build());
-
-		return availableSegmentsEntries;
 	}
 
 	private Map<String, Map<String, Object>> _getAvailableViewportSizes() {
@@ -1333,7 +1200,7 @@ public class ContentPageEditorDisplayContext {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					getGroupId(), getSegmentsExperienceId(),
+					getGroupId(), 0,
 					themeDisplay.getPlid(), false);
 
 		LayoutStructure layoutStructure = _getLayoutStructure();
@@ -1578,7 +1445,7 @@ public class ContentPageEditorDisplayContext {
 
 		_layoutStructure = LayoutStructureUtil.getLayoutStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			getSegmentsExperienceId());
+			0);
 
 		return _layoutStructure;
 	}
@@ -1745,7 +1612,7 @@ public class ContentPageEditorDisplayContext {
 		try {
 			_masterLayoutStructure = LayoutStructureUtil.getLayoutStructure(
 				layout.getGroupId(), layout.getMasterLayoutPlid(),
-				SegmentsExperienceConstants.KEY_DEFAULT);
+				"DEFAULT");
 
 			return _masterLayoutStructure;
 		}
@@ -1833,18 +1700,6 @@ public class ContentPageEditorDisplayContext {
 			httpServletRequest, _getLayoutStructure(), themeDisplay);
 
 		return _restrictedItemIds;
-	}
-
-	private String _getSegmentsCompanyConfigurationURL() {
-		try {
-			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
-				httpServletRequest);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getSiteNavigationMenuItemSelectorURL() {
@@ -1980,41 +1835,6 @@ public class ContentPageEditorDisplayContext {
 		return false;
 	}
 
-	private boolean _isSegmentationEnabled() {
-		try {
-			return _segmentsConfigurationProvider.isSegmentationEnabled(
-				themeDisplay.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException);
-			}
-
-			return false;
-		}
-	}
-
-	private boolean _isSegmentsExperimentVariant() {
-		long segmentsExperienceId = getSegmentsExperienceId();
-
-		SegmentsExperience segmentsExperience =
-			segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		if ((segmentsExperience != null) && !segmentsExperience.isActive()) {
-			List<SegmentsExperimentRel> segmentsExperimentRels =
-				_segmentsExperimentRelLocalService.
-					getSegmentsExperimentRelsBySegmentsExperienceId(
-						segmentsExperienceId);
-
-			if (ListUtil.isNotEmpty(segmentsExperimentRels)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
@@ -2048,12 +1868,6 @@ public class ContentPageEditorDisplayContext {
 	private Layout _publishedLayout;
 	private String _redirect;
 	private List<String> _restrictedItemIds;
-	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
-	private final SegmentsEntryService _segmentsEntryService;
-	private Long _segmentsExperienceId;
-	private final SegmentsExperienceManager _segmentsExperienceManager;
-	private final SegmentsExperimentRelLocalService
-		_segmentsExperimentRelLocalService;
 	private List<Map<String, Object>> _sidebarPanels;
 	private final Staging _staging;
 	private final StyleBookEntryLocalService _styleBookEntryLocalService;

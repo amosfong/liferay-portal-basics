@@ -101,7 +101,6 @@ page import="com.liferay.roles.admin.web.internal.display.context.EditRolePermis
 page import="com.liferay.roles.admin.web.internal.display.context.RoleDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.SelectRoleManagementToolbarDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.ViewRolesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.roles.admin.web.internal.display.util.SegmentsEntryDisplayUtil" %><%@
 page import="com.liferay.roles.admin.web.internal.frontend.taglib.clay.servlet.taglib.GroupVerticalCard" %><%@
 page import="com.liferay.roles.admin.web.internal.frontend.taglib.clay.servlet.taglib.OrganizationVerticalCard" %><%@
 page import="com.liferay.roles.admin.web.internal.frontend.taglib.clay.servlet.taglib.UserGroupVerticalCard" %><%@

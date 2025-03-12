@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,15 +177,7 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			"5.0.0", "5.0.1",
 			new com.liferay.layout.page.template.internal.upgrade.v5_0_1.
 				LayoutPageTemplateStructureUpgradeProcess(
-					_fragmentEntryLinkLocalService,
-					_segmentsExperienceLocalService));
-
-		registry.register(
-			"5.0.1", "5.1.0",
-			new com.liferay.layout.page.template.internal.upgrade.v5_1_0.
-				LayoutPageTemplateStructureUpgradeProcess(
-					_layoutLocalService, _segmentsExperienceLocalService,
-					_userLocalService));
+					_fragmentEntryLinkLocalService));
 
 		registry.register(
 			"5.1.0", "5.1.1",
@@ -270,9 +261,6 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

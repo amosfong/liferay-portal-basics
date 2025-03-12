@@ -47,7 +47,6 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
-import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,8 +70,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,31 +162,7 @@ public class GetCollectionFieldMVCResourceCommand
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
 		ListObjectReference listObjectReference, long segmentsExperienceId) {
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		if (!(layoutListRetriever instanceof
-				SegmentsEntryLayoutListRetriever)) {
-
-			return new long[] {segmentsExperience.getSegmentsEntryId()};
-		}
-
-		SegmentsEntryLayoutListRetriever<ListObjectReference>
-			segmentsEntryLayoutListRetriever =
-				(SegmentsEntryLayoutListRetriever<ListObjectReference>)
-					layoutListRetriever;
-
-		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsExperience.getSegmentsEntryId())) {
-
-			return new long[] {segmentsExperience.getSegmentsEntryId()};
-		}
-
-		return new long[] {
-			segmentsEntryLayoutListRetriever.getDefaultVariationSegmentsEntryId(
-				listObjectReference)
-		};
+		return new long[] {0};
 	}
 
 	private JSONObject _getCollectionFieldsJSONObject(
@@ -646,8 +619,5 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

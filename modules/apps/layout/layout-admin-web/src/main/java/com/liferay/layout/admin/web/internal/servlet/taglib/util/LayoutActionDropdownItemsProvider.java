@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;

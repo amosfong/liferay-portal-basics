@@ -13,7 +13,6 @@ import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -48,9 +47,7 @@ public class LayoutOSGiCommands implements OSGiCommands {
 				" does not have a layout page template structure";
 		}
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				plid);
+		long defaultSegmentsExperienceId = 0;
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(defaultSegmentsExperienceId));
@@ -70,8 +67,5 @@ public class LayoutOSGiCommands implements OSGiCommands {
 	@Reference
 	private LayoutStructureItemJSONSerializer
 		_layoutStructureItemJSONSerializer;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

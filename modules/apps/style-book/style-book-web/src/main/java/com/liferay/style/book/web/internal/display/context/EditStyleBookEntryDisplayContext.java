@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -498,10 +497,7 @@ public class EditStyleBookEntryDisplayContext {
 				String previewURL = HttpComponentsUtil.addParameters(
 					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 						"/portal/get_page_preview",
-					"p_l_mode", Constants.PREVIEW, "segmentsExperienceId",
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(
-							layoutPageTemplateEntry.getPlid()),
+					"p_l_mode", Constants.PREVIEW, "segmentsExperienceId", 0,
 					"selPlid", layoutPageTemplateEntry.getPlid(),
 					"styleBookEntryPreview", true);
 

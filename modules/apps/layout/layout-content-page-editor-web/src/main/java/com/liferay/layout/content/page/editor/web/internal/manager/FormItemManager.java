@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -638,7 +637,7 @@ public class FormItemManager {
 			LayoutStructure masterLayoutStructure =
 				LayoutStructureUtil.getLayoutStructure(
 					layout.getGroupId(), layout.getMasterLayoutPlid(),
-					SegmentsExperienceConstants.KEY_DEFAULT);
+					"DEFAULT");
 
 			return (DropZoneLayoutStructureItem)
 				masterLayoutStructure.getDropZoneLayoutStructureItem();

@@ -8,8 +8,8 @@ package com.liferay.layout.page.template.model.impl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Eduardo García
@@ -19,12 +19,18 @@ public class LayoutPageTemplateStructureImpl
 
 	@Override
 	public String getData(long segmentsExperienceId) {
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			LayoutPageTemplateStructureRelLocalServiceUtil.
-				fetchLayoutPageTemplateStructureRel(
-					getLayoutPageTemplateStructureId(), segmentsExperienceId);
+		// TODO move data field to LayoutPageTemplateStructure and delete
+		// LayoutPageTemplateStructureRel
 
-		if (layoutPageTemplateStructureRel != null) {
+		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
+			LayoutPageTemplateStructureRelLocalServiceUtil.
+				getLayoutPageTemplateStructureRels(
+					getLayoutPageTemplateStructureId());
+
+		if (!layoutPageTemplateStructureRels.isEmpty()) {
+			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+				layoutPageTemplateStructureRels.get(0);
+
 			return layoutPageTemplateStructureRel.getData();
 		}
 
@@ -33,33 +39,20 @@ public class LayoutPageTemplateStructureImpl
 
 	@Override
 	public String getData(String segmentsExperienceKey) {
-		SegmentsExperience segmentsExperience =
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				getGroupId(), segmentsExperienceKey, getPlid());
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			LayoutPageTemplateStructureRelLocalServiceUtil.
-				fetchLayoutPageTemplateStructureRel(
-					getLayoutPageTemplateStructureId(),
-					segmentsExperience.getSegmentsExperienceId());
-
-		if (layoutPageTemplateStructureRel != null) {
-			return layoutPageTemplateStructureRel.getData();
-		}
-
 		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getDefaultSegmentsExperienceData() {
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
 			LayoutPageTemplateStructureRelLocalServiceUtil.
-				fetchLayoutPageTemplateStructureRel(
-					getLayoutPageTemplateStructureId(),
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(getPlid()));
+				getLayoutPageTemplateStructureRels(
+					getLayoutPageTemplateStructureId());
 
-		if (layoutPageTemplateStructureRel != null) {
+		if (!layoutPageTemplateStructureRels.isEmpty()) {
+			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+				layoutPageTemplateStructureRels.get(0);
+
 			return layoutPageTemplateStructureRel.getData();
 		}
 

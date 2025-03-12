@@ -44,8 +44,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTaskExecutor;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
-import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -280,13 +278,8 @@ public class PortletSharedSearchRequestImpl
 		List<SearchSettingsContributor> searchSettingsContributors =
 			new ArrayList<>();
 
-		SegmentsExperienceManager segmentsExperienceManager =
-			new SegmentsExperienceManager(_segmentsExperienceLocalService);
-
 		List<Portlet> portlets = _getPortlets(
-			themeDisplay.getLayout(),
-			segmentsExperienceManager.getSegmentsExperienceId(
-				_portal.getHttpServletRequest(renderRequest)));
+			themeDisplay.getLayout(), 0);
 
 		for (Portlet portlet : portlets) {
 			SearchSettingsContributor searchSettingsContributor =
@@ -376,9 +369,6 @@ public class PortletSharedSearchRequestImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>
 		_serviceTrackerMap;

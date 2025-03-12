@@ -61,8 +61,6 @@ import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
-import com.liferay.segments.model.SegmentsExperienceModel;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -181,24 +179,6 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		}
 
 		Set<String> portletIds = new HashSet<>();
-
-		long[] segmentsExperiencesIds = TransformUtil.transformToLongArray(
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				themeDisplay.getScopeGroupId(), themeDisplay.getPlid()),
-			SegmentsExperienceModel::getSegmentsExperienceId);
-
-		for (FragmentEntryLink fragmentEntryLink :
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						themeDisplay.getScopeGroupId(), segmentsExperiencesIds,
-						themeDisplay.getPlid(), deleted)) {
-
-			portletIds.addAll(
-				TransformUtil.transform(
-					_portletRegistry.getFragmentEntryLinkPortletIds(
-						fragmentEntryLink),
-					portletId -> PortletIdCodec.decodePortletName(portletId)));
-		}
 
 		return portletIds;
 	}
@@ -616,9 +596,6 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 	@Reference
 	private PortletRegistry _portletRegistry;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceTrackerMap<String, PortletManager> _serviceTrackerMap;
 

@@ -12,7 +12,6 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,9 +88,7 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 		LayoutStructureProvider layoutStructureProvider =
 			ServletContextUtil.getLayoutStructureHelper();
 
-		long defaultSegmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				layoutUtilityPageEntry.getPlid());
+		long defaultSegmentsExperienceId = 0;
 
 		return layoutStructureProvider.getLayoutStructure(
 			layoutUtilityPageEntry.getPlid(), defaultSegmentsExperienceId);

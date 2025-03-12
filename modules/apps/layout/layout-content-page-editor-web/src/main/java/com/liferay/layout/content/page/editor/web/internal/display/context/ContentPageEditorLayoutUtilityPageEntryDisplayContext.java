@@ -29,11 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -70,12 +65,7 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 		LayoutPermission layoutPermission,
 		PageEditorConfiguration pageEditorConfiguration, Portal portal,
 		PortletRequest portletRequest, PortletURLFactory portletURLFactory,
-		RenderResponse renderResponse,
-		SegmentsConfigurationProvider segmentsConfigurationProvider,
-		SegmentsExperienceManager segmentsExperienceManager,
-		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
-		SegmentsEntryService segmentsEntryService, Staging staging,
+		RenderResponse renderResponse, Staging staging,
 		StagingGroupHelper stagingGroupHelper,
 		StyleBookEntryLocalService styleBookEntryLocalService,
 		UserLocalService userLocalService,
@@ -92,9 +82,7 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 			layoutPageTemplateEntryService, layoutPermission,
 			layoutSetLocalService, pageEditorConfiguration, portal,
 			portletRequest, portletURLFactory, renderResponse,
-			segmentsConfigurationProvider, segmentsExperienceManager,
-			segmentsExperienceLocalService, segmentsExperimentRelLocalService,
-			segmentsEntryService, staging, stagingGroupHelper,
+			staging, stagingGroupHelper,
 			styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 	}

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
 
@@ -75,9 +74,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		Layout sourceLayout = themeDisplay.getLayout();
 
 		if (plid > 0) {
-			segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(plid);
+			segmentsExperienceId = 0;
 			sourceLayout = _layoutLocalService.getLayout(plid);
 		}
 
@@ -247,8 +244,5 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

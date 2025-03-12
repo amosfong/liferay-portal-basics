@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,9 +96,7 @@ public class LayoutColumn {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(), 0, 0,
-				SegmentsExperienceLocalServiceUtil.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				serviceContext.getScopeGroupId(), 0, 0, 0,
 				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(

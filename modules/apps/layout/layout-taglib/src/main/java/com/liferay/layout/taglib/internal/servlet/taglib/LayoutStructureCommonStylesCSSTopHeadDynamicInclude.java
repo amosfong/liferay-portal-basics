@@ -5,7 +5,6 @@
 
 package com.liferay.layout.taglib.internal.servlet.taglib;
 
-import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -72,9 +71,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			_portal.getPathContext() +
 				"/o/layout-common-styles/main.css?plid=");
 		printWriter.print(layout.getPlid());
-		printWriter.print("&segmentsExperienceId=");
-		printWriter.print(
-			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
+		printWriter.print("&segmentsExperienceId=0");
 		printWriter.print("&t=");
 
 		_addModifiedDate(printWriter, layout);

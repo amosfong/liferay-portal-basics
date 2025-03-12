@@ -92,31 +92,6 @@ renderResponse.setTitle(role.getTitle(locale));
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<c:if test='<%= !SegmentsEntryDisplayUtil.isRoleSegmentationEnabled(themeDisplay.getCompanyId()) && tabs2.equals("segments") %>'>
-	<clay:stripe
-		displayType="warning"
-	>
-		<strong class="lead"><liferay-ui:message key="assigning-roles-by-segment-is-disabled" /></strong>
-
-		<%
-		String segmentsConfigurationURL = SegmentsEntryDisplayUtil.getSegmentsCompanyConfigurationURL(request);
-		%>
-
-		<c:choose>
-			<c:when test="<%= segmentsConfigurationURL != null %>">
-				<clay:link
-					cssClass="assign-roles-segments-warning"
-					href="<%= segmentsConfigurationURL %>"
-					label='<%= LanguageUtil.get(request, "to-enable,-go-to-instance-settings") %>'
-				/>
-			</c:when>
-			<c:otherwise>
-				<span><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></span>
-			</c:otherwise>
-		</c:choose>
-	</clay:stripe>
-</c:if>
-
 <aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="current" />
@@ -126,9 +101,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	<aui:input name="removeUserIds" type="hidden" />
 	<aui:input name="addGroupIds" type="hidden" />
 	<aui:input name="removeGroupIds" type="hidden" />
-	<aui:input name="addSegmentsEntryIds" type="hidden" />
-	<aui:input name="removeSegmentsEntryIds" type="hidden" />
-
+	
 	<%
 	request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
 	request.setAttribute("edit_role_assignments.jsp-searchContainer", searchContainer);
@@ -146,9 +119,6 @@ renderResponse.setTitle(role.getTitle(locale));
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-groups") %>'>
 			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs2.equals("segments") %>'>
-			<liferay-util:include page="/edit_role_assignments_segments_entry.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
 </aui:form>

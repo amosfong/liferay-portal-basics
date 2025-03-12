@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
-import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -138,12 +137,7 @@ public class RoleDisplayContext {
 	}
 
 	public int getAssigneesTotal(long roleId) throws Exception {
-		int segmentsEntryRolesCountByRoleId =
-			SegmentsEntryRoleLocalServiceUtil.
-				getSegmentsEntryRolesCountByRoleId(roleId);
-
-		return RoleLocalServiceUtil.getAssigneesTotal(roleId) +
-			segmentsEntryRolesCountByRoleId;
+		return RoleLocalServiceUtil.getAssigneesTotal(roleId);
 	}
 
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {

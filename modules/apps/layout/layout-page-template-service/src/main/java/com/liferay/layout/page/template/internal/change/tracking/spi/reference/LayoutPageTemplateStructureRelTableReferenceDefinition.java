@@ -12,7 +12,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelTabl
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureTable;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructureRelPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.segments.model.SegmentsExperienceTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,9 +41,6 @@ public class LayoutPageTemplateStructureRelTableReferenceDefinition
 				layoutPageTemplateStructureId,
 			LayoutPageTemplateStructureTable.INSTANCE.
 				layoutPageTemplateStructureId
-		).singleColumnReference(
-			LayoutPageTemplateStructureRelTable.INSTANCE.segmentsExperienceId,
-			SegmentsExperienceTable.INSTANCE.segmentsExperienceId
 		);
 	}
 

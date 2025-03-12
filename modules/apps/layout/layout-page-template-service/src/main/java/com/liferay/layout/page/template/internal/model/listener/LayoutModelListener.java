@@ -32,9 +32,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Objects;
 
@@ -67,14 +64,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			ServiceContextThreadLocal.getServiceContext();
 
 		try {
-			SegmentsExperience segmentsExperience =
-				_addDefaultSegmentsExperience(layout, serviceContext);
-
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					layout.getUserId(), layout.getGroupId(), layout.getPlid(),
-					segmentsExperience.getSegmentsExperienceId(),
-					_generateContentLayoutStructure(), serviceContext);
+					0, _generateContentLayoutStructure(), serviceContext);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -115,9 +108,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 
 		try {
-			_segmentsExperienceLocalService.deleteSegmentsExperiences(
-				layout.getGroupId(), layout.getPlid());
-
 			if (!layout.isTypeContent()) {
 				return;
 			}
@@ -134,23 +124,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			throw new ModelListenerException(portalException);
 		}
-	}
-
-	private SegmentsExperience _addDefaultSegmentsExperience(
-			Layout layout, ServiceContext serviceContext)
-		throws PortalException {
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				layout.getPlid());
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
-			null, layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 
 	private void _copySiteNavigationMenuId(
@@ -290,8 +263,5 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

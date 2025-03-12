@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,11 +33,9 @@ import java.util.List;
 public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 	public LayoutPageTemplateStructureUpgradeProcess(
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
 	@Override
@@ -152,10 +149,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				preparedStatement3.setTimestamp(7, timestamp);
 				preparedStatement3.setTimestamp(8, timestamp);
 				preparedStatement3.setLong(9, layoutPageTemplateStructureId);
-				preparedStatement3.setLong(
-					10,
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(plid));
+				preparedStatement3.setLong(10, 0);
 				preparedStatement3.setString(
 					11,
 					_generateLayoutPageTemplateStructureData(groupId, plid));
@@ -183,7 +177,5 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		LayoutPageTemplateStructureUpgradeProcess.class);
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final SegmentsExperienceLocalService
-		_segmentsExperienceLocalService;
 
 }

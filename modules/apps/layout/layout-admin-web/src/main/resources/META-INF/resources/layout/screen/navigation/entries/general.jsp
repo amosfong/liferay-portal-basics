@@ -157,8 +157,6 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 			</c:if>
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
-
 		<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 		<%

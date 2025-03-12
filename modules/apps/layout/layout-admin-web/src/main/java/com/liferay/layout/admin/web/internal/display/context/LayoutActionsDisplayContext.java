@@ -33,9 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -52,12 +49,10 @@ public class LayoutActionsDisplayContext {
 
 	public LayoutActionsDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LayoutActionsHelper layoutActionsHelper,
-		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+		LayoutActionsHelper layoutActionsHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_layoutActionsHelper = layoutActionsHelper;
-		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -261,7 +256,7 @@ public class LayoutActionsDisplayContext {
 				"/portal/get_page_preview",
 			"p_l_mode", Constants.PREVIEW, "p_p_state",
 			WindowState.UNDEFINED.toString(), "segmentsExperienceId",
-			_getSegmentsExperienceId(draftLayout), "selPlid",
+			0, "selPlid",
 			draftLayout.getPlid());
 
 		if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
@@ -270,42 +265,6 @@ public class LayoutActionsDisplayContext {
 		}
 
 		return pagePreviewURL;
-	}
-
-	private long _getSegmentsExperienceId(Layout layout) {
-		UnicodeProperties unicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		// LPS-131416
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			"segmentsExperienceId",
-			GetterUtil.getLong(
-				unicodeProperties.getProperty("segmentsExperienceId"), -1));
-
-		if (segmentsExperienceId != -1) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					segmentsExperienceId);
-
-			if (segmentsExperience != null) {
-				return segmentsExperience.getSegmentsExperienceId();
-			}
-
-			segmentsExperienceId = -1L;
-		}
-
-		if (segmentsExperienceId == -1) {
-			SegmentsExperienceManager segmentsExperienceManager =
-				new SegmentsExperienceManager(_segmentsExperienceLocalService);
-
-			segmentsExperienceId =
-				segmentsExperienceManager.getSegmentsExperienceId(
-					_httpServletRequest);
-		}
-
-		return segmentsExperienceId;
 	}
 
 	private boolean _isContentLayout(Layout layout) {
@@ -359,8 +318,6 @@ public class LayoutActionsDisplayContext {
 	private Boolean _contentLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutActionsHelper _layoutActionsHelper;
-	private final SegmentsExperienceLocalService
-		_segmentsExperienceLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

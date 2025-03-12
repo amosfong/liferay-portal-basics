@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.IOException;
 
@@ -132,9 +131,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
 	private class LayoutPageTemplateEntryItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
 
@@ -182,10 +178,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 									"/portal/get_page_preview",
 							"p_l_mode", Constants.PREVIEW, "selPlid",
 							_layoutPageTemplateEntry.getPlid(),
-							"segmentsExperienceId",
-							_segmentsExperienceLocalService.
-								fetchDefaultSegmentsExperienceId(
-									_layoutPageTemplateEntry.getPlid()));
+							"segmentsExperienceId", 0);
 
 						if (Validator.isNotNull(
 								_themeDisplay.getDoAsUserId())) {

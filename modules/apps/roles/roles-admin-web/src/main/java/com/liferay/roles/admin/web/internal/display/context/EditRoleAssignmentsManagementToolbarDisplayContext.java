@@ -55,8 +55,6 @@ import com.liferay.roles.admin.search.OrganizationRoleChecker;
 import com.liferay.roles.admin.search.SetUserRoleChecker;
 import com.liferay.roles.admin.search.UnsetUserRoleChecker;
 import com.liferay.roles.admin.search.UserGroupRoleChecker;
-import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.site.search.GroupSearch;
 import com.liferay.users.admin.search.UserSearch;
 import com.liferay.users.admin.search.UserSearchTerms;
@@ -122,43 +120,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		if (!_tabs2.equals("segments")) {
-			return null;
-		}
-
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.putData("action", "addSegmentEntry");
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				Group companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
-					themeDisplay.getCompanyId());
-
-				dropdownItem.putData(
-					"addSegmentEntryURL",
-					PortletURLBuilder.create(
-						PortletProviderUtil.getPortletURL(
-							_renderRequest, companyGroup,
-							SegmentsEntry.class.getName(),
-							PortletProvider.Action.EDIT)
-					).setRedirect(
-						ParamUtil.getString(_httpServletRequest, "redirect")
-					).setBackURL(
-						ParamUtil.getString(_httpServletRequest, "backURL")
-					).setParameter(
-						"groupId", themeDisplay.getCompanyGroupId()
-					).buildString());
-
-				dropdownItem.putData(
-					"sessionKey", RolesAdminWebKeys.MODAL_SEGMENT_STATE);
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "new-segment"));
-			}
-		).build();
+		return null;
 	}
 
 	public SearchContainer<Group> getGroupSearchContainer()
@@ -370,10 +332,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		if (Objects.equals(getTabs2(), "organizations")) {
 			_searchContainer = getOrganizationSearchContainer();
 		}
-		else if (Objects.equals(getTabs2(), "segments")) {
-			_searchContainer = SegmentsEntrySearchContainerFactory.create(
-				_renderRequest, _renderResponse);
-		}
 		else if (Objects.equals(getTabs2(), "sites")) {
 			_searchContainer = getGroupSearchContainer();
 		}
@@ -399,15 +357,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	public String getTabs2() throws PortalException {
 		if (Validator.isNull(_tabs2)) {
 			_tabs2 = ParamUtil.getString(_httpServletRequest, "tabs2", "users");
-		}
-
-		Role role = RoleServiceUtil.fetchRole(
-			ParamUtil.getLong(_httpServletRequest, "roleId"));
-
-		if (StringUtil.equals(_tabs2, "segments") &&
-			Objects.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
-
-			_tabs2 = "users";
 		}
 
 		return _tabs2;
@@ -506,10 +455,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() throws PortalException {
-		if (_tabs2.equals("segments")) {
-			return null;
-		}
-
 		return new ViewTypeItemList(getPortletURL(), _displayStyle) {
 			{
 				addCardViewTypeItem();

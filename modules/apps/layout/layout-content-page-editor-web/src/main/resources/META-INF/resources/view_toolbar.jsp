@@ -121,19 +121,6 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 				/>
 			</li>
 
-			<c:if test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
-				<li class="nav-item">
-					<clay:button
-						cssClass="mr-3"
-						disabled="<%= true %>"
-						displayType="secondary"
-						small="<%= true %>"
-					>
-						<liferay-ui:message key="discard-variant" />
-					</clay:button>
-				</li>
-			</c:if>
-
 			<li class="nav-item">
 				<clay:button
 					disabled="<%= true %>"
@@ -143,9 +130,6 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 					<c:choose>
 						<c:when test="<%= contentPageEditorDisplayContext.isMasterLayout() %>">
 							<liferay-ui:message key="publish-master" />
-						</c:when>
-						<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
-							<liferay-ui:message key="save-variant" />
 						</c:when>
 						<c:when test="<%= contentPageEditorDisplayContext.isWorkflowEnabled() %>">
 							<liferay-ui:message key="submit-for-workflow" />

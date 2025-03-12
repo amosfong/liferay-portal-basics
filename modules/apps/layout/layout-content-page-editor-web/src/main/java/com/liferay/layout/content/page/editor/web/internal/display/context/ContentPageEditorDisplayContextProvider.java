@@ -41,11 +41,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -96,10 +91,6 @@ public class ContentPageEditorDisplayContextProvider {
 				_layoutPageTemplateStructureRelLocalService, _layoutPermission,
 				_pageEditorConfiguration, _portal, portletRequest,
 				_portletURLFactory, renderResponse,
-				_segmentsConfigurationProvider,
-				new SegmentsExperienceManager(_segmentsExperienceLocalService),
-				_segmentsExperienceLocalService,
-				_segmentsExperimentRelLocalService, _segmentsEntryService,
 				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
 				_userLocalService, _workflowDefinitionLinkLocalService);
 		}
@@ -117,10 +108,6 @@ public class ContentPageEditorDisplayContextProvider {
 				_layoutPageTemplateEntryService, _layoutPermission,
 				_pageEditorConfiguration, _portal, portletRequest,
 				_portletURLFactory, renderResponse,
-				_segmentsConfigurationProvider,
-				new SegmentsExperienceManager(_segmentsExperienceLocalService),
-				_segmentsExperienceLocalService,
-				_segmentsExperimentRelLocalService, _segmentsEntryService,
 				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
 				_userLocalService, _workflowDefinitionLinkLocalService);
 		}
@@ -152,12 +139,8 @@ public class ContentPageEditorDisplayContextProvider {
 			_layoutPageTemplateEntryLocalService,
 			_layoutPageTemplateEntryService, _layoutPermission,
 			_pageEditorConfiguration, pageIsDisplayPage, _portal,
-			portletRequest, _portletURLFactory, renderResponse,
-			_segmentsConfigurationProvider,
-			new SegmentsExperienceManager(_segmentsExperienceLocalService),
-			_segmentsExperienceLocalService, _segmentsExperimentRelLocalService,
-			_segmentsEntryService, _staging, _stagingGroupHelper,
-			_styleBookEntryLocalService, _userLocalService,
+			portletRequest, _portletURLFactory, renderResponse, _staging,
+			_stagingGroupHelper, _styleBookEntryLocalService, _userLocalService,
 			_workflowDefinitionLinkLocalService);
 	}
 
@@ -253,19 +236,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
-
-	@Reference
-	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
-
-	@Reference
-	private SegmentsEntryService _segmentsEntryService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference
-	private SegmentsExperimentRelLocalService
-		_segmentsExperimentRelLocalService;
 
 	private volatile ServiceTrackerList<ContentPageEditorSidebarPanel>
 		_serviceTrackerList;

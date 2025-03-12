@@ -13,7 +13,6 @@ import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.segments.model.SegmentsExperienceTable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,9 +41,6 @@ public class FragmentEntryLinkTableReferenceDefinition
 
 		parentTableReferenceInfoBuilder.groupedModel(
 			FragmentEntryLinkTable.INSTANCE
-		).singleColumnReference(
-			FragmentEntryLinkTable.INSTANCE.segmentsExperienceId,
-			SegmentsExperienceTable.INSTANCE.segmentsExperienceId
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				LayoutTable.INSTANCE

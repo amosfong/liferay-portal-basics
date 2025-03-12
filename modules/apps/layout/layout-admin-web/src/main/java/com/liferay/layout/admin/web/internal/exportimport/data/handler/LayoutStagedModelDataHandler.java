@@ -133,8 +133,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.configuration.StagingConfiguration;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -2232,43 +2230,6 @@ public class LayoutStagedModelDataHandler
 		finally {
 			portletDataContext.setPlid(originalPlid);
 		}
-
-		Map<Long, Long> layoutPageTemplateStructureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				LayoutPageTemplateStructure.class);
-
-		String path = layoutPageTemplateStructureElement.attributeValue("path");
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			(LayoutPageTemplateStructure)portletDataContext.getZipEntryAsObject(
-				path);
-
-		long layoutPageTemplateStructureId = MapUtil.getLong(
-			layoutPageTemplateStructureIds,
-			layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
-			layoutPageTemplateStructure.getLayoutPageTemplateStructureId());
-
-		LayoutPageTemplateStructure existingLayoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(layoutPageTemplateStructureId);
-
-		if (existingLayoutPageTemplateStructure == null) {
-			return;
-		}
-
-		List<LayoutPageTemplateStructureRel>
-			existingLayoutPageTemplateStructureRels =
-				_layoutPageTemplateStructureRelLocalService.
-					getLayoutPageTemplateStructureRels(
-						layoutPageTemplateStructureId);
-
-		for (LayoutPageTemplateStructureRel
-				existingLayoutPageTemplateStructureRel :
-					existingLayoutPageTemplateStructureRels) {
-
-			_updateSegmentsExperiences(
-				classPK, existingLayoutPageTemplateStructureRel);
-		}
 	}
 
 	private void _importLayoutPageTemplateStructures(
@@ -2279,9 +2240,6 @@ public class LayoutStagedModelDataHandler
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
 			return;
 		}
-
-		_segmentsExperienceLocalService.deleteSegmentsExperiences(
-			portletDataContext.getScopeGroupId(), importedLayout.getPlid());
 
 		List<Element> layoutPageTemplateStructureElements =
 			portletDataContext.getReferenceDataElements(
@@ -3004,25 +2962,6 @@ public class LayoutStagedModelDataHandler
 			importedLayoutTypeSettingsUnicodeProperties);
 	}
 
-	private void _updateSegmentsExperiences(
-		long classPK,
-		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
-
-		SegmentsExperience existingSegmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				existingLayoutPageTemplateStructureRel.
-					getSegmentsExperienceId());
-
-		if (existingSegmentsExperience == null) {
-			return;
-		}
-
-		existingSegmentsExperience.setPlid(classPK);
-
-		_segmentsExperienceLocalService.updateSegmentsExperience(
-			existingSegmentsExperience);
-	}
-
 	private void _updateTypeSettings(Layout importedLayout, Layout layout)
 		throws Exception {
 
@@ -3209,9 +3148,6 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private Sites _sites;

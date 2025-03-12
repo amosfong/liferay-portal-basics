@@ -35,7 +35,6 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
-import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -56,10 +55,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.context.RequestContextMapper;
-import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -342,42 +337,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
 		ListObjectReference listObjectReference, long[] segmentsEntryIds) {
 
-		if (!(layoutListRetriever instanceof
-				SegmentsEntryLayoutListRetriever)) {
-
-			return segmentsEntryIds;
-		}
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			_httpServletRequest, "segmentsExperienceId", -1);
-
-		if (segmentsExperienceId <= 0) {
-			return segmentsEntryIds;
-		}
-
-		SegmentsExperience segmentsExperience =
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		if (segmentsExperience == null) {
-			return segmentsEntryIds;
-		}
-
-		SegmentsEntryLayoutListRetriever<ListObjectReference>
-			segmentsEntryLayoutListRetriever =
-				(SegmentsEntryLayoutListRetriever<ListObjectReference>)
-					layoutListRetriever;
-
-		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsExperience.getSegmentsEntryId())) {
-
-			return new long[] {segmentsExperience.getSegmentsEntryId()};
-		}
-
-		return new long[] {
-			segmentsEntryLayoutListRetriever.getDefaultVariationSegmentsEntryId(
-				listObjectReference)
-		};
+		return segmentsEntryIds;
 	}
 
 	private int _getCollectionCount() {
@@ -661,23 +621,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private long[] _getSegmentsEntryIds(
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
 		ListObjectReference listObjectReference) {
-
-		if (_segmentsEntryIds != null) {
-			return _segmentsEntryIds;
-		}
-
-		SegmentsEntryRetriever segmentsEntryRetriever =
-			ServletContextUtil.getSegmentsEntryRetriever();
-
-		RequestContextMapper requestContextMapper =
-			ServletContextUtil.getRequestContextMapper();
-
-		_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
-			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-			requestContextMapper.map(_httpServletRequest), new long[0]);
-
-		_segmentsEntryIds = _filterSegmentsEntryIds(
-			layoutListRetriever, listObjectReference, _segmentsEntryIds);
 
 		return _segmentsEntryIds;
 	}

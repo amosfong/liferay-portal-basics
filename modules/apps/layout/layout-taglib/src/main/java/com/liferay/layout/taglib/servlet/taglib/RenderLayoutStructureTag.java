@@ -9,7 +9,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.taglib.servlet.taglib.renderer.LayoutStructureRenderer;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -122,8 +121,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			ServletContextUtil.getLayoutStructureHelper();
 
 		return layoutStructureProvider.getLayoutStructure(
-			themeDisplay.getPlid(),
-			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
+			themeDisplay.getPlid(), 0);
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";

@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.Comparator;
 import java.util.List;

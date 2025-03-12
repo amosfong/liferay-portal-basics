@@ -21,9 +21,6 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.context.RequestContextMapper;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.ServletContext;
 
@@ -106,20 +103,6 @@ public class ServletContextUtil {
 		return _listObjectReferenceFactoryRegistrySnapshot.get();
 	}
 
-	public static RequestContextMapper getRequestContextMapper() {
-		return _requestContextMapperSnapshot.get();
-	}
-
-	public static SegmentsEntryRetriever getSegmentsEntryRetriever() {
-		return _segmentsEntryRetrieverSnapshot.get();
-	}
-
-	public static SegmentsExperienceLocalService
-		getSegmentsExperienceLocalService() {
-
-		return _segmentsExperienceLocalServiceSnapshot.get();
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
@@ -169,15 +152,6 @@ public class ServletContextUtil {
 	private static final Snapshot<ListObjectReferenceFactoryRegistry>
 		_listObjectReferenceFactoryRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, ListObjectReferenceFactoryRegistry.class);
-	private static final Snapshot<RequestContextMapper>
-		_requestContextMapperSnapshot = new Snapshot<>(
-			ServletContextUtil.class, RequestContextMapper.class);
-	private static final Snapshot<SegmentsEntryRetriever>
-		_segmentsEntryRetrieverSnapshot = new Snapshot<>(
-			ServletContextUtil.class, SegmentsEntryRetriever.class);
-	private static final Snapshot<SegmentsExperienceLocalService>
-		_segmentsExperienceLocalServiceSnapshot = new Snapshot<>(
-			ServletContextUtil.class, SegmentsExperienceLocalService.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,

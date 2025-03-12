@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -441,7 +440,7 @@ public class LayoutImportController implements ImportController {
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Layout.class));
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(SegmentsExperience.class, Layout.class));
+			new StagedModelType(Layout.class));
 	}
 
 	protected void validateFile(

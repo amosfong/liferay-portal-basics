@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Date;
 
@@ -43,10 +42,7 @@ public class RenderLayoutUtilityPageEntryDisplayContext {
 		sb.append(PortalUtil.getPathContext());
 		sb.append("/o/layout-common-styles/main.css?plid=");
 		sb.append(_layoutUtilityPageEntry.getPlid());
-		sb.append("&segmentsExperienceId=");
-		sb.append(
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+		sb.append("&segmentsExperienceId=0");
 		sb.append("&t=");
 		sb.append(_getModifiedDate(layout));
 

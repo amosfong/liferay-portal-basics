@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsWebKeys;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,24 +98,12 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		long[] currentSegmentsExperienceIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
 		Layout currentLayout = (Layout)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT);
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
 			httpServletRequest.getAttribute(WebKeys.PORTLET_DECORATE));
 
 		try {
-			long segmentsExperienceId = ParamUtil.getLong(
-				httpServletRequest, "segmentsExperienceId",
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(selPlid));
-
-			httpServletRequest.setAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-				new long[] {segmentsExperienceId});
-
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 
@@ -188,9 +174,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			ServletResponseUtil.write(httpServletResponse, document.html());
 		}
 		finally {
-			httpServletRequest.setAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-				currentSegmentsExperienceIds);
 			httpServletRequest.setAttribute(WebKeys.LAYOUT, currentLayout);
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
@@ -269,9 +252,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
