@@ -5,10 +5,6 @@
 
 package com.liferay.layout.page.template.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
@@ -143,49 +139,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				infoItemReference.getClassName());
-
-		if (assetRendererFactory == null) {
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				infoItemReference, object, themeDisplay);
-		}
-
-		try {
-			AssetRenderer<?> assetRenderer = null;
-
-			if (infoItemReference.getInfoItemIdentifier() instanceof
-					ClassPKInfoItemIdentifier) {
-
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)
-						infoItemReference.getInfoItemIdentifier();
-
-				assetRenderer = assetRendererFactory.getAssetRenderer(
-					classPKInfoItemIdentifier.getClassPK());
-			}
-
-			if (assetRenderer == null) {
-				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					infoItemReference, object, themeDisplay);
-			}
-
-			String viewInContextURL = assetRenderer.getURLViewInContext(
-				themeDisplay, StringPool.BLANK);
-
-			if (Validator.isNotNull(viewInContextURL)) {
-				return viewInContextURL;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			infoItemReference, object, themeDisplay);
+		return null;
 	}
 
 	private InfoField<InfoFieldType> _getDefaultDisplayPageURLInfoField(
@@ -325,10 +279,6 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageInfoItemFieldSetProviderImpl.class);
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

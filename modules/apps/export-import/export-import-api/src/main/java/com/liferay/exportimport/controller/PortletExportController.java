@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.xml.Element;
  */
 public interface PortletExportController extends ExportController {
 
-	public void exportAssetLinks(PortletDataContext portletDataContext)
-		throws Exception;
-
 	public void exportLocks(PortletDataContext portletDataContext)
 		throws Exception;
 

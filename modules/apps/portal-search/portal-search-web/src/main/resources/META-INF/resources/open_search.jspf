@@ -133,15 +133,6 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 
 						<%= HighlightUtil.highlight(HtmlUtil.escape(summary), queryTerms) %>
 					</c:if>
-
-					<br />
-
-					<liferay-asset:asset-tags-summary
-						className="<%= entryClassName %>"
-						classPK="<%= entryClassPK %>"
-						paramName="<%= Field.ASSET_TAG_NAMES %>"
-						portletURL="<%= searchDisplayContext.getPortletURL() %>"
-					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

@@ -5,15 +5,6 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.display.context;
 
-import com.liferay.asset.constants.AssetWebKeys;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,8 +61,6 @@ public class AddContentPanelDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_assetHelper = (AssetHelper)httpServletRequest.getAttribute(
-			AssetWebKeys.ASSET_HELPER);
 		_portletCategoryManager =
 			(PortletCategoryManager)httpServletRequest.getAttribute(
 				PortletCategoryManager.class.getName());
@@ -135,67 +124,6 @@ public class AddContentPanelDisplayContext {
 
 	public List<Map<String, Object>> getContents() throws Exception {
 		List<Map<String, Object>> contents = new ArrayList<>();
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
-		assetEntryQuery.setClassNameIds(_getAvailableClassNameIds());
-		assetEntryQuery.setEnd(_getDelta());
-		assetEntryQuery.setGroupIds(
-			new long[] {_themeDisplay.getScopeGroupId()});
-		assetEntryQuery.setKeywords(_getKeywords());
-		assetEntryQuery.setOrderByCol1("modifiedDate");
-		assetEntryQuery.setOrderByCol2("title");
-		assetEntryQuery.setOrderByType1("DESC");
-		assetEntryQuery.setOrderByType2("ASC");
-		assetEntryQuery.setStart(0);
-
-		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			_assetHelper.searchAssetEntries(
-				_httpServletRequest, assetEntryQuery, 0, _getDelta());
-
-		for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
-			AssetRendererFactory<?> assetRendererFactory =
-				assetEntry.getAssetRendererFactory();
-
-			if (assetRendererFactory == null) {
-				continue;
-			}
-
-			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-			if (assetRenderer == null) {
-				continue;
-			}
-
-			String portletId = PortletProviderUtil.getPortletId(
-				assetEntry.getClassName(), PortletProvider.Action.ADD);
-
-			contents.add(
-				HashMapBuilder.<String, Object>put(
-					"className", assetEntry.getClassName()
-				).put(
-					"classPK", assetEntry.getClassPK()
-				).put(
-					"draggable",
-					PortletPermissionUtil.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getLayout(), portletId,
-						ActionKeys.ADD_TO_PAGE)
-				).put(
-					"icon", assetRenderer.getIconCssClass()
-				).put(
-					"portletId", portletId
-				).put(
-					"title",
-					HtmlUtil.escape(
-						assetRenderer.getTitle(_themeDisplay.getLocale()))
-				).put(
-					"type",
-					_getAssetEntryTypeLabel(
-						assetEntry.getClassName(), assetEntry.getClassTypeId())
-				).build());
-		}
 
 		return contents;
 	}
@@ -301,83 +229,7 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getAddContentsURLs() throws Exception {
-		return TransformUtil.transform(
-			_assetHelper.getAssetPublisherAddItemHolders(
-				_liferayPortletRequest, _liferayPortletResponse,
-				_themeDisplay.getScopeGroupId(), _getClassNameIds(),
-				new long[0], null, null, _getRedirectURL()),
-			assetPublisherAddItemHolder -> HashMapBuilder.<String, Object>put(
-				"label", assetPublisherAddItemHolder.getModelResource()
-			).put(
-				"url",
-				() -> {
-					long curGroupId = _themeDisplay.getScopeGroupId();
-
-					Group group = _themeDisplay.getScopeGroup();
-
-					if (!group.isStagedPortlet(
-							assetPublisherAddItemHolder.getPortletId()) &&
-						!group.isStagedRemotely()) {
-
-						curGroupId = group.getLiveGroupId();
-					}
-
-					return _assetHelper.getAddURLPopUp(
-						curGroupId, _themeDisplay.getPlid(),
-						assetPublisherAddItemHolder.getPortletURL(), false,
-						_themeDisplay.getLayout());
-				}
-			).build());
-	}
-
-	private String _getAssetEntryTypeLabel(String className, long classTypeId) {
-		if (classTypeId <= 0) {
-			return ResourceActionsUtil.getModelResource(
-				_themeDisplay.getLocale(), className);
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return ResourceActionsUtil.getModelResource(
-				_themeDisplay.getLocale(), className);
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			ClassType classType = classTypeReader.getClassType(
-				classTypeId, themeDisplay.getLocale());
-
-			return classType.getName();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return ResourceActionsUtil.getModelResource(
-			_themeDisplay.getLocale(), className);
-	}
-
-	private long[] _getAvailableClassNameIds() {
-		return AssetRendererFactoryRegistryUtil.getClassNameIds(
-			_themeDisplay.getCompanyId(), true);
-	}
-
-	private long[] _getClassNameIds() {
-		return AssetRendererFactoryRegistryUtil.getClassNameIds(
-			_themeDisplay.getCompanyId());
+		return new ArrayList<>();
 	}
 
 	private int _getDelta() {
@@ -436,7 +288,6 @@ public class AddContentPanelDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddContentPanelDisplayContext.class);
 
-	private final AssetHelper _assetHelper;
 	private Integer _delta;
 	private Boolean _hasAddApplicationsPermission;
 	private Boolean _hasAddContentPermission;

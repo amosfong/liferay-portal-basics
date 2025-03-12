@@ -5,9 +5,6 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.link.model.AssetLink;
-import com.liferay.asset.link.service.AssetLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -160,24 +157,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void addAssetCategories(
-		String className, long classPK, long[] assetCategoryIds) {
-
-		_assetCategoryIdsMap.put(
-			_getPrimaryKeyString(className, (Serializable)classPK),
-			assetCategoryIds);
-	}
-
-	@Override
-	public void addAssetTags(
-		String className, long classPK, String[] assetTagNames) {
-
-		_assetTagNamesMap.put(
-			_getPrimaryKeyString(className, (Serializable)classPK),
-			assetTagNames);
-	}
-
-	@Override
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException {
@@ -210,8 +189,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 
 			if (_isResourceMain(classedModel)) {
-				_addAssetLinks(classNameId, GetterUtil.getLong(classPK));
-
 				addExpando(element, path, classedModel, clazz);
 
 				if (getBooleanParameter(
@@ -230,15 +207,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
 			element.addAttribute("user-uuid", auditedModel.getUserUuid());
-		}
-
-		if (_isResourceMain(classedModel)) {
-			double assetEntryPriority =
-				AssetEntryLocalServiceUtil.getEntryPriority(
-					classNameId, GetterUtil.getLong(classPK));
-
-			element.addAttribute(
-				"asset-entry-priority", String.valueOf(assetEntryPriority));
 		}
 
 		_addWorkflowDefinitionLink(classedModel);
@@ -620,38 +588,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return _xStream.fromXML(xml);
-	}
-
-	@Override
-	public long[] getAssetCategoryIds(Class<?> clazz, Serializable classPK) {
-		long[] assetCategoryIds = _assetCategoryIdsMap.get(
-			_getPrimaryKeyString(clazz, classPK));
-
-		if (assetCategoryIds == null) {
-			return new long[0];
-		}
-
-		return assetCategoryIds;
-	}
-
-	@Override
-	public Set<Long> getAssetLinkIds() {
-		return _assetLinkIds;
-	}
-
-	@Override
-	public String[] getAssetTagNames(Class<?> clazz, Serializable classPK) {
-		return getAssetTagNames(_getPrimaryKeyString(clazz, classPK));
-	}
-
-	@Override
-	public String[] getAssetTagNames(String className, Serializable classPK) {
-		return getAssetTagNames(_getPrimaryKeyString(className, classPK));
-	}
-
-	@Override
-	public Map<String, String[]> getAssetTagNamesMap() {
-		return _assetTagNamesMap;
 	}
 
 	@Override
@@ -1906,28 +1842,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			serviceContext.setAddGuestPermissions(true);
 		}
 
-		// Asset
-
-		if (_isResourceMain(classedModel)) {
-			Serializable classPKObj =
-				ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
-
-			serviceContext.setAssetCategoryIds(
-				getAssetCategoryIds(clazz, classPKObj));
-			serviceContext.setAssetTagNames(
-				getAssetTagNames(clazz, classPKObj));
-		}
-
-		if (element != null) {
-			Attribute assetPriorityAttribute = element.attribute(
-				"asset-entry-priority");
-
-			if (assetPriorityAttribute != null) {
-				serviceContext.setAssetPriority(
-					GetterUtil.getDouble(assetPriorityAttribute.getValue()));
-			}
-		}
-
 		// Expando
 
 		String expandoPath = null;
@@ -1979,16 +1893,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return serviceContext;
-	}
-
-	protected String[] getAssetTagNames(String key) {
-		String[] assetTagNames = _assetTagNamesMap.get(key);
-
-		if (assetTagNames == null) {
-			return new String[0];
-		}
-
-		return assetTagNames;
 	}
 
 	protected Element getExportDataGroupElement(String name) {
@@ -2181,15 +2085,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return 0;
-	}
-
-	private void _addAssetLinks(long classNameId, long classPK) {
-		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
-			classNameId, classPK);
-
-		for (AssetLink assetLink : assetLinks) {
-			_assetLinkIds.add(assetLink.getLinkId());
-		}
 	}
 
 	private Element _addReferenceElement(
@@ -2736,9 +2631,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private static long _modifiedCount;
 	private static transient XStream _xStream;
 
-	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
-	private final Set<Long> _assetLinkIds = new HashSet<>();
-	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;

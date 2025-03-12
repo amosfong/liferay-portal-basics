@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.display.context;
 
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
@@ -178,11 +177,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
-		).put(
-			"hasDisplayPage",
-			AssetDisplayPageUtil.hasAssetDisplayPage(
-				_themeDisplay.getScopeGroupId(), getClassNameId(), getClassPK(),
-				getClassTypeId())
 		).put(
 			"item",
 			HashMapBuilder.<String, Object>put(

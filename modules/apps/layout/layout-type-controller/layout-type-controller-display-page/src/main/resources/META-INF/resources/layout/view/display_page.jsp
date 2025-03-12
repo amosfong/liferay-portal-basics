@@ -34,13 +34,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 		<%
 		DisplayPageLayoutTypeControllerDisplayContext displayPageLayoutTypeControllerDisplayContext = (DisplayPageLayoutTypeControllerDisplayContext)request.getAttribute(DisplayPageLayoutTypeControllerWebKeys.DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT);
-
-		AssetRendererFactory<?> assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
 		%>
-
-		<c:if test="<%= assetRendererFactory != null %>">
-			<liferay-ui:success key='<%= assetRendererFactory.getPortletId() + "requestProcessed" %>' message="your-request-processed-successfully" />
-		</c:if>
 
 		<c:choose>
 			<c:when test="<%= displayPageLayoutTypeControllerDisplayContext.isForbidden(response) %>">

@@ -5,8 +5,6 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -318,7 +316,6 @@ public class FileEntryStagedModelDataHandler
 
 		_exportMetaData(portletDataContext, fileEntryElement, fileEntry);
 
-		_exportAssetDisplayPage(portletDataContext, fileEntry);
 		_exportFriendlyURLEntries(portletDataContext, fileEntry);
 
 		portletDataContext.addClassedModel(
@@ -376,11 +373,6 @@ public class FileEntryStagedModelDataHandler
 
 		long folderId = MapUtil.getLong(
 			folderIds, fileEntry.getFolderId(), fileEntry.getFolderId());
-
-		long[] assetCategoryIds = portletDataContext.getAssetCategoryIds(
-			DLFileEntry.class, fileEntry.getFileEntryId());
-		String[] assetTagNames = portletDataContext.getAssetTagNames(
-			DLFileEntry.class, fileEntry.getFileEntryId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			fileEntry, DLFileEntry.class);
@@ -565,11 +557,6 @@ public class FileEntryStagedModelDataHandler
 									fileEntry.getReviewDate(), serviceContext);
 						}
 						else {
-							_dlAppLocalService.updateAsset(
-								userId, existingFileEntry,
-								latestExistingFileVersion, assetCategoryIds,
-								assetTagNames, null);
-
 							importedFileEntry = existingFileEntry;
 						}
 
@@ -659,8 +646,6 @@ public class FileEntryStagedModelDataHandler
 			fileEntryIds.put(
 				fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
 
-			_importAssetDisplayPage(
-				portletDataContext, fileEntry, importedFileEntry);
 			_importFriendlyURLEntries(
 				portletDataContext, fileEntry, importedFileEntry,
 				serviceContext);
@@ -696,7 +681,6 @@ public class FileEntryStagedModelDataHandler
 	@Override
 	protected String[] getSkipImportReferenceStagedModelNames() {
 		return new String[] {
-			AssetDisplayPageEntry.class.getName(),
 			FriendlyURLEntry.class.getName()
 		};
 	}
@@ -787,23 +771,6 @@ public class FileEntryStagedModelDataHandler
 				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-	}
-
-	private void _exportAssetDisplayPage(
-			PortletDataContext portletDataContext, FileEntry fileEntry)
-		throws Exception {
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				fileEntry.getGroupId(),
-				_portal.getClassNameId(FileEntry.class.getName()),
-				fileEntry.getFileEntryId());
-
-		if (assetDisplayPageEntry != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, fileEntry, assetDisplayPageEntry,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
 	}
 
 	private void _exportDDMFormValues(
@@ -918,71 +885,6 @@ public class FileEntryStagedModelDataHandler
 		return DDMBeanTranslatorUtil.translate(ddmFormValues);
 	}
 
-	private void _importAssetDisplayPage(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry)
-		throws PortalException {
-
-		List<Element> assetDisplayPageEntryElements =
-			portletDataContext.getReferenceDataElements(
-				fileEntry, AssetDisplayPageEntry.class);
-
-		Map<Long, Long> fileEntryNewPrimaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntry.class);
-
-		fileEntryNewPrimaryKeys.put(
-			fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
-
-		if (ListUtil.isEmpty(assetDisplayPageEntryElements)) {
-			AssetDisplayPageEntry existingAssetDisplayPageEntry =
-				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-					importedFileEntry.getGroupId(),
-					_portal.getClassNameId(FileEntry.class.getName()),
-					importedFileEntry.getFileEntryId());
-
-			if (existingAssetDisplayPageEntry != null) {
-				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
-					existingAssetDisplayPageEntry);
-			}
-
-			return;
-		}
-
-		for (Element assetDisplayPageEntryElement :
-				assetDisplayPageEntryElements) {
-
-			String path = assetDisplayPageEntryElement.attributeValue("path");
-
-			AssetDisplayPageEntry assetDisplayPageEntry =
-				(AssetDisplayPageEntry)portletDataContext.getZipEntryAsObject(
-					path);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, assetDisplayPageEntryElement);
-
-			Map<Long, Long> assetDisplayPageEntries =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					AssetDisplayPageEntry.class);
-
-			long assetDisplayPageEntryId = MapUtil.getLong(
-				assetDisplayPageEntries,
-				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
-				assetDisplayPageEntry.getAssetDisplayPageEntryId());
-
-			AssetDisplayPageEntry existingAssetDisplayPageEntry =
-				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-					assetDisplayPageEntryId);
-
-			if (existingAssetDisplayPageEntry != null) {
-				existingAssetDisplayPageEntry.setClassPK(
-					importedFileEntry.getFileEntryId());
-
-				_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
-					existingAssetDisplayPageEntry);
-			}
-		}
-	}
 
 	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
@@ -1230,10 +1132,6 @@ public class FileEntryStagedModelDataHandler
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

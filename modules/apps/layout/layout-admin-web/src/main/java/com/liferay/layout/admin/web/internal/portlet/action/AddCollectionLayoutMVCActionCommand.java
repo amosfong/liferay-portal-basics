@@ -5,8 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -167,31 +165,7 @@ public class AddCollectionLayoutMVCActionCommand
 	private String _getCollectionPageElementJSON(
 		String className, String classPK) {
 
-		if (Validator.isNull(classPK)) {
-			return null;
-		}
-
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(
-				Long.valueOf(classPK));
-
-		if (assetListEntry == null) {
-			return null;
-		}
-
-		Map<String, String> values = HashMapBuilder.put(
-			"CLASS_NAME", className
-		).put(
-			"CLASS_PK", classPK
-		).put(
-			"COLLECTION_NAME", HtmlUtil.escape(assetListEntry.getTitle())
-		).build();
-
-		String collectionPageElementJSON = StringUtil.read(
-			AddCollectionLayoutMVCActionCommand.class,
-			"collection-page-element.json");
-
-		return StringUtil.replace(collectionPageElementJSON, "${", "}", values);
+		return null;
 	}
 
 	private String _getCollectionProviderPageElementJSON(String className) {
@@ -253,9 +227,6 @@ public class AddCollectionLayoutMVCActionCommand
 				pageElementJSON, 0, true);
 		}
 	}
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.internal.lar.DeletionSystemEventExporter;
@@ -311,14 +310,11 @@ public class LayoutExportController implements ExportController {
 
 		// Export other models
 
-		_portletExportController.exportAssetLinks(portletDataContext);
 		_portletExportController.exportLocks(portletDataContext);
 
 		if (Objects.equals(portletDataContext.getType(), "layout-set")) {
 			portletDataContext.addDeletionSystemEventStagedModelTypes(
 				new StagedModelType(SegmentsExperience.class, Layout.class));
-			portletDataContext.addDeletionSystemEventStagedModelTypes(
-				new StagedModelType(StagedAssetLink.class));
 		}
 
 		_deletionSystemEventExporter.exportDeletionSystemEvents(

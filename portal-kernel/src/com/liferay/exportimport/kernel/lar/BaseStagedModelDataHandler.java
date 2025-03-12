@@ -5,10 +5,6 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -97,8 +93,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
 
-			exportAssetCategories(portletDataContext, stagedModel);
-			exportAssetTags(portletDataContext, stagedModel);
 			exportComments(portletDataContext, stagedModel);
 			exportRatings(portletDataContext, stagedModel);
 
@@ -367,9 +361,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			restoreStagedModel(portletDataContext, stagedModel);
 
-			importAssetCategories(portletDataContext, stagedModel);
-			importAssetTags(portletDataContext, stagedModel);
-
 			importReferenceStagedModels(portletDataContext, stagedModel);
 
 			doImportStagedModel(portletDataContext, stagedModel);
@@ -548,37 +539,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throw new UnsupportedOperationException();
 	}
 
-	protected void exportAssetCategories(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		List<AssetCategory> assetCategories =
-			AssetCategoryLocalServiceUtil.getCategories(
-				ExportImportClassedModelUtil.getClassNameId(stagedModel),
-				ExportImportClassedModelUtil.getClassPK(stagedModel));
-
-		for (AssetCategory assetCategory : assetCategories) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, assetCategory,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
-		}
-	}
-
-	protected void exportAssetTags(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-			ExportImportClassedModelUtil.getClassNameId(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
-
-		for (AssetTag assetTag : assetTags) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, assetTag,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
-		}
-	}
-
 	protected void exportComments(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -666,97 +626,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	protected String[] getSkipImportReferenceStagedModelNames() {
 		return null;
-	}
-
-	protected void importAssetCategories(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		List<Element> referenceElements =
-			portletDataContext.getReferenceElements(
-				stagedModel, AssetCategory.class);
-
-		if (referenceElements.isEmpty()) {
-			return;
-		}
-
-		List<Long> assetCategoryIds = new ArrayList<>(referenceElements.size());
-
-		for (Element referenceElement : referenceElements) {
-			Long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, AssetCategory.class, classPK);
-
-			assetCategoryIds.add(classPK);
-		}
-
-		Map<Long, Long> assetCategoryIdsMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetCategory.class);
-
-		long[] importedAssetCategoryIds = new long[assetCategoryIds.size()];
-
-		for (int i = 0; i < assetCategoryIds.size(); i++) {
-			long categoryId = assetCategoryIds.get(i);
-
-			importedAssetCategoryIds[i] = MapUtil.getLong(
-				assetCategoryIdsMap, categoryId, categoryId);
-		}
-
-		portletDataContext.addAssetCategories(
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel),
-			importedAssetCategoryIds);
-	}
-
-	protected void importAssetTags(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		List<Element> referenceElements =
-			portletDataContext.getReferenceElements(
-				stagedModel, AssetTag.class);
-
-		List<Long> assetTagIds = new ArrayList<>(referenceElements.size());
-
-		for (Element referenceElement : referenceElements) {
-			Long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, AssetTag.class, classPK);
-
-			assetTagIds.add(classPK);
-		}
-
-		Map<Long, Long> assetTagIdsMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetTag.class);
-
-		Set<String> assetTagNames = new HashSet<>();
-
-		for (long assetTagId : assetTagIds) {
-			long importedStagedAssetTagId = MapUtil.getLong(
-				assetTagIdsMap, assetTagId, assetTagId);
-
-			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
-				importedStagedAssetTagId);
-
-			if (assetTag != null) {
-				assetTagNames.add(assetTag.getName());
-			}
-		}
-
-		if (assetTagNames.isEmpty()) {
-			return;
-		}
-
-		portletDataContext.addAssetTags(
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel),
-			assetTagNames.toArray(new String[0]));
 	}
 
 	protected void importComments(
@@ -859,8 +728,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		for (Element referenceElement : referenceElements) {
 			String className = referenceElement.attributeValue("class-name");
 
-			if (className.equals(AssetCategory.class.getName()) ||
-				className.equals(RatingsEntry.class.getName()) ||
+			if (className.equals(RatingsEntry.class.getName()) ||
 				className.equals(stagedModelClassName) ||
 				ArrayUtil.contains(
 					getSkipImportReferenceStagedModelNames(), className,

@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.internal.change.tracking.spi.reference;
 
-import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
@@ -49,27 +48,6 @@ public class DLFileEntryTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.fileEntryId,
 			DLFileEntryMetadataTable.INSTANCE.fileEntryId
-		).assetEntryReference(
-			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				AssetDisplayPageEntryTable.INSTANCE
-			).innerJoinON(
-				DLFileEntryTable.INSTANCE,
-				DLFileEntryTable.INSTANCE.groupId.eq(
-					AssetDisplayPageEntryTable.INSTANCE.groupId
-				).and(
-					DLFileEntryTable.INSTANCE.fileEntryId.eq(
-						AssetDisplayPageEntryTable.INSTANCE.classPK)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					AssetDisplayPageEntryTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
-				)
-			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				FriendlyURLEntryTable.INSTANCE

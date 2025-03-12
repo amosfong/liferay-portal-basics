@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -70,11 +69,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		String className = _portal.getClassName(classNameId);
 
 		try {
-			JSONObject jsonObject = JSONUtil.put(
-				"hasDisplayPage",
-				AssetDisplayPageUtil.hasAssetDisplayPage(
-					themeDisplay.getScopeGroupId(), classNameId, classPK,
-					classTypeId));
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			String itemType = _getItemType(className, themeDisplay);
 

@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -94,12 +93,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.UPDATE);
 
-		int count =
-			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
-				_layoutPageTemplateEntry.getClassNameId(),
-				_layoutPageTemplateEntry.getClassTypeId(),
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				_layoutPageTemplateEntry.isDefaultTemplate());
+		int count = 0;
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {

@@ -5,13 +5,6 @@
 
 package com.liferay.friendly.url.internal.exportimport.data.handler;
 
-import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
-import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
-import com.liferay.asset.entry.rel.util.comparator.AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -80,8 +73,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		Element friendlyURLEntryElement =
 			portletDataContext.getExportDataElement(friendlyURLEntry);
-
-		_exportAssetCategories(portletDataContext, friendlyURLEntry);
 
 		friendlyURLEntryElement.addAttribute(
 			"resource-class-name", friendlyURLEntry.getClassName());
@@ -182,9 +173,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 			}
 		}
 
-		_importAssetCategories(
-			portletDataContext, friendlyURLEntry, importedFriendlyURLEntry);
-
 		portletDataContext.importClassedModel(
 			friendlyURLEntry, importedFriendlyURLEntry);
 	}
@@ -195,118 +183,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
-
-	private void _exportAssetCategories(
-			PortletDataContext portletDataContext,
-			FriendlyURLEntry friendlyURLEntry)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147")) {
-
-			return;
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			FriendlyURLEntry.class.getName(),
-			friendlyURLEntry.getFriendlyURLEntryId());
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetEntryId(
-					assetEntry.getEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS,
-					AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator.
-						getInstance(true));
-
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
-				assetEntryAssetCategoryRels) {
-
-			AssetCategory assetCategory =
-				_assetCategoryLocalService.fetchCategory(
-					assetEntryAssetCategoryRel.getAssetCategoryId());
-
-			if (assetCategory != null) {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, friendlyURLEntry, assetCategory,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-		}
-	}
-
-	private void _importAssetCategories(
-			PortletDataContext portletDataContext,
-			FriendlyURLEntry friendlyURLEntry,
-			FriendlyURLEntry importedFriendlyURL)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147") ||
-			(friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
-				AssetCategory.class.getName()))) {
-
-			return;
-		}
-
-		List<Element> assetCategoryElements =
-			portletDataContext.getReferenceDataElements(
-				friendlyURLEntry, AssetCategory.class);
-
-		if (ListUtil.isEmpty(assetCategoryElements)) {
-			return;
-		}
-
-		List<Long> assetCategoryIds = new ArrayList<>();
-
-		for (Element assetCategoryElement : assetCategoryElements) {
-			String assetCategoryPath = assetCategoryElement.attributeValue(
-				"path");
-
-			AssetCategory assetCategory =
-				(AssetCategory)portletDataContext.getZipEntryAsObject(
-					assetCategoryPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, assetCategory);
-
-			Map<Long, Long> assetCategoryNewPrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					AssetCategory.class);
-
-			assetCategoryIds.add(
-				MapUtil.getLong(
-					assetCategoryNewPrimaryKeys, assetCategory.getCategoryId(),
-					assetCategory.getCategoryId()));
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		_assetEntryLocalService.updateEntry(
-			serviceContext.getUserId(), importedFriendlyURL.getGroupId(),
-			importedFriendlyURL.getCreateDate(),
-			importedFriendlyURL.getModifiedDate(),
-			FriendlyURLEntry.class.getName(),
-			importedFriendlyURL.getFriendlyURLEntryId(),
-			importedFriendlyURL.getUuid(), 0,
-			ArrayUtil.toLongArray(assetCategoryIds), new String[0], true, false,
-			null, null, null, null, ContentTypes.TEXT_PLAIN, null, null, null,
-			null, null, 0, 0, serviceContext.getAssetPriority());
-	}
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetEntryAssetCategoryRelLocalService
-		_assetEntryAssetCategoryRelLocalService;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

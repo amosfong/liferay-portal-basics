@@ -82,21 +82,6 @@
 							</div>
 						</c:if>
 
-						<liferay-util:buffer
-							var="assetTagsSummary"
-						>
-							<liferay-asset:asset-tags-summary
-								className="<%= Group.class.getName() %>"
-								classPK="<%= group.getGroupId() %>"
-							/>
-						</liferay-util:buffer>
-
-						<c:if test="<%= Validator.isNotNull(assetTagsSummary) %>">
-							<div class="text-default">
-								<%= assetTagsSummary %>
-							</div>
-						</c:if>
-
 						<%
 						int usersCount = siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId());
 						%>
@@ -225,15 +210,6 @@
 							value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
 						/>
 					</c:if>
-
-					<liferay-ui:search-container-column-text
-						name="tags"
-					>
-						<liferay-asset:asset-tags-summary
-							className="<%= Group.class.getName() %>"
-							classPK="<%= group.getGroupId() %>"
-						/>
-					</liferay-ui:search-container-column-text>
 
 					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 						<liferay-ui:search-container-column-text>

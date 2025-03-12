@@ -5,15 +5,12 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryService;
-import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
-import com.liferay.layout.page.template.admin.web.internal.display.context.AssetDisplayPageUsagesDisplayContext;
 import com.liferay.layout.page.template.admin.web.internal.display.context.DisplayPageDisplayContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -144,14 +141,6 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
 		renderRequest.setAttribute(
-			LayoutPageTemplateAdminWebKeys.
-				ASSET_DISPLAY_PAGE_USAGES_DISPLAY_CONTEXT,
-			new AssetDisplayPageUsagesDisplayContext(
-				_assetDisplayPageEntryService, _assetEntryService,
-				_portal.getHttpServletRequest(renderRequest),
-				_infoSearchClassMapperRegistry, _infoItemServiceRegistry,
-				_portal, renderRequest, renderResponse));
-		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebConfiguration.class.getName(),
 			_layoutPageTemplateAdminWebConfiguration);
 		renderRequest.setAttribute(
@@ -168,12 +157,6 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesPortlet.class);
-
-	@Reference
-	private AssetDisplayPageEntryService _assetDisplayPageEntryService;
-
-	@Reference
-	private AssetEntryService _assetEntryService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

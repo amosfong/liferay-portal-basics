@@ -5,10 +5,6 @@
 
 package com.liferay.layout.internal.struts;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -207,33 +203,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	private void _addLinkedAssetEntryId(
-		String className, long classPK, HttpServletRequest httpServletRequest) {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return;
-		}
-
-		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				className, classPK);
-
-			if (assetEntry != null) {
-				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
-					httpServletRequest, assetEntry.getEntryId());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-	}
-
 	private void _includeInfoItemObjects(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
@@ -283,8 +252,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 				layoutDisplayPageObjectProvider);
 		}
-
-		_addLinkedAssetEntryId(className, classPK, httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

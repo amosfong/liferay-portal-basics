@@ -5,7 +5,6 @@
 
 package com.liferay.layout.seo.internal;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOGeneralGroupConfiguration;
 import com.liferay.layout.seo.internal.util.AlternateURLMapperProvider;
@@ -157,8 +156,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	@Activate
 	protected void activate() {
 		_alternateURLMapperProvider = new AlternateURLMapperProvider(
-			_assetDisplayPageFriendlyURLProvider, _classNameLocalService,
-			_portal);
+			_classNameLocalService, _portal);
 	}
 
 	@Deactivate
@@ -327,10 +325,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		LayoutSEOLinkManagerImpl.class);
 
 	private AlternateURLMapperProvider _alternateURLMapperProvider;
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

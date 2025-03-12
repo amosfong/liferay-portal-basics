@@ -5,8 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
-import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -20,7 +18,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -58,62 +55,10 @@ public class GetCollectionVariationsMVCResourceCommand
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long assetListEntryId = ParamUtil.getLong(resourceRequest, "classPK");
-
-		if (assetListEntryId <= 0) {
-			return _jsonFactory.createJSONArray();
-		}
-
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			_assetListEntrySegmentsEntryRelLocalService.
-				getAssetListEntrySegmentsEntryRels(
-					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (assetListEntrySegmentsEntryRels.size() < 2) {
-			return _jsonFactory.createJSONArray();
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		assetListEntrySegmentsEntryRels = ListUtil.sort(
-			assetListEntrySegmentsEntryRels,
-			Comparator.comparingInt(
-				AssetListEntrySegmentsEntryRel::getPriority));
-
-		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-				assetListEntrySegmentsEntryRels) {
-
-			if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
-					SegmentsEntryConstants.ID_DEFAULT) {
-
-				jsonArray.put(
-					SegmentsEntryConstants.getDefaultSegmentsEntryName(
-						themeDisplay.getLocale()));
-
-				continue;
-			}
-
-			SegmentsEntry segmentsEntry =
-				_segmentsEntryLocalService.getSegmentsEntry(
-					assetListEntrySegmentsEntryRel.getSegmentsEntryId());
-
-			jsonArray.put(segmentsEntry.getName(themeDisplay.getLocale()));
-		}
-
-		return jsonArray;
+		return _jsonFactory.createJSONArray();
 	}
 
 	@Reference
-	private AssetListEntrySegmentsEntryRelLocalService
-		_assetListEntrySegmentsEntryRelLocalService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

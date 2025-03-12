@@ -5,13 +5,6 @@
 
 package com.liferay.friendly.url.model.impl;
 
-import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
-import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
-import com.liferay.asset.entry.rel.util.comparator.AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -50,50 +43,7 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 			}
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			FriendlyURLEntry.class.getName(), getFriendlyURLEntryId());
-
-		if (assetEntry == null) {
-			return urlTitle;
-		}
-
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
-			AssetEntryAssetCategoryRelLocalServiceUtil.
-				getAssetEntryAssetCategoryRelsByAssetEntryId(
-					assetEntry.getEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS,
-					AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator.
-						getInstance(true));
-
-		List<AssetCategory> assetCategories = new ArrayList<>(
-			assetEntryAssetCategoryRels.size());
-
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
-				assetEntryAssetCategoryRels) {
-
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchCategory(
-					assetEntryAssetCategoryRel.getAssetCategoryId());
-
-			if (assetCategory != null) {
-				assetCategories.add(assetCategory);
-			}
-		}
-
-		if (assetCategories.isEmpty()) {
-			return urlTitle;
-		}
-
-		StringBundler sb = new StringBundler(assetCategories.size() * 2);
-
-		for (AssetCategory assetCategory : assetCategories) {
-			sb.append(assetCategory.getTitle(languageId));
-			sb.append(StringPool.SLASH);
-		}
-
-		sb.append(urlTitle);
-
-		return sb.toString();
+		return urlTitle;
 	}
 
 	@Override

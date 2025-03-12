@@ -13,8 +13,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
-	compileOnly project(":apps:asset:asset-display-page-api")
-	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:export-import:export-import-api")

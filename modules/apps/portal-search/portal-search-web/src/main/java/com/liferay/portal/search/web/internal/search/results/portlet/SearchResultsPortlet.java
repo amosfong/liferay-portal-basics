@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.web.internal.search.results.portlet;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -149,12 +147,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 	protected boolean isRenderNothing(
 		RenderRequest renderRequest, SearchRequest searchRequest) {
 
-		long assetEntryId = ParamUtil.getLong(renderRequest, "assetEntryId");
-
-		if (assetEntryId != 0) {
-			return false;
-		}
-
 		if ((searchRequest.getQueryString() == null) &&
 			!searchRequest.isEmptySearchEnabled()) {
 
@@ -163,11 +155,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	protected AssetEntryLocalService assetEntryLocalService;
-
-	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
 
 	@Reference
 	protected DocumentBuilderFactory documentBuilderFactory;
@@ -323,11 +310,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 			searchResultSummaryDisplayContextBuilder =
 				new SearchResultSummaryDisplayContextBuilder();
 
-		searchResultSummaryDisplayContextBuilder.setAssetEntryLocalService(
-			assetEntryLocalService
-		).setAssetRendererFactoryLookup(
-			assetRendererFactoryLookup
-		).setClassNameLocalService(
+		searchResultSummaryDisplayContextBuilder.setClassNameLocalService(
 			_classNameLocalService
 		).setCurrentURL(
 			getCurrentURL(renderRequest)

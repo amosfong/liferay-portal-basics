@@ -5,13 +5,6 @@
 
 package com.liferay.layout.page.template.internal.exportimport.content.processor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -124,24 +117,6 @@ public class DataValuesMappingExportImportContentProcessor
 				type, InfoListItemSelectorReturnType.class.getName())) {
 
 			return;
-		}
-
-		long classPK = collectionJSONObject.getLong("classPK");
-
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(classPK);
-
-		if (assetListEntry != null) {
-			try {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedModel, assetListEntry,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-			catch (PortletDataException portletDataException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portletDataException);
-				}
-			}
 		}
 	}
 
@@ -379,73 +354,6 @@ public class DataValuesMappingExportImportContentProcessor
 		String className = _portal.getClassName(classNameId);
 
 		jsonObject.put("className", className);
-
-		className = _infoSearchClassMapperRegistry.getSearchClassName(
-			className);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			className, classPK);
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-		if (assetRenderer == null) {
-			return;
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!stagingGroupHelper.isStagedPortlet(
-				portletDataContext.getScopeGroupId(),
-				assetRendererFactory.getPortletId())) {
-
-			return;
-		}
-
-		if (exportReferencedContent) {
-			try {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedModel,
-					(StagedModel)assetRenderer.getAssetObject(),
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					String errorMessage = StringBundler.concat(
-						"Staged model with class name ",
-						stagedModel.getModelClassName(), " and primary key ",
-						stagedModel.getPrimaryKeyObj(),
-						" references asset entry with class primary key ",
-						classPK, " and class name ",
-						_portal.getClassName(classNameId),
-						" that could not be exported due to ", exception);
-
-					if (Validator.isNotNull(exception.getMessage())) {
-						errorMessage = StringBundler.concat(
-							errorMessage, ": ", exception.getMessage());
-					}
-
-					_log.debug(errorMessage, exception);
-				}
-			}
-		}
-		else {
-			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
-
-			portletDataContext.addReferenceElement(
-				stagedModel, entityElement,
-				(ClassedModel)assetRenderer.getAssetObject(),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-		}
 	}
 
 	private void _replaceCollectionImportContentReferences(
@@ -471,68 +379,6 @@ public class DataValuesMappingExportImportContentProcessor
 				type, InfoListItemSelectorReturnType.class.getName())) {
 
 			return;
-		}
-
-		long classPK = collectionJSONObject.getLong("classPK");
-
-		Map<Long, Long> assetListEntryNewPrimaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetListEntry.class.getName());
-
-		long newClassPK = MapUtil.getLong(
-			assetListEntryNewPrimaryKeys, classPK, -1);
-
-		if (newClassPK == -1) {
-			try {
-				StagedModelDataHandlerUtil.importReferenceStagedModel(
-					portletDataContext, stagedModel, AssetListEntry.class,
-					classPK);
-			}
-			catch (Exception exception) {
-				StringBundler exceptionSB = new StringBundler(6);
-
-				exceptionSB.append("Unable to process asset list entry ");
-				exceptionSB.append(classPK);
-				exceptionSB.append(" for ");
-				exceptionSB.append(stagedModel.getModelClassName());
-				exceptionSB.append(" with primary key ");
-				exceptionSB.append(stagedModel.getPrimaryKeyObj());
-
-				ExportImportContentProcessorException
-					exportImportContentProcessorException =
-						new ExportImportContentProcessorException(
-							exceptionSB.toString(), exception);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						exceptionSB.toString(),
-						exportImportContentProcessorException);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(exceptionSB.toString());
-				}
-			}
-		}
-
-		newClassPK = MapUtil.getLong(
-			assetListEntryNewPrimaryKeys, classPK, classPK);
-
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
-
-		if (assetListEntry != null) {
-			collectionJSONObject.put(
-				"classNameId",
-				_portal.getClassNameId(assetListEntry.getAssetEntryType())
-			).put(
-				"classPK", String.valueOf(newClassPK)
-			).put(
-				"itemSubtype", assetListEntry.getAssetEntrySubtype()
-			).put(
-				"itemType", assetListEntry.getAssetEntryType()
-			).put(
-				"title", assetListEntry.getTitle()
-			);
 		}
 	}
 
@@ -727,52 +573,12 @@ public class DataValuesMappingExportImportContentProcessor
 					"fieldId", _DDM_TEMPLATE + importedDDMTemplateKey);
 			}
 		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!stagingGroupHelper.isStagedPortlet(
-				portletDataContext.getScopeGroupId(),
-				assetRendererFactory.getPortletId())) {
-
-			return;
-		}
-
-		long classPK = jsonObject.getLong("classPK");
-
-		if (classPK == 0) {
-			return;
-		}
-
-		jsonObject.put("classNameId", _portal.getClassNameId(className));
-
-		Map<Long, Long> primaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
-
-		classPK = MapUtil.getLong(primaryKeys, classPK, classPK);
-
-		jsonObject.put("classPK", classPK);
-
-		if (jsonObject.has("fileEntryId")) {
-			jsonObject.put("fileEntryId", classPK);
-		}
 	}
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataValuesMappingExportImportContentProcessor.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

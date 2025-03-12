@@ -5,14 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -100,7 +92,6 @@ public class ContentPageLayoutEditorDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageLayoutEditorDisplayContext(
-		AssetListEntryLocalService assetListEntryLocalService,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
 		ContentManager contentManager,
 		FragmentCollectionManager fragmentCollectionManager,
@@ -153,7 +144,6 @@ public class ContentPageLayoutEditorDisplayContext
 			styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 
-		_assetListEntryLocalService = assetListEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
@@ -268,97 +258,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return _segmentsExperienceId;
 	}
 
-	private AssetListEntry _getAssetListEntry(String collectionPK) {
-		return _assetListEntryLocalService.fetchAssetListEntry(
-			GetterUtil.getLong(collectionPK));
-	}
-
-	private String _getAssetListEntryItemTypeLabel(
-		AssetListEntry assetListEntry) {
-
-		if (Objects.equals(
-				assetListEntry.getAssetEntryType(),
-				AssetEntry.class.getName())) {
-
-			return language.get(httpServletRequest, "multiple-item-types");
-		}
-
-		String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(
-			themeDisplay.getLocale(), assetListEntry.getAssetEntryType());
-
-		long classTypeId = GetterUtil.getLong(
-			assetListEntry.getAssetEntrySubtype(), -1);
-
-		if (classTypeId >= 0) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetListEntry.getAssetEntryType());
-
-			if ((assetRendererFactory != null) &&
-				assetRendererFactory.isSupportsClassTypes()) {
-
-				ClassTypeReader classTypeReader =
-					assetRendererFactory.getClassTypeReader();
-
-				try {
-					ClassType classType = classTypeReader.getClassType(
-						classTypeId, themeDisplay.getLocale());
-
-					assetEntryTypeLabel =
-						assetEntryTypeLabel + " - " + classType.getName();
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
-			}
-		}
-
-		return assetEntryTypeLabel;
-	}
-
-	private String _getAssetListEntryItemTypeURL(AssetListEntry assetListEntry)
-		throws Exception {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			portletRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"assetListEntryId",
-			String.valueOf(assetListEntry.getAssetListEntryId()));
-
-		return portletURL.toString();
-	}
-
-	private JSONArray _getAssetListEntryLinkedCollectionJSONArray(
-		AssetListEntry assetListEntry) {
-
-		return JSONUtil.put(
-			JSONUtil.put(
-				"classNameId",
-				portal.getClassNameId(AssetListEntry.class.getName())
-			).put(
-				"classPK", String.valueOf(assetListEntry.getAssetListEntryId())
-			).put(
-				"itemSubtype", assetListEntry.getAssetEntrySubtype()
-			).put(
-				"itemType", assetListEntry.getAssetEntryType()
-			).put(
-				"title", assetListEntry.getTitle()
-			).put(
-				"type", InfoListItemSelectorReturnType.class.getName()
-			));
-	}
-
 	private String _getEditSegmentsEntryURL() throws Exception {
 		if (_editSegmentsEntryURL != null) {
 			return _editSegmentsEntryURL;
@@ -410,10 +309,6 @@ public class ContentPageLayoutEditorDisplayContext
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
 		String className = infoCollectionProvider.getCollectionItemClassName();
-
-		if (Objects.equals(className, AssetEntry.class.getName())) {
-			return language.get(httpServletRequest, "multiple-item-types");
-		}
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(
@@ -551,26 +446,8 @@ public class ContentPageLayoutEditorDisplayContext
 					collectionType,
 					InfoListItemSelectorReturnType.class.getName())) {
 
-			AssetListEntry assetListEntry = _getAssetListEntry(collectionPK);
-
-			if (assetListEntry != null) {
-				itemTypeLabel = _getAssetListEntryItemTypeLabel(assetListEntry);
-				linkedCollectionJSONArray =
-					_getAssetListEntryLinkedCollectionJSONArray(assetListEntry);
-				subtypeLabel = assetListEntry.getTitle();
-				subtypeURL = _getAssetListEntryItemTypeURL(assetListEntry);
-			}
-
-			if (assetListEntry.getType() ==
-					AssetListEntryTypeConstants.TYPE_DYNAMIC) {
-
-				typeLabel = language.get(
-					httpServletRequest, "dynamic-collection");
-			}
-			else {
-				typeLabel = language.get(
-					httpServletRequest, "manual-collection");
-			}
+			typeLabel = language.get(
+				httpServletRequest, "manual-collection");
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -688,7 +565,6 @@ public class ContentPageLayoutEditorDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageLayoutEditorDisplayContext.class);
 
-	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private String _editSegmentsEntryURL;
 	private final GroupLocalService _groupLocalService;
 	private final LayoutPageTemplateStructureLocalService

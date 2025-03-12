@@ -5,8 +5,6 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.portlet;
 
-import com.liferay.asset.constants.AssetWebKeys;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -55,7 +53,6 @@ public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		resourceRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
 		resourceRequest.setAttribute(
 			PortletCategoryManager.class.getName(), _portletCategoryManager);
 
@@ -78,8 +75,6 @@ public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 			return;
 		}
 
-		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
-
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
@@ -93,9 +88,6 @@ public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	private AssetHelper _assetHelper;
 
 	@Reference
 	private Portal _portal;

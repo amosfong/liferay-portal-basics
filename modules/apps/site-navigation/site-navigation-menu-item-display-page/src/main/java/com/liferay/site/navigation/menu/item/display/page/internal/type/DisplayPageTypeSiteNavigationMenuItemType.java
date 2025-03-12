@@ -5,8 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
@@ -65,13 +63,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	implements SiteNavigationMenuItemType {
 
 	public DisplayPageTypeSiteNavigationMenuItemType(
-		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		DisplayPageTypeContext displayPageTypeContext,
 		ItemSelector itemSelector, JSPRenderer jspRenderer, Portal portal,
 		ServletContext servletContext) {
 
-		_assetDisplayPageFriendlyURLProvider =
-			assetDisplayPageFriendlyURLProvider;
 		_displayPageTypeContext = displayPageTypeContext;
 		_itemSelector = itemSelector;
 		_jspRenderer = jspRenderer;
@@ -219,25 +214,11 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			return StringPool.BLANK;
 		}
 
-		String friendlyURL =
-			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_displayPageTypeContext.getInfoItemReference(
-					siteNavigationMenuItem),
-				themeDisplay);
-
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
 		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getStatusIcon(SiteNavigationMenuItem siteNavigationMenuItem) {
-		if (!_hasAssetDisplayPage(siteNavigationMenuItem)) {
-			return "warning-full";
-		}
-
 		return SiteNavigationMenuItemType.super.getStatusIcon(
 			siteNavigationMenuItem);
 	}
@@ -391,10 +372,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
-		if (_hasAssetDisplayPage(siteNavigationMenuItem)) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -435,28 +412,9 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			"/edit_display_page_type.jsp");
 	}
 
-	private boolean _hasAssetDisplayPage(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem.getTypeSettings()
-			).build();
-
-		return AssetDisplayPageUtil.hasAssetDisplayPage(
-			siteNavigationMenuItem.getGroupId(),
-			GetterUtil.getLong(
-				typeSettingsUnicodeProperties.get("classNameId")),
-			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")),
-			GetterUtil.getLong(
-				typeSettingsUnicodeProperties.get("classTypeId")));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageTypeSiteNavigationMenuItemType.class);
 
-	private final AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 	private final DisplayPageTypeContext _displayPageTypeContext;
 	private final ItemSelector _itemSelector;
 	private final JSPRenderer _jspRenderer;

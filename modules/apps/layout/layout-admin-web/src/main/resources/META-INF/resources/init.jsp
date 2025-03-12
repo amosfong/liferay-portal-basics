@@ -9,8 +9,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
-taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/friendly-url" prefix="liferay-friendly-url" %><%@
@@ -42,11 +41,9 @@ page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminM
 page import="com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.layout.admin.web.internal.display.context.SelectCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutPageTemplateEntryDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.CollectionProvidersVerticalCard" %><%@
-page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.CollectionsVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.LayoutUtilityPageEntryVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectBasicTemplatesNavigationCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectBasicTemplatesVerticalCard" %><%@

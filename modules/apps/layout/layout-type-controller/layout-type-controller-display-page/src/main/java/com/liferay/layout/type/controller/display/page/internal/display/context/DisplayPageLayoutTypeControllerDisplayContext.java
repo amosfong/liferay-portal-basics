@@ -5,12 +5,6 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -41,68 +35,14 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 
-		long assetEntryId = ParamUtil.getLong(
-			httpServletRequest, "assetEntryId");
-
 		Object infoItem = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 		InfoItemDetails infoItemDetails =
 			(InfoItemDetails)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-		if ((assetEntryId > 0) && (infoItem == null) &&
-			(infoItemDetails == null)) {
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				assetEntryId);
-
-			String className = infoSearchClassMapperRegistry.getClassName(
-				assetEntry.getClassName());
-
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				(InfoItemObjectProvider<Object>)
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-			InfoItemIdentifier infoItemIdentifier =
-				new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
-
-			infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
-
-			infoItem = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
-
-			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-			if (assetRenderer != null) {
-				InfoItemDetailsProvider infoItemDetailsProvider =
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemDetailsProvider.class, className);
-
-				infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
-					assetRenderer.getAssetObject());
-			}
-
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_ITEM, infoItem);
-			httpServletRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-
-			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
-				httpServletRequest, assetEntry.getEntryId());
-		}
-
 		_infoItem = infoItem;
 		_infoItemDetails = infoItemDetails;
-	}
-
-	public AssetRendererFactory<?> getAssetRendererFactory() {
-		if (_infoItemDetails == null) {
-			return null;
-		}
-
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(_infoItemDetails.getClassName());
 	}
 
 	public boolean hasInfoItem() {
@@ -129,29 +69,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		if (infoItemPermissionProvider != null) {
 			return infoItemPermissionProvider.hasPermission(
 				permissionChecker, _infoItem, actionId);
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			getAssetRendererFactory();
-
-		if (assetRendererFactory != null) {
-			InfoItemReference infoItemReference =
-				_infoItemDetails.getInfoItemReference();
-
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-				return false;
-			}
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			return assetRendererFactory.hasPermission(
-				permissionChecker, classPKInfoItemIdentifier.getClassPK(),
-				actionId);
 		}
 
 		return true;

@@ -5,11 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
@@ -197,22 +192,6 @@ public class GetCollectionFieldMVCResourceCommand
 		};
 	}
 
-	private AssetListEntry _getAssetListEntry(
-		ListObjectReference listObjectReference) {
-
-		// LPS-133832
-
-		if (listObjectReference instanceof ClassedModelListObjectReference) {
-			ClassedModelListObjectReference classedModelListObjectReference =
-				(ClassedModelListObjectReference)listObjectReference;
-
-			return _assetListEntryLocalService.fetchAssetListEntry(
-				classedModelListObjectReference.getClassPK());
-		}
-
-		return null;
-	}
-
 	private JSONObject _getCollectionFieldsJSONObject(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, int activePage,
@@ -249,14 +228,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		String originalItemType = null;
 
-		AssetListEntry assetListEntry = _getAssetListEntry(listObjectReference);
-
-		if (assetListEntry != null) {
-			originalItemType = assetListEntry.getAssetEntryType();
-		}
-		else {
-			originalItemType = listObjectReference.getItemType();
-		}
+		originalItemType = listObjectReference.getItemType();
 
 		if (!_hasViewPermission(httpServletRequest, listObjectReference)) {
 			return JSONUtil.put(
@@ -268,11 +240,7 @@ public class GetCollectionFieldMVCResourceCommand
 			).put(
 				"itemSubtype",
 				() -> {
-					if (assetListEntry == null) {
-						return null;
-					}
-
-					return assetListEntry.getAssetEntrySubtype();
+					return null;
 				}
 			).put(
 				"itemType", originalItemType
@@ -377,11 +345,7 @@ public class GetCollectionFieldMVCResourceCommand
 		).put(
 			"itemSubtype",
 			() -> {
-				if (assetListEntry == null) {
-					return null;
-				}
-
-				return assetListEntry.getAssetEntrySubtype();
+				return null;
 			}
 		).put(
 			"itemType", originalItemType
@@ -434,14 +398,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 			String className =
 				_infoSearchClassMapperRegistry.getSearchClassName(itemType);
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (assetRendererFactory != null) {
-				sourceItemTypes.add(AssetEntry.class.getName());
-			}
 
 			relatedInfoItemCollectionProviderItemSelectorCriterion.
 				setSourceItemTypes(sourceItemTypes);
@@ -655,9 +611,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionFieldMVCResourceCommand.class);
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

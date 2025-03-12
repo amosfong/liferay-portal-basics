@@ -71,20 +71,6 @@
 												<div class="h6 text-default">
 													<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>
 												</div>
-
-												<div class="h6 text-default">
-													<liferay-asset:asset-tags-summary
-														className="<%= Group.class.getName() %>"
-														classPK="<%= childGroup.getGroupId() %>"
-													/>
-												</div>
-
-												<div class="h6 text-default">
-													<liferay-asset:asset-categories-summary
-														className="<%= Group.class.getName() %>"
-														classPK="<%= childGroup.getGroupId() %>"
-													/>
-												</div>
 											</liferay-ui:search-container-column-text>
 										</c:otherwise>
 									</c:choose>

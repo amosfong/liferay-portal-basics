@@ -58,12 +58,6 @@ public interface PortletDataContext extends Serializable {
 
 	public static final String REFERENCE_TYPE_WEAK = "weak";
 
-	public void addAssetCategories(
-		String className, long classPK, long[] assetCategoryIds);
-
-	public void addAssetTags(
-		String className, long classPK, String[] assetTagNames);
-
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException;
@@ -145,16 +139,6 @@ public interface PortletDataContext extends Serializable {
 	public Object fromXML(byte[] bytes);
 
 	public Object fromXML(String xml);
-
-	public long[] getAssetCategoryIds(Class<?> clazz, Serializable classPK);
-
-	public Set<Long> getAssetLinkIds();
-
-	public String[] getAssetTagNames(Class<?> clazz, Serializable classPK);
-
-	public String[] getAssetTagNames(String className, Serializable classPK);
-
-	public Map<String, String[]> getAssetTagNamesMap();
 
 	public boolean getBooleanParameter(String namespace, String name);
 

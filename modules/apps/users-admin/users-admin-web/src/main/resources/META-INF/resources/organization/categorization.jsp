@@ -20,25 +20,6 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 	value="categorization"
 />
 
-<liferay-asset:asset-categories-error />
-
-<liferay-asset:asset-tags-error />
-
 <label class="control-label">
 	<liferay-ui:message key="categorization" />
 </label>
-
-<div class="form-group">
-	<liferay-asset:asset-categories-selector
-		className="<%= Organization.class.getName() %>"
-		classPK="<%= (organization != null) ? organization.getPrimaryKey() : 0 %>"
-		visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-	/>
-</div>
-
-<div class="form-group">
-	<liferay-asset:asset-tags-selector
-		className="<%= Organization.class.getName() %>"
-		classPK="<%= (organization != null) ? organization.getPrimaryKey() : 0 %>"
-	/>
-</div>

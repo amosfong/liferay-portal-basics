@@ -9,8 +9,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -29,7 +28,6 @@ portletDisplay.setShowBackIcon(false);
 
 SearchResultContentDisplayContextBuilder searchResultContentDisplayContextBuilder = new SearchResultContentDisplayContextBuilder();
 
-searchResultContentDisplayContextBuilder.setAssetEntryId(ParamUtil.getLong(request, "assetEntryId"));
 searchResultContentDisplayContextBuilder.setLocale(locale);
 searchResultContentDisplayContextBuilder.setPermissionChecker(permissionChecker);
 searchResultContentDisplayContextBuilder.setPortal(PortalUtil.getPortal());
@@ -64,11 +62,4 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 			</c:if>
 		</div>
 	</div>
-
-	<liferay-asset:asset-display
-		assetEntry="<%= searchResultContentDisplayContext.getAssetEntry() %>"
-		assetRenderer="<%= searchResultContentDisplayContext.getAssetRenderer() %>"
-		assetRendererFactory="<%= searchResultContentDisplayContext.getAssetRendererFactory() %>"
-		showExtraInfo="<%= searchResultContentDisplayContext.isShowExtraInfo() %>"
-	/>
 </c:if>

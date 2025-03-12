@@ -6,8 +6,6 @@
 package com.liferay.layout.admin.web.internal.action.provider;
 
 import com.liferay.application.list.GroupProvider;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -240,28 +238,6 @@ public class LayoutActionProvider {
 
 	private String _getBackURLTitle() {
 		Layout layout = _themeDisplay.getLayout();
-
-		if (!layout.isTypeAssetDisplay()) {
-			return layout.getName(_themeDisplay.getLocale());
-		}
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			(LayoutDisplayPageObjectProvider<?>)
-				_httpServletRequest.getAttribute(
-					LayoutDisplayPageWebKeys.
-						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
-		if (layoutDisplayPageObjectProvider != null) {
-			return layoutDisplayPageObjectProvider.getTitle(
-				_themeDisplay.getLocale());
-		}
-
-		AssetEntry assetEntry = (AssetEntry)_httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (assetEntry != null) {
-			return assetEntry.getTitle(_themeDisplay.getLocale());
-		}
 
 		return layout.getName(_themeDisplay.getLocale());
 	}
@@ -613,37 +589,7 @@ public class LayoutActionProvider {
 	}
 
 	private String _getViewCollectionItemsURL(Layout layout) throws Exception {
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.VIEW)
-		).setRedirect(
-			() -> {
-				String redirect = PortalUtil.getLayoutRelativeURL(
-					_themeDisplay.getLayout(), _themeDisplay);
-
-				Layout curLayout = _themeDisplay.getLayout();
-
-				if (curLayout.isTypeAssetDisplay() ||
-					curLayout.isTypeControlPanel()) {
-
-					return ParamUtil.getString(
-						_httpServletRequest, "redirect", redirect);
-				}
-
-				return redirect;
-			}
-		).setParameter(
-			"backURLTitle", _getBackURLTitle()
-		).setParameter(
-			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
-		).setParameter(
-			"collectionType", layout.getTypeSettingsProperty("collectionType")
-		).setParameter(
-			"showActions", true
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+		return null;
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

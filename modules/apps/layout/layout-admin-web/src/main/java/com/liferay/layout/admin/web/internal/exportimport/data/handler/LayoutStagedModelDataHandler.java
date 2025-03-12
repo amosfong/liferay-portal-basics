@@ -5,8 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
@@ -944,8 +942,6 @@ public class LayoutStagedModelDataHandler
 
 		_importLayoutFriendlyURLs(importedLayout, layout, portletDataContext);
 
-		_importAssets(importedLayout, layout, portletDataContext);
-
 		_importLayoutPageTemplateStructures(
 			importedLayout, layout, portletDataContext);
 
@@ -1285,25 +1281,6 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		long collectionPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.getProperty(
-				"collectionPK", StringPool.BLANK));
-
-		if (collectionPK <= 0) {
-			return;
-		}
-
-		try {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout,
-				_assetListEntryLocalService.getAssetListEntry(collectionPK),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
 	}
 
 	private void _exportDraftLayout(
@@ -2043,19 +2020,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return friendlyURL;
-	}
-
-	private void _importAssets(
-			Layout importedLayout, Layout layout,
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		_layoutLocalService.updateAsset(
-			portletDataContext.getUserId(layout.getUserUuid()), importedLayout,
-			portletDataContext.getAssetCategoryIds(
-				Layout.class, layout.getPlid()),
-			portletDataContext.getAssetTagNames(
-				Layout.class, layout.getPlid()));
 	}
 
 	private void _importClientExtensionEntryRels(
@@ -3005,42 +2969,6 @@ public class LayoutStagedModelDataHandler
 			return importedLayout;
 		}
 
-		long collectionPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.getProperty(
-				"collectionPK", StringPool.BLANK));
-
-		if (collectionPK <= 0) {
-			return importedLayout;
-		}
-
-		try {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, layout, AssetListEntry.class, collectionPK);
-
-			Map<Long, Long> assetListEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					AssetListEntry.class);
-
-			long assetListEntryId = MapUtil.getLong(
-				assetListEntryIds, collectionPK, collectionPK);
-
-			typeSettingsUnicodeProperties.setProperty(
-				"collectionPK", String.valueOf(assetListEntryId));
-
-			importedLayout = _layoutLocalService.getLayout(
-				importedLayout.getPlid());
-
-			importedLayout.setTypeSettingsProperties(
-				typeSettingsUnicodeProperties);
-
-			importedLayout = _layoutLocalService.updateLayout(importedLayout);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
 		return importedLayout;
 	}
 
@@ -3152,9 +3080,6 @@ public class LayoutStagedModelDataHandler
 		TransactionConfig.Factory.create(
 			Propagation.SUPPORTS,
 			new Class<?>[] {PortalException.class, SystemException.class});
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private ClientExtensionEntryRelLocalService

@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -536,43 +535,7 @@ public class LayoutActionDropdownItemsProvider {
 	private String _getViewCollectionItemsURL(Layout layout)
 		throws PortalException, WindowStateException {
 
-		if (!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
-			return null;
-		}
-
-		String collectionType = layout.getTypeSettingsProperty(
-			"collectionType");
-
-		if (Validator.isNull(collectionType)) {
-			return null;
-		}
-
-		String collectionPK = layout.getTypeSettingsProperty("collectionPK");
-
-		if (Validator.isNull(collectionPK)) {
-			return null;
-		}
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		if (portletURL == null) {
-			return null;
-		}
-
-		portletURL.setParameter(
-			"redirect", _layoutsAdminDisplayContext.getRedirect());
-		portletURL.setParameter(
-			"backURLTitle", LanguageUtil.get(_httpServletRequest, "pages"));
-		portletURL.setParameter("collectionPK", collectionPK);
-		portletURL.setParameter("collectionType", collectionType);
-		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		return null;
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

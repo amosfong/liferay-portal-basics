@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.type.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.capability.InfoItemCapability;
@@ -69,10 +68,6 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTracker {
 
 		_serviceRegistrations.clear();
 	}
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference(
 		target = "(info.item.capability.key=" + DisplayPageInfoItemCapability.KEY + ")"
@@ -165,7 +160,6 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTracker {
 					_bundleContext.registerService(
 						SiteNavigationMenuItemType.class,
 						new DisplayPageTypeSiteNavigationMenuItemType(
-							_assetDisplayPageFriendlyURLProvider,
 							new DisplayPageTypeContext(
 								className, _infoItemServiceRegistry,
 								_layoutDisplayPageInfoItemFieldValuesProviderRegistry,

@@ -5,8 +5,6 @@
 
 package com.liferay.fragment.internal.exportimport.content.processor;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -59,51 +57,13 @@ public class
 			"className",
 			_portal.getClassName(
 				configurationValueJSONObject.getLong("classNameId")));
-
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(
-				configurationValueJSONObject.getLong("classPK"));
-
-		if (assetListEntry == null) {
-			return;
-		}
-
-		if (exportReferencedContent) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, assetListEntry,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-		else {
-			Element entityElement = portletDataContext.getExportDataElement(
-				assetListEntry);
-
-			portletDataContext.addReferenceElement(
-				stagedModel, entityElement, assetListEntry,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-		}
 	}
 
 	@Override
 	protected void replaceImportContentReferences(
 		PortletDataContext portletDataContext,
 		JSONObject configurationValueJSONObject) {
-
-		if (!configurationValueJSONObject.has("classPK")) {
-			return;
-		}
-
-		Map<Long, Long> assetListEntryNewPrimaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetListEntry.class.getName());
-
-		configurationValueJSONObject.put(
-			"classPK",
-			assetListEntryNewPrimaryKeys.getOrDefault(
-				configurationValueJSONObject.getLong("classPK"), 0L));
 	}
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

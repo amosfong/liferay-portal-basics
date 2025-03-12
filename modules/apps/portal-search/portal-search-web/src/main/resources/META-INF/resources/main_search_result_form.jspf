@@ -47,24 +47,6 @@
 				</span>
 			</c:if>
 
-			<c:if test="<%= searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible() %>">
-				<div class="text-default">
-					<liferay-asset:asset-tags-summary
-						className="<%= searchResultSummaryDisplayContext.getClassName() %>"
-						classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
-						paramName="<%= searchResultSummaryDisplayContext.getFieldAssetTagNames() %>"
-						portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
-					/>
-
-					<liferay-asset:asset-categories-summary
-						className="<%= searchResultSummaryDisplayContext.getClassName() %>"
-						classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
-						paramName="<%= searchResultSummaryDisplayContext.getFieldAssetCategoryIds() %>"
-						portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
-					/>
-				</div>
-			</c:if>
-
 			<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
 				<div class="expand-details text-default"><a href="javascript:void(0);"><liferay-ui:message key="details" />...</a></div>
 

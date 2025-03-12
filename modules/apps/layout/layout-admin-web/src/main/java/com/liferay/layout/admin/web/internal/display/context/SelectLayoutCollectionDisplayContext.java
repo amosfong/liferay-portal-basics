@@ -5,9 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryServiceUtil;
-import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -75,43 +72,6 @@ public class SelectLayoutCollectionDisplayContext {
 					_httpServletRequest, "there-are-no-collection-providers"));
 
 		searchContainer.setResultsAndTotal(_getInfoCollectionProviders());
-
-		return searchContainer;
-	}
-
-	public SearchContainer<AssetListEntry> getCollectionsSearchContainer() {
-		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, getPortletURL(), null,
-			LanguageUtil.get(_httpServletRequest, "there-are-no-collections"));
-
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByComparator(
-			AssetListPortletUtil.getAssetListEntryOrderByComparator(
-				_getOrderByCol(), _getOrderByType()));
-		searchContainer.setOrderByType(_getOrderByType());
-
-		if (_isSearch()) {
-			searchContainer.setResultsAndTotal(
-				() -> AssetListEntryServiceUtil.getAssetListEntries(
-					_themeDisplay.getScopeGroupId(), _getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()),
-				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					_themeDisplay.getScopeGroupId(), _getKeywords()));
-		}
-		else {
-			long[] groupIds = {_themeDisplay.getScopeGroupId()};
-
-			List<String> types = _getInfoItemFormProviderSearchClassNames();
-
-			searchContainer.setResultsAndTotal(
-				() -> AssetListEntryServiceUtil.getAssetListEntries(
-					groupIds, types.toArray(new String[0]),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()),
-				AssetListEntryServiceUtil.getAssetListEntriesCount(
-					groupIds, types.toArray(new String[0])));
-		}
 
 		return searchContainer;
 	}

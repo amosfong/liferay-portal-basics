@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -162,42 +161,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 				portletPreferencesIds.getOwnerType(),
 				portletPreferencesIds.getPlid(),
 				portletPreferencesIds.getPortletId(), xml);
-		}
-	}
-
-	@Override
-	public void importAssetLinks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/links.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			portletDataContext.setImportDataRootElement(
-				document.getRootElement());
-
-			Element linksElement = portletDataContext.getImportDataGroupElement(
-				StagedAssetLink.class);
-
-			List<Element> linkElements = linksElement.elements();
-
-			for (Element linkElement : linkElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, linkElement);
-			}
-		}
-		finally {
-			portletDataContext.setImportDataRootElement(importDataRootElement);
 		}
 	}
 
@@ -751,33 +714,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 	@Override
 	public void readLocks(PortletDataContext portletDataContext)
 		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/locks.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> assetElements = rootElement.elements("asset");
-
-		for (Element assetElement : assetElements) {
-			String path = assetElement.attributeValue("path");
-
-			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(path);
-
-			if (lock != null) {
-				String className = assetElement.attributeValue("class-name");
-				String key = assetElement.attributeValue("key");
-
-				portletDataContext.addLocks(className, key, lock);
-			}
-		}
 	}
 
 	@Override
@@ -1032,8 +968,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			portletDataHandler.getDeletionSystemEventStagedModelTypes());
-		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(StagedAssetLink.class));
 	}
 
 	protected void validateFile(
@@ -1363,14 +1297,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 				indexer.reindex(_userLocalService.fetchUser(userId));
 			}
 		}
-
-		// Asset links
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Importing asset links");
-		}
-
-		importAssetLinks(portletDataContext);
 
 		// Deletion system events
 

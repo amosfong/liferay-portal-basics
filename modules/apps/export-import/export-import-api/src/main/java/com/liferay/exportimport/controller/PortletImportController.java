@@ -19,9 +19,6 @@ public interface PortletImportController extends ImportController {
 	public void deletePortletData(PortletDataContext portletDataContext)
 		throws Exception;
 
-	public void importAssetLinks(PortletDataContext portletDataContext)
-		throws Exception;
-
 	public void importPortletData(
 			PortletDataContext portletDataContext, Element portletDataElement)
 		throws Exception;

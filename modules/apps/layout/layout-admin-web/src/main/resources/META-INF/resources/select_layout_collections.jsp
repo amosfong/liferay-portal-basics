@@ -10,8 +10,6 @@
 <%
 SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (SelectLayoutCollectionDisplayContext)request.getAttribute(LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT);
 
-SelectCollectionManagementToolbarDisplayContext selectCollectionManagementToolbarDisplayContext = new SelectCollectionManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectLayoutCollectionDisplayContext);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(layoutsAdminDisplayContext.getBackURL());
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
@@ -25,24 +23,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 	navigationItems="<%= selectLayoutCollectionDisplayContext.getNavigationItems() %>"
 />
 
-<c:if test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
-	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= selectCollectionManagementToolbarDisplayContext %>"
-		propsTransformer="{SelectLayoutCollectionManagementToolbarPropsTransformer} from layout-admin-web"
-	/>
-</c:if>
-
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "collections" %>'
 >
-	<c:choose>
-		<c:when test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
-			<liferay-util:include page="/select_collections.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:otherwise>
-			<liferay-util:include page="/select_collection_providers.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
-	</c:choose>
+	<liferay-util:include page="/select_collection_providers.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>
 
 <aui:script sandbox="<%= true %>">

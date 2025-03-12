@@ -5,9 +5,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import com.liferay.asset.link.model.AssetLink;
-import com.liferay.asset.link.model.adapter.StagedAssetLink;
-import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
@@ -169,61 +166,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 	}
 
 	@Override
-	public void exportAssetLinks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("links");
-
-		Element exportDataRootElement =
-			portletDataContext.getExportDataRootElement();
-
-		try {
-			portletDataContext.setExportDataRootElement(rootElement);
-
-			List<AssetLink> assetLinks = new ArrayList<>();
-
-			if (_isIncludeAllAssetLinks()) {
-				assetLinks.addAll(
-					_assetLinkLocalService.getLinks(
-						portletDataContext.getGroupId(),
-						portletDataContext.getStartDate(),
-						portletDataContext.getEndDate(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS));
-			}
-
-			Set<Long> assetLinkIds = portletDataContext.getAssetLinkIds();
-
-			for (Long assetLinkId : assetLinkIds) {
-				AssetLink assetLink = _assetLinkLocalService.fetchAssetLink(
-					assetLinkId);
-
-				if ((assetLink != null) && !assetLinks.contains(assetLink)) {
-					assetLinks.add(assetLink);
-				}
-			}
-
-			for (AssetLink assetLink : assetLinks) {
-				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
-					assetLink, AssetLink.class, StagedAssetLink.class);
-
-				portletDataContext.addClassedModel(
-					portletDataContext.getExportDataElement(stagedAssetLink),
-					ExportImportPathUtil.getModelPath(stagedAssetLink),
-					stagedAssetLink);
-			}
-		}
-		finally {
-			portletDataContext.setExportDataRootElement(exportDataRootElement);
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) + "/links.xml",
-			document.formattedString());
-	}
-
-	@Override
 	public void exportLocks(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -245,12 +187,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 			String path = _getLockPath(
 				portletDataContext, className, key, lock);
-
-			Element assetElement = rootElement.addElement("asset");
-
-			assetElement.addAttribute("path", path);
-			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("key", key);
 
 			portletDataContext.addZipEntry(path, lock);
 		}
@@ -865,11 +801,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletDataContext, rootElement,
 			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_SETUP));
 
-		exportAssetLinks(portletDataContext);
 		exportLocks(portletDataContext);
-
-		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(StagedAssetLink.class));
 
 		_deletionSystemEventExporter.exportDeletionSystemEvents(
 			portletDataContext);
@@ -1272,22 +1204,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 		return false;
 	}
 
-	private boolean _isIncludeAllAssetLinks() {
-		try {
-			ExportImportServiceConfiguration exportImportServiceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					ExportImportServiceConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
-
-			return exportImportServiceConfiguration.includeAllAssetLinks();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return false;
-	}
-
 	private Portlet _replacePortlet(
 		PortletDataContext portletDataContext, Portlet portlet) {
 
@@ -1312,9 +1228,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportControllerImpl.class);
-
-	@Reference
-	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -5,12 +5,6 @@
 
 package com.liferay.portal.search.web.internal.result.display.context.builder;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -35,81 +29,11 @@ public class SearchResultContentDisplayContextBuilder {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			new SearchResultContentDisplayContext();
 
-		searchResultContentDisplayContext.setAssetRendererFactory(
-			getAssetRendererFactoryByType(_type));
-
-		AssetEntry assetEntry = getAssetEntry();
-
-		searchResultContentDisplayContext.setAssetEntry(assetEntry);
-
-		AssetRenderer<?> assetRenderer = null;
-
-		if (assetEntry != null) {
-			assetRenderer = assetEntry.getAssetRenderer();
-		}
-
-		searchResultContentDisplayContext.setAssetRenderer(assetRenderer);
-
 		boolean visible = false;
-
-		if ((assetEntry != null) && (assetRenderer != null) &&
-			assetEntry.isVisible() &&
-			assetRenderer.hasViewPermission(_permissionChecker)) {
-
-			visible = true;
-		}
 
 		searchResultContentDisplayContext.setVisible(visible);
 
-		if (visible) {
-			String title = assetRenderer.getTitle(_locale);
-
-			searchResultContentDisplayContext.setHeaderTitle(title);
-
-			boolean hasEditPermission = assetRenderer.hasEditPermission(
-				_permissionChecker);
-
-			searchResultContentDisplayContext.setHasEditPermission(
-				hasEditPermission);
-
-			if (hasEditPermission) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				searchResultContentDisplayContext.setIconEditTarget(title);
-				searchResultContentDisplayContext.setIconURLString(
-					PortletURLBuilder.create(
-						assetRenderer.getURLEdit(
-							_portal.getLiferayPortletRequest(_renderRequest),
-							_portal.getLiferayPortletResponse(_renderResponse))
-					).setRedirect(
-						themeDisplay.getURLCurrent()
-					).setPortletResource(
-						() -> {
-							PortletDisplay portletDisplay =
-								themeDisplay.getPortletDisplay();
-
-							return portletDisplay.getId();
-						}
-					).buildString());
-			}
-
-			searchResultContentDisplayContext.setShowExtraInfo(
-				_type.equals("document"));
-		}
-
 		return searchResultContentDisplayContext;
-	}
-
-	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryId = assetEntryId;
-	}
-
-	public void setAssetRendererFactoryLookup(
-		AssetRendererFactoryLookup assetRendererFactoryLookup) {
-
-		_assetRendererFactoryLookup = assetRendererFactoryLookup;
 	}
 
 	public void setLocale(Locale locale) {
@@ -136,24 +60,6 @@ public class SearchResultContentDisplayContextBuilder {
 		_type = type;
 	}
 
-	protected AssetEntry getAssetEntry() throws PortalException {
-		return AssetEntryLocalServiceUtil.getAssetEntry(_assetEntryId);
-	}
-
-	protected AssetRendererFactory<?> getAssetRendererFactoryByType(
-		String type) {
-
-		if (_assetRendererFactoryLookup != null) {
-			return _assetRendererFactoryLookup.getAssetRendererFactoryByType(
-				type);
-		}
-
-		return AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(
-			type);
-	}
-
-	private long _assetEntryId;
-	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
 	private Locale _locale;
 	private PermissionChecker _permissionChecker;
 	private Portal _portal;

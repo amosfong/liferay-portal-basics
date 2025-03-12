@@ -5,10 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -105,33 +101,6 @@ public class GetFragmentEntryLinksMVCResourceCommand
 			resourceRequest, resourceResponse, fragmentEntryLinksJSONArray);
 	}
 
-	private void _addLinkedAssetEntryId(
-		String className, long classPK, HttpServletRequest httpServletRequest) {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return;
-		}
-
-		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				className, classPK);
-
-			if (assetEntry != null) {
-				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
-					httpServletRequest, assetEntry.getEntryId());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-	}
-
 	private JSONObject _getFragmentEntryLinkJSONObject(
 			long fragmentEntryLinkId, String itemClassName, long itemClassPK,
 			String itemExternalReferenceCode, String languageId,
@@ -205,9 +174,6 @@ public class GetFragmentEntryLinksMVCResourceCommand
 				httpServletRequest.setAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
 					new InfoItemReference(itemClassName, infoItemIdentifier));
-
-				_addLinkedAssetEntryId(
-					itemClassName, itemClassPK, httpServletRequest);
 			}
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =

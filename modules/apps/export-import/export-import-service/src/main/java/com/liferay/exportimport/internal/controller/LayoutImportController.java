@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
@@ -443,8 +442,6 @@ public class LayoutImportController implements ImportController {
 			new StagedModelType(Layout.class));
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(SegmentsExperience.class, Layout.class));
-		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(StagedAssetLink.class));
 	}
 
 	protected void validateFile(
@@ -979,10 +976,6 @@ public class LayoutImportController implements ImportController {
 				portletDataContext, layoutSetPrototypeUuid, serviceContext,
 				portletElements, manifestSummary, userId);
 		}
-
-		// Asset links
-
-		_portletImportController.importAssetLinks(portletDataContext);
 
 		// Site
 
