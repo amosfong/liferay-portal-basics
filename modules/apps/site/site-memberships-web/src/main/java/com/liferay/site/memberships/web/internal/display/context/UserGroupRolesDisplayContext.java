@@ -29,7 +29,6 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
-import com.liferay.site.memberships.web.internal.util.DepotRolesUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -235,14 +234,8 @@ public class UserGroupRolesDisplayContext {
 				(_isAssignRoles() && !selectedRoles.contains(role)) ||
 				(!_isAssignRoles() && selectedRoles.contains(role)));
 
-		if (group.isDepot()) {
-			roles = DepotRolesUtil.filterGroupRoles(
-				themeDisplay.getPermissionChecker(), getGroupId(), roles);
-		}
-		else {
-			roles = UsersAdminUtil.filterGroupRoles(
-				themeDisplay.getPermissionChecker(), getGroupId(), roles);
-		}
+		roles = UsersAdminUtil.filterGroupRoles(
+			themeDisplay.getPermissionChecker(), getGroupId(), roles);
 
 		roleSearch.setResultsAndTotal(roles);
 		roleSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));

@@ -18,17 +18,6 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	message="some-load-attributes-cannot-be-changed-because-they-were-set-in-a-client-extension"
 />
 
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="javascript-client-extensions"
->
-	<react:component
-		module="{GlobalJSCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-	/>
-</liferay-frontend:fieldset>
-
 <%
 UnicodeProperties layoutSetTypeSettingsUnicodeProperties = selLayoutSet.getSettingsProperties();
 %>

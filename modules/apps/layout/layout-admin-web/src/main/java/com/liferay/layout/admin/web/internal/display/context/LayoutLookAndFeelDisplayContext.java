@@ -5,12 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
-import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.GlobalJSCET;
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -71,50 +65,6 @@ public class LayoutLookAndFeelDisplayContext {
 			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public Map<String, Object> getGlobalCSSCETsConfigurationProps(
-		String className, long classPK) {
-
-		return HashMapBuilder.<String, Object>put(
-			"globalCSSCETs",
-			_getClientExtensionEntryRelsJSONArray(
-				className, classPK,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
-		).put(
-			"globalCSSCETSelectorURL",
-			() -> PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getCETItemSelectorURL(
-					true, "selectGlobalCSSCETs",
-					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
-			).buildString()
-		).put(
-			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
-		).put(
-			"selectGlobalCSSCETsEventName", "selectGlobalCSSCETs"
-		).build();
-	}
-
-	public Map<String, Object> getGlobalJSCETsConfigurationProps(
-		String className, long classPK) {
-
-		return HashMapBuilder.<String, Object>put(
-			"globalJSCETs",
-			_getClientExtensionEntryRelsJSONArray(
-				className, classPK,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
-		).put(
-			"globalJSCETSelectorURL",
-			() -> PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getCETItemSelectorURL(
-					true, "selectGlobalJSCETs",
-					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
-			).buildString()
-		).put(
-			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
-		).put(
-			"selectGlobalJSCETsEventName", "selectGlobalJSCETs"
-		).build();
 	}
 
 	public Map<String, Object> getMasterLayoutConfigurationProps() {
@@ -285,42 +235,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getThemeSpritemapCETConfigurationProps(
-		String className, long classPK) {
-
-		return HashMapBuilder.<String, Object>put(
-			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
-		).put(
-			"selectThemeSpritemapCETEventName", "selectThemeSpritemapCET"
-		).put(
-			"themeSpritemapCET",
-			() -> {
-				ClientExtensionEntryRel clientExtensionEntryRel =
-					ClientExtensionEntryRelLocalServiceUtil.
-						fetchClientExtensionEntryRel(
-							PortalUtil.getClassNameId(className), classPK,
-							ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
-
-				if (clientExtensionEntryRel == null) {
-					return null;
-				}
-
-				return _getCETJSONObject(
-					clientExtensionEntryRel, true,
-					LanguageUtil.format(
-						_themeDisplay.getLocale(), "from-x",
-						_getLayoutRootNodeName(), false));
-			}
-		).put(
-			"themeSpritemapCETSelectorURL",
-			() -> PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getCETItemSelectorURL(
-					false, "selectThemeSpritemapCET",
-					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)
-			).buildString()
-		).build();
-	}
-
 	public boolean hasEditableMasterLayout() {
 		if (_hasEditableMasterLayout != null) {
 			return _hasEditableMasterLayout;
@@ -404,123 +318,6 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return true;
-	}
-
-	private JSONObject _getCETJSONObject(
-		ClientExtensionEntryRel clientExtensionEntryRel, boolean inherited,
-		String inheritedLabel) {
-
-		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
-			CETManager.class.getName());
-
-		CET cet = cetManager.getCET(
-			_themeDisplay.getCompanyId(),
-			clientExtensionEntryRel.getCETExternalReferenceCode());
-
-		if (cet == null) {
-			return null;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).fastLoad(
-				clientExtensionEntryRel.getTypeSettings()
-			).build();
-
-		return JSONUtil.put(
-			"cetExternalReferenceCode",
-			clientExtensionEntryRel.getCETExternalReferenceCode()
-		).put(
-			"inherited", inherited
-		).put(
-			"inheritedLabel", inheritedLabel
-		).put(
-			"loadType",
-			() -> typeSettingsUnicodeProperties.getProperty("loadType", null)
-		).put(
-			"name", cet.getName(_themeDisplay.getLocale())
-		).put(
-			"scriptElementAttributesJSON",
-			() -> {
-				if (!Objects.equals(
-						cet.getType(),
-						ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-
-					return null;
-				}
-
-				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
-
-				return globalJSCET.getScriptElementAttributesJSON();
-			}
-		).put(
-			"scriptLocation",
-			() -> typeSettingsUnicodeProperties.getProperty(
-				"scriptLocation", null)
-		);
-	}
-
-	private JSONArray _getClientExtensionEntryRelsJSONArray(
-		String className, long classPK, String type) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		if (Objects.equals(className, Layout.class.getName())) {
-			LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
-
-			List<ClientExtensionEntryRel> clientExtensionEntryRels =
-				ClientExtensionEntryRelLocalServiceUtil.
-					getClientExtensionEntryRels(
-						PortalUtil.getClassNameId(LayoutSet.class),
-						layoutSet.getLayoutSetId(), type);
-
-			for (ClientExtensionEntryRel clientExtensionEntryRel :
-					clientExtensionEntryRels) {
-
-				jsonArray.put(
-					() -> _getCETJSONObject(
-						clientExtensionEntryRel, true,
-						LanguageUtil.format(
-							_themeDisplay.getLocale(), "from-x",
-							_getLayoutRootNodeName(), false)));
-			}
-
-			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
-
-			if ((layout != null) && (layout.getMasterLayoutPlid() > 0)) {
-				clientExtensionEntryRels =
-					ClientExtensionEntryRelLocalServiceUtil.
-						getClientExtensionEntryRels(
-							PortalUtil.getClassNameId(Layout.class),
-							layout.getMasterLayoutPlid(), type);
-
-				for (ClientExtensionEntryRel clientExtensionEntryRel :
-						clientExtensionEntryRels) {
-
-					jsonArray.put(
-						() -> _getCETJSONObject(
-							clientExtensionEntryRel, true,
-							LanguageUtil.format(
-								_themeDisplay.getLocale(), "from-x", "master",
-								true)));
-				}
-			}
-		}
-
-		List<ClientExtensionEntryRel> clientExtensionEntryRels =
-			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
-				PortalUtil.getClassNameId(className), classPK, type);
-
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				clientExtensionEntryRels) {
-
-			jsonArray.put(
-				() -> _getCETJSONObject(
-					clientExtensionEntryRel, false, StringPool.DASH));
-		}
-
-		return jsonArray;
 	}
 
 	private String _getLayoutRootNodeName() {

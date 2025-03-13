@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -589,7 +588,7 @@ public class GraphQLServletExtender {
 
 		_liferayMethodDataFetchingProcessor =
 			new LiferayMethodDataFetchingProcessor(
-				_bundleContext, _companyLocalService, _depotEntryLocalService,
+				_bundleContext, _companyLocalService,
 				_expressionConvert, _filterParserProvider,
 				_graphQLContributorServiceTrackerList, _groupLocalService,
 				_language, _paginationProvider, _portal,
@@ -2062,9 +2061,6 @@ public class GraphQLServletExtender {
 	private ConfigurationProvider _configurationProvider;
 
 	private DefaultTypeFunction _defaultTypeFunction;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
@@ -577,21 +576,6 @@ public class DDMTemplateLocalServiceImpl
 			return template;
 		}
 
-		if (!includeAncestorTemplates) {
-			return null;
-		}
-
-		for (long ancestorSiteGroupId :
-				_getAncestorSiteAndDepotGroupIds(groupId)) {
-
-			template = ddmTemplatePersistence.fetchByG_C_T(
-				ancestorSiteGroupId, classNameId, templateKey);
-
-			if (template != null) {
-				return template;
-			}
-		}
-
 		return null;
 	}
 
@@ -670,17 +654,6 @@ public class DDMTemplateLocalServiceImpl
 				"No DDMTemplate exists with the template key " + templateKey);
 		}
 
-		for (long ancestorSiteGroupId :
-				_getAncestorSiteAndDepotGroupIds(groupId)) {
-
-			template = ddmTemplatePersistence.fetchByG_C_T(
-				ancestorSiteGroupId, classNameId, templateKey);
-
-			if (template != null) {
-				return template;
-			}
-		}
-
 		throw new NoSuchTemplateException(
 			"No DDMTemplate exists with the template key " + templateKey +
 				" in the ancestor groups");
@@ -745,15 +718,6 @@ public class DDMTemplateLocalServiceImpl
 
 		ddmTemplates.addAll(
 			ddmTemplatePersistence.findByG_C_C(groupId, classNameId, classPK));
-
-		if (!includeAncestorTemplates) {
-			return ddmTemplates;
-		}
-
-		ddmTemplates.addAll(
-			ddmTemplatePersistence.findByG_C_C(
-				_getAncestorSiteAndDepotGroupIds(groupId), classNameId,
-				classPK));
 
 		return ddmTemplates;
 	}
@@ -1736,25 +1700,6 @@ public class DDMTemplateLocalServiceImpl
 		return targetTemplate;
 	}
 
-	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
-		try {
-			SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
-				_siteConnectedGroupGroupProviderSnapshot.get();
-
-			if (siteConnectedGroupGroupProvider == null) {
-				return _portal.getAncestorSiteGroupIds(groupId);
-			}
-
-			return siteConnectedGroupGroupProvider.
-				getAncestorSiteAndDepotGroupIds(groupId, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return new long[0];
-		}
-	}
-
 	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
 			long groupId)
 		throws ConfigurationException {
@@ -1923,11 +1868,6 @@ public class DDMTemplateLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateLocalServiceImpl.class);
-
-	private static final Snapshot<SiteConnectedGroupGroupProvider>
-		_siteConnectedGroupGroupProviderSnapshot = new Snapshot<>(
-			DDMTemplateLocalServiceImpl.class,
-			SiteConnectedGroupGroupProvider.class, null, true);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -10,7 +10,6 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
@@ -576,21 +575,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 		return panelAppKeys.toArray(new String[0]);
 	}
 
-	private boolean _isDepotGroup(long groupId) {
-		try {
-			Group group = _groupService.getGroup(groupId);
-
-			if (group.isDepot()) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
-	}
-
 	private void _setAttributes(PortletRequest portletRequest) {
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
@@ -728,19 +712,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			selResource = PortletKeys.PORTAL;
 			actionId = ActionKeys.VIEW_CONTROL_PANEL;
-		}
-		else if (panelCategoryHelper.containsPortlet(
-					portletId, PanelCategoryKeys.SITE_ADMINISTRATION)) {
-
-			_updateAction(
-				role, scopeGroupId, DepotEntry.class.getName(),
-				ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
-				ArrayUtil.filter(
-					groupIds,
-					groupId -> _isDepotGroup(GetterUtil.getLong(groupId))));
-
-			selResource = Group.class.getName();
-			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
 		}
 
 		if (selResource != null) {

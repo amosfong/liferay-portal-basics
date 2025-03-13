@@ -8,13 +8,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
-import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
-import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -152,8 +145,6 @@ public class LayoutsAdminDisplayContext {
 		httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 
-		_cetManager = (CETManager)httpServletRequest.getAttribute(
-			CETManager.class.getName());
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			httpServletRequest);
 
@@ -358,22 +349,6 @@ public class LayoutsAdminDisplayContext {
 		return _backURL;
 	}
 
-	public PortletURL getCETItemSelectorURL(
-		boolean multipleSelection, String selectEventName, String type) {
-
-		CETItemSelectorCriterion cetItemSelectorCriterion =
-			new CETItemSelectorCriterion();
-
-		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new CETItemSelectorReturnType());
-		cetItemSelectorCriterion.setMultipleSelection(multipleSelection);
-		cetItemSelectorCriterion.setType(type);
-
-		return _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			selectEventName, cetItemSelectorCriterion);
-	}
-
 	public String getConfigurationTitle(Layout layout, Locale locale) {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
@@ -542,9 +517,6 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"isReadOnly", isReadOnly()
 		).put(
-			"themeFaviconCETExternalReferenceCode",
-			getThemeFaviconCETExternalReferenceCode()
-		).put(
 			"title", HtmlUtil.escape(getFaviconTitle())
 		).put(
 			"url", getFileEntryItemSelectorURL()
@@ -554,7 +526,7 @@ public class LayoutsAdminDisplayContext {
 	public String getFaviconTitle() {
 		if (getSelLayout() != null) {
 			return FaviconUtil.getFaviconTitle(
-				_cetManager, getSelLayout(), themeDisplay.getLocale());
+				getSelLayout(), themeDisplay.getLocale());
 		}
 
 		return FaviconUtil.getFaviconTitle(
@@ -565,7 +537,7 @@ public class LayoutsAdminDisplayContext {
 		String faviconURL = StringPool.BLANK;
 
 		if (getSelLayout() != null) {
-			faviconURL = FaviconUtil.getFaviconURL(_cetManager, getSelLayout());
+			faviconURL = FaviconUtil.getFaviconURL(getSelLayout());
 		}
 
 		if (Validator.isNotNull(faviconURL)) {
@@ -574,7 +546,7 @@ public class LayoutsAdminDisplayContext {
 
 		if (getSelLayoutSet() != null) {
 			faviconURL = FaviconUtil.getFaviconURL(
-				_cetManager, getSelLayoutSet());
+				getSelLayoutSet());
 		}
 
 		if (Validator.isNotNull(faviconURL)) {
@@ -592,19 +564,10 @@ public class LayoutsAdminDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		CETItemSelectorCriterion cetItemSelectorCriterion =
-			new CETItemSelectorCriterion();
-
-		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new CETItemSelectorReturnType());
-		cetItemSelectorCriterion.setType(
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				getSelectFaviconEventName(), itemSelectorCriterion,
-				cetItemSelectorCriterion));
+				getSelectFaviconEventName(), itemSelectorCriterion));
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -1408,103 +1371,6 @@ public class LayoutsAdminDisplayContext {
 		return HtmlUtil.escape(layout.getTypeSettingsProperty("target"));
 	}
 
-	public Map<String, Object> getThemeCSSReplacementSelectorProps()
-		throws PortalException {
-
-		String selectThemeCSSClientExtensionEventName =
-			"selectThemeCSSClientExtension";
-
-		LayoutSet setLayoutSet = getSelLayoutSet();
-
-		String className = LayoutSet.class.getName();
-		long classPK = setLayoutSet.getLayoutSetId();
-
-		Layout selLayout = getSelLayout();
-
-		if (selLayout != null) {
-			className = Layout.class.getName();
-			classPK = selLayout.getPlid();
-		}
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(className), classPK,
-					ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-		return HashMapBuilder.<String, Object>put(
-			"isReadOnly", isReadOnly()
-		).put(
-			"placeholder", _getPlaceholder()
-		).put(
-			"selectThemeCSSClientExtensionEventName",
-			selectThemeCSSClientExtensionEventName
-		).put(
-			"selectThemeCSSClientExtensionURL",
-			() -> String.valueOf(
-				getCETItemSelectorURL(
-					false, selectThemeCSSClientExtensionEventName,
-					ClientExtensionEntryConstants.TYPE_THEME_CSS))
-		).put(
-			"themeCSSCETExternalReferenceCode",
-			() -> {
-				if (clientExtensionEntryRel != null) {
-					return clientExtensionEntryRel.
-						getCETExternalReferenceCode();
-				}
-
-				return StringPool.BLANK;
-			}
-		).put(
-			"themeCSSExtensionName",
-			() -> {
-				if (clientExtensionEntryRel != null) {
-					CET cet = _cetManager.getCET(
-						themeDisplay.getCompanyId(),
-						clientExtensionEntryRel.getCETExternalReferenceCode());
-
-					if (cet != null) {
-						return cet.getName(themeDisplay.getLocale());
-					}
-				}
-
-				return StringPool.BLANK;
-			}
-		).build();
-	}
-
-	public String getThemeFaviconCETExternalReferenceCode() {
-		Layout selLayout = getSelLayout();
-
-		if (selLayout != null) {
-			ClientExtensionEntryRel clientExtensionEntryRel =
-				ClientExtensionEntryRelLocalServiceUtil.
-					fetchClientExtensionEntryRel(
-						PortalUtil.getClassNameId(Layout.class),
-						selLayout.getPlid(),
-						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-			if (clientExtensionEntryRel != null) {
-				return clientExtensionEntryRel.getCETExternalReferenceCode();
-			}
-		}
-
-		LayoutSet setLayoutSet = getSelLayoutSet();
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(LayoutSet.class),
-					setLayoutSet.getLayoutSetId(),
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel.getCETExternalReferenceCode();
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public String getTitle(boolean privatePages) {
 		String title = "pages";
 
@@ -1749,34 +1615,12 @@ public class LayoutsAdminDisplayContext {
 				return true;
 			}
 
-			ClientExtensionEntryRel clientExtensionEntryRel =
-				ClientExtensionEntryRelLocalServiceUtil.
-					fetchClientExtensionEntryRel(
-						PortalUtil.getClassNameId(Layout.class),
-						selLayout.getPlid(),
-						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-			if (clientExtensionEntryRel != null) {
-				return true;
-			}
-
 			return false;
 		}
 
 		LayoutSet selLayoutSet = getSelLayoutSet();
 
 		if (selLayoutSet.getFaviconFileEntryId() > 0) {
-			return true;
-		}
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(LayoutSet.class),
-					selLayoutSet.getLayoutSetId(),
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-		if (clientExtensionEntryRel != null) {
 			return true;
 		}
 
@@ -2152,16 +1996,7 @@ public class LayoutsAdminDisplayContext {
 					selLayout.getMasterLayoutPlid());
 
 				if (masterLayout != null) {
-					ClientExtensionEntryRel clientExtensionEntryRel =
-						ClientExtensionEntryRelLocalServiceUtil.
-							fetchClientExtensionEntryRel(
-								PortalUtil.getClassNameId(Layout.class),
-								selLayout.getPlid(),
-								ClientExtensionEntryConstants.
-									TYPE_THEME_FAVICON);
-
-					if ((masterLayout.getFaviconFileEntryId() > 0) ||
-						(clientExtensionEntryRel != null)) {
+					if (masterLayout.getFaviconFileEntryId() > 0) {
 
 						return LanguageUtil.get(
 							httpServletRequest, "favicon-from-master");
@@ -2189,7 +2024,7 @@ public class LayoutsAdminDisplayContext {
 
 				if (masterLayout != null) {
 					String faviconURL = FaviconUtil.getFaviconURL(
-						_cetManager, masterLayout);
+						masterLayout);
 
 					if (Validator.isNotNull(faviconURL)) {
 						return faviconURL;
@@ -2198,7 +2033,7 @@ public class LayoutsAdminDisplayContext {
 			}
 			else {
 				String faviconURL = FaviconUtil.getFaviconURL(
-					_cetManager, getSelLayoutSet());
+					getSelLayoutSet());
 
 				if (Validator.isNotNull(faviconURL)) {
 					return faviconURL;
@@ -2339,48 +2174,6 @@ public class LayoutsAdminDisplayContext {
 		return _orderByType;
 	}
 
-	private String _getPlaceholder() throws PortalException {
-		Layout selLayout = getSelLayout();
-
-		if (selLayout != null) {
-			ClientExtensionEntryRel clientExtensionEntryRel =
-				ClientExtensionEntryRelLocalServiceUtil.
-					fetchClientExtensionEntryRel(
-						PortalUtil.getClassNameId(Layout.class),
-						selLayout.getMasterLayoutPlid(),
-						ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-			if (clientExtensionEntryRel != null) {
-				return LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"theme-css-is-inherited-from-master");
-			}
-		}
-
-		LayoutSet selLayoutSet = getSelLayoutSet();
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(LayoutSet.class),
-					selLayoutSet.getLayoutSetId(),
-					ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-		if (clientExtensionEntryRel != null) {
-			Group group = selLayoutSet.getGroup();
-
-			return LanguageUtil.format(
-				themeDisplay.getLocale(), "theme-css-is-inherited-from-x",
-				group.getLayoutRootNodeName(
-					selLayoutSet.isPrivateLayout(), themeDisplay.getLocale()),
-				false);
-		}
-
-		return LanguageUtil.get(
-			themeDisplay.getLocale(),
-			"no-theme-css-client-extension-was-loaded");
-	}
-
 	private String _getStrictRobots() {
 		LayoutSet layoutSet = getSelLayoutSet();
 
@@ -2512,7 +2305,6 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
-	private final CETManager _cetManager;
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

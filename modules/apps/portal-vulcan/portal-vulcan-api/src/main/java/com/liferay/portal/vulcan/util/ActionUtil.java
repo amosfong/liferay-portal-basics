@@ -5,8 +5,6 @@
 
 package com.liferay.portal.vulcan.util;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -400,15 +398,7 @@ public class ActionUtil {
 			return parameterMap;
 		}
 
-		if ((siteId != null) &&
-			Objects.equals(firstParameterName, "assetLibraryId")) {
-
-			DepotEntry depotEntry = DepotEntryServiceUtil.getGroupDepotEntry(
-				siteId);
-
-			parameterMap.put(firstParameterName, depotEntry.getDepotEntryId());
-		}
-		else if (Objects.equals(firstParameterName, "id")) {
+		if (Objects.equals(firstParameterName, "id")) {
 			parameterMap.put(firstParameterName, id);
 		}
 		else if ((siteId != null) &&

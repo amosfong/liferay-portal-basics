@@ -16,39 +16,6 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"
 	collapsible="<%= true %>"
-	label="theme-css-client-extension"
->
-	<react:component
-		module="{ThemeCSSReplacementSelector} from layout-admin-web"
-		props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="css-client-extensions"
->
-	<react:component
-		module="{GlobalCSSCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="theme-spritemap-client-extension"
->
-	<react:component
-		module="{ThemeSpritemapCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
 	cssClass='<%= (selLayout.getMasterLayoutPlid() > 0) ? "hide" : StringPool.BLANK %>'
 	id='<%= liferayPortletResponse.getNamespace() + "customCSS" %>'
 	label="custom-css"

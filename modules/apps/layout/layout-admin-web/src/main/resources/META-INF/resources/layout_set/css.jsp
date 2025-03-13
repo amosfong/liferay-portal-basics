@@ -16,39 +16,6 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"
 	collapsible="<%= true %>"
-	label="theme-css-client-extension"
->
-	<react:component
-		module="{ThemeCSSReplacementSelector} from layout-admin-web"
-		props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="css-client-extensions"
->
-	<react:component
-		module="{GlobalCSSCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="theme-spritemap-client-extension"
->
-	<react:component
-		module="{ThemeSpritemapCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-	/>
-</liferay-frontend:fieldset>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
 	label="custom-css"
 >
 	<aui:input label="css" name="regularCss" type="textarea" value="<%= selLayoutSet.getCss() %>" wrapperCssClass="c-mb-0 c-mt-4" />

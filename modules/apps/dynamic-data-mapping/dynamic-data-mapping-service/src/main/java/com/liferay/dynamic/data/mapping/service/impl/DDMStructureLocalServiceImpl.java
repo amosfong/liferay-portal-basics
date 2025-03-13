@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.DuplicateDDMStructureExternalReferenceCodeException;
@@ -694,21 +693,6 @@ public class DDMStructureLocalServiceImpl
 			return structure;
 		}
 
-		if (!includeAncestorStructures) {
-			return null;
-		}
-
-		for (long ancestorSiteGroupId :
-				_getAncestorSiteAndDepotGroupIds(groupId)) {
-
-			structure = ddmStructurePersistence.fetchByG_C_S(
-				ancestorSiteGroupId, classNameId, structureKey);
-
-			if (structure != null) {
-				return structure;
-			}
-		}
-
 		return null;
 	}
 
@@ -729,21 +713,6 @@ public class DDMStructureLocalServiceImpl
 
 		if (structure != null) {
 			return structure;
-		}
-
-		if (!includeAncestorStructures) {
-			return null;
-		}
-
-		for (long ancestorSiteGroupId :
-				_getAncestorSiteAndDepotGroupIds(groupId)) {
-
-			structure = ddmStructurePersistence.fetchByUUID_G(
-				uuid, ancestorSiteGroupId);
-
-			if (structure != null) {
-				return structure;
-			}
 		}
 
 		return null;
@@ -891,15 +860,6 @@ public class DDMStructureLocalServiceImpl
 			throw new NoSuchStructureException(
 				"No DDMStructure exists with the structure key " +
 					structureKey);
-		}
-
-		for (long curGroupId : _getAncestorSiteAndDepotGroupIds(groupId)) {
-			structure = ddmStructurePersistence.fetchByG_C_S(
-				curGroupId, classNameId, structureKey);
-
-			if (structure != null) {
-				return structure;
-			}
 		}
 
 		throw new NoSuchStructureException(
@@ -1733,25 +1693,6 @@ public class DDMStructureLocalServiceImpl
 		return _deserializeDDMForm(content, _jsonDDMFormDeserializer);
 	}
 
-	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
-		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
-			_siteConnectedGroupGroupProviderSnapshot.get();
-
-		try {
-			if (siteConnectedGroupGroupProvider == null) {
-				return _portal.getAncestorSiteGroupIds(groupId);
-			}
-
-			return siteConnectedGroupGroupProvider.
-				getAncestorSiteAndDepotGroupIds(groupId, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return new long[0];
-		}
-	}
-
 	private Set<Long> _getDataProviderInstanceIds(
 		long groupId, DDMForm ddmForm) {
 
@@ -2369,10 +2310,6 @@ public class DDMStructureLocalServiceImpl
 	private static final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
-	private static final Snapshot<SiteConnectedGroupGroupProvider>
-		_siteConnectedGroupGroupProviderSnapshot = new Snapshot<>(
-			DDMStructureLocalServiceImpl.class,
-			SiteConnectedGroupGroupProvider.class, null, true);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -34,10 +33,8 @@ public class SiteParamConverterProvider
 	implements ParamConverter<Long>, ParamConverterProvider {
 
 	public SiteParamConverterProvider(
-		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService) {
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 	}
 
@@ -48,15 +45,8 @@ public class SiteParamConverterProvider
 
 		Long siteId = null;
 
-		if (multivaluedMap.containsKey("assetLibraryId")) {
-			siteId = getDepotGroupId(
-				multivaluedMap.getFirst("assetLibraryId"),
-				_company.getCompanyId());
-		}
-		else {
-			siteId = getGroupId(
-				_company.getCompanyId(), multivaluedMap.getFirst("siteId"));
-		}
+		siteId = getGroupId(
+			_company.getCompanyId(), multivaluedMap.getFirst("siteId"));
 
 		if (siteId != null) {
 			return siteId;
@@ -90,16 +80,6 @@ public class SiteParamConverterProvider
 		return null;
 	}
 
-	public Long getDepotGroupId(String assetLibraryKey, long companyId) {
-		if (assetLibraryKey == null) {
-			return null;
-		}
-
-		return GroupUtil.getDepotGroupId(
-			assetLibraryKey, companyId, _depotEntryLocalService,
-			_groupLocalService);
-	}
-
 	public Long getGroupId(long companyId, String siteKey) {
 		if (siteKey == null) {
 			return null;
@@ -130,7 +110,6 @@ public class SiteParamConverterProvider
 	@Context
 	private Company _company;
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 
 	@Context

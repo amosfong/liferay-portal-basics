@@ -28,17 +28,6 @@ if (selLayout != null) {
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="javascript-client-extensions"
->
-	<react:component
-		module="{GlobalJSCETsConfiguration} from layout-admin-web"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
-	/>
-</liferay-frontend:fieldset>
-
 <c:if test='<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT || Validator.isNotNull(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>'>
 	<liferay-frontend:fieldset
 		collapsed="<%= false %>"

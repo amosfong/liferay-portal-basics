@@ -8,8 +8,6 @@ package com.liferay.site.internal.provider;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -98,15 +96,6 @@ public class GroupURLProviderImpl implements GroupURLProvider {
 		Group group, PortletRequest portletRequest,
 		boolean includeStagingGroup) {
 
-		if (group.isDepot()) {
-			String depotDashboardGroupURL = _getDepotDashboardGroupURL(
-				group, portletRequest);
-
-			if (depotDashboardGroupURL != null) {
-				return depotDashboardGroupURL;
-			}
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -147,47 +136,8 @@ public class GroupURLProviderImpl implements GroupURLProvider {
 		return getGroupAdministrationURL(group, portletRequest);
 	}
 
-	private String _getDepotDashboardGroupURL(
-		Group group, PortletRequest portletRequest) {
-
-		try {
-			DepotEntryLocalService depotEntryLocalService =
-				_depotEntryLocalServiceSnapshot.get();
-
-			if (depotEntryLocalService == null) {
-				return null;
-			}
-
-			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
-				group.getGroupId());
-
-			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, group, _DEPOT_ADMIN_PORTLET_ID, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/depot/view_depot_dashboard"
-			).setParameter(
-				"depotEntryId", depotEntry.getDepotEntryId()
-			).buildString();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return null;
-		}
-	}
-
-	private static final String _DEPOT_ADMIN_PORTLET_ID =
-		"com_liferay_depot_web_portlet_DepotAdminPortlet";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupURLProviderImpl.class);
-
-	private static final Snapshot<DepotEntryLocalService>
-		_depotEntryLocalServiceSnapshot = new Snapshot<>(
-			GroupURLProviderImpl.class, DepotEntryLocalService.class, null,
-			true);
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

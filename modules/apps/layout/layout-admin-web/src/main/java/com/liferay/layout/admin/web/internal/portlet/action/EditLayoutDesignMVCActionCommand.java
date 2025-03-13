@@ -7,9 +7,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -69,115 +66,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 		_updateLayout(
 			actionRequest, actionResponse,
 			_portal.getUploadPortletRequest(actionRequest));
-	}
-
-	private void _addClientExtensionEntryRel(
-			String cetExternalReferenceCode, Layout layout, String type,
-			long userId, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (Validator.isNull(cetExternalReferenceCode)) {
-			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-				_portal.getClassNameId(Layout.class), layout.getPlid(), type);
-
-			return;
-		}
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.
-				fetchClientExtensionEntryRelByExternalReferenceCode(
-					cetExternalReferenceCode, layout.getCompanyId());
-
-		if (clientExtensionEntryRel != null) {
-			return;
-		}
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid(), type);
-
-		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			userId, layout.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(), cetExternalReferenceCode, type, StringPool.BLANK,
-			serviceContext);
-	}
-
-	private void _updateClientExtensionEntryRels(
-			ActionRequest actionRequest, Layout layout, long userId)
-		throws PortalException {
-
-		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
-			actionRequest, "themeFaviconCETExternalReferenceCode");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_addClientExtensionEntryRel(
-			themeFaviconCETExternalReferenceCode, layout,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, userId,
-			serviceContext);
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-
-		String[] globalCSSCETExternalReferenceCodes = ParamUtil.getStringValues(
-			actionRequest, "globalCSSCETExternalReferenceCodes");
-
-		for (String globalCSSCETExternalReferenceCode :
-				globalCSSCETExternalReferenceCodes) {
-
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, layout.getGroupId(),
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				globalCSSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
-				serviceContext);
-		}
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-
-		String[] globalJSCETExternalReferenceCodes = ParamUtil.getStringValues(
-			actionRequest, "globalJSCETExternalReferenceCodes");
-
-		for (String globalJSCETExternalReferenceCode :
-				globalJSCETExternalReferenceCodes) {
-
-			String[] typeSettings = StringUtil.split(
-				globalJSCETExternalReferenceCode, StringPool.UNDERLINE);
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"loadType", typeSettings[1]
-				).put(
-					"scriptLocation", typeSettings[2]
-				).build();
-
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, layout.getGroupId(),
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				typeSettings[0], ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				typeSettingsUnicodeProperties.toString(), serviceContext);
-		}
-
-		String themeCSSCETExternalReferenceCode = ParamUtil.getString(
-			actionRequest, "themeCSSCETExternalReferenceCode");
-
-		_addClientExtensionEntryRel(
-			themeCSSCETExternalReferenceCode, layout,
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, userId,
-			serviceContext);
-
-		String themeSpritemapCETExternalReferenceCode = ParamUtil.getString(
-			actionRequest, "themeSpritemapCETExternalReferenceCode");
-
-		_addClientExtensionEntryRel(
-			themeSpritemapCETExternalReferenceCode, layout,
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, userId,
-			serviceContext);
 	}
 
 	private void _updateLayout(
@@ -256,9 +144,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				!deleteLogo, iconBytes, styleBookEntryId, faviconFileEntryId,
 				masterLayoutPlid, serviceContext);
 
-			_updateClientExtensionEntryRels(
-				actionRequest, layout, themeDisplay.getUserId());
-
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
@@ -281,9 +166,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
 					styleBookEntryId, faviconFileEntryId,
 					draftLayout.getMasterLayoutPlid(), serviceContext);
-
-				_updateClientExtensionEntryRels(
-					actionRequest, draftLayout, themeDisplay.getUserId());
 			}
 
 			UnicodeProperties layoutTypeSettingsUnicodeProperties =
@@ -354,10 +236,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

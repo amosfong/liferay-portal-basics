@@ -5,9 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -379,8 +376,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		_exportFaviconFileEntry(layout, layoutElement, portletDataContext);
-
-		_exportClientExtensionEntryRels(layout, portletDataContext);
 
 		_exportLayoutLocalizations(layout, portletDataContext);
 
@@ -918,9 +913,6 @@ public class LayoutStagedModelDataHandler
 		_importFaviconFileEntry(
 			layout, layoutElement, importedLayout, portletDataContext);
 
-		_importClientExtensionEntryRels(
-			importedLayout, layout, portletDataContext);
-
 		_importLayoutLocalizations(layout, portletDataContext);
 
 		_staging.updateLastImportSettings(
@@ -1240,23 +1232,6 @@ public class LayoutStagedModelDataHandler
 		_layoutLocalService.updateStatus(
 			draftLayout.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	private void _exportClientExtensionEntryRels(
-			Layout layout, PortletDataContext portletDataContext)
-		throws Exception {
-
-		List<ClientExtensionEntryRel> clientExtensionEntryRels =
-			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
-
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				clientExtensionEntryRels) {
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, clientExtensionEntryRel,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
-		}
 	}
 
 	private void _exportCollectionLayoutCollection(
@@ -2018,33 +1993,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return friendlyURL;
-	}
-
-	private void _importClientExtensionEntryRels(
-			Layout importedLayout, Layout layout,
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), importedLayout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), importedLayout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), importedLayout.getPlid(),
-			ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-		List<Element> clientExtensionEntryRelsElements =
-			portletDataContext.getReferenceDataElements(
-				layout, ClientExtensionEntryRel.class);
-
-		for (Element clientExtensionEntryRelsElement :
-				clientExtensionEntryRelsElements) {
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, clientExtensionEntryRelsElement);
-		}
 	}
 
 	private void _importFaviconFileEntry(
@@ -3019,10 +2967,6 @@ public class LayoutStagedModelDataHandler
 		TransactionConfig.Factory.create(
 			Propagation.SUPPORTS,
 			new Class<?>[] {PortalException.class, SystemException.class});
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

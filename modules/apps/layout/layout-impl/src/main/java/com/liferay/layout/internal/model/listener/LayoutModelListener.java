@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.model.listener;
 
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -46,9 +45,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		if (layout == null) {
 			return;
 		}
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 			layout.getGroupId(),
@@ -119,10 +115,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutModelListener.class);
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

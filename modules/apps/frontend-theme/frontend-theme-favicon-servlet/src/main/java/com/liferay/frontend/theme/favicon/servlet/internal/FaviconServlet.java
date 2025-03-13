@@ -5,12 +5,6 @@
 
 package com.liferay.frontend.theme.favicon.servlet.internal;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
-import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.ThemeFaviconCET;
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -85,36 +79,8 @@ public class FaviconServlet extends HttpServlet {
 			theme.getContextPath() + theme.getImagesPath() + "/favicon.ico");
 	}
 
-	private CET _getCET(long classNameId, long classPK, long companyId) {
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				classNameId, classPK,
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-		if (clientExtensionEntryRel == null) {
-			return null;
-		}
-
-		return _cetManager.getCET(
-			companyId, clientExtensionEntryRel.getCETExternalReferenceCode());
-	}
-
 	private String _getFaviconURL(LayoutSet layoutSet) {
-		String faviconURL = _getThemeFaviconCETURL(
-			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
-			layoutSet.getCompanyId());
-
-		if (Validator.isNotNull(faviconURL)) {
-			return faviconURL;
-		}
-
-		faviconURL = layoutSet.getFaviconURL();
-
-		if (Validator.isNotNull(faviconURL)) {
-			return faviconURL;
-		}
-
-		return null;
+		return layoutSet.getFaviconURL();
 	}
 
 	private LayoutSet _getLayoutSet(LayoutSet layoutSet, String path) {
@@ -154,30 +120,9 @@ public class FaviconServlet extends HttpServlet {
 		return layoutSet;
 	}
 
-	private String _getThemeFaviconCETURL(
-		long classNameId, long classPK, long companyId) {
-
-		CET cet = _getCET(classNameId, classPK, companyId);
-
-		if (cet == null) {
-			return null;
-		}
-
-		ThemeFaviconCET themeFaviconCET = (ThemeFaviconCET)cet;
-
-		return themeFaviconCET.getURL();
-	}
-
 	private static final String _PATH_DOCUMENTS = "/documents/d/";
 
 	private static final long serialVersionUID = 1L;
-
-	@Reference
-	private CETManager _cetManager;
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

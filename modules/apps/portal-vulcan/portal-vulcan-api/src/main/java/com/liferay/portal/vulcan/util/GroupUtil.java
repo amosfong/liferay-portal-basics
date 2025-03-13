@@ -5,8 +5,6 @@
 
 package com.liferay.portal.vulcan.util;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,40 +20,6 @@ public class GroupUtil {
 	public static String getAssetLibraryKey(Group group) {
 		if (group.isDepot()) {
 			return group.getGroupKey();
-		}
-
-		return null;
-	}
-
-	public static Long getDepotGroupId(
-		String assetLibraryKey, long companyId,
-		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService) {
-
-		Group group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
-
-		if (group == null) {
-			try {
-				DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
-					GetterUtil.getLong(assetLibraryKey));
-
-				if (depotEntry == null) {
-					return null;
-				}
-
-				group = depotEntry.getGroup();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
-				return null;
-			}
-		}
-
-		if (_checkGroup(group)) {
-			return group.getGroupId();
 		}
 
 		return null;

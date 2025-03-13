@@ -8,7 +8,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -184,8 +183,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new PaginationContextProvider(_paginationProvider, _portal));
 		featureContext.register(
-			new SiteParamConverterProvider(
-				_depotEntryLocalService, _groupLocalService));
+			new SiteParamConverterProvider(_groupLocalService));
 		featureContext.register(
 			new SortContextProvider(_language, _portal, _sortParserProvider));
 		featureContext.register(new UserContextProvider(_portal));
@@ -221,9 +219,6 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

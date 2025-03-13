@@ -7,8 +7,6 @@ package com.liferay.layout.internal.service;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -901,10 +899,6 @@ public class LayoutLocalServiceWrapper
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
-
-	@Reference
 	private CommentManager _commentManager;
 
 	@Reference
@@ -993,9 +987,6 @@ public class LayoutLocalServiceWrapper
 			_copyLayoutSEOEntry(
 				_sourceLayout, _targetLayout, _user.getUserId());
 
-			_copyLayoutClientExtensions(
-				_sourceLayout, _targetLayout, _user.getUserId());
-
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 
@@ -1026,33 +1017,6 @@ public class LayoutLocalServiceWrapper
 			_targetLayout = targetLayout;
 			_targetSegmentsExperiencesIds = targetSegmentsExperiencesIds;
 			_user = user;
-		}
-
-		private void _copyLayoutClientExtensions(
-				Layout sourceLayout, Layout targetLayout, long userId)
-			throws Exception {
-
-			long classNameId = _portal.getClassNameId(Layout.class);
-
-			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-				classNameId, targetLayout.getPlid());
-
-			List<ClientExtensionEntryRel> clientExtensionEntryRels =
-				_clientExtensionEntryRelLocalService.
-					getClientExtensionEntryRels(
-						classNameId, sourceLayout.getPlid());
-
-			for (ClientExtensionEntryRel clientExtensionEntryRel :
-					clientExtensionEntryRels) {
-
-				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					userId, targetLayout.getGroupId(), classNameId,
-					targetLayout.getPlid(),
-					clientExtensionEntryRel.getCETExternalReferenceCode(),
-					clientExtensionEntryRel.getType(),
-					clientExtensionEntryRel.getTypeSettings(),
-					ServiceContextThreadLocal.getServiceContext());
-			}
 		}
 
 		private void _deleteOrphanPortletPreferences(

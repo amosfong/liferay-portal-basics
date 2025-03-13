@@ -5,8 +5,6 @@
 
 package com.liferay.layout.internal.exportimport.data.handler;
 
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -104,7 +102,6 @@ public class StagedLayoutSetStagedModelDataHandler
 			StagedLayoutSet stagedLayoutSet)
 		throws Exception {
 
-		_exportClientExtensionEntryRels(portletDataContext, stagedLayoutSet);
 		_exportLayouts(portletDataContext, stagedLayoutSet);
 		_exportLogo(portletDataContext, stagedLayoutSet);
 		_exportTheme(portletDataContext, stagedLayoutSet);
@@ -218,8 +215,6 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext, importedStagedLayoutSet);
 		}
 
-		_importClientExtensionEntryRels(
-			portletDataContext, stagedLayoutSet, importedStagedLayoutSet);
 		_importLogo(portletDataContext);
 		_importTheme(portletDataContext, stagedLayoutSet);
 
@@ -389,53 +384,6 @@ public class StagedLayoutSetStagedModelDataHandler
 					}
 				}
 			}
-		}
-	}
-
-	private void _deleteUnnecessaryClientExtensionEntryRels(
-		StagedLayoutSet stagedLayoutSet,
-		StagedLayoutSet importedStagedLayoutSet) {
-
-		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
-
-		List<ClientExtensionEntryRel> importedClientExtensionEntryRels =
-			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
-				_portal.getClassNameId(LayoutSet.class),
-				importedLayoutSet.getLayoutSetId());
-
-		for (ClientExtensionEntryRel importedClientExtensionEntryRel :
-				importedClientExtensionEntryRels) {
-
-			ClientExtensionEntryRel stagedClientExtensionEntryRel =
-				_clientExtensionEntryRelLocalService.
-					fetchClientExtensionEntryRelByUuidAndGroupId(
-						importedClientExtensionEntryRel.getUuid(),
-						stagedLayoutSet.getGroupId());
-
-			if (stagedClientExtensionEntryRel == null) {
-				_clientExtensionEntryRelLocalService.
-					deleteClientExtensionEntryRel(
-						importedClientExtensionEntryRel);
-			}
-		}
-	}
-
-	private void _exportClientExtensionEntryRels(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet stagedLayoutSet)
-		throws Exception {
-
-		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
-
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				_clientExtensionEntryRelLocalService.
-					getClientExtensionEntryRels(
-						_portal.getClassNameId(LayoutSet.class),
-						layoutSet.getLayoutSetId())) {
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedLayoutSet, clientExtensionEntryRel,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 	}
 
@@ -710,27 +658,6 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 
 		return false;
-	}
-
-	private void _importClientExtensionEntryRels(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet stagedLayoutSet,
-			StagedLayoutSet importedStagedLayoutSet)
-		throws Exception {
-
-		_deleteUnnecessaryClientExtensionEntryRels(
-			stagedLayoutSet, importedStagedLayoutSet);
-
-		List<Element> clientExtensionEntryRelsElements =
-			portletDataContext.getReferenceDataElements(
-				stagedLayoutSet, ClientExtensionEntryRel.class);
-
-		for (Element clientExtensionEntryRelsElement :
-				clientExtensionEntryRelsElements) {
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, clientExtensionEntryRelsElement);
-		}
 	}
 
 	private void _importFaviconFileEntry(
@@ -1138,10 +1065,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedLayoutSetStagedModelDataHandler.class);
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;
