@@ -5,7 +5,6 @@
 
 package com.liferay.staging.taglib.internal.display.context;
 
-import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -33,15 +32,7 @@ public class RenderControlsDisplayContext {
 	public boolean includeThumbnailsAndPreviewsDuringStaging()
 		throws ConfigurationException {
 
-		ExportImportServiceConfiguration exportImportServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				ExportImportServiceConfiguration.class,
-				CompanyThreadLocal.getCompanyId());
-
-		if (!isStagingEnabled() ||
-			exportImportServiceConfiguration.
-				includeThumbnailsAndPreviewsDuringStaging()) {
-
+		if (!isStagingEnabled()) {
 			return true;
 		}
 

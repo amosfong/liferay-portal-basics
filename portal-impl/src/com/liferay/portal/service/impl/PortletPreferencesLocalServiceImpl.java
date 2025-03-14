@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -814,19 +813,6 @@ public class PortletPreferencesLocalServiceImpl
 			return layoutRevision;
 		}
 
-		Layout layout = _layoutPersistence.fetchByPrimaryKey(plid);
-
-		if (layout == null) {
-			return null;
-		}
-
-		if (LayoutStagingUtil.isBranchingLayout(layout)) {
-			LayoutStagingHandler layoutStagingHandler =
-				new LayoutStagingHandler(layout);
-
-			return layoutStagingHandler.getLayoutRevision();
-		}
-
 		return null;
 	}
 
@@ -1086,27 +1072,6 @@ public class PortletPreferencesLocalServiceImpl
 	private PortletPreferences _updatePreferences(
 		long ownerId, int ownerType, long plid, String portletId,
 		Map<String, Preference> preferenceMap) {
-
-		if (CopyLayoutThreadLocal.isCopyLayout()) {
-			Layout layout = _layoutPersistence.fetchByPrimaryKey(plid);
-
-			if ((layout != null) &&
-				LayoutStagingUtil.isBranchingLayout(layout)) {
-
-				LayoutStagingHandler layoutStagingHandler =
-					new LayoutStagingHandler(layout);
-
-				LayoutRevision layoutRevision =
-					layoutStagingHandler.getLayoutRevision();
-
-				if (layoutRevision != null) {
-					_updatePreferences(
-						ownerId, ownerType,
-						layoutRevision.getLayoutRevisionId(), portletId,
-						preferenceMap);
-				}
-			}
-		}
 
 		plid = _swapPlidForUpdatePreferences(plid);
 

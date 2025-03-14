@@ -6,11 +6,9 @@
 package com.liferay.document.library.internal.security.permission.resource;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,12 +27,7 @@ public class DLPortletResourcePermissionWrapper
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			DLConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));
+			DLConstants.RESOURCE_NAME);
 	}
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

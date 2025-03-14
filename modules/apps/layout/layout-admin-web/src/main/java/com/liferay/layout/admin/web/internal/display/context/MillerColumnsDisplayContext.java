@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -190,15 +189,6 @@ public class MillerColumnsDisplayContext {
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Layout layout : layouts) {
-			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
-				LayoutRevision layoutRevision =
-					LayoutStagingUtil.getLayoutRevision(layout);
-
-				if ((layoutRevision != null) && layoutRevision.isIncomplete()) {
-					continue;
-				}
-			}
-
 			LayoutTypeController layoutTypeController =
 				LayoutTypeControllerTracker.getLayoutTypeController(
 					layout.getType());

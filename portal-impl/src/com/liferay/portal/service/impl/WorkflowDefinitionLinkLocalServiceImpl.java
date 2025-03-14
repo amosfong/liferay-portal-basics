@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -50,7 +49,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.create(workflowDefinitionLinkId);
 
-		workflowDefinitionLink.setGroupId(StagingUtil.getLiveGroupId(groupId));
+		workflowDefinitionLink.setGroupId(groupId);
 		workflowDefinitionLink.setCompanyId(companyId);
 		workflowDefinitionLink.setUserId(userId);
 		workflowDefinitionLink.setUserName(user.getFullName());
@@ -105,7 +104,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
-				StagingUtil.getLiveGroupId(groupId), companyId,
+				groupId, companyId,
 				_classNameLocalService.getClassNameId(className), classPK,
 				typePK);
 
@@ -133,7 +132,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long companyId, long groupId, String className, long classPK) {
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
-			StagingUtil.getLiveGroupId(groupId), companyId,
+			groupId, companyId,
 			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
@@ -171,7 +170,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			throw new NoSuchWorkflowDefinitionLinkException(
 				StringBundler.concat(
 					"No workflow exists with the key {groupId=",
-					StagingUtil.getLiveGroupId(groupId), ", companyId=",
+					groupId, ", companyId=",
 					companyId, ", and className=", className, "}"));
 		}
 
@@ -193,7 +192,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		throws PortalException {
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
-			companyId, StagingUtil.getLiveGroupId(groupId),
+			companyId, groupId,
 			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
@@ -212,7 +211,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long companyId, long groupId, String className) {
 
 		return workflowDefinitionLinkPersistence.countByG_C_C(
-			StagingUtil.getLiveGroupId(groupId), companyId,
+			groupId, companyId,
 			_classNameLocalService.getClassNameId(className));
 	}
 
@@ -232,7 +231,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		int count =
 			workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount(
-				companyId, StagingUtil.getLiveGroupId(groupId), className);
+				companyId, groupId, className);
 
 		if (count > 0) {
 			return true;
@@ -262,7 +261,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long companyId, long groupId, String className, long classPK) {
 
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C(
-			StagingUtil.getLiveGroupId(groupId), companyId,
+			groupId, companyId,
 			_classNameLocalService.getClassNameId(className), classPK);
 
 		if (count > 0) {
@@ -294,7 +293,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long typePK) {
 
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C_T(
-			StagingUtil.getLiveGroupId(groupId), companyId,
+			groupId, companyId,
 			_classNameLocalService.getClassNameId(className), classPK, typePK);
 
 		if (count > 0) {
@@ -355,18 +354,18 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
-				StagingUtil.getLiveGroupId(groupId), companyId,
+				groupId, companyId,
 				_classNameLocalService.getClassNameId(className), classPK,
 				typePK);
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink = addWorkflowDefinitionLink(
-				userId, companyId, StagingUtil.getLiveGroupId(groupId),
+				userId, companyId, groupId,
 				className, classPK, typePK, workflowDefinitionName,
 				workflowDefinitionVersion);
 		}
 
-		workflowDefinitionLink.setGroupId(StagingUtil.getLiveGroupId(groupId));
+		workflowDefinitionLink.setGroupId(groupId);
 		workflowDefinitionLink.setCompanyId(companyId);
 		workflowDefinitionLink.setUserId(userId);
 		workflowDefinitionLink.setUserName(user.getFullName());

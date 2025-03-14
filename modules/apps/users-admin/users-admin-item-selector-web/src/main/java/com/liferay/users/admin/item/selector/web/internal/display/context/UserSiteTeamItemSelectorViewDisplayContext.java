@@ -73,10 +73,6 @@ public class UserSiteTeamItemSelectorViewDisplayContext {
 					Group group = GroupLocalServiceUtil.fetchGroup(
 						team.getGroupId());
 
-					if (group != null) {
-						group = StagingUtil.getLiveGroup(group.getGroupId());
-					}
-
 					return group.getGroupId();
 				}
 			).build();

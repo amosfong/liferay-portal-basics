@@ -4308,8 +4308,7 @@ public class PortalImpl implements Portal {
 
 				if ((group != null) && group.hasStagingGroup()) {
 					try {
-						Group stagingGroup =
-							StagingUtil.getPermissionStagingGroup(group);
+						Group stagingGroup = group;
 
 						scopeGroupId = stagingGroup.getGroupId();
 					}
@@ -4533,16 +4532,6 @@ public class PortalImpl implements Portal {
 				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
 
 			groups.addAll(getAncestorSiteGroups(groupId, true));
-		}
-
-		Iterator<Group> iterator = groups.iterator();
-
-		while (iterator.hasNext()) {
-			Group group = iterator.next();
-
-			if (!StagingUtil.isGroupAccessible(group, siteGroup)) {
-				iterator.remove();
-			}
 		}
 
 		long[] groupIds = new long[groups.size()];

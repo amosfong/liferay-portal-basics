@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
@@ -33,13 +32,6 @@ public abstract class BaseResourcePermissionChecker
 	public static boolean contains(
 		PermissionChecker permissionChecker, String name, String portletId,
 		long classPK, String actionId) {
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, classPK, name, classPK, portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
 
 		return contains(permissionChecker, name, classPK, actionId);
 	}

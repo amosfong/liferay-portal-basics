@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.UnsafeFunction;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
@@ -79,10 +77,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 							configureModelResourcePermissionLogics(
 								modelResourcePermission, consumer));
 
-				consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY,
-						DLFileEntry::getFileEntryId));
 				consumer.accept(
 					new DLFileEntryWorkflowedModelResourcePermissionLogic(
 						modelResourcePermission));
@@ -188,9 +182,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 	private ServiceTrackerList
 		<ModelResourcePermissionFactory.ModelResourcePermissionConfigurator>
 			_serviceTrackerList;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 	private class DLFileEntryWorkflowedModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DLFileEntry> {

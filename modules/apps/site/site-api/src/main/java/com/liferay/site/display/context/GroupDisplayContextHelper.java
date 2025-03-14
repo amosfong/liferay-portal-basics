@@ -113,8 +113,6 @@ public class GroupDisplayContextHelper {
 			return null;
 		}
 
-		_liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
-
 		if (_liveGroup == null) {
 			_liveGroup = group;
 		}
@@ -170,8 +168,6 @@ public class GroupDisplayContextHelper {
 		if (group == null) {
 			return null;
 		}
-
-		_stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
 
 		return _stagingGroup;
 	}

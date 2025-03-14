@@ -36,7 +36,7 @@ public class ProductNavigationControlMenuUtil {
 		Layout layout = themeDisplay.getLayout();
 
 		if (!layout.isTypePortlet() || layout.isTypeAssetDisplay() ||
-			layout.isTypeContent() || StagingUtil.isIncomplete(layout)) {
+			layout.isTypeContent() ) {
 
 			return false;
 		}

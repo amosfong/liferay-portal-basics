@@ -14,7 +14,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
-	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:normalizer:normalizer-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")

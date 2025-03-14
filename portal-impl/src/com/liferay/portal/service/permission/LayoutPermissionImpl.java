@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -674,16 +673,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		Group group = layout.getGroup();
 
-		if (group.hasLocalOrRemoteStagingGroup()) {
-			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, group, Layout.class.getName(),
-				layout.getGroupId(), null, actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-		else if (!checkViewableGroup && group.isUserGroup() &&
+		if (!checkViewableGroup && group.isUserGroup() &&
 				 actionId.equals(ActionKeys.VIEW)) {
 
 			if (permissionChecker.isGroupAdmin(group.getGroupId())) {

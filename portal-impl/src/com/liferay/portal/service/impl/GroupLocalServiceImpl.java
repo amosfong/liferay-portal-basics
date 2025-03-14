@@ -4929,8 +4929,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Remote publishing
 
-			String groupName = StagingUtil.getSchedulerGroupName(
-				DestinationNames.LAYOUTS_REMOTE_PUBLISHER, group.getGroupId());
+			String groupName =
+				DestinationNames.LAYOUTS_REMOTE_PUBLISHER + "/" + group.getGroupId();
 
 			SchedulerEngineHelperUtil.delete(groupName, StorageType.PERSISTED);
 
@@ -4954,16 +4954,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				// Publish to live
 
-				groupName = StagingUtil.getSchedulerGroupName(
-					DestinationNames.LAYOUTS_LOCAL_PUBLISHER, liveGroupId);
+				groupName =
+					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" + liveGroupId;
 
 				SchedulerEngineHelperUtil.delete(
 					groupName, StorageType.PERSISTED);
 
 				// Copy from live
 
-				groupName = StagingUtil.getSchedulerGroupName(
-					DestinationNames.LAYOUTS_LOCAL_PUBLISHER, stagingGroupId);
+				groupName =
+					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" + stagingGroupId;
 
 				SchedulerEngineHelperUtil.delete(
 					groupName, StorageType.PERSISTED);

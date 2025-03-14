@@ -108,7 +108,7 @@ public class StyleBookEntryItemSelectorViewDescriptor
 
 		styleBookEntries.addAll(
 			StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-				StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
+				_themeDisplay.getScopeGroupId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true)));
 

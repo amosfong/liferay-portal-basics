@@ -16,7 +16,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
 		<div class="d-flex flex-wrap layout-selector" id="<portlet:namespace />pages">
-			<c:if test="<%= (!layoutsTreeDisplayContext.isDisableInputs() && layoutsTreeDisplayContext.isPrivateLayoutsEnabled()) || LayoutStagingUtil.isBranchingLayoutSet(layoutsTreeDisplayContext.getSelectPagesGroup(), layoutsTreeDisplayContext.isSelectPagesPrivateLayout()) %>">
+			<c:if test="<%= !layoutsTreeDisplayContext.isDisableInputs() && layoutsTreeDisplayContext.isPrivateLayoutsEnabled() %>">
 				<div class="layout-selector-options">
 					<aui:fieldset label="pages-options">
 						<c:if test="<%= !layoutsTreeDisplayContext.isDisableInputs() && layoutsTreeDisplayContext.isPrivateLayoutsEnabled() %>">
@@ -28,29 +28,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									<aui:button id="changeToPrivateLayoutsButton" value="change-to-private-pages" />
 								</c:otherwise>
 							</c:choose>
-						</c:if>
-
-						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(layoutsTreeDisplayContext.getSelectPagesGroup(), layoutsTreeDisplayContext.isSelectPagesPrivateLayout()) %>">
-							<aui:select disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>" label="site-pages-variation" name="layoutSetBranchId">
-
-								<%
-								for (LayoutSetBranch layoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
-									boolean translateLayoutSetBranchName = LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(HtmlUtil.escape(layoutSetBranch.getName()));
-
-									boolean selected = false;
-
-									if ((layoutsTreeDisplayContext.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId()) || ((layoutsTreeDisplayContext.getLayoutSetBranchId() == 0) && layoutSetBranch.isMaster())) {
-										selected = true;
-									}
-								%>
-
-									<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" localizeLabel="<%= translateLayoutSetBranchName %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
 						</c:if>
 					</aui:fieldset>
 				</div>

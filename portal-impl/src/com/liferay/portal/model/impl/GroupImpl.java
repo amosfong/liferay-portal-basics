@@ -1121,76 +1121,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isStagedPortlet(String portletId) {
-		UnicodeProperties typeSettingsUnicodeProperties =
-			getParentLiveGroupTypeSettingsProperties();
-
-		portletId = PortletIdCodec.decodePortletName(portletId);
-
-		String typeSettingsProperty = typeSettingsUnicodeProperties.getProperty(
-			StagingUtil.getStagedPortletId(portletId));
-
-		if (Validator.isNotNull(typeSettingsProperty)) {
-			return GetterUtil.getBoolean(typeSettingsProperty);
-		}
-
-		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if (portletDataHandler == null) {
-				return false;
-			}
-
-			for (Map.Entry<String, String> entry :
-					typeSettingsUnicodeProperties.entrySet()) {
-
-				String key = entry.getKey();
-
-				if (!key.contains(StagingConstants.STAGED_PORTLET)) {
-					continue;
-				}
-
-				String stagedPortletId = StringUtil.removeSubstring(
-					key, StagingConstants.STAGED_PORTLET);
-
-				Portlet stagedPortlet = PortletLocalServiceUtil.getPortletById(
-					stagedPortletId);
-
-				if (stagedPortlet == null) {
-					continue;
-				}
-
-				PortletDataHandler stagedPortletDataHandler =
-					stagedPortlet.getPortletDataHandlerInstance();
-
-				if (stagedPortletDataHandler == null) {
-					continue;
-				}
-
-				String serviceName = portletDataHandler.getServiceName();
-
-				if (serviceName == null) {
-					continue;
-				}
-
-				if (serviceName.equals(
-						stagedPortletDataHandler.getServiceName())) {
-
-					return GetterUtil.getBoolean(entry.getValue());
-				}
-			}
-
-			return portletDataHandler.isStaged();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override

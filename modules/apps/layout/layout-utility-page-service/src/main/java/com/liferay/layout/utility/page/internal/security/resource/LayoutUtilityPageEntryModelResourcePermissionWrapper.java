@@ -5,7 +5,6 @@
 
 package com.liferay.layout.utility.page.internal.security.resource;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.security.permission.resource.BaseModelResourceP
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,10 +36,7 @@ public class LayoutUtilityPageEntryModelResourcePermissionWrapper
 			LayoutUtilityPageEntry::getLayoutUtilityPageEntryId,
 			_layoutUtilityPageEntryLocalService::getLayoutUtilityPageEntry,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> consumer.accept(
-				new StagedModelPermissionLogic<>(
-					_stagingPermission, LayoutAdminPortletKeys.GROUP_PAGES,
-					LayoutUtilityPageEntry::getLayoutUtilityPageEntryId)));
+			(modelResourcePermission, consumer) -> {});
 	}
 
 	@Reference
@@ -52,8 +47,5 @@ public class LayoutUtilityPageEntryModelResourcePermissionWrapper
 		target = "(resource.name=" + LayoutUtilityPageConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

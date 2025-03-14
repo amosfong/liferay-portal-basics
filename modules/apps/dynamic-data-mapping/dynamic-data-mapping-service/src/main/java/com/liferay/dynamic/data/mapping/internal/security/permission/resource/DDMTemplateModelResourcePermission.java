@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -68,20 +67,6 @@ public class DDMTemplateModelResourcePermission
 			_ddmPermissionSupport.getTemplateModelResourceName(
 				template.getResourceClassName());
 
-		String portletId = PortletProviderUtil.getPortletId(
-			template.getResourceClassName(), PortletProvider.Action.EDIT);
-
-		if (Validator.isNotNull(portletId)) {
-			Boolean hasPermission = _stagingPermission.hasPermission(
-				permissionChecker, template.getGroupId(),
-				templateModelResourceName, template.getTemplateId(), portletId,
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
 		if (permissionChecker.hasOwnerPermission(
 				template.getCompanyId(), templateModelResourceName,
 				template.getTemplateId(), template.getUserId(), actionId)) {
@@ -121,8 +106,5 @@ public class DDMTemplateModelResourcePermission
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

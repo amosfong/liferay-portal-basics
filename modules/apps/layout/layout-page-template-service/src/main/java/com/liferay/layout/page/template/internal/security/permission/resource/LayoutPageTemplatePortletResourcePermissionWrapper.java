@@ -5,13 +5,11 @@
 
 package com.liferay.layout.page.template.internal.security.permission.resource;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,13 +28,7 @@ public class LayoutPageTemplatePortletResourcePermissionWrapper
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			LayoutPageTemplateConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES));
+			LayoutPageTemplateConstants.RESOURCE_NAME);
 	}
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

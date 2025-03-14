@@ -8,12 +8,10 @@ package com.liferay.document.library.internal.security.permission.resource;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,10 +35,7 @@ public class DLFileShortcutModelResourcePermissionWrapper
 			DLFileShortcut.class, DLFileShortcut::getFileShortcutId,
 			_dlFileShortcutLocalService::getFileShortcut,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> consumer.accept(
-				new StagedModelPermissionLogic<>(
-					_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY,
-					DLFileShortcut::getFileShortcutId)));
+			(modelResourcePermission, consumer) -> {});
 	}
 
 	@Reference
@@ -48,8 +43,5 @@ public class DLFileShortcutModelResourcePermissionWrapper
 
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

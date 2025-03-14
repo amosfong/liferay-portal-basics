@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -646,21 +645,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	private LayoutSetBranch _getLayoutSetBranch(LayoutSet layoutSet)
 		throws PortalException {
-
-		LayoutSetStagingHandler layoutSetStagingHandler =
-			LayoutStagingUtil.getLayoutSetStagingHandler(layoutSet);
-
-		if (layoutSetStagingHandler != null) {
-			return layoutSetStagingHandler.getLayoutSetBranch();
-		}
-
-		if (LayoutStagingUtil.isBranchingLayoutSet(
-				layoutSet.getGroup(), layoutSet.isPrivateLayout())) {
-
-			layoutSetStagingHandler = new LayoutSetStagingHandler(layoutSet);
-
-			return layoutSetStagingHandler.getLayoutSetBranch();
-		}
 
 		return null;
 	}

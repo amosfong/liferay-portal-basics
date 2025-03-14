@@ -279,9 +279,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			typeSettingsUnicodeProperties.remove(key);
 		}
 
-		StagingUtil.deleteLastImportSettings(liveGroup, true);
-		StagingUtil.deleteLastImportSettings(liveGroup, false);
-
 		checkDefaultLayoutSetBranches(
 			serviceContext.getUserId(), liveGroup, false, false, stagedRemotely,
 			serviceContext);

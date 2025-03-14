@@ -11,14 +11,12 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,10 +64,7 @@ public class DLFileEntryTypeModelResourcePermissionWrapper
 			DLFileEntryType.class, DLFileEntryTypeModel::getFileEntryTypeId,
 			_dlFileEntryTypeLocalService::getDLFileEntryType,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> consumer.accept(
-				new StagedModelPermissionLogic<>(
-					_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY,
-					DLFileEntryTypeModel::getFileEntryTypeId)));
+			(modelResourcePermission, consumer) -> {});
 	}
 
 	@Reference
@@ -80,8 +75,5 @@ public class DLFileEntryTypeModelResourcePermissionWrapper
 
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

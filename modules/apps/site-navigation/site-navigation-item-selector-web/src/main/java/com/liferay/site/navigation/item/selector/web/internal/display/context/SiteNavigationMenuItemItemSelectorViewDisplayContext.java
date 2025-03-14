@@ -198,7 +198,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			themeDisplay.getScopeGroupId(), privateLayout, parentLayoutId);
 
 		for (Layout layout : layouts) {
-			if (layout.isHidden() || StagingUtil.isIncomplete(layout)) {
+			if (layout.isHidden()) {
 				continue;
 			}
 

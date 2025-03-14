@@ -7,11 +7,9 @@ package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,13 +27,7 @@ public class DDMFormPortletResourcePermissionWrapper
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			DDMConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission,
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
+			DDMConstants.RESOURCE_NAME);
 	}
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

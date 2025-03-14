@@ -5,7 +5,6 @@
 
 package com.liferay.staging.internal.service;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,26 +70,7 @@ public class LayoutSetLocalServiceStagingAdvice {
 	}
 
 	protected LayoutSet wrapLayoutSet(LayoutSet layoutSet) {
-		try {
-			if (!LayoutStagingUtil.isBranchingLayoutSet(
-					layoutSet.getGroup(), layoutSet.isPrivateLayout())) {
-
-				return layoutSet;
-			}
-		}
-		catch (PortalException portalException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return layoutSet;
-		}
-
-		return LayoutSetStagingHandler.newProxyInstance(
-			new LayoutSetStagingHandler(layoutSet));
+		return layoutSet;
 	}
 
 	protected List<LayoutSet> wrapLayoutSets(List<LayoutSet> layoutSets) {

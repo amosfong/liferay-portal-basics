@@ -160,7 +160,7 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 		<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 		<%
-		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
+		LayoutRevision layoutRevision = null;
 		%>
 
 		<c:if test="<%= layoutRevision != null %>">

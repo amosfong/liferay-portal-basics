@@ -141,10 +141,6 @@ public class LayoutRevisionLocalServiceImpl
 				serviceContext);
 		}
 
-		StagingUtil.setRecentLayoutRevisionId(
-			user, layoutSetBranchId, plid,
-			layoutRevision.getLayoutRevisionId());
-
 		return layoutRevision;
 	}
 
@@ -535,14 +531,6 @@ public class LayoutRevisionLocalServiceImpl
 					}
 				}
 			}
-
-			StagingUtil.setRecentLayoutBranchId(
-				user, layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid(), layoutRevision.getLayoutBranchId());
-
-			StagingUtil.setRecentLayoutRevisionId(
-				user, layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
 		}
 		else {
 			if (layoutRevision == null) {

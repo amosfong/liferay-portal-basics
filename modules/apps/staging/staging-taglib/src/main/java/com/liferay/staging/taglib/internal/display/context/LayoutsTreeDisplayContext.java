@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -471,12 +470,6 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private boolean _isIncomplete() {
-		if (LayoutStagingUtil.isBranchingLayoutSet(
-				getSelectPagesGroup(), isSelectPagesPrivateLayout())) {
-
-			return true;
-		}
-
 		return false;
 	}
 

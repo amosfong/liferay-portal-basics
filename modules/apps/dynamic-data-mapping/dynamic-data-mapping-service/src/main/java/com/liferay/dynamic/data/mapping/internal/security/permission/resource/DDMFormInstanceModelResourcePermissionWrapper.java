@@ -10,13 +10,11 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 
 import java.util.Objects;
 
@@ -41,29 +39,7 @@ public class DDMFormInstanceModelResourcePermissionWrapper
 			DDMFormInstance.class, DDMFormInstance::getFormInstanceId,
 			_ddmFormInstanceLocalService::getDDMFormInstance,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> consumer.accept(
-				new StagedModelPermissionLogic<DDMFormInstance>(
-					_stagingPermission,
-					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-					DDMFormInstance::getFormInstanceId) {
-
-					@Override
-					public Boolean contains(
-						PermissionChecker permissionChecker, String name,
-						DDMFormInstance ddmFormInstance, String actionId) {
-
-						if (Objects.equals(
-								actionId,
-								DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
-
-							return null;
-						}
-
-						return super.contains(
-							permissionChecker, name, ddmFormInstance, actionId);
-					}
-
-				}));
+			(modelResourcePermission, consumer) -> {});
 	}
 
 	@Reference
@@ -71,8 +47,5 @@ public class DDMFormInstanceModelResourcePermissionWrapper
 
 	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

@@ -7,7 +7,6 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -55,7 +54,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
 		return _permissionChecker.getRoleIds(
-			userId, StagingUtil.getLiveGroupId(groupId));
+			userId, groupId);
 	}
 
 	@Override
@@ -99,7 +98,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 			return true;
 		}
 
-		Group liveGroup = StagingUtil.getLiveGroup(group);
+		Group liveGroup = group;
 
 		if ((liveGroup != null) &&
 			(liveGroup.getGroupId() != group.getGroupId()) &&
@@ -120,7 +119,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 			return true;
 		}
 
-		Group liveGroup = StagingUtil.getLiveGroup(group);
+		Group liveGroup = group;
 
 		if ((liveGroup != group) &&
 			primKey.equals(String.valueOf(group.getGroupId()))) {
@@ -171,25 +170,25 @@ public class StagingPermissionChecker implements PermissionChecker {
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
 		return _permissionChecker.isContentReviewer(
-			companyId, StagingUtil.getLiveGroupId(groupId));
+			companyId, groupId);
 	}
 
 	@Override
 	public boolean isGroupAdmin(long groupId) {
 		return _permissionChecker.isGroupAdmin(
-			StagingUtil.getLiveGroupId(groupId));
+			groupId);
 	}
 
 	@Override
 	public boolean isGroupMember(long groupId) {
 		return _permissionChecker.isGroupMember(
-			StagingUtil.getLiveGroupId(groupId));
+			groupId);
 	}
 
 	@Override
 	public boolean isGroupOwner(long groupId) {
 		return _permissionChecker.isGroupOwner(
-			StagingUtil.getLiveGroupId(groupId));
+			groupId);
 	}
 
 	@Override

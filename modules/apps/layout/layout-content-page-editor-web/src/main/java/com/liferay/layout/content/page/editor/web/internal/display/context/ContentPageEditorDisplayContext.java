@@ -1721,7 +1721,7 @@ public class ContentPageEditorDisplayContext {
 
 		List<StyleBookEntry> styleBookEntries =
 			_styleBookEntryLocalService.getStyleBookEntries(
-				_staging.getLiveGroupId(themeDisplay.getScopeGroupId()),
+				themeDisplay.getScopeGroupId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true));
 

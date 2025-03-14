@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
@@ -52,14 +51,6 @@ public class TeamPermissionUtil {
 	public static boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException {
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, team.getGroupId(), Team.class.getName(),
-			team.getTeamId(), StringPool.BLANK, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
 
 		if (GroupPermissionUtil.contains(
 				permissionChecker, team.getGroupId(),

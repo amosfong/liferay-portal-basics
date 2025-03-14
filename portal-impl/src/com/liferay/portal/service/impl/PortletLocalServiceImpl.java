@@ -7,7 +7,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -329,29 +328,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					portletPreferences.getPortletId(), plid);
 			}
 
-			if (LayoutStagingUtil.isBranchingLayout(
-					_layoutLocalService.getLayout(plid))) {
-
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				String[] removePortlets = (String[])serviceContext.getAttribute(
-					"removePortletIds");
-
-				if (removePortlets == null) {
-					serviceContext.setAttribute(
-						"removePortletIds", new String[] {portletId});
-				}
-				else if (!ArrayUtil.contains(removePortlets, portletId)) {
-					serviceContext.setAttribute(
-						"removePortletIds",
-						ArrayUtil.append(removePortlets, portletId));
-				}
-			}
-			else {
-				_portletPreferencesLocalService.deletePortletPreferences(
-					portletPreferences.getPortletPreferencesId());
-			}
+			_portletPreferencesLocalService.deletePortletPreferences(
+				portletPreferences.getPortletPreferencesId());
 		}
 	}
 

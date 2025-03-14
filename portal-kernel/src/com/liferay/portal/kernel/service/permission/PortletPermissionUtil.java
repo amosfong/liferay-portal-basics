@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -546,16 +545,6 @@ public class PortletPermissionUtil {
 		}
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
-
-		if (checkStagingPermission) {
-			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, group, rootPortletId, groupId, rootPortletId,
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
 
 		String resourcePermissionPrimKey = getPrimaryKey(
 			layout.getPlid(), portletId);

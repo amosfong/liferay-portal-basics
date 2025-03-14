@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.internal.security.permission.resource;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -13,7 +12,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -78,10 +76,7 @@ public class LayoutPageTemplatePortletResourcePermission
 	@Activate
 	protected void activate() {
 		_portletResourcePermission = PortletResourcePermissionFactory.create(
-			LayoutPageTemplateConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES));
+			LayoutPageTemplateConstants.RESOURCE_NAME);
 	}
 
 	private long _getGroupId(long groupId) {
@@ -107,8 +102,5 @@ public class LayoutPageTemplatePortletResourcePermission
 	private GroupLocalService _groupLocalService;
 
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

@@ -79,10 +79,6 @@ public class LayoutBranchLocalServiceImpl
 			layoutBranch.getUserId(), LayoutBranch.class.getName(),
 			layoutBranch.getLayoutBranchId(), false, true, false);
 
-		StagingUtil.setRecentLayoutBranchId(
-			user, layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
-			layoutBranch.getLayoutBranchId());
-
 		return layoutBranch;
 	}
 

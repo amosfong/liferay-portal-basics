@@ -947,7 +947,7 @@ public class ThemeDisplay
 	}
 
 	public long getSiteGroupIdOrLiveGroupId() {
-		return StagingUtil.getLiveGroupId(_siteGroupId);
+		return _siteGroupId;
 	}
 
 	public String getSiteGroupName() throws PortalException {

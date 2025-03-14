@@ -46,7 +46,6 @@
 	<c:otherwise>
 
 		<%
-		ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ExportImportServiceConfiguration.class, CompanyThreadLocal.getCompanyId());
 		Group groupType = layout.getGroup();
 		%>
 
@@ -158,10 +157,6 @@
 				var="publishOnLayoutLink"
 			>
 				<div class="btn-group dropdown">
-					<button class="btn btn-primary btn-sm" href="<%= exportImportServiceConfiguration.showAdvancedStagingConfigurationByDefault() ? advancedPublishLayoutsURL : simplePublishLayoutsURL %>" id="<%= layoutSetBranchId %>publishToLiveLink" type="button">
-						<liferay-ui:message key="publish-to-live" />
-					</button>
-
 					<c:if test="<%= branchingEnabled %>">
 						<clay:button
 							aria-expanded="false"

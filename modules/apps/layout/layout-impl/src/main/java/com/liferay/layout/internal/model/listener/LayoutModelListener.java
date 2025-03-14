@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.model.listener;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutLocalization;
@@ -87,30 +86,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		_layoutClassedModelUsageLocalService.
 			deleteLayoutClassedModelUsagesByPlid(layout.getPlid());
-
-		try {
-			if (!LayoutStagingUtil.isBranchingLayout(layout)) {
-				return;
-			}
-
-			_layoutRevisionLocalService.deleteLayoutLayoutRevisions(
-				layout.getPlid());
-		}
-		catch (IllegalStateException illegalStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException);
-			}
-
-			// This is only needed because of LayoutPersistenceTest but should
-			// never happen in a deployed environment
-
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
-		catch (SystemException systemException) {
-			throw new ModelListenerException(systemException);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

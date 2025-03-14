@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -161,16 +160,6 @@ public class LayoutsAdminDisplayContext {
 			httpServletRequest, "layoutSetBranchId");
 
 		Layout layout = getSelLayout();
-
-		if (layout != null) {
-			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
-				layout);
-
-			if (layoutRevision != null) {
-				_activeLayoutSetBranchId =
-					layoutRevision.getLayoutSetBranchId();
-			}
-		}
 
 		List<LayoutSetBranch> layoutSetBranches =
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(

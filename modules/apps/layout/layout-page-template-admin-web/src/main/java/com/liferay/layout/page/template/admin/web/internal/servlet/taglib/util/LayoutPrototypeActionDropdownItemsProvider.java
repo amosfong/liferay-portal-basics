@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -54,9 +53,6 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), _layoutPrototype.getGroup(),
-			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 		boolean hasUpdatePermission = LayoutPrototypePermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(),
 			_layoutPrototype.getLayoutPrototypeId(), ActionKeys.UPDATE);
@@ -67,18 +63,6 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() -> hasUpdatePermission,
 						_getEditLayoutPrototypeActionUnsafeConsumer()
-					).build());
-				dropdownGroupItem.setSeparator(true);
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						() -> hasExportImportLayoutsPermission,
-						_getExportLayoutPrototypeActionUnsafeConsumer()
-					).add(
-						() -> hasExportImportLayoutsPermission,
-						_getImportLayoutPrototypeActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -162,74 +146,6 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-			_getExportLayoutPrototypeActionUnsafeConsumer()
-		throws Exception {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "exportLayoutPrototype");
-			dropdownItem.putData(
-				"exportLayoutPrototypeURL",
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						_httpServletRequest, ExportImportPortletKeys.EXPORT,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/export_import/export_layouts"
-				).setCMD(
-					Constants.EXPORT
-				).setParameter(
-					"groupId", _layoutPrototype.getGroupId()
-				).setParameter(
-					"privateLayout", true
-				).setParameter(
-					"rootNodeName",
-					_layoutPrototype.getName(_themeDisplay.getLocale())
-				).setParameter(
-					"showHeader", false
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
-			dropdownItem.setIcon("upload");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "export"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-			_getImportLayoutPrototypeActionUnsafeConsumer()
-		throws Exception {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "importLayoutPrototype");
-			dropdownItem.putData(
-				"importLayoutPrototypeURL",
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						_httpServletRequest, ExportImportPortletKeys.IMPORT,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/export_import/import_layouts"
-				).setCMD(
-					Constants.IMPORT
-				).setParameter(
-					"groupId", _layoutPrototype.getGroupId()
-				).setParameter(
-					"privateLayout", true
-				).setParameter(
-					"rootNodeName",
-					_layoutPrototype.getName(_themeDisplay.getLocale())
-				).setParameter(
-					"showHeader", false
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
-			dropdownItem.setIcon("download");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "import"));
 		};
 	}
 

@@ -9,7 +9,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -18,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.resource.DynamicInheritance
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -41,11 +39,6 @@ public class DLFolderModelResourcePermissionWrapper
 			DLFolder.class, DLFolder::getFolderId,
 			_dlFolderLocalService::getDLFolder, _portletResourcePermission,
 			(modelResourcePermission, consumer) -> {
-				consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY,
-						DLFolder::getFolderId));
-
 				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					consumer.accept(
 						new DynamicInheritancePermissionLogic<>(
@@ -85,8 +78,5 @@ public class DLFolderModelResourcePermissionWrapper
 
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

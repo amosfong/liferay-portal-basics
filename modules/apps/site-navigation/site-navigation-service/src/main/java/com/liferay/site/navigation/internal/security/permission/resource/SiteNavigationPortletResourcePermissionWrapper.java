@@ -5,11 +5,9 @@
 
 package com.liferay.site.navigation.internal.security.permission.resource;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 
@@ -29,13 +27,7 @@ public class SiteNavigationPortletResourcePermissionWrapper
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			SiteNavigationConstants.RESOURCE_NAME,
-			new StagedPortletPermissionLogic(
-				_stagingPermission,
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN));
+			SiteNavigationConstants.RESOURCE_NAME);
 	}
-
-	@Reference
-	private StagingPermission _stagingPermission;
 
 }

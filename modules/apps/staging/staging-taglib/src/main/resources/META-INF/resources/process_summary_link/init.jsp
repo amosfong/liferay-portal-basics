@@ -7,8 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %>
-
 <%
 long backgroundTaskId = GetterUtil.getLong(request.getAttribute("liferay-staging:process-summary-link:backgroundTaskId"));
 

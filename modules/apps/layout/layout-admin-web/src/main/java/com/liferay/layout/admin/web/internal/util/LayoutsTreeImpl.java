@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.application.list.GroupProvider;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
@@ -532,30 +531,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					"layout.types." + layout.getType());
 			}
 		);
-
-		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
-			layout);
-
-		if (layoutRevision != null) {
-			if (_staging.isIncomplete(
-					layout, layoutRevision.getLayoutSetBranchId())) {
-
-				jsonObject.put("incomplete", true);
-			}
-
-			LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
-
-			if (!layoutBranch.isMaster()) {
-				jsonObject.put("layoutBranchName", layoutBranch.getName());
-			}
-
-			if (layoutRevision.isHead()) {
-				jsonObject.put("layoutRevisionHead", true);
-			}
-
-			jsonObject.put(
-				"layoutRevisionId", layoutRevision.getLayoutRevisionId());
-		}
 
 		return jsonObject;
 	}

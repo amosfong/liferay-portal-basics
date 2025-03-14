@@ -248,10 +248,6 @@ public class LayoutSetBranchLocalServiceImpl
 
 		LayoutSet layoutSet = layoutSetBranch.getLayoutSet();
 
-		StagingUtil.setRecentLayoutSetBranchId(
-			user, layoutSet.getLayoutSetId(),
-			layoutSetBranch.getLayoutSetBranchId());
-
 		return layoutSetBranch;
 	}
 

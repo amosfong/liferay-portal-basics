@@ -911,9 +911,7 @@ public class LayoutsTreeDisplayContext {
 
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
-		if (scopeGroup.isStaged() &&
-			Objects.equals(scopeGroup, StagingUtil.getLiveGroup(scopeGroup))) {
-
+		if (scopeGroup.isStaged()) {
 			return false;
 		}
 

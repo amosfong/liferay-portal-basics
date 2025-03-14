@@ -5,9 +5,7 @@
 
 package com.liferay.staging.internal;
 
-import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -92,41 +90,7 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public Group fetchRemoteLiveGroup(Group group) {
-		if (!isRemoteStagingGroup(group)) {
-			return null;
-		}
-
-		group = _getParentGroupForScopeGroup(group);
-
-		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
-				PortalClassLoaderUtil.getClassLoader())) {
-
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			User user = permissionChecker.getUser();
-
-			String remoteURL = _stagingURLHelper.buildRemoteURL(
-				group.getTypeSettingsProperties());
-
-			HttpPrincipal httpPrincipal = new HttpPrincipal(
-				remoteURL, user.getLogin(), user.getPassword(),
-				user.isPasswordEncrypted());
-
-			long remoteGroupId = GetterUtil.getLong(
-				_getTypeSettingsProperty(group, "remoteGroupId"));
-
-			return GroupServiceHttp.getGroup(httpPrincipal, remoteGroupId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get remote live group: " +
-						portalException.getMessage());
-			}
-
-			return null;
-		}
+		return null;
 	}
 
 	@Override
@@ -301,39 +265,6 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public boolean isStagedPortletData(long groupId, String className) {
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			return true;
-		}
-
-		List<Portlet> dataSiteLevelPortlets = Collections.emptyList();
-
-		try {
-			dataSiteLevelPortlets =
-				_exportImportHelper.getDataSiteLevelPortlets(
-					group.getCompanyId(), true);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return true;
-		}
-
-		for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
-			PortletDataHandler portletDataHandler =
-				dataSiteLevelPortlet.getPortletDataHandlerInstance();
-
-			if (ArrayUtil.contains(
-					portletDataHandler.getClassNames(), className)) {
-
-				return isStagedPortlet(
-					groupId, dataSiteLevelPortlet.getRootPortletId());
-			}
-		}
-
 		return true;
 	}
 
@@ -384,12 +315,6 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 		StagingGroupHelperImpl.class);
 
 	@Reference
-	private ExportImportHelper _exportImportHelper;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private StagingURLHelper _stagingURLHelper;
 
 }

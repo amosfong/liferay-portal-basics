@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -239,31 +238,7 @@ public class PublishLayoutMVCActionCommand
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			layout = _layoutLocalService.updateLayout(layout);
-
-			_updateLayoutRevision(layout, serviceContext);
 		}
-	}
-
-	private void _updateLayoutRevision(
-			Layout layout, ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
-			layout);
-
-		if (layoutRevision == null) {
-			return;
-		}
-
-		_layoutRevisionLocalService.updateLayoutRevision(
-			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
-			layoutRevision.getTitle(), layoutRevision.getDescription(),
-			layoutRevision.getKeywords(), layoutRevision.getRobots(),
-			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
-			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
-			serviceContext);
 	}
 
 	@Reference

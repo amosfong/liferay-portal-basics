@@ -203,10 +203,6 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		}
 
 		if (layoutRevision != null) {
-			StagingUtil.setRecentLayoutRevisionId(
-				user, layoutSetBranchId, layout.getPlid(),
-				layoutRevision.getLayoutRevisionId());
-
 			return layoutRevision;
 		}
 

@@ -91,7 +91,7 @@ LayoutRevision layoutRevision = null;
 if (layout != null) {
 	group = layout.getGroup();
 
-	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
+	layoutRevision = null;
 }
 %>
 

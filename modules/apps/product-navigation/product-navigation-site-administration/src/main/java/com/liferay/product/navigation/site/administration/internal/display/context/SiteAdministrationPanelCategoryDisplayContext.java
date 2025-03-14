@@ -159,64 +159,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_liveGroupURL = StringPool.BLANK;
 
-		Group group = getGroup();
-
-		if (group.isStagedRemotely()) {
-			Layout layout = _themeDisplay.getLayout();
-
-			boolean privateLayout = layout.isPrivateLayout();
-
-			if (layout instanceof VirtualLayout) {
-				VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-				Group targetGroup = virtualLayout.getGroup();
-
-				if (!targetGroup.hasPrivateLayouts()) {
-					privateLayout = false;
-				}
-			}
-
-			try {
-				_liveGroupURL = StagingUtil.getRemoteSiteURL(
-					group, privateLayout);
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to get live group URL", portalException);
-				}
-
-				_log.error(
-					"Unable to get live group URL: " +
-						portalException.getMessage());
-			}
-			catch (SystemException systemException) {
-				Throwable throwable = systemException.getCause();
-
-				if (!(throwable instanceof ConnectException)) {
-					throw systemException;
-				}
-
-				_log.error(
-					"Unable to connect to remote live: " +
-						systemException.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(systemException);
-				}
-
-				throw new RemoteExportException(
-					RemoteExportException.BAD_CONNECTION);
-			}
-		}
-		else if (group.isStagingGroup()) {
-			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
-
-			if (liveGroup != null) {
-				_liveGroupURL = _groupURLProvider.getLiveGroupURL(
-					liveGroup, _portletRequest);
-			}
-		}
-
 		return _liveGroupURL;
 	}
 
@@ -326,18 +268,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_stagingGroupURL = StringPool.BLANK;
 
-		Group group = getGroup();
-
-		if (!group.isStagedRemotely() && group.hasStagingGroup()) {
-			Group stagingGroup = StagingUtil.getStagingGroup(
-				group.getGroupId());
-
-			if (stagingGroup != null) {
-				_stagingGroupURL = _groupURLProvider.getGroupURL(
-					stagingGroup, _portletRequest);
-			}
-		}
-
 		return _stagingGroupURL;
 	}
 
@@ -381,10 +311,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		Group group = getGroup();
 
 		Layout layout = _getFirstLayout(group);
-
-		if ((layout == null) && group.isStaged()) {
-			layout = _getFirstLayout(StagingUtil.getLiveGroup(group));
-		}
 
 		if (layout != null) {
 			return true;

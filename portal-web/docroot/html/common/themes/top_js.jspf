@@ -180,7 +180,7 @@
 			<%
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
-			Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
+			Group liveGroup = scopeGroup;
 			%>
 
 			<c:if test="<%= layout != null %>">

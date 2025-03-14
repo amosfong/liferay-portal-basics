@@ -118,8 +118,7 @@ public class LayoutActionsHelper {
 	}
 
 	public boolean isShowDeleteAction(Layout layout) throws PortalException {
-		if (StagingUtil.isIncomplete(layout) ||
-			!LayoutPermissionUtil.contains(
+		if (!LayoutPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.DELETE)) {
 
@@ -196,8 +195,7 @@ public class LayoutActionsHelper {
 	public boolean isShowOrphanPortletsAction(Layout layout, Group selGroup)
 		throws PortalException {
 
-		if (StagingUtil.isIncomplete(layout) ||
-			!layout.isSupportsEmbeddedPortlets() ||
+		if (!layout.isSupportsEmbeddedPortlets() ||
 			!isShowAddRootLayoutButton(selGroup) ||
 			!_hasOrphanPortlets(layout)) {
 
@@ -210,7 +208,7 @@ public class LayoutActionsHelper {
 	public boolean isShowPermissionsAction(Layout layout, Group selGroup)
 		throws PortalException {
 
-		if (StagingUtil.isIncomplete(layout) || selGroup.isLayoutPrototype()) {
+		if (selGroup.isLayoutPrototype()) {
 			return false;
 		}
 
