@@ -33,15 +33,6 @@ SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServi
 		siteNavigationMenuItemType.renderEditPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), siteNavigationMenuItem);
 		%>
 
-		<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), SiteNavigationMenuItem.class.getName(), siteNavigationMenuItemId, null) %>">
-			<liferay-expando:custom-attribute-list
-				className="<%= SiteNavigationMenuItem.class.getName() %>"
-				classPK="<%= siteNavigationMenuItemId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
-		</c:if>
-
 		<clay:button
 			block="<%= true %>"
 			label="save"

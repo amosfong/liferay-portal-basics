@@ -157,21 +157,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				Map<String, Serializable> roleCustomAttributes = roleExpandoBridge.getAttributes();
 				%>
 
-				<c:if test="<%= !roleCustomAttributes.isEmpty() %>">
-					<div class="sheet">
-						<div class="panel-group panel-group-flush">
-							<aui:fieldset>
-								<liferay-expando:custom-attribute-list
-									className="<%= Role.class.getName() %>"
-									classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
-									editable="<%= true %>"
-									label="<%= true %>"
-								/>
-							</aui:fieldset>
-						</div>
-					</div>
-				</c:if>
-
 				<aui:button-row>
 					<aui:button type="submit" />
 

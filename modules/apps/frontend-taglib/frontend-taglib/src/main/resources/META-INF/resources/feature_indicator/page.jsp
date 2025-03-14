@@ -23,8 +23,6 @@ String type = (String)request.getAttribute("liferay-frontend:feature-indicator:t
 			).put(
 				"interactive", interactive
 			).put(
-				"learnResourceContext", LearnMessageUtil.getReactDataJSONObject("frontend-js-components-web")
-			).put(
 				"tooltipAlign", tooltipAlign
 			).put(
 				"type", type

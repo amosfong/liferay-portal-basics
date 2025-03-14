@@ -10,8 +10,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext" %>
 
 <portlet:defineObjects />
@@ -44,8 +43,6 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 				"initialTextEmbeddingProviderConfigurationJSONs", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingProviderConfigurationJSONs()
 			).put(
 				"initialTextEmbeddingsEnabled", semanticSearchCompanyConfigurationDisplayContext.isTextEmbeddingsEnabled()
-			).put(
-				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(

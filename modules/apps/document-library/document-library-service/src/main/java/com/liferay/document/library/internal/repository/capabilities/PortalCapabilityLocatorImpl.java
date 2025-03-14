@@ -161,14 +161,8 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		DocumentRepository documentRepository,
 		WorkflowCapability.OperationMode operationMode) {
 
-		if (operationMode == WorkflowCapability.OperationMode.MINIMAL) {
-			return new MinimalWorkflowCapability(
-				DLFileEntryServiceAdapter.create(documentRepository));
-		}
-
-		return new LiferayWorkflowCapability(
-			DLFileEntryServiceAdapter.create(documentRepository),
-			DLFileVersionServiceAdapter.create(documentRepository));
+		return new MinimalWorkflowCapability(
+			DLFileEntryServiceAdapter.create(documentRepository));
 	}
 
 	@Activate

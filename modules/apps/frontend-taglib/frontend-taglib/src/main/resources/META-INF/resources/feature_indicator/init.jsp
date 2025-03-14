@@ -7,5 +7,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>

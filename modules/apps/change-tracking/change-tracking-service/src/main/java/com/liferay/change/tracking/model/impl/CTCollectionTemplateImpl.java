@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.model.impl;
 
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalServiceUtil;
-import com.liferay.json.storage.service.JSONStorageEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -20,9 +19,7 @@ public class CTCollectionTemplateImpl extends CTCollectionTemplateBaseImpl {
 
 	@Override
 	public JSONObject getJSONObject() {
-		return JSONStorageEntryLocalServiceUtil.getJSONObject(
-			ClassNameLocalServiceUtil.getClassNameId(getModelClassName()),
-			getCtCollectionTemplateId());
+		return null;
 	}
 
 	@Override

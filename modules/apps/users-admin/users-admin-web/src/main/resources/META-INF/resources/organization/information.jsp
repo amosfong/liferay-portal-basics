@@ -36,11 +36,3 @@ Organization organization = organizationScreenNavigationDisplayContext.getOrgani
 		<liferay-util:include page="/organization/comments.jsp" servletContext="<%= application %>" />
 	</div>
 </clay:sheet-section>
-
-<c:if test="<%= ExpandoAttributesUtil.hasVisibleAttributes(company.getCompanyId(), Organization.class) %>">
-	<clay:sheet-section>
-		<span class="sheet-tertiary-title"><liferay-ui:message key="custom-fields" /></span>
-
-		<liferay-util:include page="/organization/custom_fields.jsp" servletContext="<%= application %>" />
-	</clay:sheet-section>
-</c:if>

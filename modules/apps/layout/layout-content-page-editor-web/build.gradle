@@ -38,7 +38,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:layout:layout-utility-page-api")
-	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")

@@ -40,7 +40,3 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 		<liferay-util:include page="/user/comments.jsp" servletContext="<%= application %>" />
 	</div>
 </clay:sheet-section>
-
-<clay:sheet-section>
-	<liferay-util:include page="/user/custom_fields.jsp" servletContext="<%= application %>" />
-</clay:sheet-section>

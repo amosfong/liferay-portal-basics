@@ -10,7 +10,6 @@ import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.base.CTCollectionTemplateLocalServiceBaseImpl;
-import com.liferay.json.storage.service.JSONStorageEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -77,12 +76,6 @@ public class CTCollectionTemplateLocalServiceImpl
 			CTCollectionTemplate.class.getName(),
 			ctCollectionTemplate.getCtCollectionTemplateId(), false, false,
 			false);
-
-		_jsonStorageEntryLocalService.addJSONStorageEntries(
-			user.getCompanyId(),
-			_classNameLocalService.getClassNameId(
-				CTCollectionTemplate.class.getName()),
-			ctCollectionTemplateId, json);
 
 		return ctCollectionTemplate;
 	}
@@ -165,12 +158,6 @@ public class CTCollectionTemplateLocalServiceImpl
 		ctCollectionTemplate = ctCollectionTemplatePersistence.update(
 			ctCollectionTemplate);
 
-		_jsonStorageEntryLocalService.updateJSONStorageEntries(
-			ctCollectionTemplate.getCompanyId(),
-			_classNameLocalService.getClassNameId(
-				CTCollectionTemplate.class.getName()),
-			ctCollectionTemplateId, json);
-
 		return ctCollectionTemplate;
 	}
 
@@ -231,9 +218,6 @@ public class CTCollectionTemplateLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

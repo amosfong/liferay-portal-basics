@@ -5,12 +5,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import com.liferay.expando.kernel.exception.NoSuchTableException;
-import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
@@ -632,83 +626,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 	@Override
 	public void readExpandoTables(PortletDataContext portletDataContext)
 		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/expando-tables.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> expandoTableElements = rootElement.elements(
-			"expando-table");
-
-		for (Element expandoTableElement : expandoTableElements) {
-			String className = expandoTableElement.attributeValue("class-name");
-
-			ExpandoTable expandoTable = null;
-
-			try {
-				expandoTable = _expandoTableLocalService.getDefaultTable(
-					portletDataContext.getCompanyId(), className);
-			}
-			catch (NoSuchTableException noSuchTableException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchTableException);
-				}
-
-				expandoTable = _expandoTableLocalService.addDefaultTable(
-					portletDataContext.getCompanyId(), className);
-			}
-
-			List<Element> expandoColumnElements = expandoTableElement.elements(
-				"expando-column");
-
-			for (Element expandoColumnElement : expandoColumnElements) {
-				long columnId = GetterUtil.getLong(
-					expandoColumnElement.attributeValue("column-id"));
-				String name = expandoColumnElement.attributeValue("name");
-				int type = GetterUtil.getInteger(
-					expandoColumnElement.attributeValue("type"));
-				String defaultData = expandoColumnElement.elementText(
-					"default-data");
-				String typeSettings = expandoColumnElement.elementText(
-					"type-settings");
-
-				Serializable defaultDataObject =
-					ExpandoConverterUtil.getAttributeFromString(
-						type, defaultData);
-
-				ExpandoColumn expandoColumn =
-					_expandoColumnLocalService.fetchColumn(
-						expandoTable.getTableId(), name);
-
-				if (expandoColumn != null) {
-					_expandoColumnLocalService.updateColumn(
-						expandoColumn.getColumnId(), name, type,
-						defaultDataObject);
-				}
-				else {
-					expandoColumn = _expandoColumnLocalService.addColumn(
-						expandoTable.getTableId(), name, type,
-						defaultDataObject);
-				}
-
-				_expandoColumnLocalService.updateTypeSettings(
-					expandoColumn.getColumnId(), typeSettings);
-
-				portletDataContext.importPermissions(
-					ExpandoColumn.class, columnId, expandoColumn.getColumnId());
-			}
-		}
 	}
 
 	@Override
@@ -1213,13 +1130,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 		String layoutsImportMode = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
 
-		if (!layoutsImportMode.equals(
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
-
-			readExpandoTables(portletDataContext);
-		}
-
 		readLocks(portletDataContext);
 
 		Element portletDataElement = portletElement.element("portlet-data");
@@ -1426,12 +1336,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
-
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
