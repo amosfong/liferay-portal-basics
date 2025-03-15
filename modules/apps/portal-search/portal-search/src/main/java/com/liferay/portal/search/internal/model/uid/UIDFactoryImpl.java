@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.model.uid;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
@@ -56,7 +55,7 @@ public class UIDFactoryImpl implements UIDFactory {
 		String modelClassName, Serializable primaryKeyObject,
 		long ctCollectionId) {
 
-		return _getUID(modelClassName, primaryKeyObject, ctCollectionId);
+		return _getUID(modelClassName, primaryKeyObject);
 	}
 
 	@Override
@@ -94,20 +93,9 @@ public class UIDFactoryImpl implements UIDFactory {
 		documentBuilder.setString(Field.UID, _getUID(classedModel));
 	}
 
-	private long _getCtCollectionId(ClassedModel classedModel) {
-		if (classedModel instanceof CTModel<?>) {
-			CTModel<?> ctModel = (CTModel<?>)classedModel;
-
-			return ctModel.getCtCollectionId();
-		}
-
-		return CTConstants.CT_COLLECTION_ID_PRODUCTION;
-	}
-
 	private String _getUID(ClassedModel classedModel) {
 		return _getUID(
-			classedModel.getModelClassName(), classedModel.getPrimaryKeyObj(),
-			_getCtCollectionId(classedModel));
+			classedModel.getModelClassName(), classedModel.getPrimaryKeyObj());
 	}
 
 	private String _getUID(com.liferay.portal.kernel.search.Document document) {
@@ -119,14 +107,7 @@ public class UIDFactoryImpl implements UIDFactory {
 	}
 
 	private String _getUID(
-		String modelClassName, Serializable primaryKeyObject,
-		long ctCollectionId) {
-
-		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return StringBundler.concat(
-				modelClassName, "_PORTLET_", primaryKeyObject, "_FIELD_",
-				ctCollectionId);
-		}
+		String modelClassName, Serializable primaryKeyObject) {
 
 		return modelClassName + "_PORTLET_" + primaryKeyObject;
 	}

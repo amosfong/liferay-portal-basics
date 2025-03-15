@@ -8,8 +8,6 @@ package com.liferay.layout.internal.upgrade.registry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutClassedModelUsageUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
@@ -18,7 +16,6 @@ import com.liferay.layout.internal.upgrade.v1_2_1.LayoutAssetUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
-import com.liferay.layout.internal.upgrade.v1_3_1.LayoutLocalizationUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -79,11 +76,6 @@ public class LayoutServiceUpgradeStepRegistrator
 		registry.register("1.2.3", "1.3.0", LayoutLocalizationTable.create());
 
 		registry.register(
-			"1.3.0", "1.3.1",
-			new LayoutLocalizationUpgradeProcess(
-				_ctCollectionLocalService, _ctEntryLocalService, _portal));
-
-		registry.register(
 			"1.3.1", "1.4.0",
 			UpgradeProcessFactory.addColumns(
 				"LayoutClassedModelUsage",
@@ -127,12 +119,6 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.fragment.service)(&(release.schema.version>=2.5.0)))"

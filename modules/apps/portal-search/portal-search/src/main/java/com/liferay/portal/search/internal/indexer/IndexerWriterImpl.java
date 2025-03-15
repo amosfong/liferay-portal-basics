@@ -5,13 +5,8 @@
 
 package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.model.CTCollectionModel;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -56,7 +51,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		ModelSearchSettings modelSearchSettings,
 		BaseModelRetriever baseModelRetriever,
 		BatchIndexingHelper batchIndexingHelper,
-		CTCollectionLocalService ctCollectionLocalService,
 		ModelIndexerWriterContributor<T> modelIndexerWriterContributor,
 		IndexerDocumentBuilder indexerDocumentBuilder,
 		SearchPermissionIndexWriter searchPermissionIndexWriter,
@@ -68,7 +62,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		_modelSearchSettings = modelSearchSettings;
 		_baseModelRetriever = baseModelRetriever;
 		_batchIndexingHelper = batchIndexingHelper;
-		_ctCollectionLocalService = ctCollectionLocalService;
 		_modelIndexerWriterContributor = modelIndexerWriterContributor;
 		_indexerDocumentBuilder = indexerDocumentBuilder;
 		_searchPermissionIndexWriter = searchPermissionIndexWriter;
@@ -182,43 +175,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 				CompanyThreadLocal.setCompanyId(companyId);
 
-				for (long ctCollectionId : _getCTCollectionIds(companyId)) {
-					try (SafeCloseable safeCloseable1 =
-							CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-								CTSQLModeThreadLocal.CTSQLMode.CT_ONLY);
-						SafeCloseable safeCloseable2 =
-							CTCollectionThreadLocal.
-								setCTCollectionIdWithSafeCloseable(
-									ctCollectionId)) {
-
-						BatchIndexingActionable batchIndexingActionable =
-							getBatchIndexingActionable();
-
-						batchIndexingActionable.setCompanyId(companyId);
-
-						_modelIndexerWriterContributor.customize(
-							batchIndexingActionable,
-							new ModelIndexerWriterDocumentHelperImpl(
-								_modelSearchSettings.getClassName(),
-								_indexerDocumentBuilder));
-
-						try {
-							batchIndexingActionable.performActions();
-						}
-						catch (Exception exception) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									StringBundler.concat(
-										"Unable to reindex ",
-										_modelSearchSettings.getClassName(),
-										" for change tracking collection ID ",
-										ctCollectionId, " and company ID ",
-										companyId),
-									exception);
-							}
-						}
-					}
-				}
+				// TODO reindex
 			}
 		}
 		finally {
@@ -278,22 +235,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			false);
 	}
 
-	private List<Long> _getCTCollectionIds(long companyId) {
-		List<Long> ctCollectionIds = ListUtil.toList(
-			_ctCollectionLocalService.getCTCollections(
-				companyId,
-				new int[] {
-					WorkflowConstants.STATUS_DRAFT,
-					WorkflowConstants.STATUS_SCHEDULED
-				},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CTCollectionModel::getCtCollectionId);
-
-		ctCollectionIds.add(CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		return ctCollectionIds;
-	}
-
 	private IndexerWriterMode _getIndexerWriterMode(T baseModel) {
 		IndexerWriterMode indexerWriterMode =
 			_modelIndexerWriterContributor.getIndexerWriterMode(baseModel);
@@ -321,7 +262,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	private final BaseModelRetriever _baseModelRetriever;
 	private final BatchIndexingHelper _batchIndexingHelper;
-	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;
 	private Boolean _indexerEnabled;
 	private final IndexStatusManager _indexStatusManager;

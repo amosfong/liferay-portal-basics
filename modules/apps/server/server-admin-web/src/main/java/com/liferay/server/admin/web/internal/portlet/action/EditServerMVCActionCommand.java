@@ -6,9 +6,6 @@
 package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
-import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.model.CTCollectionModel;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -31,7 +28,6 @@ import com.liferay.portal.convert.ConvertProcessUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -475,66 +471,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _cleanUpOrphanedPortletPreferences() throws Exception {
-		boolean active = CacheRegistryUtil.isActive();
-
-		CacheRegistryUtil.setActive(true);
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					List<Long> ctCollectionIds = ListUtil.toList(
-						_ctCollectionLocalService.getCTCollections(
-							companyId,
-							new int[] {
-								WorkflowConstants.STATUS_DRAFT,
-								WorkflowConstants.STATUS_SCHEDULED
-							},
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-						CTCollectionModel::getCtCollectionId);
-
-					ctCollectionIds.add(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-					for (long ctCollectionId : ctCollectionIds) {
-						_cleanUpOrphanedPortletPreferences(ctCollectionId);
-					}
-				});
-		}
-		finally {
-			CacheRegistryUtil.setActive(active);
-		}
-	}
-
-	private void _cleanUpOrphanedPortletPreferences(long ctCollectionId)
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
-			ActionableDynamicQuery actionableDynamicQuery =
-				_portletPreferencesLocalService.getActionableDynamicQuery();
-
-			actionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> {
-					Property plidProperty = PropertyFactoryUtil.forName("plid");
-
-					DynamicQuery layoutRevisionDynamicQuery =
-						_layoutRevisionLocalService.dynamicQuery();
-
-					layoutRevisionDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("layoutRevisionId"));
-
-					dynamicQuery.add(
-						plidProperty.notIn(layoutRevisionDynamicQuery));
-				});
-			actionableDynamicQuery.setParallel(true);
-			actionableDynamicQuery.setPerformActionMethod(
-				(com.liferay.portal.kernel.model.PortletPreferences
-					portletPreferences) -> _performAction(portletPreferences));
-
-			actionableDynamicQuery.performActions();
-		}
 	}
 
 	private boolean _containsPortlet(Layout layout, String portletId) {
@@ -636,56 +572,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		Runtime runtime = Runtime.getRuntime();
 
 		runtime.gc();
-	}
-
-	private void _performAction(
-			com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences)
-		throws PortalException {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					portletPreferences.getCtCollectionId())) {
-
-			if ((portletPreferences.getOwnerId() !=
-					PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
-				(portletPreferences.getOwnerType() !=
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
-
-				return;
-			}
-
-			Layout layout = _layoutLocalService.getLayout(
-				portletPreferences.getPlid());
-
-			if (layout.isTypeAssetDisplay() || layout.isTypeContent() ||
-				layout.isTypeControlPanel()) {
-
-				return;
-			}
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				layout.getTypeSettingsProperties();
-
-			Set<String> keys = typeSettingsUnicodeProperties.keySet();
-
-			boolean orphan = true;
-
-			for (String key : keys) {
-				String value = typeSettingsUnicodeProperties.getProperty(key);
-
-				if (value.contains(portletPreferences.getPortletId())) {
-					orphan = false;
-
-					break;
-				}
-			}
-
-			if (orphan) {
-				_portletPreferencesLocalService.deletePortletPreferences(
-					portletPreferences.getPortletPreferencesId());
-			}
-		}
 	}
 
 	private void _runScript(
@@ -955,9 +841,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;

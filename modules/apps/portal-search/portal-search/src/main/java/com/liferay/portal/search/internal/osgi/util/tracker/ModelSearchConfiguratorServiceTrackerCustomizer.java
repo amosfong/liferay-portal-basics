@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.osgi.util.tracker;
 
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -322,7 +321,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 		IndexerWriter<?> indexerWriter = new IndexerWriterImpl<>(
 			modelSearchSettingsImpl, baseModelRetriever, batchIndexingHelper,
-			_ctCollectionLocalService,
 			modelSearchConfigurator.getModelIndexerWriterContributor(),
 			indexerDocumentBuilder, searchPermissionIndexWriter,
 			updateDocumentIndexWriter, indexStatusManager, indexWriterHelper,
@@ -353,9 +351,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		ModelSearchConfiguratorServiceTrackerCustomizer.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	private ServiceTrackerList<DocumentContributor<?>> _documentContributors;
 
