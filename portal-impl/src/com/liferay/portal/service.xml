@@ -3,7 +3,7 @@
 
 <service-builder api-package-path="com.liferay.portal.kernel" auto-import-default-references="false" mvcc-enabled="true" package-path="com.liferay.portal">
 	<namespace>Portal</namespace>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="Address" persistence-class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Address" persistence-class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -249,7 +249,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Country" remote-service="true" uuid="true">
+	<entity local-service="true" name="Country" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -330,7 +330,7 @@
 			<finder-column name="shippingAllowed" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="EmailAddress" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="EmailAddress" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -382,7 +382,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="Group" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Group" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -543,7 +543,7 @@
 			<finder-column name="inheritContent" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Image" remote-service="true">
+	<entity local-service="true" name="Image" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -573,7 +573,7 @@
 			<finder-column comparator="&lt;" name="size" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="group" local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -774,7 +774,7 @@
 			<finder-column name="master" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="LayoutFriendlyURL" remote-service="false" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="LayoutFriendlyURL" remote-service="false" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -835,7 +835,7 @@
 			<finder-column name="languageId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="LayoutPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="LayoutPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -982,7 +982,7 @@
 			<finder-column name="plid" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="LayoutSet" remote-service="true">
+	<entity local-service="true" name="LayoutSet" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1210,7 +1210,7 @@
 			<finder-column name="statusId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="Organization" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Organization" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1438,9 +1438,9 @@
 			<finder-column name="userId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="false" name="Permission" remote-service="true">
+	<entity local-service="false" name="Permission" remote-service="true">
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="Phone" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Phone" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1668,7 +1668,7 @@
 			<finder-column name="classNameId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="PortletPreferences" remote-service="true">
+	<entity local-service="true" name="PortletPreferences" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1732,7 +1732,7 @@
 			<finder-column name="portletId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="PortletPreferenceValue" remote-service="false">
+	<entity local-service="true" name="PortletPreferenceValue" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -1894,7 +1894,7 @@
 			<finder-column name="layoutSetId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Region" remote-service="true" uuid="true">
+	<entity local-service="true" name="Region" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2000,7 +2000,7 @@
 			<finder-column comparator="&lt;=" name="expirationDate" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="group" local-service="true" name="Repository" remote-service="true" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="Repository" remote-service="true" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2039,7 +2039,7 @@
 			<finder-column name="portletId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="RepositoryEntry" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
+	<entity local-service="true" name="RepositoryEntry" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2105,7 +2105,7 @@
 			<finder-column name="actionId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="ResourcePermission" remote-service="true">
+	<entity local-service="true" name="ResourcePermission" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2186,7 +2186,7 @@
 			<finder-column name="viewActionId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="Role" remote-service="true" uad-application-name="Roles" uad-dir-path="../modules/apps/roles/roles-uad/src/main/java" uad-package-path="com.liferay.roles" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="Role" remote-service="true" uad-application-name="Roles" uad-dir-path="../modules/apps/roles/roles-uad/src/main/java" uad-package-path="com.liferay.roles" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2338,7 +2338,7 @@
 			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="SystemEvent" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal">
+	<entity local-service="true" name="SystemEvent" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal">
 
 		<!-- PK fields -->
 
@@ -2393,7 +2393,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Team" remote-service="true" uad-application-name="Site Teams" uad-dir-path="../modules/apps/site/site-teams-uad/src/main/java" uad-package-path="com.liferay.site.teams" uuid="true">
+	<entity local-service="true" name="Team" remote-service="true" uad-application-name="Site Teams" uad-dir-path="../modules/apps/site/site-teams-uad/src/main/java" uad-package-path="com.liferay.site.teams" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2488,7 +2488,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="User" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="User" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2616,7 +2616,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="UserGroup" remote-service="true" uad-application-name="User Groups Admin" uad-dir-path="../modules/apps/user-groups-admin/user-groups-admin-uad/src/main/java" uad-package-path="com.liferay.user.groups.admin" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="UserGroup" remote-service="true" uad-application-name="User Groups Admin" uad-dir-path="../modules/apps/user-groups-admin/user-groups-admin-uad/src/main/java" uad-package-path="com.liferay.user.groups.admin" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2672,7 +2672,7 @@
 			<finder-column name="parentUserGroupId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="UserGroupGroupRole" remote-service="true">
+	<entity local-service="true" name="UserGroupGroupRole" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2713,7 +2713,7 @@
 			<finder-column name="roleId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="UserGroupRole" remote-service="true">
+	<entity local-service="true" name="UserGroupRole" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2994,7 +2994,7 @@
 			<finder-column name="userTrackerId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="VirtualHost" remote-service="false">
+	<entity local-service="true" name="VirtualHost" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -3117,7 +3117,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="WorkflowDefinitionLink" remote-service="true" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
+	<entity local-service="true" name="WorkflowDefinitionLink" remote-service="true" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
 
 		<!-- PK fields -->
 
@@ -3183,7 +3183,7 @@
 			<finder-column name="typePK" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="WorkflowInstanceLink" remote-service="false">
+	<entity local-service="true" name="WorkflowInstanceLink" remote-service="false">
 
 		<!-- PK fields -->
 
