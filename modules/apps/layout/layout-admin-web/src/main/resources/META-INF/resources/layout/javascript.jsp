@@ -24,10 +24,6 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<%
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
-%>
-
 <c:if test='<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT || Validator.isNotNull(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>'>
 	<liferay-frontend:fieldset
 		collapsed="<%= false %>"

@@ -351,7 +351,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		ModelSearchConfiguratorServiceTrackerCustomizer.class);
 
 	private BundleContext _bundleContext;
-
 	private ServiceTrackerList<DocumentContributor<?>> _documentContributors;
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)

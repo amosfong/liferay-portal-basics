@@ -6,7 +6,6 @@
 package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
-import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;

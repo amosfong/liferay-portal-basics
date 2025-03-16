@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.Theme;
@@ -534,8 +533,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (getSelLayoutSet() != null) {
-			faviconURL = FaviconUtil.getFaviconURL(
-				getSelLayoutSet());
+			faviconURL = FaviconUtil.getFaviconURL(getSelLayoutSet());
 		}
 
 		if (Validator.isNotNull(faviconURL)) {
@@ -1986,7 +1984,6 @@ public class LayoutsAdminDisplayContext {
 
 				if (masterLayout != null) {
 					if (masterLayout.getFaviconFileEntryId() > 0) {
-
 						return LanguageUtil.get(
 							httpServletRequest, "favicon-from-master");
 					}
@@ -2012,8 +2009,7 @@ public class LayoutsAdminDisplayContext {
 					selLayout.getMasterLayoutPlid());
 
 				if (masterLayout != null) {
-					String faviconURL = FaviconUtil.getFaviconURL(
-						masterLayout);
+					String faviconURL = FaviconUtil.getFaviconURL(masterLayout);
 
 					if (Validator.isNotNull(faviconURL)) {
 						return faviconURL;

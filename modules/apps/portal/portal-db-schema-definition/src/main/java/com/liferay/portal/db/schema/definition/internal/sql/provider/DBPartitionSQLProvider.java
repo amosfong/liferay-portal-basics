@@ -68,9 +68,8 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_getCreatePartitionSQL(),
-			_partitionTablesSQL,
-			_getViewsSQL(), rulesSQLSupplier.get());
+			_getCreatePartitionSQL(), _partitionTablesSQL, _getViewsSQL(),
+			rulesSQLSupplier.get());
 	}
 
 	private String _getCreatePartitionSQL() {

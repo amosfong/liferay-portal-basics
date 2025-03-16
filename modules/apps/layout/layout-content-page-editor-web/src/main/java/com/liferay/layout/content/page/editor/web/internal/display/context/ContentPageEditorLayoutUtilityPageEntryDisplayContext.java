@@ -81,9 +81,8 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 			layoutLockManager, layoutPageTemplateEntryLocalService,
 			layoutPageTemplateEntryService, layoutPermission,
 			layoutSetLocalService, pageEditorConfiguration, portal,
-			portletRequest, portletURLFactory, renderResponse,
-			staging, stagingGroupHelper,
-			styleBookEntryLocalService, userLocalService,
+			portletRequest, portletURLFactory, renderResponse, staging,
+			stagingGroupHelper, styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 	}
 

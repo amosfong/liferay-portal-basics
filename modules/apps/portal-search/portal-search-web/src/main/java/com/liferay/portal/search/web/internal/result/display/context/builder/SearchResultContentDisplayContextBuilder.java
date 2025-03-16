@@ -5,13 +5,8 @@
 
 package com.liferay.portal.search.web.internal.result.display.context.builder;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext;
 
 import java.util.Locale;

@@ -173,8 +173,8 @@ public class LayoutLocalServiceStagingAdvice {
 			groupId, privateLayout, layoutId, parentLayoutId);
 
 		return layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, nameMap,
-			titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
+			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
 			friendlyURLMap, hasIconImage, iconBytes, styleBookEntryId,
 			faviconFileEntryId, masterLayoutPlid, serviceContext);
 	}

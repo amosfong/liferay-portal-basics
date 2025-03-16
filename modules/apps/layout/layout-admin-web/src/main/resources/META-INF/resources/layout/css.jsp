@@ -9,8 +9,6 @@
 
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
 <liferay-frontend:fieldset

@@ -5,7 +5,6 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.util;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -36,7 +35,7 @@ public class ProductNavigationControlMenuUtil {
 		Layout layout = themeDisplay.getLayout();
 
 		if (!layout.isTypePortlet() || layout.isTypeAssetDisplay() ||
-			layout.isTypeContent() ) {
+			layout.isTypeContent()) {
 
 			return false;
 		}

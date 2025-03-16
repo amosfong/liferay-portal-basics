@@ -5,7 +5,6 @@
 
 package com.liferay.layout.utility.page.internal.security.resource;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
@@ -36,7 +35,8 @@ public class LayoutUtilityPageEntryModelResourcePermissionWrapper
 			LayoutUtilityPageEntry::getLayoutUtilityPageEntryId,
 			_layoutUtilityPageEntryLocalService::getLayoutUtilityPageEntry,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> {});
+			(modelResourcePermission, consumer) -> {
+			});
 	}
 
 	@Reference

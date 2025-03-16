@@ -40,8 +40,7 @@ page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %><%@
 page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %><%@
-page import="com.liferay.taglib.util.CustomAttributesUtil" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.Objects" %>

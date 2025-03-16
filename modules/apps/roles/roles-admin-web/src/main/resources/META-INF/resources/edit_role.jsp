@@ -151,12 +151,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					<aui:input helpMessage="allow-subsite-management-help" inlineLabel="right" label="allow-subsite-management" labelCssClass="simple-toggle-switch" name="manageSubgroups" type="toggle-switch" value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>" />
 				</c:if>
 
-				<%
-				ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);
-
-				Map<String, Serializable> roleCustomAttributes = roleExpandoBridge.getAttributes();
-				%>
-
 				<aui:button-row>
 					<aui:button type="submit" />
 

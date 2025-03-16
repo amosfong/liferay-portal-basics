@@ -37,7 +37,7 @@ public class RenderLayoutUtilityPageEntryDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(PortalUtil.getPathContext());
 		sb.append("/o/layout-common-styles/main.css?plid=");

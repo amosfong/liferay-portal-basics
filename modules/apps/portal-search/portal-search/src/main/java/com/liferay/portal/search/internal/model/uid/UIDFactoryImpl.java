@@ -5,10 +5,8 @@
 
 package com.liferay.portal.search.internal.model.uid;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;

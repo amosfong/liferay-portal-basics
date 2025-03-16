@@ -6,9 +6,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%
-long backgroundTaskId = GetterUtil.getLong(request.getAttribute("liferay-staging:process-summary-link:backgroundTaskId"));
-
-BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
-%>

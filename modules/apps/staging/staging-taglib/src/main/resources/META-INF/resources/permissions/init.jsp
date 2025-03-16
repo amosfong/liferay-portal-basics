@@ -9,7 +9,6 @@
 
 <%
 String action = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:action"));
-boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:disableInputs"));
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:permissions:exportImportConfigurationId"));
 boolean global = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:global"));
 

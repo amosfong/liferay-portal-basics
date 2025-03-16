@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.internal.security.permission.resource;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
@@ -35,7 +34,8 @@ public class DLFileShortcutModelResourcePermissionWrapper
 			DLFileShortcut.class, DLFileShortcut::getFileShortcutId,
 			_dlFileShortcutLocalService::getFileShortcut,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> {});
+			(modelResourcePermission, consumer) -> {
+			});
 	}
 
 	@Reference

@@ -90,8 +90,8 @@ public class ContentPageEditorDisplayContextProvider {
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService, _layoutPermission,
 				_pageEditorConfiguration, _portal, portletRequest,
-				_portletURLFactory, renderResponse,
-				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
+				_portletURLFactory, renderResponse, _staging,
+				_stagingGroupHelper, _styleBookEntryLocalService,
 				_userLocalService, _workflowDefinitionLinkLocalService);
 		}
 
@@ -107,8 +107,8 @@ public class ContentPageEditorDisplayContextProvider {
 				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateEntryService, _layoutPermission,
 				_pageEditorConfiguration, _portal, portletRequest,
-				_portletURLFactory, renderResponse,
-				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
+				_portletURLFactory, renderResponse, _staging,
+				_stagingGroupHelper, _styleBookEntryLocalService,
 				_userLocalService, _workflowDefinitionLinkLocalService);
 		}
 

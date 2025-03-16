@@ -7,7 +7,5 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@page import="com.liferay.portal.kernel.cal.Recurrence" %><%@
+<%@ page import="com.liferay.portal.kernel.cal.Recurrence" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %>
-
-<%@ page import="java.util.Arrays" %>

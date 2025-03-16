@@ -35,9 +35,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.KeyLocalizedLabelPair;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.CustomFileItemSelectorCriterion;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -58,7 +55,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -397,29 +393,28 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		inputTemplateNode.addAttribute(
 			"selectFromDocumentLibrary", selectFromDocumentLibrary);
-/*
-		if (selectFromDocumentLibrary &&
-			Validator.isNotNull(allowedFileExtensions)) {
+		/*
 
-			CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
-				new CustomFileItemSelectorCriterion();
+				if (selectFromDocumentLibrary &&
+					Validator.isNotNull(allowedFileExtensions)) {
 
-			customFileItemSelectorCriterion.setExtensions(
-				StringUtil.split(allowedFileExtensions));
-			customFileItemSelectorCriterion.setMaxFileSize(maximumFileSize);
+					CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
+						new CustomFileItemSelectorCriterion();
 
-			customFileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType());
-
-			inputTemplateNode.addAttribute(
-				"selectFromDocumentLibraryURL",
-				String.valueOf(
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							httpServletRequest),
-						fragmentEntryLink.getNamespace() + "selectFileEntry",
-						customFileItemSelectorCriterion)));
-		}*/
+					customFileItemSelectorCriterion.setExtensions(
+						StringUtil.split(allowedFileExtensions));
+					customFileItemSelectorCriterion.setMaxFileSize(maximumFileSize);
+					customFileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+						new FileEntryItemSelectorReturnType());
+					inputTemplateNode.addAttribute(
+						"selectFromDocumentLibraryURL",
+						String.valueOf(
+							_itemSelector.getItemSelectorURL(
+								RequestBackedPortletURLFactoryUtil.create(
+									httpServletRequest),
+								fragmentEntryLink.getNamespace() + "selectFileEntry",
+								customFileItemSelectorCriterion)));
+				}*/
 	}
 
 	private void _addInputTemplateNodeAttributes(

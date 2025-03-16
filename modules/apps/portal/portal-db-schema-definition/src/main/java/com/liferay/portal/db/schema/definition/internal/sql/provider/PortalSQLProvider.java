@@ -5,9 +5,7 @@
 
 package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 
 /**
  * @author Mariano Álvaro Sáiz

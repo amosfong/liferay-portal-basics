@@ -368,8 +368,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			LayoutStructure masterLayoutStructure =
 				LayoutStructureUtil.getLayoutStructure(
 					masterLayoutPageTemplateEntry.getGroupId(),
-					masterLayoutPageTemplateEntry.getPlid(),
-					"DEFAULT");
+					masterLayoutPageTemplateEntry.getPlid(), "DEFAULT");
 
 			return (DropZoneLayoutStructureItem)
 				masterLayoutStructure.getDropZoneLayoutStructureItem();

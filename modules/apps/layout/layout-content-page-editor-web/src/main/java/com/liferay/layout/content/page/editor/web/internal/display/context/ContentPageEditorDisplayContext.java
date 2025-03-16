@@ -64,7 +64,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -77,11 +76,9 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -96,7 +93,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -104,7 +100,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1200,8 +1195,7 @@ public class ContentPageEditorDisplayContext {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					getGroupId(), 0,
-					themeDisplay.getPlid(), false);
+					getGroupId(), 0, themeDisplay.getPlid(), false);
 
 		LayoutStructure layoutStructure = _getLayoutStructure();
 
@@ -1444,8 +1438,7 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		_layoutStructure = LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			0);
+			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(), 0);
 
 		return _layoutStructure;
 	}
@@ -1611,8 +1604,7 @@ public class ContentPageEditorDisplayContext {
 
 		try {
 			_masterLayoutStructure = LayoutStructureUtil.getLayoutStructure(
-				layout.getGroupId(), layout.getMasterLayoutPlid(),
-				"DEFAULT");
+				layout.getGroupId(), layout.getMasterLayoutPlid(), "DEFAULT");
 
 			return _masterLayoutStructure;
 		}
@@ -1721,8 +1713,8 @@ public class ContentPageEditorDisplayContext {
 
 		List<StyleBookEntry> styleBookEntries =
 			_styleBookEntryLocalService.getStyleBookEntries(
-				themeDisplay.getScopeGroupId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true));
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {

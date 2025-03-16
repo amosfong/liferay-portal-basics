@@ -978,8 +978,7 @@ public class RenderLayoutStructureDisplayContext {
 			layoutStructureRulesResult =
 				layoutStructureRulesHelper.processLayoutStructureRules(
 					_themeDisplay.getScopeGroupId(), _layoutStructure,
-					_themeDisplay.getPermissionChecker(),
-					new long[0]);
+					_themeDisplay.getPermissionChecker(), new long[0]);
 
 		_layoutStructureRulesResult = layoutStructureRulesResult;
 

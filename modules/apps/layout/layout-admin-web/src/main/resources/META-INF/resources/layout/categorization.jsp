@@ -7,13 +7,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-%>
-
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
 	value="categorization"
 />
 
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayout() %>" model="<%= Layout.class %>" />

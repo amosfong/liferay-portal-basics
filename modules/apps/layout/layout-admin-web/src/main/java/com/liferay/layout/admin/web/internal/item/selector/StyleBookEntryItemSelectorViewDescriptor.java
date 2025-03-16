@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.item.selector;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
@@ -108,8 +107,8 @@ public class StyleBookEntryItemSelectorViewDescriptor
 
 		styleBookEntries.addAll(
 			StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-				_themeDisplay.getScopeGroupId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true)));
 
 		styleBookEntrySearchContainer.setResultsAndTotal(styleBookEntries);

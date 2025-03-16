@@ -19,6 +19,7 @@ public class LayoutPageTemplateStructureImpl
 
 	@Override
 	public String getData(long segmentsExperienceId) {
+
 		// TODO move data field to LayoutPageTemplateStructure and delete
 		// LayoutPageTemplateStructureRel
 

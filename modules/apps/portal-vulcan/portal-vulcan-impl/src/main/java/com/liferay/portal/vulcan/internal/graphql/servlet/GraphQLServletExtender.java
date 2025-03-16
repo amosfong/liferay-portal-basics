@@ -588,10 +588,9 @@ public class GraphQLServletExtender {
 
 		_liferayMethodDataFetchingProcessor =
 			new LiferayMethodDataFetchingProcessor(
-				_bundleContext, _companyLocalService,
-				_expressionConvert, _filterParserProvider,
-				_graphQLContributorServiceTrackerList, _groupLocalService,
-				_language, _paginationProvider, _portal,
+				_bundleContext, _companyLocalService, _expressionConvert,
+				_filterParserProvider, _graphQLContributorServiceTrackerList,
+				_groupLocalService, _language, _paginationProvider, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sortParserProvider,
 				_vulcanBatchEngineImportTaskResourceFactory);

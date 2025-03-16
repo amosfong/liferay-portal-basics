@@ -32,9 +32,7 @@ import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 public class SiteParamConverterProvider
 	implements ParamConverter<Long>, ParamConverterProvider {
 
-	public SiteParamConverterProvider(
-		GroupLocalService groupLocalService) {
-
+	public SiteParamConverterProvider(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 

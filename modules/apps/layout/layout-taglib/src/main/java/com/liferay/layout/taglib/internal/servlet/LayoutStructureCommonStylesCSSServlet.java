@@ -148,8 +148,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		}
 
 		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(), 0);
+			_layoutStructureProvider.getLayoutStructure(layout.getPlid(), 0);
 
 		if (layoutStructure == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

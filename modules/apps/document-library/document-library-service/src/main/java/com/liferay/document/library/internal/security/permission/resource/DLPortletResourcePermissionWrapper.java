@@ -5,14 +5,12 @@
 
 package com.liferay.document.library.internal.security.permission.resource;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary

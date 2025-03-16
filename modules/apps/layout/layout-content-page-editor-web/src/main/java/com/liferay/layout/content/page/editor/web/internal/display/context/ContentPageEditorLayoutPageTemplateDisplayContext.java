@@ -109,9 +109,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			layoutLockManager, layoutPageTemplateEntryLocalService,
 			layoutPageTemplateEntryService, layoutPermission,
 			layoutSetLocalService, pageEditorConfiguration, portal,
-			portletRequest, portletURLFactory, renderResponse,
-			staging, stagingGroupHelper,
-			styleBookEntryLocalService, userLocalService,
+			portletRequest, portletURLFactory, renderResponse, staging,
+			stagingGroupHelper, styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 
 		_itemSelector = itemSelector;

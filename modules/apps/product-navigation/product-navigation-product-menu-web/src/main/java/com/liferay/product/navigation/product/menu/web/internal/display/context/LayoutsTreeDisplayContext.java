@@ -7,7 +7,6 @@ package com.liferay.product.navigation.product.menu.web.internal.display.context
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.petra.string.StringBundler;

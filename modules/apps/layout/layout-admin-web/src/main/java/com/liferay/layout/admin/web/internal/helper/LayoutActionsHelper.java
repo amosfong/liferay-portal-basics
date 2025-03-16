@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.helper;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.exception.PortalException;

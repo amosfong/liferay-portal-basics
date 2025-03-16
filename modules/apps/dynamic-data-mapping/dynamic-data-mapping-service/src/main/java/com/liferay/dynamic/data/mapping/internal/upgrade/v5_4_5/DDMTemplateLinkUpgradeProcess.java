@@ -5,8 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

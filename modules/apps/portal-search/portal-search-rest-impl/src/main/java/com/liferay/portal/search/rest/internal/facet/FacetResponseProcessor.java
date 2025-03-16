@@ -223,8 +223,8 @@ public class FacetResponseProcessor {
 		String className, long companyId, Locale locale) {
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassName(className);
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
 		if (assetRendererFactory != null) {
 			return assetRendererFactory.getTypeName(locale);

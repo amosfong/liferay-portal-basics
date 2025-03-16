@@ -64,14 +64,12 @@ public class ReleaseManagerOSGiCommands implements OSGiCommands {
 
 		try {
 			_upgradeExecutor.execute(
-				BundleUtil.getBundle(
-					_bundleContext, bundleSymbolicName),
+				BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
 				upgradeInfos);
 		}
 		catch (Throwable throwable) {
 			_log.error(
-				"Failed upgrade process for module ".concat(
-					bundleSymbolicName),
+				"Failed upgrade process for module ".concat(bundleSymbolicName),
 				throwable);
 		}
 

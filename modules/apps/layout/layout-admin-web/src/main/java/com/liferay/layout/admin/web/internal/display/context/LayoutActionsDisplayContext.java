@@ -24,13 +24,10 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -255,9 +252,8 @@ public class LayoutActionsDisplayContext {
 			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 				"/portal/get_page_preview",
 			"p_l_mode", Constants.PREVIEW, "p_p_state",
-			WindowState.UNDEFINED.toString(), "segmentsExperienceId",
-			0, "selPlid",
-			draftLayout.getPlid());
+			WindowState.UNDEFINED.toString(), "segmentsExperienceId", 0,
+			"selPlid", draftLayout.getPlid());
 
 		if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
 			pagePreviewURL = PortalUtil.addPreservedParameters(

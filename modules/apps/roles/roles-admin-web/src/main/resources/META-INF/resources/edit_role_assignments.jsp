@@ -101,7 +101,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	<aui:input name="removeUserIds" type="hidden" />
 	<aui:input name="addGroupIds" type="hidden" />
 	<aui:input name="removeGroupIds" type="hidden" />
-	
+
 	<%
 	request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
 	request.setAttribute("edit_role_assignments.jsp-searchContainer", searchContainer);

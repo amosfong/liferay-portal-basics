@@ -120,7 +120,6 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 					small="<%= true %>"
 				/>
 			</li>
-
 			<li class="nav-item">
 				<clay:button
 					disabled="<%= true %>"

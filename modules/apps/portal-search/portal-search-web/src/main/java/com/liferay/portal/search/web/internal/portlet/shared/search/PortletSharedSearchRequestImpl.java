@@ -278,8 +278,7 @@ public class PortletSharedSearchRequestImpl
 		List<SearchSettingsContributor> searchSettingsContributors =
 			new ArrayList<>();
 
-		List<Portlet> portlets = _getPortlets(
-			themeDisplay.getLayout(), 0);
+		List<Portlet> portlets = _getPortlets(themeDisplay.getLayout(), 0);
 
 		for (Portlet portlet : portlets) {
 			SearchSettingsContributor searchSettingsContributor =

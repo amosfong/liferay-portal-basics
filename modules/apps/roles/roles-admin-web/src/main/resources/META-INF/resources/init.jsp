@@ -23,8 +23,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
-page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion" %><%@
@@ -109,11 +107,8 @@ page import="com.liferay.site.search.GroupSearch" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.template.constants.TemplatePortletKeys" %>
 
-<%@ page import="java.io.Serializable" %>
-
 <%@ page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Objects" %>
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

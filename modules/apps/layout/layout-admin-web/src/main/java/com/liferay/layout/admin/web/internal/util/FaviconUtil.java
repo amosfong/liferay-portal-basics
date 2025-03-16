@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -25,9 +24,7 @@ import java.util.Locale;
  */
 public class FaviconUtil {
 
-	public static String getFaviconTitle(
-		Layout layout, Locale locale) {
-
+	public static String getFaviconTitle(Layout layout, Locale locale) {
 		if (layout.getFaviconFileEntryId() > 0) {
 			try {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
@@ -104,7 +101,7 @@ public class FaviconUtil {
 	}
 
 	public static String getFaviconURL(LayoutSet layoutSet) {
-		return  layoutSet.getFaviconURL();
+		return layoutSet.getFaviconURL();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FaviconUtil.class);

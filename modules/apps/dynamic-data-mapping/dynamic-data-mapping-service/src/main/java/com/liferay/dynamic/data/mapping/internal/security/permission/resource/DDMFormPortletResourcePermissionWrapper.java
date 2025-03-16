@@ -6,13 +6,11 @@
 package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves

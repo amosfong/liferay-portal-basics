@@ -5,18 +5,13 @@
 
 package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 
-import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +34,8 @@ public class DDMFormInstanceModelResourcePermissionWrapper
 			DDMFormInstance.class, DDMFormInstance::getFormInstanceId,
 			_ddmFormInstanceLocalService::getDDMFormInstance,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> {});
+			(modelResourcePermission, consumer) -> {
+			});
 	}
 
 	@Reference

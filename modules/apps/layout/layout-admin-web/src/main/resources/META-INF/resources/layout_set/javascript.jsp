@@ -9,8 +9,6 @@
 
 <%
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
 <clay:alert

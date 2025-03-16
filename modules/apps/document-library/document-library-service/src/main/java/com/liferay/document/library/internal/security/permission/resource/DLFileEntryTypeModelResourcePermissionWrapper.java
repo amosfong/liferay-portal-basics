@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.internal.security.permission.resource;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
@@ -16,7 +15,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,7 +63,8 @@ public class DLFileEntryTypeModelResourcePermissionWrapper
 			DLFileEntryType.class, DLFileEntryTypeModel::getFileEntryTypeId,
 			_dlFileEntryTypeLocalService::getDLFileEntryType,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> {});
+			(modelResourcePermission, consumer) -> {
+			});
 	}
 
 	@Reference

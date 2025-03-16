@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 import com.liferay.sites.kernel.util.Sites;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -101,8 +100,7 @@ public class LayoutLocalServiceWrapper
 	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		return copyLayoutContent(
-			new long[0], sourceLayout, targetLayout);
+		return copyLayoutContent(new long[0], sourceLayout, targetLayout);
 	}
 
 	@Override
@@ -112,9 +110,7 @@ public class LayoutLocalServiceWrapper
 
 		return _copyLayoutContent(
 			true, sourceLayout, new long[] {segmentsExperienceId}, targetLayout,
-			new long[] {
-				0
-			});
+			new long[] {0});
 	}
 
 	@Override
@@ -340,8 +336,8 @@ public class LayoutLocalServiceWrapper
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					user.getUserId(), targetLayout.getGroupId(),
-					targetLayout.getPlid(), 0,
-					null, ServiceContextThreadLocal.getServiceContext());
+					targetLayout.getPlid(), 0, null,
+					ServiceContextThreadLocal.getServiceContext());
 		}
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
@@ -971,7 +967,6 @@ public class LayoutLocalServiceWrapper
 				_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
 			}
 			else {
-
 			}
 
 			// Copy classedModelUsages after copying the structure
