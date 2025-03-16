@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -26,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFieldModel
-	extends BaseModel<DDMField>, CTModel<DDMField>, MVCCModel, ShardedModel {
+	extends BaseModel<DDMField>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -39,7 +38,6 @@ public interface DDMFieldModel
 	 *
 	 * @return the primary key of this ddm field
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -47,7 +45,6 @@ public interface DDMFieldModel
 	 *
 	 * @param primaryKey the primary key of this ddm field
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -65,22 +62,6 @@ public interface DDMFieldModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ddm field.
-	 *
-	 * @return the ct collection ID of this ddm field
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ddm field.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm field
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the field ID of this ddm field.

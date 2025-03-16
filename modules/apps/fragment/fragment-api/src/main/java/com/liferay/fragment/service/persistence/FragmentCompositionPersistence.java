@@ -8,7 +8,6 @@ package com.liferay.fragment.service.persistence;
 import com.liferay.fragment.exception.NoSuchCompositionException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FragmentCompositionPersistence
-	extends BasePersistence<FragmentComposition>,
-			CTPersistence<FragmentComposition> {
+	extends BasePersistence<FragmentComposition> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

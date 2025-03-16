@@ -67,8 +67,8 @@ public class LayoutPageTemplateEntryModelImpl
 	public static final String TABLE_NAME = "LayoutPageTemplateEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"layoutPageTemplateEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -89,7 +89,6 @@ public class LayoutPageTemplateEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
@@ -117,7 +116,7 @@ public class LayoutPageTemplateEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,layoutPageTemplateEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,layoutPageTemplateEntryKey VARCHAR(75) null,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,plid LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (layoutPageTemplateEntryId, ctCollectionId))";
+		"create table LayoutPageTemplateEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,layoutPageTemplateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateCollectionId LONG,layoutPageTemplateEntryKey VARCHAR(75) null,classNameId LONG,classTypeId LONG,name VARCHAR(75) null,type_ INTEGER,previewFileEntryId LONG,defaultTemplate BOOLEAN,layoutPrototypeId LONG,plid LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateEntry";
@@ -337,8 +336,6 @@ public class LayoutPageTemplateEntryModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutPageTemplateEntry::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutPageTemplateEntry::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"uuid", LayoutPageTemplateEntry::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
@@ -416,10 +413,6 @@ public class LayoutPageTemplateEntryModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutPageTemplateEntry, Long>)
 					LayoutPageTemplateEntry::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutPageTemplateEntry, Long>)
-					LayoutPageTemplateEntry::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutPageTemplateEntry, String>)
@@ -536,21 +529,6 @@ public class LayoutPageTemplateEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1292,7 +1270,6 @@ public class LayoutPageTemplateEntryModelImpl
 			new LayoutPageTemplateEntryImpl();
 
 		layoutPageTemplateEntryImpl.setMvccVersion(getMvccVersion());
-		layoutPageTemplateEntryImpl.setCtCollectionId(getCtCollectionId());
 		layoutPageTemplateEntryImpl.setUuid(getUuid());
 		layoutPageTemplateEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1336,8 +1313,6 @@ public class LayoutPageTemplateEntryModelImpl
 
 		layoutPageTemplateEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutPageTemplateEntryImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutPageTemplateEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutPageTemplateEntryImpl.setExternalReferenceCode(
@@ -1465,8 +1440,6 @@ public class LayoutPageTemplateEntryModelImpl
 			new LayoutPageTemplateEntryCacheModel();
 
 		layoutPageTemplateEntryCacheModel.mvccVersion = getMvccVersion();
-
-		layoutPageTemplateEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutPageTemplateEntryCacheModel.uuid = getUuid();
 
@@ -1660,7 +1633,6 @@ public class LayoutPageTemplateEntryModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _layoutPageTemplateEntryId;
@@ -1718,7 +1690,6 @@ public class LayoutPageTemplateEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1773,55 +1744,53 @@ public class LayoutPageTemplateEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("layoutPageTemplateEntryId", 8L);
 
-		columnBitmasks.put("layoutPageTemplateEntryId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("layoutPageTemplateCollectionId", 1024L);
 
-		columnBitmasks.put("layoutPageTemplateCollectionId", 2048L);
+		columnBitmasks.put("layoutPageTemplateEntryKey", 2048L);
 
-		columnBitmasks.put("layoutPageTemplateEntryKey", 4096L);
+		columnBitmasks.put("classNameId", 4096L);
 
-		columnBitmasks.put("classNameId", 8192L);
+		columnBitmasks.put("classTypeId", 8192L);
 
-		columnBitmasks.put("classTypeId", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("type_", 32768L);
 
-		columnBitmasks.put("type_", 65536L);
+		columnBitmasks.put("previewFileEntryId", 65536L);
 
-		columnBitmasks.put("previewFileEntryId", 131072L);
+		columnBitmasks.put("defaultTemplate", 131072L);
 
-		columnBitmasks.put("defaultTemplate", 262144L);
+		columnBitmasks.put("layoutPrototypeId", 262144L);
 
-		columnBitmasks.put("layoutPrototypeId", 524288L);
+		columnBitmasks.put("plid", 524288L);
 
-		columnBitmasks.put("plid", 1048576L);
+		columnBitmasks.put("lastPublishDate", 1048576L);
 
-		columnBitmasks.put("lastPublishDate", 2097152L);
+		columnBitmasks.put("status", 2097152L);
 
-		columnBitmasks.put("status", 4194304L);
+		columnBitmasks.put("statusByUserId", 4194304L);
 
-		columnBitmasks.put("statusByUserId", 8388608L);
+		columnBitmasks.put("statusByUserName", 8388608L);
 
-		columnBitmasks.put("statusByUserName", 16777216L);
-
-		columnBitmasks.put("statusDate", 33554432L);
+		columnBitmasks.put("statusDate", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

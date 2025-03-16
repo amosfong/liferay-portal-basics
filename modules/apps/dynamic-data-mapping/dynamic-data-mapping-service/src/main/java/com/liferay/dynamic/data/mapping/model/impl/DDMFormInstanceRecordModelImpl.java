@@ -65,13 +65,12 @@ public class DDMFormInstanceRecordModelImpl
 	public static final String TABLE_NAME = "DDMFormInstanceRecord";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"formInstanceRecordId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"versionUserId", Types.BIGINT}, {"versionUserName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"formInstanceId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"formInstanceRecordId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"versionUserId", Types.BIGINT},
+		{"versionUserName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"formInstanceId", Types.BIGINT},
 		{"formInstanceVersion", Types.VARCHAR}, {"storageId", Types.BIGINT},
 		{"version", Types.VARCHAR}, {"ipAddress", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -82,7 +81,6 @@ public class DDMFormInstanceRecordModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formInstanceRecordId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -102,7 +100,7 @@ public class DDMFormInstanceRecordModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,ipAddress VARCHAR(75) null,lastPublishDate DATE null,primary key (formInstanceRecordId, ctCollectionId))";
+		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,ipAddress VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceRecord";
@@ -277,8 +275,6 @@ public class DDMFormInstanceRecordModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMFormInstanceRecord::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", DDMFormInstanceRecord::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"uuid", DDMFormInstanceRecord::getUuid);
 			attributeGetterFunctions.put(
 				"formInstanceRecordId",
@@ -335,10 +331,6 @@ public class DDMFormInstanceRecordModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMFormInstanceRecord, Long>)
 					DDMFormInstanceRecord::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMFormInstanceRecord, Long>)
-					DDMFormInstanceRecord::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<DDMFormInstanceRecord, String>)
@@ -423,21 +415,6 @@ public class DDMFormInstanceRecordModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -869,7 +846,6 @@ public class DDMFormInstanceRecordModelImpl
 			new DDMFormInstanceRecordImpl();
 
 		ddmFormInstanceRecordImpl.setMvccVersion(getMvccVersion());
-		ddmFormInstanceRecordImpl.setCtCollectionId(getCtCollectionId());
 		ddmFormInstanceRecordImpl.setUuid(getUuid());
 		ddmFormInstanceRecordImpl.setFormInstanceRecordId(
 			getFormInstanceRecordId());
@@ -901,8 +877,6 @@ public class DDMFormInstanceRecordModelImpl
 
 		ddmFormInstanceRecordImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmFormInstanceRecordImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmFormInstanceRecordImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		ddmFormInstanceRecordImpl.setFormInstanceRecordId(
@@ -1015,8 +989,6 @@ public class DDMFormInstanceRecordModelImpl
 			new DDMFormInstanceRecordCacheModel();
 
 		ddmFormInstanceRecordCacheModel.mvccVersion = getMvccVersion();
-
-		ddmFormInstanceRecordCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmFormInstanceRecordCacheModel.uuid = getUuid();
 
@@ -1178,7 +1150,6 @@ public class DDMFormInstanceRecordModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _formInstanceRecordId;
 	private long _groupId;
@@ -1228,7 +1199,6 @@ public class DDMFormInstanceRecordModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"formInstanceRecordId", _formInstanceRecordId);
@@ -1271,39 +1241,37 @@ public class DDMFormInstanceRecordModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("formInstanceRecordId", 4L);
 
-		columnBitmasks.put("formInstanceRecordId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("versionUserId", 128L);
 
-		columnBitmasks.put("versionUserId", 256L);
+		columnBitmasks.put("versionUserName", 256L);
 
-		columnBitmasks.put("versionUserName", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("createDate", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("modifiedDate", 2048L);
+		columnBitmasks.put("formInstanceId", 2048L);
 
-		columnBitmasks.put("formInstanceId", 4096L);
+		columnBitmasks.put("formInstanceVersion", 4096L);
 
-		columnBitmasks.put("formInstanceVersion", 8192L);
+		columnBitmasks.put("storageId", 8192L);
 
-		columnBitmasks.put("storageId", 16384L);
+		columnBitmasks.put("version", 16384L);
 
-		columnBitmasks.put("version", 32768L);
+		columnBitmasks.put("ipAddress", 32768L);
 
-		columnBitmasks.put("ipAddress", 65536L);
-
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

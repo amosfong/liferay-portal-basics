@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.model.version.VersionedModel;
 
 import java.util.Date;
@@ -32,9 +31,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface StyleBookEntryModel
-	extends BaseModel<StyleBookEntry>, CTModel<StyleBookEntry>,
-			ExternalReferenceCodeModel, GroupedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel, VersionedModel<StyleBookEntryVersion> {
+	extends BaseModel<StyleBookEntry>, ExternalReferenceCodeModel, GroupedModel,
+			MVCCModel, ShardedModel, StagedAuditedModel,
+			VersionedModel<StyleBookEntryVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -73,22 +72,6 @@ public interface StyleBookEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this style book entry.
-	 *
-	 * @return the ct collection ID of this style book entry
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this style book entry.
-	 *
-	 * @param ctCollectionId the ct collection ID of this style book entry
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this style book entry.

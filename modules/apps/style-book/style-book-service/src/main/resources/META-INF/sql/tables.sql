@@ -1,11 +1,10 @@
 create table StyleBookEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	headId LONG,
 	head BOOLEAN,
-	styleBookEntryId LONG not null,
+	styleBookEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -17,14 +16,11 @@ create table StyleBookEntry (
 	name VARCHAR(75) null,
 	previewFileEntryId LONG,
 	styleBookEntryKey VARCHAR(75) null,
-	themeId VARCHAR(255) null,
-	primary key (styleBookEntryId, ctCollectionId)
+	themeId VARCHAR(255) null
 );
 
 create table StyleBookEntryVersion (
-	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	styleBookEntryVersionId LONG not null,
+	styleBookEntryVersionId LONG not null primary key,
 	version INTEGER,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
@@ -40,6 +36,5 @@ create table StyleBookEntryVersion (
 	name VARCHAR(75) null,
 	previewFileEntryId LONG,
 	styleBookEntryKey VARCHAR(75) null,
-	themeId VARCHAR(255) null,
-	primary key (styleBookEntryVersionId, ctCollectionId)
+	themeId VARCHAR(255) null
 );

@@ -63,7 +63,6 @@ public class FragmentEntryVersionModelImpl
 	public static final String TABLE_NAME = "FragmentEntryVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"fragmentEntryVersionId", Types.BIGINT}, {"version", Types.INTEGER},
 		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"fragmentEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
@@ -85,8 +84,6 @@ public class FragmentEntryVersionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fragmentEntryVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -119,7 +116,7 @@ public class FragmentEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,typeOptions TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentEntryVersionId, ctCollectionId))";
+		"create table FragmentEntryVersion (fragmentEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,typeOptions TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentEntryVersion";
@@ -307,10 +304,6 @@ public class FragmentEntryVersionModelImpl
 						<String, Function<FragmentEntryVersion, Object>>();
 
 			attributeGetterFunctions.put(
-				"mvccVersion", FragmentEntryVersion::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", FragmentEntryVersion::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"fragmentEntryVersionId",
 				FragmentEntryVersion::getFragmentEntryVersionId);
 			attributeGetterFunctions.put(
@@ -384,14 +377,6 @@ public class FragmentEntryVersionModelImpl
 					new LinkedHashMap
 						<String, BiConsumer<FragmentEntryVersion, ?>>();
 
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<FragmentEntryVersion, Long>)
-					FragmentEntryVersion::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<FragmentEntryVersion, Long>)
-					FragmentEntryVersion::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"fragmentEntryVersionId",
 				(BiConsumer<FragmentEntryVersion, Long>)
@@ -522,7 +507,6 @@ public class FragmentEntryVersionModelImpl
 
 	@Override
 	public void populateVersionedModel(FragmentEntry fragmentEntry) {
-		fragmentEntry.setCtCollectionId(getCtCollectionId());
 		fragmentEntry.setUuid(getUuid());
 		fragmentEntry.setExternalReferenceCode(getExternalReferenceCode());
 		fragmentEntry.setGroupId(getGroupId());
@@ -566,34 +550,6 @@ public class FragmentEntryVersionModelImpl
 		populateVersionedModel(fragmentEntry);
 
 		return fragmentEntry;
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -1344,8 +1300,6 @@ public class FragmentEntryVersionModelImpl
 		FragmentEntryVersionImpl fragmentEntryVersionImpl =
 			new FragmentEntryVersionImpl();
 
-		fragmentEntryVersionImpl.setMvccVersion(getMvccVersion());
-		fragmentEntryVersionImpl.setCtCollectionId(getCtCollectionId());
 		fragmentEntryVersionImpl.setFragmentEntryVersionId(
 			getFragmentEntryVersionId());
 		fragmentEntryVersionImpl.setVersion(getVersion());
@@ -1389,10 +1343,6 @@ public class FragmentEntryVersionModelImpl
 		FragmentEntryVersionImpl fragmentEntryVersionImpl =
 			new FragmentEntryVersionImpl();
 
-		fragmentEntryVersionImpl.setMvccVersion(
-			this.<Long>getColumnOriginalValue("mvccVersion"));
-		fragmentEntryVersionImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		fragmentEntryVersionImpl.setFragmentEntryVersionId(
 			this.<Long>getColumnOriginalValue("fragmentEntryVersionId"));
 		fragmentEntryVersionImpl.setVersion(
@@ -1537,10 +1487,6 @@ public class FragmentEntryVersionModelImpl
 	public CacheModel<FragmentEntryVersion> toCacheModel() {
 		FragmentEntryVersionCacheModel fragmentEntryVersionCacheModel =
 			new FragmentEntryVersionCacheModel();
-
-		fragmentEntryVersionCacheModel.mvccVersion = getMvccVersion();
-
-		fragmentEntryVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		fragmentEntryVersionCacheModel.fragmentEntryVersionId =
 			getFragmentEntryVersionId();
@@ -1773,8 +1719,6 @@ public class FragmentEntryVersionModelImpl
 
 	}
 
-	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _fragmentEntryVersionId;
 	private int _version;
 	private String _uuid;
@@ -1836,8 +1780,6 @@ public class FragmentEntryVersionModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
-		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"fragmentEntryVersionId", _fragmentEntryVersionId);
 		_columnOriginalValues.put("version", _version);
@@ -1894,67 +1836,63 @@ public class FragmentEntryVersionModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("mvccVersion", 1L);
+		columnBitmasks.put("fragmentEntryVersionId", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("version", 2L);
 
-		columnBitmasks.put("fragmentEntryVersionId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("version", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("uuid_", 16L);
+		columnBitmasks.put("fragmentEntryId", 16L);
 
-		columnBitmasks.put("externalReferenceCode", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("fragmentEntryId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("groupId", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("companyId", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("userId", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("userName", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("createDate", 2048L);
+		columnBitmasks.put("fragmentCollectionId", 2048L);
 
-		columnBitmasks.put("modifiedDate", 4096L);
+		columnBitmasks.put("fragmentEntryKey", 4096L);
 
-		columnBitmasks.put("fragmentCollectionId", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("fragmentEntryKey", 16384L);
+		columnBitmasks.put("css", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("html", 32768L);
 
-		columnBitmasks.put("css", 65536L);
+		columnBitmasks.put("js", 65536L);
 
-		columnBitmasks.put("html", 131072L);
+		columnBitmasks.put("cacheable", 131072L);
 
-		columnBitmasks.put("js", 262144L);
+		columnBitmasks.put("configuration", 262144L);
 
-		columnBitmasks.put("cacheable", 524288L);
+		columnBitmasks.put("icon", 524288L);
 
-		columnBitmasks.put("configuration", 1048576L);
+		columnBitmasks.put("previewFileEntryId", 1048576L);
 
-		columnBitmasks.put("icon", 2097152L);
+		columnBitmasks.put("readOnly", 2097152L);
 
-		columnBitmasks.put("previewFileEntryId", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
 
-		columnBitmasks.put("readOnly", 8388608L);
+		columnBitmasks.put("typeOptions", 8388608L);
 
-		columnBitmasks.put("type_", 16777216L);
+		columnBitmasks.put("lastPublishDate", 16777216L);
 
-		columnBitmasks.put("typeOptions", 33554432L);
+		columnBitmasks.put("status", 33554432L);
 
-		columnBitmasks.put("lastPublishDate", 67108864L);
+		columnBitmasks.put("statusByUserId", 67108864L);
 
-		columnBitmasks.put("status", 134217728L);
+		columnBitmasks.put("statusByUserName", 134217728L);
 
-		columnBitmasks.put("statusByUserId", 268435456L);
-
-		columnBitmasks.put("statusByUserName", 536870912L);
-
-		columnBitmasks.put("statusDate", 1073741824L);
+		columnBitmasks.put("statusDate", 268435456L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

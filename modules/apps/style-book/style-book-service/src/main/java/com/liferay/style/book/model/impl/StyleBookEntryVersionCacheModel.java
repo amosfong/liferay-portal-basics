@@ -8,7 +8,6 @@ package com.liferay.style.book.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.style.book.model.StyleBookEntryVersion;
 
 import java.io.Externalizable;
@@ -25,7 +24,7 @@ import java.util.Date;
  * @generated
  */
 public class StyleBookEntryVersionCacheModel
-	implements CacheModel<StyleBookEntryVersion>, Externalizable, MVCCModel {
+	implements CacheModel<StyleBookEntryVersion>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -40,9 +39,8 @@ public class StyleBookEntryVersionCacheModel
 		StyleBookEntryVersionCacheModel styleBookEntryVersionCacheModel =
 			(StyleBookEntryVersionCacheModel)object;
 
-		if ((styleBookEntryVersionId ==
-				styleBookEntryVersionCacheModel.styleBookEntryVersionId) &&
-			(mvccVersion == styleBookEntryVersionCacheModel.mvccVersion)) {
+		if (styleBookEntryVersionId ==
+				styleBookEntryVersionCacheModel.styleBookEntryVersionId) {
 
 			return true;
 		}
@@ -52,30 +50,14 @@ public class StyleBookEntryVersionCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, styleBookEntryVersionId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, styleBookEntryVersionId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
-		sb.append(", styleBookEntryVersionId=");
+		sb.append("{styleBookEntryVersionId=");
 		sb.append(styleBookEntryVersionId);
 		sb.append(", version=");
 		sb.append(version);
@@ -119,8 +101,6 @@ public class StyleBookEntryVersionCacheModel
 		StyleBookEntryVersionImpl styleBookEntryVersionImpl =
 			new StyleBookEntryVersionImpl();
 
-		styleBookEntryVersionImpl.setMvccVersion(mvccVersion);
-		styleBookEntryVersionImpl.setCtCollectionId(ctCollectionId);
 		styleBookEntryVersionImpl.setStyleBookEntryVersionId(
 			styleBookEntryVersionId);
 		styleBookEntryVersionImpl.setVersion(version);
@@ -209,10 +189,6 @@ public class StyleBookEntryVersionCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
-
 		styleBookEntryVersionId = objectInput.readLong();
 
 		version = objectInput.readInt();
@@ -241,10 +217,6 @@ public class StyleBookEntryVersionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(styleBookEntryVersionId);
 
 		objectOutput.writeInt(version);
@@ -314,8 +286,6 @@ public class StyleBookEntryVersionCacheModel
 		}
 	}
 
-	public long mvccVersion;
-	public long ctCollectionId;
 	public long styleBookEntryVersionId;
 	public int version;
 	public String uuid;

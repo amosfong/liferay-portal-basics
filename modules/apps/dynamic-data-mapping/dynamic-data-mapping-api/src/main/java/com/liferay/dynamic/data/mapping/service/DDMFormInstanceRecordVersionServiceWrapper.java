@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -32,9 +31,10 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion fetchLatestFormInstanceRecordVersion(
-			long userId, long formInstanceId, String formInstanceVersion,
-			int status)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			fetchLatestFormInstanceRecordVersion(
+				long userId, long formInstanceId, String formInstanceVersion,
+				int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionService.
@@ -43,8 +43,8 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-			long ddmFormInstanceRecordVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getFormInstanceRecordVersion(long ddmFormInstanceRecordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionService.
@@ -52,8 +52,9 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-			long ddmFormInstanceRecordId, String version)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getFormInstanceRecordVersion(
+				long ddmFormInstanceRecordId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionService.
@@ -61,21 +62,24 @@ public class DDMFormInstanceRecordVersionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMFormInstanceRecordVersion>
-			getFormInstanceRecordVersions(long ddmFormInstanceRecordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
+				getFormInstanceRecordVersions(long ddmFormInstanceRecordId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionService.
 			getFormInstanceRecordVersions(ddmFormInstanceRecordId);
 	}
 
 	@Override
-	public java.util.List<DDMFormInstanceRecordVersion>
-			getFormInstanceRecordVersions(
-				long ddmFormInstanceRecordId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<DDMFormInstanceRecordVersion> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
+				getFormInstanceRecordVersions(
+					long ddmFormInstanceRecordId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.dynamic.data.mapping.model.
+							DDMFormInstanceRecordVersion> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionService.
 			getFormInstanceRecordVersions(

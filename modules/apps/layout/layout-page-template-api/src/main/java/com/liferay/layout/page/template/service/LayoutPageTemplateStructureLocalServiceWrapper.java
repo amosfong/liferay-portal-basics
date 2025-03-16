@@ -5,11 +5,8 @@
 
 package com.liferay.layout.page.template.service;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link LayoutPageTemplateStructureLocalService}.
@@ -45,18 +42,21 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the layout page template structure that was added
 	 */
 	@Override
-	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
-		LayoutPageTemplateStructure layoutPageTemplateStructure) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		addLayoutPageTemplateStructure(
+			com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+				layoutPageTemplateStructure) {
 
 		return _layoutPageTemplateStructureLocalService.
 			addLayoutPageTemplateStructure(layoutPageTemplateStructure);
 	}
 
 	@Override
-	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
-			long userId, long groupId, long plid, long segmentsExperienceId,
-			String data,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			addLayoutPageTemplateStructure(
+				long userId, long groupId, long plid, long segmentsExperienceId,
+				String data,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -72,8 +72,8 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the new layout page template structure
 	 */
 	@Override
-	public LayoutPageTemplateStructure createLayoutPageTemplateStructure(
-		long layoutPageTemplateStructureId) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		createLayoutPageTemplateStructure(long layoutPageTemplateStructureId) {
 
 		return _layoutPageTemplateStructureLocalService.
 			createLayoutPageTemplateStructure(layoutPageTemplateStructureId);
@@ -102,8 +102,10 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the layout page template structure that was removed
 	 */
 	@Override
-	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
-		LayoutPageTemplateStructure layoutPageTemplateStructure) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		deleteLayoutPageTemplateStructure(
+			com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+				layoutPageTemplateStructure) {
 
 		return _layoutPageTemplateStructureLocalService.
 			deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
@@ -121,8 +123,9 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @throws PortalException if a layout page template structure with the primary key could not be found
 	 */
 	@Override
-	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
-			long layoutPageTemplateStructureId)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			deleteLayoutPageTemplateStructure(
+				long layoutPageTemplateStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -130,8 +133,8 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
-			long groupId, long plid)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			deleteLayoutPageTemplateStructure(long groupId, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -256,16 +259,16 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long layoutPageTemplateStructureId) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		fetchLayoutPageTemplateStructure(long layoutPageTemplateStructureId) {
 
 		return _layoutPageTemplateStructureLocalService.
 			fetchLayoutPageTemplateStructure(layoutPageTemplateStructureId);
 	}
 
 	@Override
-	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-		long groupId, long plid) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		fetchLayoutPageTemplateStructure(long groupId, long plid) {
 
 		return _layoutPageTemplateStructureLocalService.
 			fetchLayoutPageTemplateStructure(groupId, plid);
@@ -279,7 +282,7 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
 	 */
 	@Override
-	public LayoutPageTemplateStructure
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 		fetchLayoutPageTemplateStructureByUuidAndGroupId(
 			String uuid, long groupId) {
 
@@ -321,8 +324,8 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @throws PortalException if a layout page template structure with the primary key could not be found
 	 */
 	@Override
-	public LayoutPageTemplateStructure getLayoutPageTemplateStructure(
-			long layoutPageTemplateStructureId)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			getLayoutPageTemplateStructure(long layoutPageTemplateStructureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -338,7 +341,7 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @throws PortalException if a matching layout page template structure could not be found
 	 */
 	@Override
-	public LayoutPageTemplateStructure
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			getLayoutPageTemplateStructureByUuidAndGroupId(
 				String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -359,8 +362,9 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the range of layout page template structures
 	 */
 	@Override
-	public java.util.List<LayoutPageTemplateStructure>
-		getLayoutPageTemplateStructures(int start, int end) {
+	public java.util.List
+		<com.liferay.layout.page.template.model.LayoutPageTemplateStructure>
+			getLayoutPageTemplateStructures(int start, int end) {
 
 		return _layoutPageTemplateStructureLocalService.
 			getLayoutPageTemplateStructures(start, end);
@@ -374,9 +378,10 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the matching layout page template structures, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutPageTemplateStructure>
-		getLayoutPageTemplateStructuresByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public java.util.List
+		<com.liferay.layout.page.template.model.LayoutPageTemplateStructure>
+			getLayoutPageTemplateStructuresByUuidAndCompanyId(
+				String uuid, long companyId) {
 
 		return _layoutPageTemplateStructureLocalService.
 			getLayoutPageTemplateStructuresByUuidAndCompanyId(uuid, companyId);
@@ -393,11 +398,13 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the range of matching layout page template structures, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutPageTemplateStructure>
-		getLayoutPageTemplateStructuresByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructure> orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.page.template.model.LayoutPageTemplateStructure>
+			getLayoutPageTemplateStructuresByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.page.template.model.
+						LayoutPageTemplateStructure> orderByComparator) {
 
 		return _layoutPageTemplateStructureLocalService.
 			getLayoutPageTemplateStructuresByUuidAndCompanyId(
@@ -449,16 +456,19 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	 * @return the layout page template structure that was updated
 	 */
 	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
-		LayoutPageTemplateStructure layoutPageTemplateStructure) {
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		updateLayoutPageTemplateStructure(
+			com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+				layoutPageTemplateStructure) {
 
 		return _layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(layoutPageTemplateStructure);
 	}
 
 	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
-			long groupId, long plid, long segmentsExperienceId, String data)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, long segmentsExperienceId, String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -467,8 +477,9 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
-			long groupId, long plid, String data)
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
@@ -478,26 +489,6 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _layoutPageTemplateStructureLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<LayoutPageTemplateStructure> getCTPersistence() {
-		return _layoutPageTemplateStructureLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<LayoutPageTemplateStructure> getModelClass() {
-		return _layoutPageTemplateStructureLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<LayoutPageTemplateStructure>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _layoutPageTemplateStructureLocalService.
-			updateWithUnsafeFunction(updateUnsafeFunction);
 	}
 
 	@Override

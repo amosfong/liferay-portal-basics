@@ -8,7 +8,6 @@ package com.liferay.layout.service.persistence;
 import com.liferay.layout.exception.NoSuchLayoutLocalizationException;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutLocalizationPersistence
-	extends BasePersistence<LayoutLocalization>,
-			CTPersistence<LayoutLocalization> {
+	extends BasePersistence<LayoutLocalization> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

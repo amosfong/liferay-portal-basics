@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -30,9 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutUtilityPageEntryModel
-	extends BaseModel<LayoutUtilityPageEntry>, CTModel<LayoutUtilityPageEntry>,
-			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<LayoutUtilityPageEntry>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,7 +43,6 @@ public interface LayoutUtilityPageEntryModel
 	 *
 	 * @return the primary key of this layout utility page entry
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -53,7 +50,6 @@ public interface LayoutUtilityPageEntryModel
 	 *
 	 * @param primaryKey the primary key of this layout utility page entry
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -71,22 +67,6 @@ public interface LayoutUtilityPageEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this layout utility page entry.
-	 *
-	 * @return the ct collection ID of this layout utility page entry
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this layout utility page entry.
-	 *
-	 * @param ctCollectionId the ct collection ID of this layout utility page entry
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this layout utility page entry.

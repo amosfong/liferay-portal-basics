@@ -29,9 +29,6 @@ public class DDMTemplateVersionTable
 	public final Column<DDMTemplateVersionTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMTemplateVersionTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMTemplateVersionTable, Long> templateVersionId =
 		createColumn(
 			"templateVersionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

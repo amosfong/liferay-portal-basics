@@ -26,12 +26,6 @@ public class StyleBookEntryVersionTable
 	public static final StyleBookEntryVersionTable INSTANCE =
 		new StyleBookEntryVersionTable();
 
-	public final Column<StyleBookEntryVersionTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<StyleBookEntryVersionTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<StyleBookEntryVersionTable, Long>
 		styleBookEntryVersionId = createColumn(
 			"styleBookEntryVersionId", Long.class, Types.BIGINT,

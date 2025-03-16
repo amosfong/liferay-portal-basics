@@ -17,7 +17,6 @@ import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -47,9 +46,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.service.version.VersionService;
 import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -557,7 +554,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			FragmentEntryLocalService.class, IdentifiableOSGiService.class,
-			CTService.class, PersistedModelLocalService.class
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -939,8 +936,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 
 		FragmentEntry draftFragmentEntry = create();
 
-		draftFragmentEntry.setCtCollectionId(
-			publishedFragmentEntry.getCtCollectionId());
 		draftFragmentEntry.setUuid(publishedFragmentEntry.getUuid());
 		draftFragmentEntry.setExternalReferenceCode(
 			publishedFragmentEntry.getExternalReferenceCode());
@@ -1004,23 +999,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		return FragmentEntryLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<FragmentEntry> getCTPersistence() {
-		return fragmentEntryPersistence;
-	}
-
-	@Override
-	public Class<FragmentEntry> getModelClass() {
+	protected Class<?> getModelClass() {
 		return FragmentEntry.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<FragmentEntry>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(fragmentEntryPersistence);
 	}
 
 	protected String getModelClassName() {

@@ -15,7 +15,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,9 +44,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -636,8 +633,7 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			FragmentCompositionLocalService.class,
-			IdentifiableOSGiService.class, CTService.class,
-			PersistedModelLocalService.class
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
 		};
 	}
 
@@ -657,23 +653,8 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 		return FragmentCompositionLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<FragmentComposition> getCTPersistence() {
-		return fragmentCompositionPersistence;
-	}
-
-	@Override
-	public Class<FragmentComposition> getModelClass() {
+	protected Class<?> getModelClass() {
 		return FragmentComposition.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<FragmentComposition>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(fragmentCompositionPersistence);
 	}
 
 	protected String getModelClassName() {

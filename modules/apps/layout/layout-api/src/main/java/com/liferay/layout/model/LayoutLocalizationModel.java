@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -29,8 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutLocalizationModel
-	extends BaseModel<LayoutLocalization>, CTModel<LayoutLocalization>,
-			MVCCModel, ShardedModel, StagedModel {
+	extends BaseModel<LayoutLocalization>, MVCCModel, ShardedModel,
+			StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -43,7 +42,6 @@ public interface LayoutLocalizationModel
 	 *
 	 * @return the primary key of this layout localization
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -51,7 +49,6 @@ public interface LayoutLocalizationModel
 	 *
 	 * @param primaryKey the primary key of this layout localization
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -69,22 +66,6 @@ public interface LayoutLocalizationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this layout localization.
-	 *
-	 * @return the ct collection ID of this layout localization
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this layout localization.
-	 *
-	 * @param ctCollectionId the ct collection ID of this layout localization
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this layout localization.

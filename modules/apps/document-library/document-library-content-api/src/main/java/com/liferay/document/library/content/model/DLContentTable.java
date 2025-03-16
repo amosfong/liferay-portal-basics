@@ -24,8 +24,6 @@ public class DLContentTable extends BaseTable<DLContentTable> {
 
 	public final Column<DLContentTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DLContentTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLContentTable, Long> contentId = createColumn(
 		"contentId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLContentTable, Long> groupId = createColumn(

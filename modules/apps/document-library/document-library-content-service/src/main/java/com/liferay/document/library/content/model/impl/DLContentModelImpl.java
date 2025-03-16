@@ -57,11 +57,11 @@ public class DLContentModelImpl
 	public static final String TABLE_NAME = "DLContent";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"contentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"repositoryId", Types.BIGINT},
-		{"path_", Types.VARCHAR}, {"version", Types.VARCHAR},
-		{"data_", Types.BLOB}, {"size_", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"contentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"repositoryId", Types.BIGINT}, {"path_", Types.VARCHAR},
+		{"version", Types.VARCHAR}, {"data_", Types.BLOB},
+		{"size_", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,7 +69,6 @@ public class DLContentModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -81,7 +80,7 @@ public class DLContentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLContent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,contentId LONG not null,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG,primary key (contentId, ctCollectionId))";
+		"create table DLContent (mvccVersion LONG default 0 not null,contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 
@@ -230,8 +229,6 @@ public class DLContentModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DLContent::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DLContent::getCtCollectionId);
 			attributeGetterFunctions.put("contentId", DLContent::getContentId);
 			attributeGetterFunctions.put("groupId", DLContent::getGroupId);
 			attributeGetterFunctions.put("companyId", DLContent::getCompanyId);
@@ -260,9 +257,6 @@ public class DLContentModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DLContent, Long>)DLContent::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DLContent, Long>)DLContent::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"contentId",
 				(BiConsumer<DLContent, Long>)DLContent::setContentId);
@@ -302,20 +296,6 @@ public class DLContentModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -555,7 +535,6 @@ public class DLContentModelImpl
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
 		dlContentImpl.setMvccVersion(getMvccVersion());
-		dlContentImpl.setCtCollectionId(getCtCollectionId());
 		dlContentImpl.setContentId(getContentId());
 		dlContentImpl.setGroupId(getGroupId());
 		dlContentImpl.setCompanyId(getCompanyId());
@@ -575,8 +554,6 @@ public class DLContentModelImpl
 
 		dlContentImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		dlContentImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		dlContentImpl.setContentId(
 			this.<Long>getColumnOriginalValue("contentId"));
 		dlContentImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
@@ -667,8 +644,6 @@ public class DLContentModelImpl
 
 		dlContentCacheModel.mvccVersion = getMvccVersion();
 
-		dlContentCacheModel.ctCollectionId = getCtCollectionId();
-
 		dlContentCacheModel.contentId = getContentId();
 
 		dlContentCacheModel.groupId = getGroupId();
@@ -700,15 +675,11 @@ public class DLContentModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{\"mvccVersion\": ");
 
 		sb.append(getMvccVersion());
-
-		sb.append(", \"ctCollectionId\": ");
-
-		sb.append(getCtCollectionId());
 
 		sb.append(", \"contentId\": ");
 
@@ -753,7 +724,6 @@ public class DLContentModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;
@@ -794,7 +764,6 @@ public class DLContentModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("contentId", _contentId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -829,23 +798,21 @@ public class DLContentModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("contentId", 2L);
 
-		columnBitmasks.put("contentId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("repositoryId", 16L);
 
-		columnBitmasks.put("repositoryId", 32L);
+		columnBitmasks.put("path_", 32L);
 
-		columnBitmasks.put("path_", 64L);
+		columnBitmasks.put("version", 64L);
 
-		columnBitmasks.put("version", 128L);
+		columnBitmasks.put("data_", 128L);
 
-		columnBitmasks.put("data_", 256L);
-
-		columnBitmasks.put("size_", 512L);
+		columnBitmasks.put("size_", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

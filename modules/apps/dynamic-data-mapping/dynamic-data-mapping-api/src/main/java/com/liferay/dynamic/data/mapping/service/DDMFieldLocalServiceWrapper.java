@@ -5,11 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMField;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DDMFieldLocalService}.
@@ -42,7 +39,9 @@ public class DDMFieldLocalServiceWrapper
 	 * @return the ddm field that was added
 	 */
 	@Override
-	public DDMField addDDMField(DDMField ddmField) {
+	public com.liferay.dynamic.data.mapping.model.DDMField addDDMField(
+		com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
+
 		return _ddmFieldLocalService.addDDMField(ddmField);
 	}
 
@@ -53,7 +52,9 @@ public class DDMFieldLocalServiceWrapper
 	 * @return the new ddm field
 	 */
 	@Override
-	public DDMField createDDMField(long fieldId) {
+	public com.liferay.dynamic.data.mapping.model.DDMField createDDMField(
+		long fieldId) {
+
 		return _ddmFieldLocalService.createDDMField(fieldId);
 	}
 
@@ -79,7 +80,9 @@ public class DDMFieldLocalServiceWrapper
 	 * @return the ddm field that was removed
 	 */
 	@Override
-	public DDMField deleteDDMField(DDMField ddmField) {
+	public com.liferay.dynamic.data.mapping.model.DDMField deleteDDMField(
+		com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
+
 		return _ddmFieldLocalService.deleteDDMField(ddmField);
 	}
 
@@ -95,7 +98,8 @@ public class DDMFieldLocalServiceWrapper
 	 * @throws PortalException if a ddm field with the primary key could not be found
 	 */
 	@Override
-	public DDMField deleteDDMField(long fieldId)
+	public com.liferay.dynamic.data.mapping.model.DDMField deleteDDMField(
+			long fieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFieldLocalService.deleteDDMField(fieldId);
@@ -225,7 +229,9 @@ public class DDMFieldLocalServiceWrapper
 	}
 
 	@Override
-	public DDMField fetchDDMField(long fieldId) {
+	public com.liferay.dynamic.data.mapping.model.DDMField fetchDDMField(
+		long fieldId) {
+
 		return _ddmFieldLocalService.fetchDDMField(fieldId);
 	}
 
@@ -253,7 +259,8 @@ public class DDMFieldLocalServiceWrapper
 	 * @throws PortalException if a ddm field with the primary key could not be found
 	 */
 	@Override
-	public DDMField getDDMField(long fieldId)
+	public com.liferay.dynamic.data.mapping.model.DDMField getDDMField(
+			long fieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFieldLocalService.getDDMField(fieldId);
@@ -280,13 +287,15 @@ public class DDMFieldLocalServiceWrapper
 	 * @return the range of ddm fields
 	 */
 	@Override
-	public java.util.List<DDMField> getDDMFields(int start, int end) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMField>
+		getDDMFields(int start, int end) {
+
 		return _ddmFieldLocalService.getDDMFields(start, end);
 	}
 
 	@Override
-	public java.util.List<DDMField> getDDMFields(
-		long storageId, String fieldName) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMField>
+		getDDMFields(long storageId, String fieldName) {
 
 		return _ddmFieldLocalService.getDDMFields(storageId, fieldName);
 	}
@@ -373,7 +382,9 @@ public class DDMFieldLocalServiceWrapper
 	 * @return the ddm field that was updated
 	 */
 	@Override
-	public DDMField updateDDMField(DDMField ddmField) {
+	public com.liferay.dynamic.data.mapping.model.DDMField updateDDMField(
+		com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
+
 		return _ddmFieldLocalService.updateDDMField(ddmField);
 	}
 
@@ -391,25 +402,6 @@ public class DDMFieldLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ddmFieldLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<DDMField> getCTPersistence() {
-		return _ddmFieldLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DDMField> getModelClass() {
-		return _ddmFieldLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMField>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return _ddmFieldLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

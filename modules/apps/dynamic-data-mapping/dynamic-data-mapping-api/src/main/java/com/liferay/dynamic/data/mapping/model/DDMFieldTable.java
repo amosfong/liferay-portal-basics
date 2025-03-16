@@ -23,8 +23,6 @@ public class DDMFieldTable extends BaseTable<DDMFieldTable> {
 
 	public final Column<DDMFieldTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMFieldTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMFieldTable, Long> fieldId = createColumn(
 		"fieldId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMFieldTable, Long> companyId = createColumn(

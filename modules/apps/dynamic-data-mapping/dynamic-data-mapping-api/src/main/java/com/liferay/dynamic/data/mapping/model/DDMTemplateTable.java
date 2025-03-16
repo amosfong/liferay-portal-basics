@@ -26,8 +26,6 @@ public class DDMTemplateTable extends BaseTable<DDMTemplateTable> {
 
 	public final Column<DDMTemplateTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMTemplateTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMTemplateTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMTemplateTable, String> externalReferenceCode =

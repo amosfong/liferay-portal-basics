@@ -67,12 +67,10 @@ public class DLFileVersionPreviewCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", dlFileVersionPreviewId=");
 		sb.append(dlFileVersionPreviewId);
 		sb.append(", groupId=");
@@ -96,7 +94,6 @@ public class DLFileVersionPreviewCacheModel
 			new DLFileVersionPreviewImpl();
 
 		dlFileVersionPreviewImpl.setMvccVersion(mvccVersion);
-		dlFileVersionPreviewImpl.setCtCollectionId(ctCollectionId);
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			dlFileVersionPreviewId);
 		dlFileVersionPreviewImpl.setGroupId(groupId);
@@ -113,8 +110,6 @@ public class DLFileVersionPreviewCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 
 		dlFileVersionPreviewId = objectInput.readLong();
 
@@ -133,8 +128,6 @@ public class DLFileVersionPreviewCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(dlFileVersionPreviewId);
 
 		objectOutput.writeLong(groupId);
@@ -149,7 +142,6 @@ public class DLFileVersionPreviewCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long dlFileVersionPreviewId;
 	public long groupId;
 	public long companyId;

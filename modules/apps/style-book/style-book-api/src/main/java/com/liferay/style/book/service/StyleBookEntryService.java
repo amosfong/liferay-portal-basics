@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.service;
 
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -29,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @AccessControlled
-@CTAware
 @JSONWebService
 @ProviderType
 @Transactional(

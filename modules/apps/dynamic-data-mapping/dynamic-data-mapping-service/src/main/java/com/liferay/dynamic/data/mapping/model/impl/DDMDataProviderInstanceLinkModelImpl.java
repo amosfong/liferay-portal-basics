@@ -58,7 +58,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	public static final String TABLE_NAME = "DDMDataProviderInstanceLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT},
 		{"dataProviderInstanceLinkId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"dataProviderInstanceId", Types.BIGINT},
 		{"structureId", Types.BIGINT}
@@ -69,7 +69,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceId", Types.BIGINT);
@@ -77,7 +76,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstanceLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,dataProviderInstanceLinkId LONG not null,companyId LONG,dataProviderInstanceId LONG,structureId LONG,primary key (dataProviderInstanceLinkId, ctCollectionId))";
+		"create table DDMDataProviderInstanceLink (mvccVersion LONG default 0 not null,dataProviderInstanceLinkId LONG not null primary key,companyId LONG,dataProviderInstanceId LONG,structureId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstanceLink";
@@ -230,9 +229,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMDataProviderInstanceLink::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId",
-				DDMDataProviderInstanceLink::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"dataProviderInstanceLinkId",
 				DDMDataProviderInstanceLink::getDataProviderInstanceLinkId);
 			attributeGetterFunctions.put(
@@ -265,10 +261,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMDataProviderInstanceLink, Long>)
 					DDMDataProviderInstanceLink::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMDataProviderInstanceLink, Long>)
-					DDMDataProviderInstanceLink::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"dataProviderInstanceLinkId",
 				(BiConsumer<DDMDataProviderInstanceLink, Long>)
@@ -304,20 +296,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -455,7 +433,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 			new DDMDataProviderInstanceLinkImpl();
 
 		ddmDataProviderInstanceLinkImpl.setMvccVersion(getMvccVersion());
-		ddmDataProviderInstanceLinkImpl.setCtCollectionId(getCtCollectionId());
 		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
 			getDataProviderInstanceLinkId());
 		ddmDataProviderInstanceLinkImpl.setCompanyId(getCompanyId());
@@ -475,8 +452,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 		ddmDataProviderInstanceLinkImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmDataProviderInstanceLinkImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
 			this.<Long>getColumnOriginalValue("dataProviderInstanceLinkId"));
 		ddmDataProviderInstanceLinkImpl.setCompanyId(
@@ -567,9 +542,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 		ddmDataProviderInstanceLinkCacheModel.mvccVersion = getMvccVersion();
 
-		ddmDataProviderInstanceLinkCacheModel.ctCollectionId =
-			getCtCollectionId();
-
 		ddmDataProviderInstanceLinkCacheModel.dataProviderInstanceLinkId =
 			getDataProviderInstanceLinkId();
 
@@ -644,7 +616,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;
 	private long _dataProviderInstanceId;
@@ -679,7 +650,6 @@ public class DDMDataProviderInstanceLinkModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"dataProviderInstanceLinkId", _dataProviderInstanceLinkId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -701,15 +671,13 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("dataProviderInstanceLinkId", 2L);
 
-		columnBitmasks.put("dataProviderInstanceLinkId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("dataProviderInstanceId", 8L);
 
-		columnBitmasks.put("dataProviderInstanceId", 16L);
-
-		columnBitmasks.put("structureId", 32L);
+		columnBitmasks.put("structureId", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

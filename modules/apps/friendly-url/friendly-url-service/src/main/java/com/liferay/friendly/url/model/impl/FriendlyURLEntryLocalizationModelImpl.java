@@ -60,7 +60,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 	public static final String TABLE_NAME = "FriendlyURLEntryLocalization";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT},
 		{"friendlyURLEntryLocalizationId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"friendlyURLEntryId", Types.BIGINT},
 		{"languageId", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
@@ -73,7 +73,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
@@ -85,7 +84,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntryLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,friendlyURLEntryLocalizationId LONG not null,companyId LONG,friendlyURLEntryId LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,groupId LONG,classNameId LONG,classPK LONG,primary key (friendlyURLEntryLocalizationId, ctCollectionId))";
+		"create table FriendlyURLEntryLocalization (mvccVersion LONG default 0 not null,friendlyURLEntryLocalizationId LONG not null primary key,companyId LONG,friendlyURLEntryId LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,groupId LONG,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryLocalization";
@@ -118,37 +117,25 @@ public class FriendlyURLEntryLocalizationModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 16L;
+	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long LANGUAGEID_COLUMN_BITMASK = 64L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 128L;
+	public static final long URLTITLE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -156,7 +143,7 @@ public class FriendlyURLEntryLocalizationModelImpl
 	 */
 	@Deprecated
 	public static final long FRIENDLYURLENTRYLOCALIZATIONID_COLUMN_BITMASK =
-		256L;
+		64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -275,9 +262,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", FriendlyURLEntryLocalization::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId",
-				FriendlyURLEntryLocalization::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"friendlyURLEntryLocalizationId",
 				FriendlyURLEntryLocalization::
 					getFriendlyURLEntryLocalizationId);
@@ -319,10 +303,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 				"mvccVersion",
 				(BiConsumer<FriendlyURLEntryLocalization, Long>)
 					FriendlyURLEntryLocalization::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<FriendlyURLEntryLocalization, Long>)
-					FriendlyURLEntryLocalization::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"friendlyURLEntryLocalizationId",
 				(BiConsumer<FriendlyURLEntryLocalization, Long>)
@@ -378,30 +358,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCtCollectionId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
-	}
-
-	@Override
 	public long getFriendlyURLEntryLocalizationId() {
 		return _friendlyURLEntryLocalizationId;
 	}
@@ -429,16 +385,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 		}
 
 		_companyId = companyId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -670,7 +616,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 			new FriendlyURLEntryLocalizationImpl();
 
 		friendlyURLEntryLocalizationImpl.setMvccVersion(getMvccVersion());
-		friendlyURLEntryLocalizationImpl.setCtCollectionId(getCtCollectionId());
 		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
 			getFriendlyURLEntryLocalizationId());
 		friendlyURLEntryLocalizationImpl.setCompanyId(getCompanyId());
@@ -694,8 +639,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 		friendlyURLEntryLocalizationImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		friendlyURLEntryLocalizationImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
 			this.<Long>getColumnOriginalValue(
 				"friendlyURLEntryLocalizationId"));
@@ -795,9 +738,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 		friendlyURLEntryLocalizationCacheModel.mvccVersion = getMvccVersion();
 
-		friendlyURLEntryLocalizationCacheModel.ctCollectionId =
-			getCtCollectionId();
-
 		friendlyURLEntryLocalizationCacheModel.friendlyURLEntryLocalizationId =
 			getFriendlyURLEntryLocalizationId();
 
@@ -892,7 +832,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _friendlyURLEntryLocalizationId;
 	private long _companyId;
 	private long _friendlyURLEntryId;
@@ -931,7 +870,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"friendlyURLEntryLocalizationId", _friendlyURLEntryLocalizationId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -956,23 +894,21 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("friendlyURLEntryLocalizationId", 2L);
 
-		columnBitmasks.put("friendlyURLEntryLocalizationId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("friendlyURLEntryId", 8L);
 
-		columnBitmasks.put("friendlyURLEntryId", 16L);
+		columnBitmasks.put("languageId", 16L);
 
-		columnBitmasks.put("languageId", 32L);
+		columnBitmasks.put("urlTitle", 32L);
 
-		columnBitmasks.put("urlTitle", 64L);
+		columnBitmasks.put("groupId", 64L);
 
-		columnBitmasks.put("groupId", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
-
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classPK", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

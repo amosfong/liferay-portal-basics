@@ -59,11 +59,10 @@ public class DDMStorageLinkModelImpl
 	public static final String TABLE_NAME = "DDMStorageLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"storageLinkId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"structureId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"storageLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"structureId", Types.BIGINT}, {"structureVersionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -71,7 +70,6 @@ public class DDMStorageLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("storageLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -82,7 +80,7 @@ public class DDMStorageLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStorageLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG,primary key (storageLinkId, ctCollectionId))";
+		"create table DDMStorageLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 
@@ -247,8 +245,6 @@ public class DDMStorageLinkModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMStorageLink::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DDMStorageLink::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DDMStorageLink::getUuid);
 			attributeGetterFunctions.put(
 				"storageLinkId", DDMStorageLink::getStorageLinkId);
@@ -282,10 +278,6 @@ public class DDMStorageLinkModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMStorageLink, Long>)
 					DDMStorageLink::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMStorageLink, Long>)
-					DDMStorageLink::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<DDMStorageLink, String>)DDMStorageLink::setUuid);
@@ -330,20 +322,6 @@ public class DDMStorageLinkModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -574,7 +552,6 @@ public class DDMStorageLinkModelImpl
 		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
 
 		ddmStorageLinkImpl.setMvccVersion(getMvccVersion());
-		ddmStorageLinkImpl.setCtCollectionId(getCtCollectionId());
 		ddmStorageLinkImpl.setUuid(getUuid());
 		ddmStorageLinkImpl.setStorageLinkId(getStorageLinkId());
 		ddmStorageLinkImpl.setCompanyId(getCompanyId());
@@ -594,8 +571,6 @@ public class DDMStorageLinkModelImpl
 
 		ddmStorageLinkImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmStorageLinkImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmStorageLinkImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		ddmStorageLinkImpl.setStorageLinkId(
@@ -688,8 +663,6 @@ public class DDMStorageLinkModelImpl
 
 		ddmStorageLinkCacheModel.mvccVersion = getMvccVersion();
 
-		ddmStorageLinkCacheModel.ctCollectionId = getCtCollectionId();
-
 		ddmStorageLinkCacheModel.uuid = getUuid();
 
 		String uuid = ddmStorageLinkCacheModel.uuid;
@@ -772,7 +745,6 @@ public class DDMStorageLinkModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _storageLinkId;
 	private long _companyId;
@@ -812,7 +784,6 @@ public class DDMStorageLinkModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("storageLinkId", _storageLinkId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -845,21 +816,19 @@ public class DDMStorageLinkModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("storageLinkId", 4L);
 
-		columnBitmasks.put("storageLinkId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("classNameId", 16L);
 
-		columnBitmasks.put("classNameId", 32L);
+		columnBitmasks.put("classPK", 32L);
 
-		columnBitmasks.put("classPK", 64L);
+		columnBitmasks.put("structureId", 64L);
 
-		columnBitmasks.put("structureId", 128L);
-
-		columnBitmasks.put("structureVersionId", 256L);
+		columnBitmasks.put("structureVersionId", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

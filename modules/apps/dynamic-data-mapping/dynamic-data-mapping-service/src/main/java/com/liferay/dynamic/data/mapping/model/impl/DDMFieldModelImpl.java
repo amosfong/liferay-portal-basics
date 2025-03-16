@@ -57,12 +57,12 @@ public class DDMFieldModelImpl
 	public static final String TABLE_NAME = "DDMField";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"fieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"parentFieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}, {"fieldName", Types.VARCHAR},
-		{"fieldType", Types.VARCHAR}, {"instanceId", Types.VARCHAR},
-		{"localizable", Types.BOOLEAN}, {"priority", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"fieldId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"parentFieldId", Types.BIGINT},
+		{"storageId", Types.BIGINT}, {"structureVersionId", Types.BIGINT},
+		{"fieldName", Types.VARCHAR}, {"fieldType", Types.VARCHAR},
+		{"instanceId", Types.VARCHAR}, {"localizable", Types.BOOLEAN},
+		{"priority", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -70,7 +70,6 @@ public class DDMFieldModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentFieldId", Types.BIGINT);
@@ -84,7 +83,7 @@ public class DDMFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,parentFieldId LONG,storageId LONG,structureVersionId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,instanceId VARCHAR(75) null,localizable BOOLEAN,priority INTEGER,primary key (fieldId, ctCollectionId))";
+		"create table DDMField (mvccVersion LONG default 0 not null,fieldId LONG not null primary key,companyId LONG,parentFieldId LONG,storageId LONG,structureVersionId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,instanceId VARCHAR(75) null,localizable BOOLEAN,priority INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMField";
 
@@ -251,8 +250,6 @@ public class DDMFieldModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMField::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DDMField::getCtCollectionId);
 			attributeGetterFunctions.put("fieldId", DDMField::getFieldId);
 			attributeGetterFunctions.put("companyId", DDMField::getCompanyId);
 			attributeGetterFunctions.put(
@@ -285,9 +282,6 @@ public class DDMFieldModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DDMField, Long>)DDMField::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMField, Long>)DDMField::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"fieldId", (BiConsumer<DDMField, Long>)DDMField::setFieldId);
 			attributeSetterBiConsumers.put(
@@ -336,20 +330,6 @@ public class DDMFieldModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -626,7 +606,6 @@ public class DDMFieldModelImpl
 		DDMFieldImpl ddmFieldImpl = new DDMFieldImpl();
 
 		ddmFieldImpl.setMvccVersion(getMvccVersion());
-		ddmFieldImpl.setCtCollectionId(getCtCollectionId());
 		ddmFieldImpl.setFieldId(getFieldId());
 		ddmFieldImpl.setCompanyId(getCompanyId());
 		ddmFieldImpl.setParentFieldId(getParentFieldId());
@@ -649,8 +628,6 @@ public class DDMFieldModelImpl
 
 		ddmFieldImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmFieldImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmFieldImpl.setFieldId(this.<Long>getColumnOriginalValue("fieldId"));
 		ddmFieldImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
@@ -753,8 +730,6 @@ public class DDMFieldModelImpl
 
 		ddmFieldCacheModel.mvccVersion = getMvccVersion();
 
-		ddmFieldCacheModel.ctCollectionId = getCtCollectionId();
-
 		ddmFieldCacheModel.fieldId = getFieldId();
 
 		ddmFieldCacheModel.companyId = getCompanyId();
@@ -855,7 +830,6 @@ public class DDMFieldModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _fieldId;
 	private long _companyId;
 	private long _parentFieldId;
@@ -896,7 +870,6 @@ public class DDMFieldModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("fieldId", _fieldId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("parentFieldId", _parentFieldId);
@@ -922,27 +895,25 @@ public class DDMFieldModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("fieldId", 2L);
 
-		columnBitmasks.put("fieldId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("parentFieldId", 8L);
 
-		columnBitmasks.put("parentFieldId", 16L);
+		columnBitmasks.put("storageId", 16L);
 
-		columnBitmasks.put("storageId", 32L);
+		columnBitmasks.put("structureVersionId", 32L);
 
-		columnBitmasks.put("structureVersionId", 64L);
+		columnBitmasks.put("fieldName", 64L);
 
-		columnBitmasks.put("fieldName", 128L);
+		columnBitmasks.put("fieldType", 128L);
 
-		columnBitmasks.put("fieldType", 256L);
+		columnBitmasks.put("instanceId", 256L);
 
-		columnBitmasks.put("instanceId", 512L);
+		columnBitmasks.put("localizable", 512L);
 
-		columnBitmasks.put("localizable", 1024L);
-
-		columnBitmasks.put("priority", 2048L);
+		columnBitmasks.put("priority", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

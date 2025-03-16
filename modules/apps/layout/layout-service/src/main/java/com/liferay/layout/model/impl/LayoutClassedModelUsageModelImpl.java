@@ -61,12 +61,11 @@ public class LayoutClassedModelUsageModelImpl
 	public static final String TABLE_NAME = "LayoutClassedModelUsage";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"layoutClassedModelUsageId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"cmExternalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"layoutClassedModelUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"cmExternalReferenceCode", Types.VARCHAR},
 		{"containerKey", Types.VARCHAR}, {"containerType", Types.BIGINT},
 		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -77,7 +76,6 @@ public class LayoutClassedModelUsageModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutClassedModelUsageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -95,7 +93,7 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,cmExternalReferenceCode VARCHAR(75) null,containerKey VARCHAR(200) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null,primary key (layoutClassedModelUsageId, ctCollectionId))";
+		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,cmExternalReferenceCode VARCHAR(75) null,containerKey VARCHAR(200) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutClassedModelUsage";
@@ -295,8 +293,6 @@ public class LayoutClassedModelUsageModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutClassedModelUsage::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutClassedModelUsage::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"uuid", LayoutClassedModelUsage::getUuid);
 			attributeGetterFunctions.put(
 				"layoutClassedModelUsageId",
@@ -349,10 +345,6 @@ public class LayoutClassedModelUsageModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutClassedModelUsage, Long>)
 					LayoutClassedModelUsage::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutClassedModelUsage, Long>)
-					LayoutClassedModelUsage::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutClassedModelUsage, String>)
@@ -429,20 +421,6 @@ public class LayoutClassedModelUsageModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -844,7 +822,6 @@ public class LayoutClassedModelUsageModelImpl
 			new LayoutClassedModelUsageImpl();
 
 		layoutClassedModelUsageImpl.setMvccVersion(getMvccVersion());
-		layoutClassedModelUsageImpl.setCtCollectionId(getCtCollectionId());
 		layoutClassedModelUsageImpl.setUuid(getUuid());
 		layoutClassedModelUsageImpl.setLayoutClassedModelUsageId(
 			getLayoutClassedModelUsageId());
@@ -874,8 +851,6 @@ public class LayoutClassedModelUsageModelImpl
 
 		layoutClassedModelUsageImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutClassedModelUsageImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutClassedModelUsageImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutClassedModelUsageImpl.setLayoutClassedModelUsageId(
@@ -984,8 +959,6 @@ public class LayoutClassedModelUsageModelImpl
 			new LayoutClassedModelUsageCacheModel();
 
 		layoutClassedModelUsageCacheModel.mvccVersion = getMvccVersion();
-
-		layoutClassedModelUsageCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutClassedModelUsageCacheModel.uuid = getUuid();
 
@@ -1126,7 +1099,6 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutClassedModelUsageId;
 	private long _groupId;
@@ -1174,7 +1146,6 @@ public class LayoutClassedModelUsageModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"layoutClassedModelUsageId", _layoutClassedModelUsageId);
@@ -1219,35 +1190,33 @@ public class LayoutClassedModelUsageModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("layoutClassedModelUsageId", 4L);
 
-		columnBitmasks.put("layoutClassedModelUsageId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("cmExternalReferenceCode", 512L);
 
-		columnBitmasks.put("cmExternalReferenceCode", 1024L);
+		columnBitmasks.put("containerKey", 1024L);
 
-		columnBitmasks.put("containerKey", 2048L);
+		columnBitmasks.put("containerType", 2048L);
 
-		columnBitmasks.put("containerType", 4096L);
+		columnBitmasks.put("plid", 4096L);
 
-		columnBitmasks.put("plid", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
-
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("lastPublishDate", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

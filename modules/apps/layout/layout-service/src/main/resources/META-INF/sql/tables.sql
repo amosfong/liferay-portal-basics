@@ -1,8 +1,7 @@
 create table LayoutClassedModelUsage (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutClassedModelUsageId LONG not null,
+	layoutClassedModelUsageId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
@@ -14,15 +13,13 @@ create table LayoutClassedModelUsage (
 	containerType LONG,
 	plid LONG,
 	type_ INTEGER,
-	lastPublishDate DATE null,
-	primary key (layoutClassedModelUsageId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table LayoutLocalization (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutLocalizationId LONG not null,
+	layoutLocalizationId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
@@ -30,6 +27,5 @@ create table LayoutLocalization (
 	content TEXT null,
 	languageId VARCHAR(75) null,
 	plid LONG,
-	lastPublishDate DATE null,
-	primary key (layoutLocalizationId, ctCollectionId)
+	lastPublishDate DATE null
 );

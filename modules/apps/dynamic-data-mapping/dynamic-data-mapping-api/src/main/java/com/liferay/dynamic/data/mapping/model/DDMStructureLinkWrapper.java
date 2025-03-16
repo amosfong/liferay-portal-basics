@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -35,7 +33,6 @@ public class DDMStructureLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("structureLinkId", getStructureLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -51,12 +48,6 @@ public class DDMStructureLinkWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long structureLinkId = (Long)attributes.get("structureLinkId");
@@ -133,16 +124,6 @@ public class DDMStructureLinkWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this ddm structure link.
-	 *
-	 * @return the ct collection ID of this ddm structure link
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -233,16 +214,6 @@ public class DDMStructureLinkWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this ddm structure link.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm structure link
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the mvcc version of this ddm structure link.
 	 *
 	 * @param mvccVersion the mvcc version of this ddm structure link
@@ -285,20 +256,6 @@ public class DDMStructureLinkWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<DDMStructureLink, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<DDMStructureLink, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

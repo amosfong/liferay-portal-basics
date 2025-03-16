@@ -65,12 +65,10 @@ public class DLContentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", contentId=");
 		sb.append(contentId);
 		sb.append(", groupId=");
@@ -95,7 +93,6 @@ public class DLContentCacheModel
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
 		dlContentImpl.setMvccVersion(mvccVersion);
-		dlContentImpl.setCtCollectionId(ctCollectionId);
 		dlContentImpl.setContentId(contentId);
 		dlContentImpl.setGroupId(groupId);
 		dlContentImpl.setCompanyId(companyId);
@@ -126,8 +123,6 @@ public class DLContentCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		contentId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -144,8 +139,6 @@ public class DLContentCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(contentId);
 
@@ -173,7 +166,6 @@ public class DLContentCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long contentId;
 	public long groupId;
 	public long companyId;

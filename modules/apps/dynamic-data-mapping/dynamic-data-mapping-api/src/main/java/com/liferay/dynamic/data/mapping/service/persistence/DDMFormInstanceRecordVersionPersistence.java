@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceRecordVersionPersistence
-	extends BasePersistence<DDMFormInstanceRecordVersion>,
-			CTPersistence<DDMFormInstanceRecordVersion> {
+	extends BasePersistence<DDMFormInstanceRecordVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -69,12 +69,10 @@ public class DDMStructureCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -127,7 +125,6 @@ public class DDMStructureCacheModel
 		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
 
 		ddmStructureImpl.setMvccVersion(mvccVersion);
-		ddmStructureImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmStructureImpl.setUuid("");
@@ -248,8 +245,6 @@ public class DDMStructureCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -290,8 +285,6 @@ public class DDMStructureCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -389,7 +382,6 @@ public class DDMStructureCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long structureId;

@@ -68,12 +68,10 @@ public class TemplateEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -110,7 +108,6 @@ public class TemplateEntryCacheModel
 		TemplateEntryImpl templateEntryImpl = new TemplateEntryImpl();
 
 		templateEntryImpl.setMvccVersion(mvccVersion);
-		templateEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			templateEntryImpl.setUuid("");
@@ -184,8 +181,6 @@ public class TemplateEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -209,8 +204,6 @@ public class TemplateEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -264,7 +257,6 @@ public class TemplateEntryCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long templateEntryId;

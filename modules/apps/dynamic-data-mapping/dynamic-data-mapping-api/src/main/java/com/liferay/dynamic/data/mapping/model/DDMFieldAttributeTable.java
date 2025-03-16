@@ -26,9 +26,6 @@ public class DDMFieldAttributeTable extends BaseTable<DDMFieldAttributeTable> {
 	public final Column<DDMFieldAttributeTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMFieldAttributeTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMFieldAttributeTable, Long> fieldAttributeId =
 		createColumn(
 			"fieldAttributeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

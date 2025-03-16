@@ -8,7 +8,6 @@ package com.liferay.document.library.content.service.persistence;
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DLContentPersistence
-	extends BasePersistence<DLContent>, CTPersistence<DLContent> {
+public interface DLContentPersistence extends BasePersistence<DLContent> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

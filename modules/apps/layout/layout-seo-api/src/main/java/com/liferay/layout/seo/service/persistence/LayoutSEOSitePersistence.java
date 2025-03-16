@@ -8,7 +8,6 @@ package com.liferay.layout.seo.service.persistence;
 import com.liferay.layout.seo.exception.NoSuchSiteException;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutSEOSitePersistence
-	extends BasePersistence<LayoutSEOSite>, CTPersistence<LayoutSEOSite> {
+	extends BasePersistence<LayoutSEOSite> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

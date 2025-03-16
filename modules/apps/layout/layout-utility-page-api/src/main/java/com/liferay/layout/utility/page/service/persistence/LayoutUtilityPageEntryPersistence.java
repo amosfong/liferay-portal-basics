@@ -8,7 +8,6 @@ package com.liferay.layout.utility.page.service.persistence;
 import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutUtilityPageEntryPersistence
-	extends BasePersistence<LayoutUtilityPageEntry>,
-			CTPersistence<LayoutUtilityPageEntry> {
+	extends BasePersistence<LayoutUtilityPageEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

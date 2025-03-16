@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DDMStructurePersistence
-	extends BasePersistence<DDMStructure>, CTPersistence<DDMStructure> {
+public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

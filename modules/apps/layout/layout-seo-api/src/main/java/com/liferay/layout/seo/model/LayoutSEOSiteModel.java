@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -34,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutSEOSiteModel
-	extends BaseModel<LayoutSEOSite>, CTModel<LayoutSEOSite>, GroupedModel,
-			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<LayoutSEOSite>, GroupedModel, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,7 +47,6 @@ public interface LayoutSEOSiteModel
 	 *
 	 * @return the primary key of this layout seo site
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,7 +54,6 @@ public interface LayoutSEOSiteModel
 	 *
 	 * @param primaryKey the primary key of this layout seo site
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,22 +71,6 @@ public interface LayoutSEOSiteModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this layout seo site.
-	 *
-	 * @return the ct collection ID of this layout seo site
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this layout seo site.
-	 *
-	 * @param ctCollectionId the ct collection ID of this layout seo site
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this layout seo site.

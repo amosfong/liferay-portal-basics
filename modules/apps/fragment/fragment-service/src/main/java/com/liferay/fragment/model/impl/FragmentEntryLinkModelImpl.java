@@ -65,8 +65,8 @@ public class FragmentEntryLinkModelImpl
 	public static final String TABLE_NAME = "FragmentEntryLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"fragmentEntryLinkId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -88,7 +88,6 @@ public class FragmentEntryLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fragmentEntryLinkId", Types.BIGINT);
@@ -119,7 +118,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,deleted BOOLEAN,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,type_ INTEGER,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,deleted BOOLEAN,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,type_ INTEGER,lastPropagationDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -326,8 +325,6 @@ public class FragmentEntryLinkModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", FragmentEntryLink::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", FragmentEntryLink::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", FragmentEntryLink::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
@@ -403,10 +400,6 @@ public class FragmentEntryLinkModelImpl
 				"mvccVersion",
 				(BiConsumer<FragmentEntryLink, Long>)
 					FragmentEntryLink::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<FragmentEntryLink, Long>)
-					FragmentEntryLink::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<FragmentEntryLink, String>)
@@ -535,21 +528,6 @@ public class FragmentEntryLinkModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1236,7 +1214,6 @@ public class FragmentEntryLinkModelImpl
 			new FragmentEntryLinkImpl();
 
 		fragmentEntryLinkImpl.setMvccVersion(getMvccVersion());
-		fragmentEntryLinkImpl.setCtCollectionId(getCtCollectionId());
 		fragmentEntryLinkImpl.setUuid(getUuid());
 		fragmentEntryLinkImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1280,8 +1257,6 @@ public class FragmentEntryLinkModelImpl
 
 		fragmentEntryLinkImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		fragmentEntryLinkImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		fragmentEntryLinkImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		fragmentEntryLinkImpl.setExternalReferenceCode(
@@ -1448,8 +1423,6 @@ public class FragmentEntryLinkModelImpl
 			new FragmentEntryLinkCacheModel();
 
 		fragmentEntryLinkCacheModel.mvccVersion = getMvccVersion();
-
-		fragmentEntryLinkCacheModel.ctCollectionId = getCtCollectionId();
 
 		fragmentEntryLinkCacheModel.uuid = getUuid();
 
@@ -1665,7 +1638,6 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _fragmentEntryLinkId;
@@ -1726,7 +1698,6 @@ public class FragmentEntryLinkModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1783,61 +1754,59 @@ public class FragmentEntryLinkModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("fragmentEntryLinkId", 8L);
 
-		columnBitmasks.put("fragmentEntryLinkId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("originalFragmentEntryLinkId", 1024L);
 
-		columnBitmasks.put("originalFragmentEntryLinkId", 2048L);
+		columnBitmasks.put("fragmentEntryId", 2048L);
 
-		columnBitmasks.put("fragmentEntryId", 4096L);
+		columnBitmasks.put("segmentsExperienceId", 4096L);
 
-		columnBitmasks.put("segmentsExperienceId", 8192L);
+		columnBitmasks.put("classNameId", 8192L);
 
-		columnBitmasks.put("classNameId", 16384L);
+		columnBitmasks.put("classPK", 16384L);
 
-		columnBitmasks.put("classPK", 32768L);
+		columnBitmasks.put("plid", 32768L);
 
-		columnBitmasks.put("plid", 65536L);
+		columnBitmasks.put("css", 65536L);
 
-		columnBitmasks.put("css", 131072L);
+		columnBitmasks.put("html", 131072L);
 
-		columnBitmasks.put("html", 262144L);
+		columnBitmasks.put("js", 262144L);
 
-		columnBitmasks.put("js", 524288L);
+		columnBitmasks.put("configuration", 524288L);
 
-		columnBitmasks.put("configuration", 1048576L);
+		columnBitmasks.put("deleted", 1048576L);
 
-		columnBitmasks.put("deleted", 2097152L);
+		columnBitmasks.put("editableValues", 2097152L);
 
-		columnBitmasks.put("editableValues", 4194304L);
+		columnBitmasks.put("namespace", 4194304L);
 
-		columnBitmasks.put("namespace", 8388608L);
+		columnBitmasks.put("position", 8388608L);
 
-		columnBitmasks.put("position", 16777216L);
+		columnBitmasks.put("rendererKey", 16777216L);
 
-		columnBitmasks.put("rendererKey", 33554432L);
+		columnBitmasks.put("type_", 33554432L);
 
-		columnBitmasks.put("type_", 67108864L);
+		columnBitmasks.put("lastPropagationDate", 67108864L);
 
-		columnBitmasks.put("lastPropagationDate", 134217728L);
-
-		columnBitmasks.put("lastPublishDate", 268435456L);
+		columnBitmasks.put("lastPublishDate", 134217728L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

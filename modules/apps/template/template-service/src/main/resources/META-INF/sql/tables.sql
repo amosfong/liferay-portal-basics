@@ -1,9 +1,8 @@
 create table TemplateEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	templateEntryId LONG not null,
+	templateEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -13,6 +12,5 @@ create table TemplateEntry (
 	ddmTemplateId LONG,
 	infoItemClassName VARCHAR(75) null,
 	infoItemFormVariationKey VARCHAR(75) null,
-	lastPublishDate DATE null,
-	primary key (templateEntryId, ctCollectionId)
+	lastPublishDate DATE null
 );

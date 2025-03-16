@@ -14,7 +14,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -40,9 +39,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -580,7 +577,7 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			FragmentEntryLinkLocalService.class, IdentifiableOSGiService.class,
-			CTService.class, PersistedModelLocalService.class
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -599,23 +596,8 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 		return FragmentEntryLinkLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<FragmentEntryLink> getCTPersistence() {
-		return fragmentEntryLinkPersistence;
-	}
-
-	@Override
-	public Class<FragmentEntryLink> getModelClass() {
+	protected Class<?> getModelClass() {
 		return FragmentEntryLink.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<FragmentEntryLink>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(fragmentEntryLinkPersistence);
 	}
 
 	protected String getModelClassName() {

@@ -60,12 +60,12 @@ public class LayoutLocalizationModelImpl
 	public static final String TABLE_NAME = "LayoutLocalization";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"layoutLocalizationId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"content", Types.CLOB}, {"languageId", Types.VARCHAR},
-		{"plid", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"layoutLocalizationId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"content", Types.CLOB},
+		{"languageId", Types.VARCHAR}, {"plid", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,7 +73,6 @@ public class LayoutLocalizationModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -87,7 +86,7 @@ public class LayoutLocalizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutLocalizationId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,content TEXT null,languageId VARCHAR(75) null,plid LONG,lastPublishDate DATE null,primary key (layoutLocalizationId, ctCollectionId))";
+		"create table LayoutLocalization (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutLocalizationId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,content TEXT null,languageId VARCHAR(75) null,plid LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutLocalization";
 
@@ -252,8 +251,6 @@ public class LayoutLocalizationModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutLocalization::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutLocalization::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", LayoutLocalization::getUuid);
 			attributeGetterFunctions.put(
 				"layoutLocalizationId",
@@ -295,10 +292,6 @@ public class LayoutLocalizationModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutLocalization, Long>)
 					LayoutLocalization::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutLocalization, Long>)
-					LayoutLocalization::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutLocalization, String>)
@@ -358,20 +351,6 @@ public class LayoutLocalizationModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -646,7 +625,6 @@ public class LayoutLocalizationModelImpl
 			new LayoutLocalizationImpl();
 
 		layoutLocalizationImpl.setMvccVersion(getMvccVersion());
-		layoutLocalizationImpl.setCtCollectionId(getCtCollectionId());
 		layoutLocalizationImpl.setUuid(getUuid());
 		layoutLocalizationImpl.setLayoutLocalizationId(
 			getLayoutLocalizationId());
@@ -671,8 +649,6 @@ public class LayoutLocalizationModelImpl
 
 		layoutLocalizationImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutLocalizationImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutLocalizationImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutLocalizationImpl.setLayoutLocalizationId(
@@ -772,8 +748,6 @@ public class LayoutLocalizationModelImpl
 			new LayoutLocalizationCacheModel();
 
 		layoutLocalizationCacheModel.mvccVersion = getMvccVersion();
-
-		layoutLocalizationCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutLocalizationCacheModel.uuid = getUuid();
 
@@ -899,7 +873,6 @@ public class LayoutLocalizationModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutLocalizationId;
 	private long _groupId;
@@ -943,7 +916,6 @@ public class LayoutLocalizationModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"layoutLocalizationId", _layoutLocalizationId);
@@ -980,27 +952,25 @@ public class LayoutLocalizationModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("layoutLocalizationId", 4L);
 
-		columnBitmasks.put("layoutLocalizationId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("content", 128L);
 
-		columnBitmasks.put("content", 256L);
+		columnBitmasks.put("languageId", 256L);
 
-		columnBitmasks.put("languageId", 512L);
+		columnBitmasks.put("plid", 512L);
 
-		columnBitmasks.put("plid", 1024L);
-
-		columnBitmasks.put("lastPublishDate", 2048L);
+		columnBitmasks.put("lastPublishDate", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

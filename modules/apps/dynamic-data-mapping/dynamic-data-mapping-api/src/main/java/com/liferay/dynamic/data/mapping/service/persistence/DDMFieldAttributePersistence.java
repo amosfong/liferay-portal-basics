@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFieldAttributeException;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFieldAttributePersistence
-	extends BasePersistence<DDMFieldAttribute>,
-			CTPersistence<DDMFieldAttribute> {
+	extends BasePersistence<DDMFieldAttribute> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

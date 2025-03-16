@@ -59,10 +59,9 @@ public class DDMTemplateLinkModelImpl
 	public static final String TABLE_NAME = "DDMTemplateLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"templateLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"templateId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"templateLinkId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"templateId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -70,7 +69,6 @@ public class DDMTemplateLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -79,7 +77,7 @@ public class DDMTemplateLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateLinkId LONG not null,companyId LONG,classNameId LONG,classPK LONG,templateId LONG,primary key (templateLinkId, ctCollectionId))";
+		"create table DDMTemplateLink (mvccVersion LONG default 0 not null,templateLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,templateId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 
@@ -233,8 +231,6 @@ public class DDMTemplateLinkModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMTemplateLink::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", DDMTemplateLink::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"templateLinkId", DDMTemplateLink::getTemplateLinkId);
 			attributeGetterFunctions.put(
 				"companyId", DDMTemplateLink::getCompanyId);
@@ -265,10 +261,6 @@ public class DDMTemplateLinkModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMTemplateLink, Long>)
 					DDMTemplateLink::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMTemplateLink, Long>)
-					DDMTemplateLink::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"templateLinkId",
 				(BiConsumer<DDMTemplateLink, Long>)
@@ -307,20 +299,6 @@ public class DDMTemplateLinkModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -499,7 +477,6 @@ public class DDMTemplateLinkModelImpl
 		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
 
 		ddmTemplateLinkImpl.setMvccVersion(getMvccVersion());
-		ddmTemplateLinkImpl.setCtCollectionId(getCtCollectionId());
 		ddmTemplateLinkImpl.setTemplateLinkId(getTemplateLinkId());
 		ddmTemplateLinkImpl.setCompanyId(getCompanyId());
 		ddmTemplateLinkImpl.setClassNameId(getClassNameId());
@@ -517,8 +494,6 @@ public class DDMTemplateLinkModelImpl
 
 		ddmTemplateLinkImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmTemplateLinkImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmTemplateLinkImpl.setTemplateLinkId(
 			this.<Long>getColumnOriginalValue("templateLinkId"));
 		ddmTemplateLinkImpl.setCompanyId(
@@ -607,8 +582,6 @@ public class DDMTemplateLinkModelImpl
 
 		ddmTemplateLinkCacheModel.mvccVersion = getMvccVersion();
 
-		ddmTemplateLinkCacheModel.ctCollectionId = getCtCollectionId();
-
 		ddmTemplateLinkCacheModel.templateLinkId = getTemplateLinkId();
 
 		ddmTemplateLinkCacheModel.companyId = getCompanyId();
@@ -681,7 +654,6 @@ public class DDMTemplateLinkModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _templateLinkId;
 	private long _companyId;
 	private long _classNameId;
@@ -717,7 +689,6 @@ public class DDMTemplateLinkModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("templateLinkId", _templateLinkId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("classNameId", _classNameId);
@@ -738,17 +709,15 @@ public class DDMTemplateLinkModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("templateLinkId", 2L);
 
-		columnBitmasks.put("templateLinkId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("classNameId", 8L);
 
-		columnBitmasks.put("classNameId", 16L);
+		columnBitmasks.put("classPK", 16L);
 
-		columnBitmasks.put("classPK", 32L);
-
-		columnBitmasks.put("templateId", 64L);
+		columnBitmasks.put("templateId", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

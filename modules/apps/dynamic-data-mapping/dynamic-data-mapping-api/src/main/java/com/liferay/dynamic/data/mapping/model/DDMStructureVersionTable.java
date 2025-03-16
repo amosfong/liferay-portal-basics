@@ -29,9 +29,6 @@ public class DDMStructureVersionTable
 	public final Column<DDMStructureVersionTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMStructureVersionTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMStructureVersionTable, Long> structureVersionId =
 		createColumn(
 			"structureVersionId", Long.class, Types.BIGINT,

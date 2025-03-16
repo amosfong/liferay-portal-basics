@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -26,8 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FriendlyURLEntryMappingModel
-	extends AttachedModel, BaseModel<FriendlyURLEntryMapping>,
-			CTModel<FriendlyURLEntryMapping>, MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<FriendlyURLEntryMapping>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -40,7 +39,6 @@ public interface FriendlyURLEntryMappingModel
 	 *
 	 * @return the primary key of this friendly url entry mapping
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -48,7 +46,6 @@ public interface FriendlyURLEntryMappingModel
 	 *
 	 * @param primaryKey the primary key of this friendly url entry mapping
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -66,22 +63,6 @@ public interface FriendlyURLEntryMappingModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this friendly url entry mapping.
-	 *
-	 * @return the ct collection ID of this friendly url entry mapping
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this friendly url entry mapping.
-	 *
-	 * @param ctCollectionId the ct collection ID of this friendly url entry mapping
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the friendly url entry mapping ID of this friendly url entry mapping.

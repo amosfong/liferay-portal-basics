@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -35,7 +33,6 @@ public class DDMFieldWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("fieldId", getFieldId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("parentFieldId", getParentFieldId());
@@ -56,12 +53,6 @@ public class DDMFieldWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long fieldId = (Long)attributes.get("fieldId");
@@ -138,16 +129,6 @@ public class DDMFieldWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this ddm field.
-	 *
-	 * @return the ct collection ID of this ddm field
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -286,16 +267,6 @@ public class DDMFieldWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this ddm field.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm field
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the field ID of this ddm field.
 	 *
 	 * @param fieldId the field ID of this ddm field
@@ -408,20 +379,6 @@ public class DDMFieldWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<DDMField, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<DDMField, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

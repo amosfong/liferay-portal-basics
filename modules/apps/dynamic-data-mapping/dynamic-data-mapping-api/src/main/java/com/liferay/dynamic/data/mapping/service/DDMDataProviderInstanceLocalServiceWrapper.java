@@ -5,11 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DDMDataProviderInstanceLocalService}.
@@ -35,14 +32,15 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public DDMDataProviderInstance addDataProviderInstance(
-			long userId, long groupId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues
-				ddmFormValues,
-			String type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			addDataProviderInstance(
+				long userId, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					ddmFormValues,
+				String type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(
@@ -61,8 +59,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the ddm data provider instance that was added
 	 */
 	@Override
-	public DDMDataProviderInstance addDDMDataProviderInstance(
-		DDMDataProviderInstance ddmDataProviderInstance) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		addDDMDataProviderInstance(
+			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+				ddmDataProviderInstance) {
 
 		return _ddmDataProviderInstanceLocalService.addDDMDataProviderInstance(
 			ddmDataProviderInstance);
@@ -75,8 +75,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the new ddm data provider instance
 	 */
 	@Override
-	public DDMDataProviderInstance createDDMDataProviderInstance(
-		long dataProviderInstanceId) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		createDDMDataProviderInstance(long dataProviderInstanceId) {
 
 		return _ddmDataProviderInstanceLocalService.
 			createDDMDataProviderInstance(dataProviderInstanceId);
@@ -96,7 +96,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public void deleteDataProviderInstance(
-			DDMDataProviderInstance dataProviderInstance)
+			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+				dataProviderInstance)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
@@ -130,8 +131,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the ddm data provider instance that was removed
 	 */
 	@Override
-	public DDMDataProviderInstance deleteDDMDataProviderInstance(
-		DDMDataProviderInstance ddmDataProviderInstance) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		deleteDDMDataProviderInstance(
+			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+				ddmDataProviderInstance) {
 
 		return _ddmDataProviderInstanceLocalService.
 			deleteDDMDataProviderInstance(ddmDataProviderInstance);
@@ -149,8 +152,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @throws PortalException if a ddm data provider instance with the primary key could not be found
 	 */
 	@Override
-	public DDMDataProviderInstance deleteDDMDataProviderInstance(
-			long dataProviderInstanceId)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			deleteDDMDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.
@@ -274,24 +277,24 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public DDMDataProviderInstance fetchDataProviderInstance(
-		long dataProviderInstanceId) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		fetchDataProviderInstance(long dataProviderInstanceId) {
 
 		return _ddmDataProviderInstanceLocalService.fetchDataProviderInstance(
 			dataProviderInstanceId);
 	}
 
 	@Override
-	public DDMDataProviderInstance fetchDataProviderInstanceByUuid(
-		String uuid) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		fetchDataProviderInstanceByUuid(String uuid) {
 
 		return _ddmDataProviderInstanceLocalService.
 			fetchDataProviderInstanceByUuid(uuid);
 	}
 
 	@Override
-	public DDMDataProviderInstance fetchDDMDataProviderInstance(
-		long dataProviderInstanceId) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		fetchDDMDataProviderInstance(long dataProviderInstanceId) {
 
 		return _ddmDataProviderInstanceLocalService.
 			fetchDDMDataProviderInstance(dataProviderInstanceId);
@@ -305,8 +308,9 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the matching ddm data provider instance, or <code>null</code> if a matching ddm data provider instance could not be found
 	 */
 	@Override
-	public DDMDataProviderInstance fetchDDMDataProviderInstanceByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		fetchDDMDataProviderInstanceByUuidAndGroupId(
+			String uuid, long groupId) {
 
 		return _ddmDataProviderInstanceLocalService.
 			fetchDDMDataProviderInstanceByUuidAndGroupId(uuid, groupId);
@@ -320,8 +324,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public DDMDataProviderInstance getDataProviderInstance(
-			long dataProviderInstanceId)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			getDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstance(
@@ -329,7 +333,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public DDMDataProviderInstance getDataProviderInstanceByUuid(String uuid)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			getDataProviderInstanceByUuid(String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.
@@ -337,26 +342,31 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMDataProviderInstance> getDataProviderInstances(
-		long[] groupIds) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDataProviderInstances(long[] groupIds) {
 
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(
 			groupIds);
 	}
 
 	@Override
-	public java.util.List<DDMDataProviderInstance> getDataProviderInstances(
-		long[] groupIds, int start, int end) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDataProviderInstances(long[] groupIds, int start, int end) {
 
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(
 			groupIds, start, end);
 	}
 
 	@Override
-	public java.util.List<DDMDataProviderInstance> getDataProviderInstances(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDataProviderInstances(
+				long[] groupIds, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.
+						DDMDataProviderInstance> orderByComparator) {
 
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(
 			groupIds, start, end, orderByComparator);
@@ -370,8 +380,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @throws PortalException if a ddm data provider instance with the primary key could not be found
 	 */
 	@Override
-	public DDMDataProviderInstance getDDMDataProviderInstance(
-			long dataProviderInstanceId)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			getDDMDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstance(
@@ -387,8 +397,9 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @throws PortalException if a matching ddm data provider instance could not be found
 	 */
 	@Override
-	public DDMDataProviderInstance getDDMDataProviderInstanceByUuidAndGroupId(
-			String uuid, long groupId)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			getDDMDataProviderInstanceByUuidAndGroupId(
+				String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.
@@ -407,8 +418,9 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the range of ddm data provider instances
 	 */
 	@Override
-	public java.util.List<DDMDataProviderInstance> getDDMDataProviderInstances(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDDMDataProviderInstances(int start, int end) {
 
 		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstances(
 			start, end);
@@ -422,9 +434,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the matching ddm data provider instances, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DDMDataProviderInstance>
-		getDDMDataProviderInstancesByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDDMDataProviderInstancesByUuidAndCompanyId(
+				String uuid, long companyId) {
 
 		return _ddmDataProviderInstanceLocalService.
 			getDDMDataProviderInstancesByUuidAndCompanyId(uuid, companyId);
@@ -441,11 +454,13 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the range of matching ddm data provider instances, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DDMDataProviderInstance>
-		getDDMDataProviderInstancesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+			getDDMDataProviderInstancesByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.
+						DDMDataProviderInstance> orderByComparator) {
 
 		return _ddmDataProviderInstanceLocalService.
 			getDDMDataProviderInstancesByUuidAndCompanyId(
@@ -504,21 +519,26 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
+			long companyId, long[] groupIds, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+					orderByComparator) {
 
 		return _ddmDataProviderInstanceLocalService.search(
 			companyId, groupIds, keywords, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, String name, String description,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstance> orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
+			long companyId, long[] groupIds, String name, String description,
+			boolean andOperator, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance>
+					orderByComparator) {
 
 		return _ddmDataProviderInstanceLocalService.search(
 			companyId, groupIds, name, description, andOperator, start, end,
@@ -541,13 +561,14 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public DDMDataProviderInstance updateDataProviderInstance(
-			long userId, long dataProviderInstanceId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues
-				ddmFormValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+			updateDataProviderInstance(
+				long userId, long dataProviderInstanceId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					ddmFormValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
@@ -566,8 +587,10 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	 * @return the ddm data provider instance that was updated
 	 */
 	@Override
-	public DDMDataProviderInstance updateDDMDataProviderInstance(
-		DDMDataProviderInstance ddmDataProviderInstance) {
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+		updateDDMDataProviderInstance(
+			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance
+				ddmDataProviderInstance) {
 
 		return _ddmDataProviderInstanceLocalService.
 			updateDDMDataProviderInstance(ddmDataProviderInstance);
@@ -576,26 +599,6 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ddmDataProviderInstanceLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<DDMDataProviderInstance> getCTPersistence() {
-		return _ddmDataProviderInstanceLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DDMDataProviderInstance> getModelClass() {
-		return _ddmDataProviderInstanceLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMDataProviderInstance>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ddmDataProviderInstanceLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

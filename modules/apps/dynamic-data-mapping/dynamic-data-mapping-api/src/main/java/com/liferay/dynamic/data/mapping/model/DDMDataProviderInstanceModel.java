@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -33,8 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMDataProviderInstanceModel
-	extends BaseModel<DDMDataProviderInstance>,
-			CTModel<DDMDataProviderInstance>, LocalizedModel, MVCCModel,
+	extends BaseModel<DDMDataProviderInstance>, LocalizedModel, MVCCModel,
 			ShardedModel, StagedGroupedModel {
 
 	/*
@@ -48,7 +46,6 @@ public interface DDMDataProviderInstanceModel
 	 *
 	 * @return the primary key of this ddm data provider instance
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,7 +53,6 @@ public interface DDMDataProviderInstanceModel
 	 *
 	 * @param primaryKey the primary key of this ddm data provider instance
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,22 +70,6 @@ public interface DDMDataProviderInstanceModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ddm data provider instance.
-	 *
-	 * @return the ct collection ID of this ddm data provider instance
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ddm data provider instance.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm data provider instance
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this ddm data provider instance.

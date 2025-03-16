@@ -64,8 +64,8 @@ public class LayoutPageTemplateStructureRelModelImpl
 	public static final String TABLE_NAME = "LayoutPageTemplateStructureRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"lPageTemplateStructureRelId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"lPageTemplateStructureRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -81,7 +81,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lPageTemplateStructureRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +100,7 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (lPageTemplateStructureRelId, ctCollectionId))";
+		"create table LayoutPageTemplateStructureRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,lPageTemplateStructureRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutPageTemplateStructureId LONG,segmentsExperienceId LONG,data_ TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateStructureRel";
@@ -273,9 +272,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutPageTemplateStructureRel::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId",
-				LayoutPageTemplateStructureRel::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"uuid", LayoutPageTemplateStructureRel::getUuid);
 			attributeGetterFunctions.put(
 				"layoutPageTemplateStructureRelId",
@@ -340,10 +336,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutPageTemplateStructureRel, Long>)
 					LayoutPageTemplateStructureRel::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutPageTemplateStructureRel, Long>)
-					LayoutPageTemplateStructureRel::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutPageTemplateStructureRel, String>)
@@ -429,20 +421,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -925,8 +903,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 			new LayoutPageTemplateStructureRelImpl();
 
 		layoutPageTemplateStructureRelImpl.setMvccVersion(getMvccVersion());
-		layoutPageTemplateStructureRelImpl.setCtCollectionId(
-			getCtCollectionId());
 		layoutPageTemplateStructureRelImpl.setUuid(getUuid());
 		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureRelId(
 			getLayoutPageTemplateStructureRelId());
@@ -962,8 +938,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 		layoutPageTemplateStructureRelImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutPageTemplateStructureRelImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutPageTemplateStructureRelImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureRelId(
@@ -1079,9 +1053,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 				new LayoutPageTemplateStructureRelCacheModel();
 
 		layoutPageTemplateStructureRelCacheModel.mvccVersion = getMvccVersion();
-
-		layoutPageTemplateStructureRelCacheModel.ctCollectionId =
-			getCtCollectionId();
 
 		layoutPageTemplateStructureRelCacheModel.uuid = getUuid();
 
@@ -1247,7 +1218,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutPageTemplateStructureRelId;
 	private long _groupId;
@@ -1297,7 +1267,6 @@ public class LayoutPageTemplateStructureRelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"lPageTemplateStructureRelId", _layoutPageTemplateStructureRelId);
@@ -1345,39 +1314,37 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("lPageTemplateStructureRelId", 4L);
 
-		columnBitmasks.put("lPageTemplateStructureRelId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("layoutPageTemplateStructureId", 512L);
 
-		columnBitmasks.put("layoutPageTemplateStructureId", 1024L);
+		columnBitmasks.put("segmentsExperienceId", 1024L);
 
-		columnBitmasks.put("segmentsExperienceId", 2048L);
+		columnBitmasks.put("data_", 2048L);
 
-		columnBitmasks.put("data_", 4096L);
+		columnBitmasks.put("lastPublishDate", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("status", 8192L);
 
-		columnBitmasks.put("status", 16384L);
+		columnBitmasks.put("statusByUserId", 16384L);
 
-		columnBitmasks.put("statusByUserId", 32768L);
+		columnBitmasks.put("statusByUserName", 32768L);
 
-		columnBitmasks.put("statusByUserName", 65536L);
-
-		columnBitmasks.put("statusDate", 131072L);
+		columnBitmasks.put("statusDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

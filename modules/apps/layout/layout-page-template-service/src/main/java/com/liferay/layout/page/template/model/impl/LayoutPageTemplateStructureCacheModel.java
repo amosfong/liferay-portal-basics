@@ -73,12 +73,10 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutPageTemplateStructureId=");
@@ -108,7 +106,6 @@ public class LayoutPageTemplateStructureCacheModel
 			new LayoutPageTemplateStructureImpl();
 
 		layoutPageTemplateStructureImpl.setMvccVersion(mvccVersion);
-		layoutPageTemplateStructureImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			layoutPageTemplateStructureImpl.setUuid("");
@@ -155,8 +152,6 @@ public class LayoutPageTemplateStructureCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutPageTemplateStructureId = objectInput.readLong();
@@ -176,8 +171,6 @@ public class LayoutPageTemplateStructureCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -208,7 +201,6 @@ public class LayoutPageTemplateStructureCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public long layoutPageTemplateStructureId;
 	public long groupId;

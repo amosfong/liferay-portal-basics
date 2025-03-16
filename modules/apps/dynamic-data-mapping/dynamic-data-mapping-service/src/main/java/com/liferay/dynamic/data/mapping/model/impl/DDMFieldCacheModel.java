@@ -65,12 +65,10 @@ public class DDMFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", fieldId=");
 		sb.append(fieldId);
 		sb.append(", companyId=");
@@ -101,7 +99,6 @@ public class DDMFieldCacheModel
 		DDMFieldImpl ddmFieldImpl = new DDMFieldImpl();
 
 		ddmFieldImpl.setMvccVersion(mvccVersion);
-		ddmFieldImpl.setCtCollectionId(ctCollectionId);
 		ddmFieldImpl.setFieldId(fieldId);
 		ddmFieldImpl.setCompanyId(companyId);
 		ddmFieldImpl.setParentFieldId(parentFieldId);
@@ -141,8 +138,6 @@ public class DDMFieldCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		fieldId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -164,8 +159,6 @@ public class DDMFieldCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(fieldId);
 
@@ -204,7 +197,6 @@ public class DDMFieldCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long fieldId;
 	public long companyId;
 	public long parentFieldId;

@@ -58,10 +58,10 @@ public class DLFileVersionPreviewModelImpl
 	public static final String TABLE_NAME = "DLFileVersionPreview";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"dlFileVersionPreviewId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
-		{"fileVersionId", Types.BIGINT}, {"previewStatus", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"dlFileVersionPreviewId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"fileEntryId", Types.BIGINT}, {"fileVersionId", Types.BIGINT},
+		{"previewStatus", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,7 +69,6 @@ public class DLFileVersionPreviewModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dlFileVersionPreviewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -79,7 +78,7 @@ public class DLFileVersionPreviewModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersionPreview (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,dlFileVersionPreviewId LONG not null,groupId LONG,companyId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER,primary key (dlFileVersionPreviewId, ctCollectionId))";
+		"create table DLFileVersionPreview (mvccVersion LONG default 0 not null,dlFileVersionPreviewId LONG not null primary key,groupId LONG,companyId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileVersionPreview";
@@ -234,8 +233,6 @@ public class DLFileVersionPreviewModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DLFileVersionPreview::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", DLFileVersionPreview::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"dlFileVersionPreviewId",
 				DLFileVersionPreview::getDlFileVersionPreviewId);
 			attributeGetterFunctions.put(
@@ -271,10 +268,6 @@ public class DLFileVersionPreviewModelImpl
 				"mvccVersion",
 				(BiConsumer<DLFileVersionPreview, Long>)
 					DLFileVersionPreview::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DLFileVersionPreview, Long>)
-					DLFileVersionPreview::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"dlFileVersionPreviewId",
 				(BiConsumer<DLFileVersionPreview, Long>)
@@ -318,20 +311,6 @@ public class DLFileVersionPreviewModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -507,7 +486,6 @@ public class DLFileVersionPreviewModelImpl
 			new DLFileVersionPreviewImpl();
 
 		dlFileVersionPreviewImpl.setMvccVersion(getMvccVersion());
-		dlFileVersionPreviewImpl.setCtCollectionId(getCtCollectionId());
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			getDlFileVersionPreviewId());
 		dlFileVersionPreviewImpl.setGroupId(getGroupId());
@@ -528,8 +506,6 @@ public class DLFileVersionPreviewModelImpl
 
 		dlFileVersionPreviewImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		dlFileVersionPreviewImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			this.<Long>getColumnOriginalValue("dlFileVersionPreviewId"));
 		dlFileVersionPreviewImpl.setGroupId(
@@ -633,8 +609,6 @@ public class DLFileVersionPreviewModelImpl
 
 		dlFileVersionPreviewCacheModel.mvccVersion = getMvccVersion();
 
-		dlFileVersionPreviewCacheModel.ctCollectionId = getCtCollectionId();
-
 		dlFileVersionPreviewCacheModel.dlFileVersionPreviewId =
 			getDlFileVersionPreviewId();
 
@@ -711,7 +685,6 @@ public class DLFileVersionPreviewModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _dlFileVersionPreviewId;
 	private long _groupId;
 	private long _companyId;
@@ -748,7 +721,6 @@ public class DLFileVersionPreviewModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"dlFileVersionPreviewId", _dlFileVersionPreviewId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -771,19 +743,17 @@ public class DLFileVersionPreviewModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("dlFileVersionPreviewId", 2L);
 
-		columnBitmasks.put("dlFileVersionPreviewId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("fileEntryId", 16L);
 
-		columnBitmasks.put("fileEntryId", 32L);
+		columnBitmasks.put("fileVersionId", 32L);
 
-		columnBitmasks.put("fileVersionId", 64L);
-
-		columnBitmasks.put("previewStatus", 128L);
+		columnBitmasks.put("previewStatus", 64L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -60,7 +60,7 @@ public class FriendlyURLEntryMappingModelImpl
 	public static final String TABLE_NAME = "FriendlyURLEntryMapping";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT},
 		{"friendlyURLEntryMappingId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"friendlyURLEntryId", Types.BIGINT}
@@ -71,7 +71,6 @@ public class FriendlyURLEntryMappingModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryMappingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -80,7 +79,7 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,friendlyURLEntryMappingId LONG not null,companyId LONG,classNameId LONG,classPK LONG,friendlyURLEntryId LONG,primary key (friendlyURLEntryMappingId, ctCollectionId))";
+		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,friendlyURLEntryMappingId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,friendlyURLEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryMapping";
@@ -231,8 +230,6 @@ public class FriendlyURLEntryMappingModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", FriendlyURLEntryMapping::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", FriendlyURLEntryMapping::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"friendlyURLEntryMappingId",
 				FriendlyURLEntryMapping::getFriendlyURLEntryMappingId);
 			attributeGetterFunctions.put(
@@ -267,10 +264,6 @@ public class FriendlyURLEntryMappingModelImpl
 				"mvccVersion",
 				(BiConsumer<FriendlyURLEntryMapping, Long>)
 					FriendlyURLEntryMapping::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<FriendlyURLEntryMapping, Long>)
-					FriendlyURLEntryMapping::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"friendlyURLEntryMappingId",
 				(BiConsumer<FriendlyURLEntryMapping, Long>)
@@ -310,20 +303,6 @@ public class FriendlyURLEntryMappingModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -494,7 +473,6 @@ public class FriendlyURLEntryMappingModelImpl
 			new FriendlyURLEntryMappingImpl();
 
 		friendlyURLEntryMappingImpl.setMvccVersion(getMvccVersion());
-		friendlyURLEntryMappingImpl.setCtCollectionId(getCtCollectionId());
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
 			getFriendlyURLEntryMappingId());
 		friendlyURLEntryMappingImpl.setCompanyId(getCompanyId());
@@ -515,8 +493,6 @@ public class FriendlyURLEntryMappingModelImpl
 
 		friendlyURLEntryMappingImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		friendlyURLEntryMappingImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
 			this.<Long>getColumnOriginalValue("friendlyURLEntryMappingId"));
 		friendlyURLEntryMappingImpl.setCompanyId(
@@ -606,8 +582,6 @@ public class FriendlyURLEntryMappingModelImpl
 
 		friendlyURLEntryMappingCacheModel.mvccVersion = getMvccVersion();
 
-		friendlyURLEntryMappingCacheModel.ctCollectionId = getCtCollectionId();
-
 		friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingId =
 			getFriendlyURLEntryMappingId();
 
@@ -684,7 +658,6 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _friendlyURLEntryMappingId;
 	private long _companyId;
 	private long _classNameId;
@@ -720,7 +693,6 @@ public class FriendlyURLEntryMappingModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"friendlyURLEntryMappingId", _friendlyURLEntryMappingId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -742,17 +714,15 @@ public class FriendlyURLEntryMappingModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("friendlyURLEntryMappingId", 2L);
 
-		columnBitmasks.put("friendlyURLEntryMappingId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("classNameId", 8L);
 
-		columnBitmasks.put("classNameId", 16L);
+		columnBitmasks.put("classPK", 16L);
 
-		columnBitmasks.put("classPK", 32L);
-
-		columnBitmasks.put("friendlyURLEntryId", 64L);
+		columnBitmasks.put("friendlyURLEntryId", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

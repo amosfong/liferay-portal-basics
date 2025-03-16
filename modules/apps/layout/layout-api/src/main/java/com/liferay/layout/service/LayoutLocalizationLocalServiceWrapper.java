@@ -5,11 +5,8 @@
 
 package com.liferay.layout.service;
 
-import com.liferay.layout.model.LayoutLocalization;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link LayoutLocalizationLocalService}.
@@ -43,15 +40,15 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the layout localization that was added
 	 */
 	@Override
-	public LayoutLocalization addLayoutLocalization(
-		LayoutLocalization layoutLocalization) {
+	public com.liferay.layout.model.LayoutLocalization addLayoutLocalization(
+		com.liferay.layout.model.LayoutLocalization layoutLocalization) {
 
 		return _layoutLocalizationLocalService.addLayoutLocalization(
 			layoutLocalization);
 	}
 
 	@Override
-	public LayoutLocalization addLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization addLayoutLocalization(
 		long groupId, String content, String languageId, long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
@@ -66,7 +63,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the new layout localization
 	 */
 	@Override
-	public LayoutLocalization createLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization createLayoutLocalization(
 		long layoutLocalizationId) {
 
 		return _layoutLocalizationLocalService.createLayoutLocalization(
@@ -96,8 +93,8 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the layout localization that was removed
 	 */
 	@Override
-	public LayoutLocalization deleteLayoutLocalization(
-		LayoutLocalization layoutLocalization) {
+	public com.liferay.layout.model.LayoutLocalization deleteLayoutLocalization(
+		com.liferay.layout.model.LayoutLocalization layoutLocalization) {
 
 		return _layoutLocalizationLocalService.deleteLayoutLocalization(
 			layoutLocalization);
@@ -115,7 +112,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @throws PortalException if a layout localization with the primary key could not be found
 	 */
 	@Override
-	public LayoutLocalization deleteLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization deleteLayoutLocalization(
 			long layoutLocalizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -239,7 +236,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutLocalization fetchLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization fetchLayoutLocalization(
 		long layoutLocalizationId) {
 
 		return _layoutLocalizationLocalService.fetchLayoutLocalization(
@@ -247,7 +244,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutLocalization fetchLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization fetchLayoutLocalization(
 		long groupId, String languageId, long plid) {
 
 		return _layoutLocalizationLocalService.fetchLayoutLocalization(
@@ -262,8 +259,8 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization fetchLayoutLocalizationByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.layout.model.LayoutLocalization
+		fetchLayoutLocalizationByUuidAndGroupId(String uuid, long groupId) {
 
 		return _layoutLocalizationLocalService.
 			fetchLayoutLocalizationByUuidAndGroupId(uuid, groupId);
@@ -302,7 +299,8 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @throws PortalException if a layout localization with the primary key could not be found
 	 */
 	@Override
-	public LayoutLocalization getLayoutLocalization(long layoutLocalizationId)
+	public com.liferay.layout.model.LayoutLocalization getLayoutLocalization(
+			long layoutLocalizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalizationLocalService.getLayoutLocalization(
@@ -310,7 +308,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutLocalization getLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization getLayoutLocalization(
 			String languageId, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -327,8 +325,8 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @throws PortalException if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization getLayoutLocalizationByUuidAndGroupId(
-			String uuid, long groupId)
+	public com.liferay.layout.model.LayoutLocalization
+			getLayoutLocalizationByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalizationLocalService.
@@ -347,16 +345,16 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the range of layout localizations
 	 */
 	@Override
-	public java.util.List<LayoutLocalization> getLayoutLocalizations(
-		int start, int end) {
+	public java.util.List<com.liferay.layout.model.LayoutLocalization>
+		getLayoutLocalizations(int start, int end) {
 
 		return _layoutLocalizationLocalService.getLayoutLocalizations(
 			start, end);
 	}
 
 	@Override
-	public java.util.List<LayoutLocalization> getLayoutLocalizations(
-		long plid) {
+	public java.util.List<com.liferay.layout.model.LayoutLocalization>
+		getLayoutLocalizations(long plid) {
 
 		return _layoutLocalizationLocalService.getLayoutLocalizations(plid);
 	}
@@ -369,7 +367,7 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the matching layout localizations, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutLocalization>
+	public java.util.List<com.liferay.layout.model.LayoutLocalization>
 		getLayoutLocalizationsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _layoutLocalizationLocalService.
@@ -387,11 +385,12 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the range of matching layout localizations, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutLocalization>
+	public java.util.List<com.liferay.layout.model.LayoutLocalization>
 		getLayoutLocalizationsByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator) {
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.layout.model.LayoutLocalization>
+					orderByComparator) {
 
 		return _layoutLocalizationLocalService.
 			getLayoutLocalizationsByUuidAndCompanyId(
@@ -440,15 +439,15 @@ public class LayoutLocalizationLocalServiceWrapper
 	 * @return the layout localization that was updated
 	 */
 	@Override
-	public LayoutLocalization updateLayoutLocalization(
-		LayoutLocalization layoutLocalization) {
+	public com.liferay.layout.model.LayoutLocalization updateLayoutLocalization(
+		com.liferay.layout.model.LayoutLocalization layoutLocalization) {
 
 		return _layoutLocalizationLocalService.updateLayoutLocalization(
 			layoutLocalization);
 	}
 
 	@Override
-	public LayoutLocalization updateLayoutLocalization(
+	public com.liferay.layout.model.LayoutLocalization updateLayoutLocalization(
 		String content, String languageId, long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
@@ -459,26 +458,6 @@ public class LayoutLocalizationLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _layoutLocalizationLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<LayoutLocalization> getCTPersistence() {
-		return _layoutLocalizationLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<LayoutLocalization> getModelClass() {
-		return _layoutLocalizationLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<LayoutLocalization>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _layoutLocalizationLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

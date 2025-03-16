@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,8 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMStorageLinkModel
-	extends AttachedModel, BaseModel<DDMStorageLink>, CTModel<DDMStorageLink>,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<DDMStorageLink>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -41,7 +39,6 @@ public interface DDMStorageLinkModel
 	 *
 	 * @return the primary key of this ddm storage link
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -49,7 +46,6 @@ public interface DDMStorageLinkModel
 	 *
 	 * @param primaryKey the primary key of this ddm storage link
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -67,22 +63,6 @@ public interface DDMStorageLinkModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ddm storage link.
-	 *
-	 * @return the ct collection ID of this ddm storage link
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ddm storage link.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm storage link
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this ddm storage link.

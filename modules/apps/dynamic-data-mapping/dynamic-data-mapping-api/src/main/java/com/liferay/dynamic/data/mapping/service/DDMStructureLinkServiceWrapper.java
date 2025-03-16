@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -40,11 +39,14 @@ public class DDMStructureLinkServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMStructureLink> getStructureLinks(
-		long classNameId, long classPK, long[] groupIds, String keywords,
-		String resourceClassName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMStructureLink>
+			getStructureLinks(
+				long classNameId, long classPK, long[] groupIds,
+				String keywords, String resourceClassName, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.DDMStructureLink>
+						orderByComparator) {
 
 		return _ddmStructureLinkService.getStructureLinks(
 			classNameId, classPK, groupIds, keywords, resourceClassName, start,

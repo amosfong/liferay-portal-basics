@@ -5,11 +5,8 @@
 
 package com.liferay.layout.utility.page.service;
 
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link LayoutUtilityPageEntryLocalService}.
@@ -44,19 +41,23 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the layout utility page entry that was added
 	 */
 	@Override
-	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		addLayoutUtilityPageEntry(
+			com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+				layoutUtilityPageEntry) {
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId, long plid,
-			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			addLayoutUtilityPageEntry(
+				String externalReferenceCode, long userId, long groupId,
+				long plid, long previewFileEntryId,
+				boolean defaultLayoutUtilityPageEntry, String name, String type,
+				long masterLayoutPlid,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
@@ -66,9 +67,10 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long userId, long groupId, long sourceLayoutUtilityPageEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			copyLayoutUtilityPageEntry(
+				long userId, long groupId, long sourceLayoutUtilityPageEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return _layoutUtilityPageEntryLocalService.copyLayoutUtilityPageEntry(
@@ -82,8 +84,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the new layout utility page entry
 	 */
 	@Override
-	public LayoutUtilityPageEntry createLayoutUtilityPageEntry(
-		long LayoutUtilityPageEntryId) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		createLayoutUtilityPageEntry(long LayoutUtilityPageEntryId) {
 
 		return _layoutUtilityPageEntryLocalService.createLayoutUtilityPageEntry(
 			LayoutUtilityPageEntryId);
@@ -113,8 +115,10 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-			LayoutUtilityPageEntry layoutUtilityPageEntry)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			deleteLayoutUtilityPageEntry(
+				com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+					layoutUtilityPageEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
@@ -133,8 +137,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @throws PortalException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-			long LayoutUtilityPageEntryId)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			deleteLayoutUtilityPageEntry(long LayoutUtilityPageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
@@ -142,8 +146,9 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			deleteLayoutUtilityPageEntry(
+				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
@@ -267,31 +272,31 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
-		long groupId, String type) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		fetchDefaultLayoutUtilityPageEntry(long groupId, String type) {
 
 		return _layoutUtilityPageEntryLocalService.
 			fetchDefaultLayoutUtilityPageEntry(groupId, type);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
-		long LayoutUtilityPageEntryId) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		fetchLayoutUtilityPageEntry(long LayoutUtilityPageEntryId) {
 
 		return _layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
 			LayoutUtilityPageEntryId);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
-		long groupId, String name, String type) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		fetchLayoutUtilityPageEntry(long groupId, String name, String type) {
 
 		return _layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
 			groupId, name, type);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {
 
@@ -301,7 +306,9 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByPlid(long plid) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		fetchLayoutUtilityPageEntryByPlid(long plid) {
+
 		return _layoutUtilityPageEntryLocalService.
 			fetchLayoutUtilityPageEntryByPlid(plid);
 	}
@@ -314,8 +321,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		fetchLayoutUtilityPageEntryByUuidAndGroupId(String uuid, long groupId) {
 
 		return _layoutUtilityPageEntryLocalService.
 			fetchLayoutUtilityPageEntryByUuidAndGroupId(uuid, groupId);
@@ -329,8 +336,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, String type)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			getDefaultLayoutUtilityPageEntry(long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.
@@ -367,56 +374,71 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the range of layout utility page entries
 	 */
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(int start, int end) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			start, end);
 	}
 
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(long groupId) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId);
 	}
 
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.utility.page.model.
+						LayoutUtilityPageEntry> orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(
+				long groupId, String type, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.utility.page.model.
+						LayoutUtilityPageEntry> orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, String keyword, String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(
+				long groupId, String keyword, String[] types, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.utility.page.model.
+						LayoutUtilityPageEntry> orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, keyword, types, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntries(
+				long groupId, String[] types, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.utility.page.model.
+						LayoutUtilityPageEntry> orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, types, start, end, orderByComparator);
@@ -430,9 +452,10 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the matching layout utility page entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutUtilityPageEntry>
-		getLayoutUtilityPageEntriesByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntriesByUuidAndCompanyId(
+				String uuid, long companyId) {
 
 		return _layoutUtilityPageEntryLocalService.
 			getLayoutUtilityPageEntriesByUuidAndCompanyId(uuid, companyId);
@@ -449,11 +472,13 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the range of matching layout utility page entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<LayoutUtilityPageEntry>
-		getLayoutUtilityPageEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutUtilityPageEntry> orderByComparator) {
+	public java.util.List
+		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
+			getLayoutUtilityPageEntriesByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.layout.utility.page.model.
+						LayoutUtilityPageEntry> orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.
 			getLayoutUtilityPageEntriesByUuidAndCompanyId(
@@ -499,8 +524,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @throws PortalException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry getLayoutUtilityPageEntry(
-			long LayoutUtilityPageEntryId)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			getLayoutUtilityPageEntry(long LayoutUtilityPageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
@@ -508,7 +533,7 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			getLayoutUtilityPageEntryByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -527,8 +552,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @throws PortalException if a matching layout utility page entry could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry getLayoutUtilityPageEntryByUuidAndGroupId(
-			String uuid, long groupId)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.
@@ -558,8 +583,8 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry setDefaultLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			setDefaultLayoutUtilityPageEntry(long layoutUtilityPageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.
@@ -577,24 +602,28 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	 * @return the layout utility page entry that was updated
 	 */
 	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		updateLayoutUtilityPageEntry(
+			com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+				layoutUtilityPageEntry) {
 
 		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-		long layoutUtilityPageEntryId, long previewFileEntryId) {
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+		updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, long previewFileEntryId) {
 
 		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, previewFileEntryId);
 	}
 
 	@Override
-	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name)
+	public com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			updateLayoutUtilityPageEntry(
+				long layoutUtilityPageEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
@@ -604,26 +633,6 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _layoutUtilityPageEntryLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<LayoutUtilityPageEntry> getCTPersistence() {
-		return _layoutUtilityPageEntryLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<LayoutUtilityPageEntry> getModelClass() {
-		return _layoutUtilityPageEntryLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<LayoutUtilityPageEntry>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _layoutUtilityPageEntryLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

@@ -26,8 +26,6 @@ public class DDMStructureTable extends BaseTable<DDMStructureTable> {
 
 	public final Column<DDMStructureTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMStructureTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMStructureTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMStructureTable, String> externalReferenceCode =

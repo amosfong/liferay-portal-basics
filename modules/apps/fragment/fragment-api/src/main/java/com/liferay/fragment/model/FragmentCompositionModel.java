@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -31,9 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FragmentCompositionModel
-	extends BaseModel<FragmentComposition>, CTModel<FragmentComposition>,
-			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
-			StagedGroupedModel, WorkflowedModel {
+	extends BaseModel<FragmentComposition>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -46,7 +44,6 @@ public interface FragmentCompositionModel
 	 *
 	 * @return the primary key of this fragment composition
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -54,7 +51,6 @@ public interface FragmentCompositionModel
 	 *
 	 * @param primaryKey the primary key of this fragment composition
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -72,22 +68,6 @@ public interface FragmentCompositionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this fragment composition.
-	 *
-	 * @return the ct collection ID of this fragment composition
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this fragment composition.
-	 *
-	 * @param ctCollectionId the ct collection ID of this fragment composition
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this fragment composition.

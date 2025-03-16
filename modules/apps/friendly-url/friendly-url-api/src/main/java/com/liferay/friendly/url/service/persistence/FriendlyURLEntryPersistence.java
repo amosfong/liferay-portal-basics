@@ -8,7 +8,6 @@ package com.liferay.friendly.url.service.persistence;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FriendlyURLEntryPersistence
-	extends BasePersistence<FriendlyURLEntry>, CTPersistence<FriendlyURLEntry> {
+	extends BasePersistence<FriendlyURLEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

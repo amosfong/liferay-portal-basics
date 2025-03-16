@@ -24,9 +24,6 @@ public class DDMStructureLinkTable extends BaseTable<DDMStructureLinkTable> {
 
 	public final Column<DDMStructureLinkTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMStructureLinkTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMStructureLinkTable, Long> structureLinkId =
 		createColumn(
 			"structureLinkId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

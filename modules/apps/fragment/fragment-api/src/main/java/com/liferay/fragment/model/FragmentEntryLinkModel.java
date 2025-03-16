@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -32,8 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentEntryLinkModel
 	extends AttachedModel, BaseModel<FragmentEntryLink>,
-			CTModel<FragmentEntryLink>, ExternalReferenceCodeModel, MVCCModel,
-			ShardedModel, StagedGroupedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -46,7 +45,6 @@ public interface FragmentEntryLinkModel
 	 *
 	 * @return the primary key of this fragment entry link
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -54,7 +52,6 @@ public interface FragmentEntryLinkModel
 	 *
 	 * @param primaryKey the primary key of this fragment entry link
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -72,22 +69,6 @@ public interface FragmentEntryLinkModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this fragment entry link.
-	 *
-	 * @return the ct collection ID of this fragment entry link
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this fragment entry link.
-	 *
-	 * @param ctCollectionId the ct collection ID of this fragment entry link
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this fragment entry link.

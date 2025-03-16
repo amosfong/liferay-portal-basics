@@ -5,11 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DDMFormInstanceRecordVersionLocalService}.
@@ -45,8 +42,10 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @return the ddm form instance record version that was added
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion addDDMFormInstanceRecordVersion(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+		addDDMFormInstanceRecordVersion(
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+				ddmFormInstanceRecordVersion) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			addDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersion);
@@ -59,8 +58,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @return the new ddm form instance record version
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion createDDMFormInstanceRecordVersion(
-		long formInstanceRecordVersionId) {
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+		createDDMFormInstanceRecordVersion(long formInstanceRecordVersionId) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			createDDMFormInstanceRecordVersion(formInstanceRecordVersionId);
@@ -90,8 +89,10 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion deleteDDMFormInstanceRecordVersion(
-			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			deleteDDMFormInstanceRecordVersion(
+				com.liferay.dynamic.data.mapping.model.
+					DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -110,8 +111,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @throws PortalException if a ddm form instance record version with the primary key could not be found
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion deleteDDMFormInstanceRecordVersion(
-			long formInstanceRecordVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			deleteDDMFormInstanceRecordVersion(long formInstanceRecordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -237,17 +238,18 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion fetchDDMFormInstanceRecordVersion(
-		long formInstanceRecordVersionId) {
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+		fetchDDMFormInstanceRecordVersion(long formInstanceRecordVersionId) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			fetchDDMFormInstanceRecordVersion(formInstanceRecordVersionId);
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion fetchLatestFormInstanceRecordVersion(
-		long userId, long formInstanceId, String formInstanceVersion,
-		int status) {
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+		fetchLatestFormInstanceRecordVersion(
+			long userId, long formInstanceId, String formInstanceVersion,
+			int status) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			fetchLatestFormInstanceRecordVersion(
@@ -270,8 +272,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @throws PortalException if a ddm form instance record version with the primary key could not be found
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion getDDMFormInstanceRecordVersion(
-			long formInstanceRecordVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getDDMFormInstanceRecordVersion(long formInstanceRecordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -290,8 +292,9 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @return the range of ddm form instance record versions
 	 */
 	@Override
-	public java.util.List<DDMFormInstanceRecordVersion>
-		getDDMFormInstanceRecordVersions(int start, int end) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
+			getDDMFormInstanceRecordVersions(int start, int end) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			getDDMFormInstanceRecordVersions(start, end);
@@ -309,8 +312,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-			long ddmFormInstanceRecordVersionId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getFormInstanceRecordVersion(long ddmFormInstanceRecordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -318,8 +321,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-			long ddmFormInstanceId, String version)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getFormInstanceRecordVersion(long ddmFormInstanceId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -327,11 +330,13 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMFormInstanceRecordVersion>
-		getFormInstanceRecordVersions(
-			long ddmFormInstanceRecordId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMFormInstanceRecordVersion> orderByComparator) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
+			getFormInstanceRecordVersions(
+				long ddmFormInstanceRecordId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.
+						DDMFormInstanceRecordVersion> orderByComparator) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			getFormInstanceRecordVersions(
@@ -339,8 +344,9 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMFormInstanceRecordVersion>
-		getFormInstanceRecordVersions(long userId, long formInstanceId) {
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion>
+			getFormInstanceRecordVersions(long userId, long formInstanceId) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			getFormInstanceRecordVersions(userId, formInstanceId);
@@ -363,8 +369,8 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getLatestFormInstanceRecordVersion(
-			long ddmFormInstanceId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getLatestFormInstanceRecordVersion(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -372,8 +378,9 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceRecordVersion getLatestFormInstanceRecordVersion(
-			long ddmFormInstanceRecordId, int status)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+			getLatestFormInstanceRecordVersion(
+				long ddmFormInstanceRecordId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordVersionLocalService.
@@ -414,8 +421,10 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	 * @return the ddm form instance record version that was updated
 	 */
 	@Override
-	public DDMFormInstanceRecordVersion updateDDMFormInstanceRecordVersion(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+		updateDDMFormInstanceRecordVersion(
+			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion
+				ddmFormInstanceRecordVersion) {
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			updateDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersion);
@@ -424,26 +433,6 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ddmFormInstanceRecordVersionLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<DDMFormInstanceRecordVersion> getCTPersistence() {
-		return _ddmFormInstanceRecordVersionLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DDMFormInstanceRecordVersion> getModelClass() {
-		return _ddmFormInstanceRecordVersionLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMFormInstanceRecordVersion>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ddmFormInstanceRecordVersionLocalService.
-			updateWithUnsafeFunction(updateUnsafeFunction);
 	}
 
 	@Override

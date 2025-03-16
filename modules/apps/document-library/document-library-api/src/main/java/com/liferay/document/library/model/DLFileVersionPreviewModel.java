@@ -8,7 +8,6 @@ package com.liferay.document.library.model;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileVersionPreviewModel
-	extends BaseModel<DLFileVersionPreview>, CTModel<DLFileVersionPreview>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<DLFileVersionPreview>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -39,7 +37,6 @@ public interface DLFileVersionPreviewModel
 	 *
 	 * @return the primary key of this dl file version preview
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -47,7 +44,6 @@ public interface DLFileVersionPreviewModel
 	 *
 	 * @param primaryKey the primary key of this dl file version preview
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -65,22 +61,6 @@ public interface DLFileVersionPreviewModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this dl file version preview.
-	 *
-	 * @return the ct collection ID of this dl file version preview
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this dl file version preview.
-	 *
-	 * @param ctCollectionId the ct collection ID of this dl file version preview
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the dl file version preview ID of this dl file version preview.

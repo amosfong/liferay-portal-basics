@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -28,8 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceReportModel
-	extends BaseModel<DDMFormInstanceReport>, CTModel<DDMFormInstanceReport>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<DDMFormInstanceReport>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -42,7 +40,6 @@ public interface DDMFormInstanceReportModel
 	 *
 	 * @return the primary key of this ddm form instance report
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -50,7 +47,6 @@ public interface DDMFormInstanceReportModel
 	 *
 	 * @param primaryKey the primary key of this ddm form instance report
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -68,22 +64,6 @@ public interface DDMFormInstanceReportModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ddm form instance report.
-	 *
-	 * @return the ct collection ID of this ddm form instance report
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ddm form instance report.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ddm form instance report
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the form instance report ID of this ddm form instance report.

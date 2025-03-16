@@ -5,11 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import com.liferay.dynamic.data.mapping.model.DDMContent;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DDMContentLocalService}.
@@ -32,7 +29,7 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
-	public DDMContent addContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 			long userId, long groupId, String name, String description,
 			String data,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -53,7 +50,9 @@ public class DDMContentLocalServiceWrapper
 	 * @return the ddm content that was added
 	 */
 	@Override
-	public DDMContent addDDMContent(DDMContent ddmContent) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent addDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
+
 		return _ddmContentLocalService.addDDMContent(ddmContent);
 	}
 
@@ -64,7 +63,9 @@ public class DDMContentLocalServiceWrapper
 	 * @return the new ddm content
 	 */
 	@Override
-	public DDMContent createDDMContent(long contentId) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent createDDMContent(
+		long contentId) {
+
 		return _ddmContentLocalService.createDDMContent(contentId);
 	}
 
@@ -80,7 +81,9 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteContent(DDMContent content) {
+	public void deleteContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent content) {
+
 		_ddmContentLocalService.deleteContent(content);
 	}
 
@@ -100,7 +103,9 @@ public class DDMContentLocalServiceWrapper
 	 * @return the ddm content that was removed
 	 */
 	@Override
-	public DDMContent deleteDDMContent(DDMContent ddmContent) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent deleteDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
+
 		return _ddmContentLocalService.deleteDDMContent(ddmContent);
 	}
 
@@ -116,7 +121,8 @@ public class DDMContentLocalServiceWrapper
 	 * @throws PortalException if a ddm content with the primary key could not be found
 	 */
 	@Override
-	public DDMContent deleteDDMContent(long contentId)
+	public com.liferay.dynamic.data.mapping.model.DDMContent deleteDDMContent(
+			long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmContentLocalService.deleteDDMContent(contentId);
@@ -236,7 +242,9 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
-	public DDMContent fetchDDMContent(long contentId) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent fetchDDMContent(
+		long contentId) {
+
 		return _ddmContentLocalService.fetchDDMContent(contentId);
 	}
 
@@ -248,8 +256,8 @@ public class DDMContentLocalServiceWrapper
 	 * @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	 */
 	@Override
-	public DDMContent fetchDDMContentByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent
+		fetchDDMContentByUuidAndGroupId(String uuid, long groupId) {
 
 		return _ddmContentLocalService.fetchDDMContentByUuidAndGroupId(
 			uuid, groupId);
@@ -263,25 +271,30 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
-	public DDMContent getContent(long contentId)
+	public com.liferay.dynamic.data.mapping.model.DDMContent getContent(
+			long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmContentLocalService.getContent(contentId);
 	}
 
 	@Override
-	public java.util.List<DDMContent> getContents() {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getContents() {
+
 		return _ddmContentLocalService.getContents();
 	}
 
 	@Override
-	public java.util.List<DDMContent> getContents(long groupId) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getContents(long groupId) {
+
 		return _ddmContentLocalService.getContents(groupId);
 	}
 
 	@Override
-	public java.util.List<DDMContent> getContents(
-		long groupId, int start, int end) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getContents(long groupId, int start, int end) {
 
 		return _ddmContentLocalService.getContents(groupId, start, end);
 	}
@@ -299,7 +312,8 @@ public class DDMContentLocalServiceWrapper
 	 * @throws PortalException if a ddm content with the primary key could not be found
 	 */
 	@Override
-	public DDMContent getDDMContent(long contentId)
+	public com.liferay.dynamic.data.mapping.model.DDMContent getDDMContent(
+			long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmContentLocalService.getDDMContent(contentId);
@@ -314,7 +328,8 @@ public class DDMContentLocalServiceWrapper
 	 * @throws PortalException if a matching ddm content could not be found
 	 */
 	@Override
-	public DDMContent getDDMContentByUuidAndGroupId(String uuid, long groupId)
+	public com.liferay.dynamic.data.mapping.model.DDMContent
+			getDDMContentByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmContentLocalService.getDDMContentByUuidAndGroupId(
@@ -333,7 +348,9 @@ public class DDMContentLocalServiceWrapper
 	 * @return the range of ddm contents
 	 */
 	@Override
-	public java.util.List<DDMContent> getDDMContents(int start, int end) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getDDMContents(int start, int end) {
+
 		return _ddmContentLocalService.getDDMContents(start, end);
 	}
 
@@ -345,8 +362,8 @@ public class DDMContentLocalServiceWrapper
 	 * @return the matching ddm contents, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DDMContent> getDDMContentsByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getDDMContentsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _ddmContentLocalService.getDDMContentsByUuidAndCompanyId(
 			uuid, companyId);
@@ -363,10 +380,12 @@ public class DDMContentLocalServiceWrapper
 	 * @return the range of matching ddm contents, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DDMContent> getDDMContentsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-			orderByComparator) {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent>
+		getDDMContentsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dynamic.data.mapping.model.DDMContent>
+					orderByComparator) {
 
 		return _ddmContentLocalService.getDDMContentsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -421,7 +440,7 @@ public class DDMContentLocalServiceWrapper
 	}
 
 	@Override
-	public DDMContent updateContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
 			long contentId, String name, String description, String data,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -441,33 +460,15 @@ public class DDMContentLocalServiceWrapper
 	 * @return the ddm content that was updated
 	 */
 	@Override
-	public DDMContent updateDDMContent(DDMContent ddmContent) {
+	public com.liferay.dynamic.data.mapping.model.DDMContent updateDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
+
 		return _ddmContentLocalService.updateDDMContent(ddmContent);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ddmContentLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<DDMContent> getCTPersistence() {
-		return _ddmContentLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DDMContent> getModelClass() {
-		return _ddmContentLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMContent>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ddmContentLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

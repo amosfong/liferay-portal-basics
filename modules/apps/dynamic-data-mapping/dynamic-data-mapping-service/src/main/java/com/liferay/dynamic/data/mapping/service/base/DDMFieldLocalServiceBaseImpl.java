@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -31,9 +30,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -378,7 +375,7 @@ public abstract class DDMFieldLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			DDMFieldLocalService.class, IdentifiableOSGiService.class,
-			CTService.class, PersistedModelLocalService.class
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -397,22 +394,8 @@ public abstract class DDMFieldLocalServiceBaseImpl
 		return DDMFieldLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<DDMField> getCTPersistence() {
-		return ddmFieldPersistence;
-	}
-
-	@Override
-	public Class<DDMField> getModelClass() {
+	protected Class<?> getModelClass() {
 		return DDMField.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DDMField>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(ddmFieldPersistence);
 	}
 
 	protected String getModelClassName() {

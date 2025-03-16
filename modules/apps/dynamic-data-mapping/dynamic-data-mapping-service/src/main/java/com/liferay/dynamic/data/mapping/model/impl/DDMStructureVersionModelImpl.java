@@ -71,16 +71,16 @@ public class DDMStructureVersionModelImpl
 	public static final String TABLE_NAME = "DDMStructureVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"structureId", Types.BIGINT}, {"version", Types.VARCHAR},
-		{"parentStructureId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.CLOB}, {"definition", Types.CLOB},
-		{"storageType", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"structureVersionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"structureId", Types.BIGINT},
+		{"version", Types.VARCHAR}, {"parentStructureId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"description", Types.CLOB},
+		{"definition", Types.CLOB}, {"storageType", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,7 +88,6 @@ public class DDMStructureVersionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -110,7 +109,7 @@ public class DDMStructureVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,structureVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (structureVersionId, ctCollectionId))";
+		"create table DDMStructureVersion (mvccVersion LONG default 0 not null,structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMStructureVersion";
@@ -265,8 +264,6 @@ public class DDMStructureVersionModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMStructureVersion::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", DDMStructureVersion::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"structureVersionId",
 				DDMStructureVersion::getStructureVersionId);
 			attributeGetterFunctions.put(
@@ -324,10 +321,6 @@ public class DDMStructureVersionModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMStructureVersion, Long>)
 					DDMStructureVersion::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMStructureVersion, Long>)
-					DDMStructureVersion::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"structureVersionId",
 				(BiConsumer<DDMStructureVersion, Long>)
@@ -420,21 +413,6 @@ public class DDMStructureVersionModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1217,7 +1195,6 @@ public class DDMStructureVersionModelImpl
 			new DDMStructureVersionImpl();
 
 		ddmStructureVersionImpl.setMvccVersion(getMvccVersion());
-		ddmStructureVersionImpl.setCtCollectionId(getCtCollectionId());
 		ddmStructureVersionImpl.setStructureVersionId(getStructureVersionId());
 		ddmStructureVersionImpl.setGroupId(getGroupId());
 		ddmStructureVersionImpl.setCompanyId(getCompanyId());
@@ -1249,8 +1226,6 @@ public class DDMStructureVersionModelImpl
 
 		ddmStructureVersionImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmStructureVersionImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmStructureVersionImpl.setStructureVersionId(
 			this.<Long>getColumnOriginalValue("structureVersionId"));
 		ddmStructureVersionImpl.setGroupId(
@@ -1366,8 +1341,6 @@ public class DDMStructureVersionModelImpl
 			new DDMStructureVersionCacheModel();
 
 		ddmStructureVersionCacheModel.mvccVersion = getMvccVersion();
-
-		ddmStructureVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmStructureVersionCacheModel.structureVersionId =
 			getStructureVersionId();
@@ -1531,7 +1504,6 @@ public class DDMStructureVersionModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -1584,7 +1556,6 @@ public class DDMStructureVersionModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("structureVersionId", _structureVersionId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1628,43 +1599,41 @@ public class DDMStructureVersionModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("structureVersionId", 2L);
 
-		columnBitmasks.put("structureVersionId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("structureId", 128L);
 
-		columnBitmasks.put("structureId", 256L);
+		columnBitmasks.put("version", 256L);
 
-		columnBitmasks.put("version", 512L);
+		columnBitmasks.put("parentStructureId", 512L);
 
-		columnBitmasks.put("parentStructureId", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("description", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("definition", 4096L);
 
-		columnBitmasks.put("definition", 8192L);
+		columnBitmasks.put("storageType", 8192L);
 
-		columnBitmasks.put("storageType", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("status", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("statusByUserId", 65536L);
 
-		columnBitmasks.put("statusByUserId", 131072L);
+		columnBitmasks.put("statusByUserName", 131072L);
 
-		columnBitmasks.put("statusByUserName", 262144L);
-
-		columnBitmasks.put("statusDate", 524288L);
+		columnBitmasks.put("statusDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

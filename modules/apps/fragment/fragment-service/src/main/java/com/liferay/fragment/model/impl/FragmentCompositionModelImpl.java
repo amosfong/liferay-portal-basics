@@ -66,8 +66,8 @@ public class FragmentCompositionModelImpl
 	public static final String TABLE_NAME = "FragmentComposition";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"fragmentCompositionId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,7 +86,6 @@ public class FragmentCompositionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fragmentCompositionId", Types.BIGINT);
@@ -110,7 +109,7 @@ public class FragmentCompositionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentComposition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentCompositionId, ctCollectionId))";
+		"create table FragmentComposition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentComposition";
@@ -287,8 +286,6 @@ public class FragmentCompositionModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", FragmentComposition::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", FragmentComposition::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", FragmentComposition::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
@@ -354,10 +351,6 @@ public class FragmentCompositionModelImpl
 				"mvccVersion",
 				(BiConsumer<FragmentComposition, Long>)
 					FragmentComposition::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<FragmentComposition, Long>)
-					FragmentComposition::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<FragmentComposition, String>)
@@ -458,21 +451,6 @@ public class FragmentCompositionModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1073,7 +1051,6 @@ public class FragmentCompositionModelImpl
 			new FragmentCompositionImpl();
 
 		fragmentCompositionImpl.setMvccVersion(getMvccVersion());
-		fragmentCompositionImpl.setCtCollectionId(getCtCollectionId());
 		fragmentCompositionImpl.setUuid(getUuid());
 		fragmentCompositionImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1111,8 +1088,6 @@ public class FragmentCompositionModelImpl
 
 		fragmentCompositionImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		fragmentCompositionImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		fragmentCompositionImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		fragmentCompositionImpl.setExternalReferenceCode(
@@ -1230,8 +1205,6 @@ public class FragmentCompositionModelImpl
 			new FragmentCompositionCacheModel();
 
 		fragmentCompositionCacheModel.mvccVersion = getMvccVersion();
-
-		fragmentCompositionCacheModel.ctCollectionId = getCtCollectionId();
 
 		fragmentCompositionCacheModel.uuid = getUuid();
 
@@ -1425,7 +1398,6 @@ public class FragmentCompositionModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _fragmentCompositionId;
@@ -1479,7 +1451,6 @@ public class FragmentCompositionModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1530,47 +1501,45 @@ public class FragmentCompositionModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("fragmentCompositionId", 8L);
 
-		columnBitmasks.put("fragmentCompositionId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("fragmentCollectionId", 1024L);
 
-		columnBitmasks.put("fragmentCollectionId", 2048L);
+		columnBitmasks.put("fragmentCompositionKey", 2048L);
 
-		columnBitmasks.put("fragmentCompositionKey", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("data_", 16384L);
 
-		columnBitmasks.put("data_", 32768L);
+		columnBitmasks.put("previewFileEntryId", 32768L);
 
-		columnBitmasks.put("previewFileEntryId", 65536L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("status", 131072L);
 
-		columnBitmasks.put("status", 262144L);
+		columnBitmasks.put("statusByUserId", 262144L);
 
-		columnBitmasks.put("statusByUserId", 524288L);
+		columnBitmasks.put("statusByUserName", 524288L);
 
-		columnBitmasks.put("statusByUserName", 1048576L);
-
-		columnBitmasks.put("statusDate", 2097152L);
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

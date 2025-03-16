@@ -24,9 +24,6 @@ public class DDMTemplateLinkTable extends BaseTable<DDMTemplateLinkTable> {
 
 	public final Column<DDMTemplateLinkTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DDMTemplateLinkTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMTemplateLinkTable, Long> templateLinkId =
 		createColumn(
 			"templateLinkId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

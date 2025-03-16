@@ -57,11 +57,10 @@ public class DDMFieldAttributeModelImpl
 	public static final String TABLE_NAME = "DDMFieldAttribute";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"fieldAttributeId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"fieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
-		{"attributeName", Types.VARCHAR}, {"languageId", Types.VARCHAR},
-		{"largeAttributeValue", Types.CLOB},
+		{"mvccVersion", Types.BIGINT}, {"fieldAttributeId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"fieldId", Types.BIGINT},
+		{"storageId", Types.BIGINT}, {"attributeName", Types.VARCHAR},
+		{"languageId", Types.VARCHAR}, {"largeAttributeValue", Types.CLOB},
 		{"smallAttributeValue", Types.VARCHAR}
 	};
 
@@ -70,7 +69,6 @@ public class DDMFieldAttributeModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldAttributeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldId", Types.BIGINT);
@@ -82,7 +80,7 @@ public class DDMFieldAttributeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldAttributeId LONG not null,companyId LONG,fieldId LONG,storageId LONG,attributeName VARCHAR(255) null,languageId VARCHAR(75) null,largeAttributeValue TEXT null,smallAttributeValue VARCHAR(255) null,primary key (fieldAttributeId, ctCollectionId))";
+		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,fieldAttributeId LONG not null primary key,companyId LONG,fieldId LONG,storageId LONG,attributeName VARCHAR(255) null,languageId VARCHAR(75) null,largeAttributeValue TEXT null,smallAttributeValue VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFieldAttribute";
 
@@ -248,8 +246,6 @@ public class DDMFieldAttributeModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", DDMFieldAttribute::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", DDMFieldAttribute::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"fieldAttributeId", DDMFieldAttribute::getFieldAttributeId);
 			attributeGetterFunctions.put(
 				"companyId", DDMFieldAttribute::getCompanyId);
@@ -289,10 +285,6 @@ public class DDMFieldAttributeModelImpl
 				"mvccVersion",
 				(BiConsumer<DDMFieldAttribute, Long>)
 					DDMFieldAttribute::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DDMFieldAttribute, Long>)
-					DDMFieldAttribute::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"fieldAttributeId",
 				(BiConsumer<DDMFieldAttribute, Long>)
@@ -344,20 +336,6 @@ public class DDMFieldAttributeModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -596,7 +574,6 @@ public class DDMFieldAttributeModelImpl
 			new DDMFieldAttributeImpl();
 
 		ddmFieldAttributeImpl.setMvccVersion(getMvccVersion());
-		ddmFieldAttributeImpl.setCtCollectionId(getCtCollectionId());
 		ddmFieldAttributeImpl.setFieldAttributeId(getFieldAttributeId());
 		ddmFieldAttributeImpl.setCompanyId(getCompanyId());
 		ddmFieldAttributeImpl.setFieldId(getFieldId());
@@ -618,8 +595,6 @@ public class DDMFieldAttributeModelImpl
 
 		ddmFieldAttributeImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ddmFieldAttributeImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmFieldAttributeImpl.setFieldAttributeId(
 			this.<Long>getColumnOriginalValue("fieldAttributeId"));
 		ddmFieldAttributeImpl.setCompanyId(
@@ -713,8 +688,6 @@ public class DDMFieldAttributeModelImpl
 			new DDMFieldAttributeCacheModel();
 
 		ddmFieldAttributeCacheModel.mvccVersion = getMvccVersion();
-
-		ddmFieldAttributeCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmFieldAttributeCacheModel.fieldAttributeId = getFieldAttributeId();
 
@@ -827,7 +800,6 @@ public class DDMFieldAttributeModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _fieldAttributeId;
 	private long _companyId;
 	private long _fieldId;
@@ -866,7 +838,6 @@ public class DDMFieldAttributeModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("fieldAttributeId", _fieldAttributeId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("fieldId", _fieldId);
@@ -890,23 +861,21 @@ public class DDMFieldAttributeModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("fieldAttributeId", 2L);
 
-		columnBitmasks.put("fieldAttributeId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("fieldId", 8L);
 
-		columnBitmasks.put("fieldId", 16L);
+		columnBitmasks.put("storageId", 16L);
 
-		columnBitmasks.put("storageId", 32L);
+		columnBitmasks.put("attributeName", 32L);
 
-		columnBitmasks.put("attributeName", 64L);
+		columnBitmasks.put("languageId", 64L);
 
-		columnBitmasks.put("languageId", 128L);
+		columnBitmasks.put("largeAttributeValue", 128L);
 
-		columnBitmasks.put("largeAttributeValue", 256L);
-
-		columnBitmasks.put("smallAttributeValue", 512L);
+		columnBitmasks.put("smallAttributeValue", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

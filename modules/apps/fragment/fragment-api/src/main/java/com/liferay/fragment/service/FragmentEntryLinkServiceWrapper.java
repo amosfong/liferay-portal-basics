@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.service;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -30,7 +29,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink addFragmentEntryLink(
+	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
 			String externalReferenceCode, long groupId,
 			long originalFragmentEntryLinkId, long fragmentEntryId,
 			long segmentsExperienceId, long plid, String css, String html,
@@ -47,7 +46,8 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
+	public com.liferay.fragment.model.FragmentEntryLink deleteFragmentEntryLink(
+			long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkService.deleteFragmentEntryLink(
@@ -55,7 +55,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink deleteFragmentEntryLink(
+	public com.liferay.fragment.model.FragmentEntryLink deleteFragmentEntryLink(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -64,8 +64,9 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
+	public com.liferay.fragment.model.FragmentEntryLink
+			getFragmentEntryLinkByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkService.
@@ -84,7 +85,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink updateDeleted(
+	public com.liferay.fragment.model.FragmentEntryLink updateDeleted(
 			long fragmentEntryLinkId, boolean deleted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -93,7 +94,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink updateFragmentEntryLink(
+	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -102,7 +103,7 @@ public class FragmentEntryLinkServiceWrapper
 	}
 
 	@Override
-	public FragmentEntryLink updateFragmentEntryLink(
+	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {

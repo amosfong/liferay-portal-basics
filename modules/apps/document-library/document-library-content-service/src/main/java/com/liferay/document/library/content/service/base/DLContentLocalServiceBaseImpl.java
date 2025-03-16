@@ -9,7 +9,6 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -36,9 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -445,7 +442,7 @@ public abstract class DLContentLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			DLContentLocalService.class, IdentifiableOSGiService.class,
-			CTService.class, PersistedModelLocalService.class
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -464,22 +461,8 @@ public abstract class DLContentLocalServiceBaseImpl
 		return DLContentLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<DLContent> getCTPersistence() {
-		return dlContentPersistence;
-	}
-
-	@Override
-	public Class<DLContent> getModelClass() {
+	protected Class<?> getModelClass() {
 		return DLContent.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLContent>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(dlContentPersistence);
 	}
 
 	protected String getModelClassName() {

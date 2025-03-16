@@ -9,7 +9,6 @@ import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import java.util.Date;
  * @generated
  */
 public class FragmentEntryVersionCacheModel
-	implements CacheModel<FragmentEntryVersion>, Externalizable, MVCCModel {
+	implements CacheModel<FragmentEntryVersion>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -40,9 +39,8 @@ public class FragmentEntryVersionCacheModel
 		FragmentEntryVersionCacheModel fragmentEntryVersionCacheModel =
 			(FragmentEntryVersionCacheModel)object;
 
-		if ((fragmentEntryVersionId ==
-				fragmentEntryVersionCacheModel.fragmentEntryVersionId) &&
-			(mvccVersion == fragmentEntryVersionCacheModel.mvccVersion)) {
+		if (fragmentEntryVersionId ==
+				fragmentEntryVersionCacheModel.fragmentEntryVersionId) {
 
 			return true;
 		}
@@ -52,30 +50,14 @@ public class FragmentEntryVersionCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, fragmentEntryVersionId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, fragmentEntryVersionId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(59);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
-		sb.append(", fragmentEntryVersionId=");
+		sb.append("{fragmentEntryVersionId=");
 		sb.append(fragmentEntryVersionId);
 		sb.append(", version=");
 		sb.append(version);
@@ -143,8 +125,6 @@ public class FragmentEntryVersionCacheModel
 		FragmentEntryVersionImpl fragmentEntryVersionImpl =
 			new FragmentEntryVersionImpl();
 
-		fragmentEntryVersionImpl.setMvccVersion(mvccVersion);
-		fragmentEntryVersionImpl.setCtCollectionId(ctCollectionId);
 		fragmentEntryVersionImpl.setFragmentEntryVersionId(
 			fragmentEntryVersionId);
 		fragmentEntryVersionImpl.setVersion(version);
@@ -288,10 +268,6 @@ public class FragmentEntryVersionCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
-
 		fragmentEntryVersionId = objectInput.readLong();
 
 		version = objectInput.readInt();
@@ -337,10 +313,6 @@ public class FragmentEntryVersionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(fragmentEntryVersionId);
 
 		objectOutput.writeInt(version);
@@ -459,8 +431,6 @@ public class FragmentEntryVersionCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
-	public long mvccVersion;
-	public long ctCollectionId;
 	public long fragmentEntryVersionId;
 	public int version;
 	public String uuid;

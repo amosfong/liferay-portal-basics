@@ -1,8 +1,7 @@
 create table LayoutSEOEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutSEOEntryId LONG not null,
+	layoutSEOEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -20,15 +19,13 @@ create table LayoutSEOEntry (
 	openGraphImageFileEntryId LONG,
 	openGraphTitle STRING null,
 	openGraphTitleEnabled BOOLEAN,
-	lastPublishDate DATE null,
-	primary key (layoutSEOEntryId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table LayoutSEOSite (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutSEOSiteId LONG not null,
+	layoutSEOSiteId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -37,6 +34,5 @@ create table LayoutSEOSite (
 	modifiedDate DATE null,
 	openGraphEnabled BOOLEAN,
 	openGraphImageAlt STRING null,
-	openGraphImageFileEntryId LONG,
-	primary key (layoutSEOSiteId, ctCollectionId)
+	openGraphImageFileEntryId LONG
 );

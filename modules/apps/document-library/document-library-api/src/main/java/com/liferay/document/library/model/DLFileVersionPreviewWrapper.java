@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -37,7 +35,6 @@ public class DLFileVersionPreviewWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("dlFileVersionPreviewId", getDlFileVersionPreviewId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -54,12 +51,6 @@ public class DLFileVersionPreviewWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long dlFileVersionPreviewId = (Long)attributes.get(
@@ -113,16 +104,6 @@ public class DLFileVersionPreviewWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this dl file version preview.
-	 *
-	 * @return the ct collection ID of this dl file version preview
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -211,16 +192,6 @@ public class DLFileVersionPreviewWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this dl file version preview.
-	 *
-	 * @param ctCollectionId the ct collection ID of this dl file version preview
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the dl file version preview ID of this dl file version preview.
 	 *
 	 * @param dlFileVersionPreviewId the dl file version preview ID of this dl file version preview
@@ -293,20 +264,6 @@ public class DLFileVersionPreviewWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<DLFileVersionPreview, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<DLFileVersionPreview, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

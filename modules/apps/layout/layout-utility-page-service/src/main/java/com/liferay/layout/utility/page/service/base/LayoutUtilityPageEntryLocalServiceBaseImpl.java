@@ -13,7 +13,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.persistence.LayoutUtilityPageEntryPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -37,9 +36,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -576,8 +573,7 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			LayoutUtilityPageEntryLocalService.class,
-			IdentifiableOSGiService.class, CTService.class,
-			PersistedModelLocalService.class
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
 		};
 	}
 
@@ -597,23 +593,8 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 		return LayoutUtilityPageEntryLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<LayoutUtilityPageEntry> getCTPersistence() {
-		return layoutUtilityPageEntryPersistence;
-	}
-
-	@Override
-	public Class<LayoutUtilityPageEntry> getModelClass() {
+	protected Class<?> getModelClass() {
 		return LayoutUtilityPageEntry.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<LayoutUtilityPageEntry>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(layoutUtilityPageEntryPersistence);
 	}
 
 	protected String getModelClassName() {
