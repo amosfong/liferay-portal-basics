@@ -5,15 +5,6 @@
 
 package com.liferay.layout.internal.struts;
 
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -148,10 +139,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
-			if (Validator.isNotNull(className) && (classPK > 0)) {
-				_includeInfoItemObjects(className, classPK, httpServletRequest);
-			}
-
 			layout.includeLayoutContent(
 				httpServletRequest, httpServletResponse);
 
@@ -185,66 +172,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	private void _includeInfoItemObjects(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		InfoItemObjectProvider<?> infoItemObjectProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		String version = ParamUtil.getString(httpServletRequest, "version");
-
-		if (Validator.isNotNull(version)) {
-			classPKInfoItemIdentifier.setVersion(version);
-		}
-
-		Object infoItem = infoItemObjectProvider.getInfoItem(
-			classPKInfoItemIdentifier);
-
-		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
-
-		InfoItemDetailsProvider infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, className);
-
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-			infoItemDetailsProvider.getInfoItemDetails(infoItem));
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		httpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-			layoutDisplayPageProvider);
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(className, classPK));
-
-		if (layoutDisplayPageObjectProvider != null) {
-			httpServletRequest.setAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-				layoutDisplayPageObjectProvider);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetPagePreviewStrutsAction.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

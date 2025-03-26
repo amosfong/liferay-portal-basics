@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -48,8 +47,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRIES,
 			_getLayoutPageTemplateEntries(resourceRequest));
-		resourceRequest.setAttribute(
-			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
@@ -102,9 +99,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return layoutPageTemplateEntries;
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutPageTemplateCollectionService

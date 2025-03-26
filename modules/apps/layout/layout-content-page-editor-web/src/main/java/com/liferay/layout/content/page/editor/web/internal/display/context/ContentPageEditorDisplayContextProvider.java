@@ -9,8 +9,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
@@ -82,8 +80,7 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_frontendTokenDefinitionRegistry, _groupLocalService,
-				httpServletRequest, _infoItemServiceRegistry,
-				_infoSearchClassMapperRegistry, _itemSelector, _jsonFactory,
+				httpServletRequest, _itemSelector, _jsonFactory,
 				_language, _layoutLocalService, _layoutLockManager,
 				_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateEntryService,
@@ -101,7 +98,6 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_frontendTokenDefinitionRegistry, httpServletRequest,
-				_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 				_itemSelector, _jsonFactory, _language, _layoutLocalService,
 				_layoutLockManager, _layoutSetLocalService,
 				_layoutPageTemplateEntryLocalService,
@@ -133,7 +129,6 @@ public class ContentPageEditorDisplayContextProvider {
 			_fragmentCollectionManager, _fragmentEntryLinkManager,
 			_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 			_frontendTokenDefinitionRegistry, httpServletRequest,
-			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 			_itemSelector, _jsonFactory, _language, _layoutLocalService,
 			_layoutLockManager, _layoutSetLocalService,
 			_layoutPageTemplateEntryLocalService,
@@ -186,12 +181,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

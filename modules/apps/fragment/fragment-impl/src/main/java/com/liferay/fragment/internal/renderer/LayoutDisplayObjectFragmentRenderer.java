@@ -7,10 +7,6 @@ package com.liferay.fragment.internal.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.item.InfoItemDetails;
-import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,57 +58,12 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object infoItem = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (infoItem == null) {
-			if (fragmentRendererContext.isEditMode()) {
-				FragmentRendererUtil.printPortletMessageInfo(
-					httpServletRequest, httpServletResponse,
-					"the-display-page-content-will-be-shown-here");
-			}
-
-			return;
+		if (fragmentRendererContext.isEditMode()) {
+			FragmentRendererUtil.printPortletMessageInfo(
+				httpServletRequest, httpServletResponse,
+				"the-display-page-content-will-be-shown-here");
 		}
-
-		InfoItemDetails infoItemDetails =
-			(InfoItemDetails)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-		InfoItemRenderer<Object> infoItemRenderer = _getInfoItemRenderer(
-			infoItemDetails.getClassName());
-
-		if (infoItemRenderer == null) {
-			if (fragmentRendererContext.isEditMode()) {
-				FragmentRendererUtil.printPortletMessageInfo(
-					httpServletRequest, httpServletResponse,
-					"there-are-no-available-renderers-for-the-display-page-" +
-						"content");
-			}
-
-			return;
-		}
-
-		infoItemRenderer.render(
-			infoItem, httpServletRequest, httpServletResponse);
 	}
-
-	private InfoItemRenderer<Object> _getInfoItemRenderer(
-		String displayObjectClassName) {
-
-		List<InfoItemRenderer<?>> infoItemRenderers =
-			_infoItemRendererRegistry.getInfoItemRenderers(
-				displayObjectClassName);
-
-		if (infoItemRenderers == null) {
-			return null;
-		}
-
-		return (InfoItemRenderer<Object>)infoItemRenderers.get(0);
-	}
-
-	@Reference
-	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
 	private Language _language;

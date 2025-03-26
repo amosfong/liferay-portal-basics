@@ -13,12 +13,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.info.field.InfoField;
-import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
@@ -124,41 +118,6 @@ public class FormItemManager {
 			_defaultInputFragmentEntryConfigurationProvider.
 				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
 
-		for (InfoField<?> infoField :
-				_getInfoFields(
-					formStyledLayoutStructureItem, layout.getGroupId())) {
-
-			if (!infoField.isEditable() ||
-				(ArrayUtil.isNotEmpty(uniqueInfoFieldIds) &&
-				 !ArrayUtil.contains(
-					 uniqueInfoFieldIds, infoField.getUniqueId()))) {
-
-				continue;
-			}
-
-			InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-			FragmentEntry fragmentEntry = _getFragmentEntry(
-				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
-				infoFieldType.getName());
-
-			if ((fragmentEntry == null) ||
-				!_isAllowedFragmentEntryKey(
-					fragmentEntry.getFragmentEntryKey(),
-					masterDropZoneLayoutStructureItem)) {
-
-				missingInputTypes.add(infoFieldType.getLabel(locale));
-
-				continue;
-			}
-
-			addedFragmentEntryLinks.add(
-				_addFragmentEntryLink(
-					formStyledLayoutStructureItem, fragmentEntry, infoField,
-					layout, layoutStructure, segmentsExperienceId,
-					serviceContext));
-		}
-
 		if (includeSubmitButton) {
 			FragmentEntry fragmentEntry = _getFragmentEntry(
 				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
@@ -175,7 +134,7 @@ public class FormItemManager {
 			else {
 				addedFragmentEntryLinks.add(
 					_addFragmentEntryLink(
-						formStyledLayoutStructureItem, fragmentEntry, null,
+						formStyledLayoutStructureItem, fragmentEntry,
 						layout, layoutStructure, segmentsExperienceId,
 						serviceContext));
 			}
@@ -477,7 +436,7 @@ public class FormItemManager {
 
 	private FragmentEntryLink _addFragmentEntryLink(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
+			FragmentEntry fragmentEntry, Layout layout,
 			LayoutStructure layoutStructure, long segmentsExperienceId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -491,31 +450,6 @@ public class FormItemManager {
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				serviceContext);
-
-		if (infoField != null) {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (jsonObject == null) {
-				jsonObject = _jsonFactory.createJSONObject();
-
-				editableValuesJSONObject.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					jsonObject);
-			}
-
-			jsonObject.put("inputFieldId", infoField.getUniqueId());
-
-			fragmentEntryLink =
-				_fragmentEntryLinkService.updateFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					editableValuesJSONObject.toString());
-		}
 
 		LayoutStructureItem layoutStructureItem =
 			_findFormStepContainerStyledLayoutStructureItem(
@@ -589,41 +523,6 @@ public class FormItemManager {
 
 		return _fragmentEntryLocalService.fetchFragmentEntry(
 			group.getGroupId(), jsonObject.getString("key"));
-	}
-
-	private List<InfoField<?>> _getInfoFields(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			long groupId)
-		throws PortalException {
-
-		String className = formStyledLayoutStructureItem.getClassName();
-
-		if (Validator.isNull(className)) {
-			return Collections.emptyList();
-		}
-
-		String itemClassName = _infoSearchClassMapperRegistry.getClassName(
-			className);
-
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemClassName);
-
-		if (infoItemFormProvider == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get info item form provider for class " +
-						itemClassName);
-			}
-
-			return Collections.emptyList();
-		}
-
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			String.valueOf(formStyledLayoutStructureItem.getClassTypeId()),
-			groupId);
-
-		return infoForm.getAllInfoFields();
 	}
 
 	private DropZoneLayoutStructureItem _getMasterDropZoneLayoutStructureItem(
@@ -703,12 +602,6 @@ public class FormItemManager {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

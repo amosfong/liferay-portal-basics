@@ -5,16 +5,9 @@
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
@@ -66,12 +59,10 @@ public class DisplayPageDisplayContext {
 
 	public DisplayPageDisplayContext(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceRegistry infoItemServiceRegistry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -257,27 +248,6 @@ public class DisplayPageDisplayContext {
 
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceRegistry.getInfoItemClassDetails(
-					_themeDisplay.getScopeGroupId(),
-					DisplayPageInfoItemCapability.KEY,
-					_themeDisplay.getPermissionChecker())) {
-
-			mappingTypesJSONArray.put(
-				JSONUtil.put(
-					"id",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							infoItemClassDetails.getClassName()))
-				).put(
-					"label",
-					infoItemClassDetails.getLabel(_themeDisplay.getLocale())
-				).put(
-					"subtypes",
-					_getMappingFormVariationsJSONArray(infoItemClassDetails)
-				));
-		}
-
 		_mappingTypesJSONArray = mappingTypesJSONArray;
 
 		return _mappingTypesJSONArray;
@@ -410,107 +380,9 @@ public class DisplayPageDisplayContext {
 
 		Map<Long, Long[]> classNameIdsMap = new HashMap<>();
 
-		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceRegistry.getInfoItemClassDetails(
-					DisplayPageInfoItemCapability.KEY)) {
-
-			classNameIdsMap.put(
-				PortalUtil.getClassNameId(infoItemClassDetails.getClassName()),
-				_getInfoFormVariationIds(infoItemClassDetails));
-		}
-
 		_classNameIdsMap = classNameIdsMap;
 
 		return _classNameIdsMap;
-	}
-
-	private Long[] _getInfoFormVariationIds(
-		InfoItemClassDetails infoItemClassDetails) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				infoItemClassDetails.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return new Long[0];
-		}
-
-		return ListUtil.toArray(
-			ListUtil.fromCollection(
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					_themeDisplay.getScopeGroupId())),
-			new Accessor<InfoItemFormVariation, Long>() {
-
-				@Override
-				public Long get(InfoItemFormVariation infoItemFormVariation) {
-					return Long.valueOf(infoItemFormVariation.getKey());
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<InfoItemFormVariation> getTypeClass() {
-					return InfoItemFormVariation.class;
-				}
-
-			});
-	}
-
-	private JSONArray _getMappingFormVariationsJSONArray(
-		InfoItemClassDetails infoItemClassDetails) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				infoItemClassDetails.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return jsonArray;
-		}
-
-		InfoPermissionProvider infoPermissionProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoPermissionProvider.class,
-				infoItemClassDetails.getClassName());
-
-		Collection<InfoItemFormVariation> infoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_themeDisplay.getScopeGroupId());
-
-		for (InfoItemFormVariation infoItemFormVariation :
-				infoItemFormVariations) {
-
-			if ((infoPermissionProvider != null) &&
-				!infoPermissionProvider.hasViewPermission(
-					infoItemFormVariation.getKey(),
-					_themeDisplay.getScopeGroupId(),
-					_themeDisplay.getPermissionChecker())) {
-
-				continue;
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"id", String.valueOf(infoItemFormVariation.getKey())
-				).put(
-					"label",
-					() -> {
-						InfoLocalizedValue<String> labelInfoLocalizedValue =
-							infoItemFormVariation.getLabelInfoLocalizedValue();
-
-						return labelInfoLocalizedValue.getValue(
-							_themeDisplay.getLocale());
-					}
-				));
-		}
-
-		return jsonArray;
 	}
 
 	private OrderByComparator<Object> _getOrderByComparator() {
@@ -565,7 +437,6 @@ public class DisplayPageDisplayContext {
 	private Map<Long, Long[]> _classNameIdsMap;
 	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private String _keywords;
 	private Long _layoutPageTemplateCollectionId;
 	private Long _layoutPageTemplateEntryId;

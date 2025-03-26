@@ -7,8 +7,6 @@ package com.liferay.fragment.renderer;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -27,11 +25,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
-	public InfoItemReference getContextInfoItemReference() {
-		return _infoItemReference;
-	}
-
-	@Override
 	public String getFragmentElementId() {
 		return _fragmentEntryElementId;
 	}
@@ -39,11 +32,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	@Override
 	public FragmentEntryLink getFragmentEntryLink() {
 		return _fragmentEntryLink;
-	}
-
-	@Override
-	public InfoForm getInfoForm() {
-		return _infoForm;
 	}
 
 	@Override
@@ -69,11 +57,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	@Override
 	public int getPreviewType() {
 		return _previewType;
-	}
-
-	@Override
-	public String getPreviewVersion() {
-		return _previewVersion;
 	}
 
 	@Override
@@ -122,16 +105,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return false;
 	}
 
-	public void setContextInfoItemReference(
-		InfoItemReference infoItemReference) {
-
-		_infoItemReference = infoItemReference;
-	}
-
-	public void setInfoForm(InfoForm infoForm) {
-		_infoForm = infoForm;
-	}
-
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
@@ -152,10 +125,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_previewType = previewType;
 	}
 
-	public void setPreviewVersion(String previewVersion) {
-		_previewVersion = previewVersion;
-	}
-
 	public void setSegmentsEntryIds(long[] segmentsSegmentsEntryIds) {
 		_segmentsSegmentsEntryIds = segmentsSegmentsEntryIds;
 	}
@@ -166,14 +135,11 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 
 	private final String _fragmentEntryElementId;
 	private final FragmentEntryLink _fragmentEntryLink;
-	private InfoForm _infoForm;
-	private InfoItemReference _infoItemReference;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private String _mode = FragmentEntryLinkConstants.VIEW;
 	private long _previewClassNameId;
 	private long _previewClassPK;
 	private int _previewType;
-	private String _previewVersion;
 	private long[] _segmentsSegmentsEntryIds = new long[0];
 	private boolean _useCachedContent = true;
 

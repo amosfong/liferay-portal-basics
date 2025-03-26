@@ -50,78 +50,16 @@ public class GetInfoItemFieldValueMVCResourceCommand
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		JSONObject jsonObject = JSONUtil.put(
-			"classNameId", ParamUtil.getLong(resourceRequest, "classNameId")
-		).put(
-			"classPK", ParamUtil.getLong(resourceRequest, "classPK")
-		).put(
-			"config",
-			() -> {
-				String editableTypeOptions = ParamUtil.getString(
-					resourceRequest, "editableTypeOptions");
-
-				if (Validator.isNotNull(editableTypeOptions)) {
-					try {
-						return _jsonFactory.createJSONObject(
-							editableTypeOptions);
-					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(exception);
-						}
-					}
-				}
-
-				return _jsonFactory.createJSONObject();
-			}
-		).put(
-			"externalReferenceCode",
-			ParamUtil.getString(resourceRequest, "externalReferenceCode")
-		).put(
-			"fieldId", ParamUtil.getString(resourceRequest, "fieldId")
-		);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = ParamUtil.getString(
-			resourceRequest, "languageId", themeDisplay.getLanguageId());
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				_portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse),
-				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.fromLanguageId(languageId));
-
-		Object value = _fragmentEntryProcessorHelper.getFieldValue(
-			jsonObject, new HashMap<>(), fragmentEntryProcessorContext);
-
-		jsonObject.put("fieldValue", value);
-
-		if (value == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONObject());
-
-			return;
-		}
-
+		
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse,
+			_jsonFactory.createJSONObject());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetInfoItemFieldValueMVCResourceCommand.class);
 
 	@Reference
-	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

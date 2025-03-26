@@ -12,25 +12,6 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.exception.InfoFormValidationException;
-import com.liferay.info.exception.NoSuchFormVariationException;
-import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.BooleanInfoFieldType;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemDetails;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
-import com.liferay.info.type.WebImage;
-import com.liferay.info.type.WebURL;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -170,12 +151,6 @@ public class RenderLayoutStructureDisplayContext {
 			linkJSONObject = localizedJSONObject;
 		}
 
-		String value = _getFieldValue(linkJSONObject);
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
 		JSONObject layoutJSONObject = linkJSONObject.getJSONObject("layout");
 
 		if (layoutJSONObject != null) {
@@ -226,38 +201,14 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
-		FragmentEntryLink fragmentEntryLink, InfoForm infoForm, String itemId) {
+		FragmentEntryLink fragmentEntryLink, String itemId) {
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		InfoItemReference infoItemReference =
-			(InfoItemReference)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-
-		if (infoItemReference == null) {
-			InfoItemDetails infoItemDetails =
-				(InfoItemDetails)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-			if (infoItemDetails != null) {
-				infoItemReference = infoItemDetails.getInfoItemReference();
-			}
-		}
-
-		defaultFragmentRendererContext.setContextInfoItemReference(
-			infoItemReference);
-
 		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
 
 		Layout layout = _themeDisplay.getLayout();
-
-		if (infoForm == null) {
-			infoForm = (InfoForm)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_FORM);
-		}
-
-		defaultFragmentRendererContext.setInfoForm(infoForm);
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 			defaultFragmentRendererContext.setMode(_mode);
@@ -266,8 +217,6 @@ public class RenderLayoutStructureDisplayContext {
 			defaultFragmentRendererContext.setPreviewClassPK(
 				_getPreviewClassPK());
 			defaultFragmentRendererContext.setPreviewType(_getPreviewType());
-			defaultFragmentRendererContext.setPreviewVersion(
-				_getPreviewVersion());
 		}
 
 		if (LayoutStructureItemUtil.hasAncestor(
@@ -298,43 +247,9 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	public String getErrorMessage(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		InfoForm infoForm) {
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
-		InfoFormException infoFormException =
-			(InfoFormException)SessionErrors.get(
-				_httpServletRequest, formStyledLayoutStructureItem.getItemId());
-
-		if (!(infoFormException instanceof InfoFormValidationException)) {
-			return infoFormException.getLocalizedMessage(
-				_themeDisplay.getLocale());
-		}
-
-		InfoFormValidationException infoFormValidationException =
-			(InfoFormValidationException)infoFormException;
-
-		if (Validator.isNull(
-				infoFormValidationException.getInfoFieldUniqueId())) {
-
-			return infoFormException.getLocalizedMessage(
-				_themeDisplay.getLocale());
-		}
-
-		String formInputLabel = _getFormInputLabel(
-			infoFormValidationException.getInfoFieldUniqueId());
-
-		if (Validator.isNotNull(formInputLabel)) {
-			return infoFormValidationException.getLocalizedMessage(
-				formInputLabel, _themeDisplay.getLocale());
-		}
-
-		InfoField<?> infoField = infoForm.getInfoField(
-			infoFormValidationException.getInfoFieldUniqueId());
-
-		formInputLabel = infoField.getLabel(_themeDisplay.getLocale());
-
-		return infoFormValidationException.getLocalizedMessage(
-			formInputLabel, _themeDisplay.getLocale());
+		return null;
 	}
 
 	public String getFormStyledLayoutStructureItemRedirect(
@@ -382,63 +297,6 @@ public class RenderLayoutStructureDisplayContext {
 			layoutStructureRulesResult = _getLayoutStructureRulesResult();
 
 		return layoutStructureRulesResult.getHiddenItemIds();
-	}
-
-	public InfoForm getInfoForm(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
-
-		long classNameId = formStyledLayoutStructureItem.getClassNameId();
-
-		if (classNameId <= 0) {
-			return null;
-		}
-
-		String className = formStyledLayoutStructureItem.getClassName();
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			ServletContextUtil.getInfoItemServiceRegistry();
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, className);
-
-		if (infoItemFormProvider != null) {
-			try {
-				return infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()),
-					_themeDisplay.getScopeGroupId());
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-
-				return null;
-			}
-		}
-
-		return null;
-	}
-
-	public String getInfoFormCheckboxNames(InfoForm infoForm) {
-		List<String> checkboxNames = TransformUtil.transform(
-			infoForm.getAllInfoFields(),
-			infoField -> {
-				if (infoField.getInfoFieldType() instanceof
-						BooleanInfoFieldType) {
-
-					return infoField.getName();
-				}
-
-				return null;
-			});
-
-		return StringUtil.merge(checkboxNames);
 	}
 
 	public Map<String, Object> getInfoItemActionComponentContext() {
@@ -537,29 +395,6 @@ public class RenderLayoutStructureDisplayContext {
 
 		if (backgroundImageJSONObject.has("fileEntryId")) {
 			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
-		}
-		else if (backgroundImageJSONObject.has("classNameId") &&
-				 backgroundImageJSONObject.has("classPK") &&
-				 backgroundImageJSONObject.has("fieldId")) {
-
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				backgroundImageJSONObject.getLong("classNameId"),
-				backgroundImageJSONObject.getLong("classPK"),
-				backgroundImageJSONObject.getString("fieldId"),
-				_themeDisplay.getLocale());
-		}
-		else if (backgroundImageJSONObject.has("collectionFieldId")) {
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				(InfoItemReference)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
-				backgroundImageJSONObject.getString("collectionFieldId"),
-				_themeDisplay.getLocale());
 		}
 		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
@@ -709,12 +544,6 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String value = _getFieldValue(jsonObject);
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
 		String backgroundImageURL = jsonObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
@@ -724,107 +553,8 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private String _getFieldValue(JSONObject jsonObject) {
-		String collectionFieldId = jsonObject.getString("collectionFieldId");
-
-		if (Validator.isNotNull(collectionFieldId)) {
-			String value = _getValue(
-				collectionFieldId,
-				(InfoItemReference)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
-
-			if (Validator.isNotNull(value)) {
-				return value;
-			}
-		}
-
-		String mappedField = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(mappedField)) {
-			Object infoItem = _httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-
-			InfoItemDetails infoItemDetails =
-				(InfoItemDetails)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-			if ((infoItem != null) && (infoItemDetails != null)) {
-				InfoItemServiceRegistry infoItemServiceRegistry =
-					ServletContextUtil.getInfoItemServiceRegistry();
-
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class,
-							infoItemDetails.getClassName());
-
-				if (infoItemFieldValuesProvider != null) {
-					String value = _parseInfoFieldValue(
-						infoItemFieldValuesProvider.getInfoFieldValue(
-							infoItem, mappedField));
-
-					if (Validator.isNotNull(value)) {
-						return value;
-					}
-				}
-			}
-		}
-
-		String fieldId = jsonObject.getString("fieldId");
-
-		if (Validator.isNotNull(fieldId)) {
-			long classNameId = jsonObject.getLong("classNameId");
-			long classPK = jsonObject.getLong("classPK");
-
-			if ((classNameId > 0) && (classPK > 0)) {
-				InfoItemReference infoItemReference = new InfoItemReference(
-					PortalUtil.getClassName(classNameId),
-					new ClassPKInfoItemIdentifier(classPK));
-
-				String value = _getValue(fieldId, infoItemReference);
-
-				if (Validator.isNotNull(value)) {
-					return value;
-				}
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private long _getFileEntryId(String fieldId) throws Exception {
-		InfoItemDetails infoItemDetails =
-			(InfoItemDetails)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-		if (infoItemDetails == null) {
-			return 0;
-		}
-
-		InfoItemReference infoItemReference =
-			infoItemDetails.getInfoItemReference();
-
-		if (infoItemReference == null) {
-			return 0;
-		}
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			return 0;
-		}
-
-		FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-			ServletContextUtil.getFragmentEntryProcessorHelper();
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-		return fragmentEntryProcessorHelper.getFileEntryId(
-			PortalUtil.getClassNameId(infoItemReference.getClassName()),
-			classPKInfoItemIdentifier.getClassPK(), fieldId,
-			_themeDisplay.getLocale());
+		return 0;
 	}
 
 	private String _getFormInputLabel(String infoFieldUniqueId) {
@@ -936,34 +666,6 @@ public class RenderLayoutStructureDisplayContext {
 		return redirect;
 	}
 
-	private Object _getInfoItem(InfoItemReference infoItemReference) {
-		if (infoItemReference == null) {
-			return null;
-		}
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			ServletContextUtil.getInfoItemServiceRegistry();
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, infoItemReference.getClassName(),
-				infoItemIdentifier.getInfoItemServiceFilter());
-
-		try {
-			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
-		}
-		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInfoItemException);
-			}
-		}
-
-		return null;
-	}
-
 	private LayoutStructureRulesHelper.LayoutStructureRulesResult
 		_getLayoutStructureRulesResult() {
 
@@ -1037,83 +739,6 @@ public class RenderLayoutStructureDisplayContext {
 		return _previewType;
 	}
 
-	private String _getPreviewVersion() {
-		if (_previewVersion != null) {
-			return _previewVersion;
-		}
-
-		if (!_showPreview) {
-			return null;
-		}
-
-		_previewVersion = ParamUtil.getString(
-			_httpServletRequest, "previewVersion");
-
-		return _previewVersion;
-	}
-
-	private String _getValue(
-		String fieldId, InfoItemReference infoItemReference) {
-
-		String className = InfoSearchClassMapperRegistryUtil.getClassName(
-			infoItemReference.getClassName());
-
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			ServletContextUtil.getInfoItemServiceRegistry();
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		if (infoItemFieldValuesProvider == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get info item field values provider for class " +
-						className);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return _parseInfoFieldValue(
-			infoItemFieldValuesProvider.getInfoFieldValue(
-				_getInfoItem(infoItemReference), fieldId));
-	}
-
-	private String _parseInfoFieldValue(InfoFieldValue<?> infoFieldValue) {
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object value = infoFieldValue.getValue(_themeDisplay.getLocale());
-
-		if (value instanceof String) {
-			return (String)value;
-		}
-
-		if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			String url = webImage.getURL();
-
-			if (Validator.isNotNull(url)) {
-				return url;
-			}
-		}
-
-		if (value instanceof WebURL) {
-			WebURL webURL = (WebURL)value;
-
-			String url = webURL.getURL();
-
-			if (Validator.isNotNull(url)) {
-				return url;
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private static final String _COLLECTION_STYLED_LAYOUT_STRUCTURE_ITEM_IDS =
 		"COLLECTION_STYLED_LAYOUT_STRUCTURE_ITEM_IDS";
 
@@ -1129,7 +754,6 @@ public class RenderLayoutStructureDisplayContext {
 	private Long _previewClassNameId;
 	private Long _previewClassPK;
 	private Integer _previewType;
-	private String _previewVersion;
 	private final boolean _showPreview;
 	private final Set<String> _themeColorsCssClasses;
 	private final ThemeDisplay _themeDisplay;

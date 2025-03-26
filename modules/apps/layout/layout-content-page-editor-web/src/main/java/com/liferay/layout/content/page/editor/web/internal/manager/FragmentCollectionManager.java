@@ -17,12 +17,8 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
-import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -640,22 +636,6 @@ public class FragmentCollectionManager {
 	}
 
 	private boolean _hideInputFragments(PermissionChecker permissionChecker) {
-		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceRegistry.getInfoItemClassDetails(
-					EditPageInfoItemCapability.KEY)) {
-
-			InfoPermissionProvider infoPermissionProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoPermissionProvider.class,
-					infoItemClassDetails.getClassName());
-
-			if ((infoPermissionProvider == null) ||
-				infoPermissionProvider.hasViewPermission(permissionChecker)) {
-
-				return false;
-			}
-		}
-
 		return true;
 	}
 
@@ -717,9 +697,6 @@ public class FragmentCollectionManager {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

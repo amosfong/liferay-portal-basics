@@ -5,7 +5,6 @@
 
 package com.liferay.layout.util;
 
-import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -23,35 +22,6 @@ public class CollectionPaginationUtil {
 	public static final String PAGINATION_TYPE_REGULAR = "regular";
 
 	public static final String PAGINATION_TYPE_SIMPLE = "simple";
-
-	public static Pagination getPagination(
-		int activePage, boolean displayAllItems, int numberOfItems,
-		int numberOfItemsPerPage, String paginationType) {
-
-		if (isPaginationEnabled(paginationType)) {
-			if ((numberOfItemsPerPage <= 0) ||
-				(numberOfItemsPerPage >
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-				numberOfItemsPerPage =
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
-			}
-
-			if (activePage < 1) {
-				activePage = 1;
-			}
-
-			int start = (activePage - 1) * numberOfItemsPerPage;
-
-			return Pagination.of(start + numberOfItemsPerPage, start);
-		}
-
-		if (displayAllItems) {
-			return Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-
-		return Pagination.of(numberOfItems, 0);
-	}
 
 	public static int getTotalNumberOfItems(
 		int count, boolean displayAllPages, boolean displayAllItems,

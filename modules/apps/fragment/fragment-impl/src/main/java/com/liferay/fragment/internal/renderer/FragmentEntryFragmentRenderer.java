@@ -20,7 +20,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -167,13 +166,13 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getInputJSONObject(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoForm infoForm,
+		HttpServletRequest httpServletRequest,
 		Locale locale) {
 
 		InputTemplateNode inputTemplateNode =
 			_fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
 				_getFragmentEntryName(fragmentEntryLink), fragmentEntryLink,
-				httpServletRequest, infoForm, locale);
+				httpServletRequest, locale);
 
 		return inputTemplateNode.toJSONObject();
 	}
@@ -347,7 +346,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					JSONUtil.toString(
 						_getInputJSONObject(
 							fragmentEntryLink, httpServletRequest,
-							fragmentRendererContext.getInfoForm(),
 							fragmentRendererContext.getLocale())));
 			}
 
@@ -409,20 +407,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getMode(),
 					fragmentRendererContext.getLocale());
 
-		defaultFragmentEntryProcessorContext.setContextInfoItemReference(
-			fragmentRendererContext.getContextInfoItemReference());
 		defaultFragmentEntryProcessorContext.setFragmentElementId(
 			fragmentRendererContext.getFragmentElementId());
-		defaultFragmentEntryProcessorContext.setInfoForm(
-			fragmentRendererContext.getInfoForm());
 		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
 			fragmentRendererContext.getPreviewClassNameId());
 		defaultFragmentEntryProcessorContext.setPreviewClassPK(
 			fragmentRendererContext.getPreviewClassPK());
 		defaultFragmentEntryProcessorContext.setPreviewType(
 			fragmentRendererContext.getPreviewType());
-		defaultFragmentEntryProcessorContext.setPreviewVersion(
-			fragmentRendererContext.getPreviewVersion());
 		defaultFragmentEntryProcessorContext.setSegmentsEntryIds(
 			fragmentRendererContext.getSegmentsEntryIds());
 

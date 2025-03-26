@@ -10,12 +10,8 @@ import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.list.renderer.InfoListRendererRegistry;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
@@ -55,34 +51,16 @@ public class ServletContextUtil {
 		return _frontendTokenDefinitionRegistrySnapshot.get();
 	}
 
-	public static InfoItemServiceRegistry getInfoItemServiceRegistry() {
-		return _infoItemServiceRegistrySnapshot.get();
-	}
-
-	public static InfoListRendererRegistry getInfoListRendererRegistry() {
-		return _infoListRendererRegistrySnapshot.get();
-	}
-
 	public static LayoutClassedModelUsagesHelper
 		getLayoutClassedModelUsagesHelper() {
 
 		return _layoutClassedModelUsagesHelperSnapshot.get();
 	}
 
-	public static LayoutDisplayPageProviderRegistry
-		getLayoutDisplayPageProviderRegistry() {
-
-		return _layoutDisplayPageProviderRegistrySnapshot.get();
-	}
-
 	public static LayoutListPermissionProviderRegistry
 		getLayoutListPermissionProviderRegistry() {
 
 		return _layoutListPermissionProviderRegistrySnapshot.get();
-	}
-
-	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
-		return _layoutListRetrieverRegistrySnapshot.get();
 	}
 
 	public static LayoutsTree getLayoutsTree() {
@@ -122,25 +100,13 @@ public class ServletContextUtil {
 	private static final Snapshot<FrontendTokenDefinitionRegistry>
 		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, FrontendTokenDefinitionRegistry.class);
-	private static final Snapshot<InfoItemServiceRegistry>
-		_infoItemServiceRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, InfoItemServiceRegistry.class);
-	private static final Snapshot<InfoListRendererRegistry>
-		_infoListRendererRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, InfoListRendererRegistry.class);
 	private static final Snapshot<LayoutClassedModelUsagesHelper>
 		_layoutClassedModelUsagesHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutClassedModelUsagesHelper.class);
-	private static final Snapshot<LayoutDisplayPageProviderRegistry>
-		_layoutDisplayPageProviderRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, LayoutDisplayPageProviderRegistry.class);
 	private static final Snapshot<LayoutListPermissionProviderRegistry>
 		_layoutListPermissionProviderRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class,
 			LayoutListPermissionProviderRegistry.class);
-	private static final Snapshot<LayoutListRetrieverRegistry>
-		_layoutListRetrieverRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, LayoutListRetrieverRegistry.class);
 	private static final Snapshot<LayoutsTree> _layoutsTreeSnapshot =
 		new Snapshot<>(ServletContextUtil.class, LayoutsTree.class);
 	private static final Snapshot<LayoutStructureProvider>

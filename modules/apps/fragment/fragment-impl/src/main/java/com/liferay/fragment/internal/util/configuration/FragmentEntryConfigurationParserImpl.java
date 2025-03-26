@@ -14,14 +14,6 @@ import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
-import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
@@ -192,32 +184,12 @@ public class FragmentEntryConfigurationParserImpl
 
 				Object contextObject = displayObject;
 
-				if (displayObject == null) {
-					contextObject = _getInfoDisplayObjectEntry(
-						configurationValuesJSONObject.getString(name));
-				}
-
 				if (contextObject != null) {
 					contextObjects.put(
 						name + _CONTEXT_OBJECT_SUFFIX, contextObject);
 				}
 
 				continue;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(),
-					"collectionSelector")) {
-
-				Object contextListObject = _getInfoListObjectEntry(
-					configurationValuesJSONObject.getString(name),
-					segmentsEntryIds,
-					fragmentConfigurationField.getTypeOptionsJSONObject());
-
-				if (contextListObject != null) {
-					contextObjects.put(
-						name + _CONTEXT_OBJECT_LIST_SUFFIX, contextListObject);
-				}
 			}
 
 			if (StringUtil.equalsIgnoreCase(
@@ -497,12 +469,6 @@ public class FragmentEntryConfigurationParserImpl
 				FragmentConfigurationFieldDataType.BOOLEAN, parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(),
-					"collectionSelector")) {
-
-			return _getInfoListObjectEntryJSONObject(parsedValue);
-		}
-		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "colorPalette")) {
 
 			JSONObject jsonObject = (JSONObject)_getFieldValue(
@@ -523,11 +489,6 @@ public class FragmentEntryConfigurationParserImpl
 				FragmentConfigurationFieldDataType.STRING, parsedValue);
 
 			return _getColorPickerCssVariable(fieldValue);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(), "itemSelector")) {
-
-			return _getInfoDisplayObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "length") ||
@@ -610,165 +571,6 @@ public class FragmentEntryConfigurationParserImpl
 					FragmentConfigurationFieldDataType.STRING) {
 
 			return value;
-		}
-
-		return null;
-	}
-
-	private Object _getInfoDisplayObjectEntry(String value) {
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
-
-			InfoItemObjectProvider<?> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					jsonObject.getString("className"),
-					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-			if (infoItemObjectProvider == null) {
-				return null;
-			}
-
-			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(jsonObject.getLong("classPK")));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get entry: " + value, exception);
-			}
-		}
-
-		return null;
-	}
-
-	private JSONObject _getInfoDisplayObjectEntryJSONObject(String value) {
-		try {
-			if (Validator.isNull(value) ||
-				Objects.equals(value, _jsonFactory.getNullJSON())) {
-
-				return _jsonFactory.createJSONObject();
-			}
-
-			JSONObject configurationValueJSONObject =
-				_jsonFactory.createJSONObject(value);
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				_jsonFactory.looseSerialize(_getInfoDisplayObjectEntry(value)));
-
-			jsonObject.put(
-				"className", configurationValueJSONObject.getString("className")
-			).put(
-				"classNameId",
-				configurationValueJSONObject.getLong("classNameId")
-			).put(
-				"classPK", configurationValueJSONObject.getLong("classPK")
-			).put(
-				"externalReferenceCode",
-				configurationValueJSONObject.getString("externalReferenceCode")
-			).put(
-				"template", configurationValueJSONObject.get("template")
-			).put(
-				"title", configurationValueJSONObject.getString("title")
-			);
-
-			return jsonObject;
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to serialize info display object entry to JSON: " +
-						value,
-					jsonException);
-			}
-		}
-
-		return null;
-	}
-
-	private Object _getInfoListObjectEntry(
-		String value, long[] segmentsEntryIds,
-		JSONObject typeOptionsJSONObject) {
-
-		if (Validator.isNull(value)) {
-			return Collections.emptyList();
-		}
-
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
-
-			if (jsonObject.length() <= 0) {
-				return Collections.emptyList();
-			}
-
-			String type = jsonObject.getString("type");
-
-			LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-				(LayoutListRetriever<?, ListObjectReference>)
-					_layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-			if (layoutListRetriever == null) {
-				return Collections.emptyList();
-			}
-
-			ListObjectReferenceFactory<?> listObjectReferenceFactory =
-				_listObjectReferenceFactoryRegistry.getListObjectReference(
-					type);
-
-			if (listObjectReferenceFactory == null) {
-				return Collections.emptyList();
-			}
-
-			DefaultLayoutListRetrieverContext
-				defaultLayoutListRetrieverContext =
-					new DefaultLayoutListRetrieverContext();
-
-			if (typeOptionsJSONObject != null) {
-				int numberOfItems = typeOptionsJSONObject.getInt(
-					"numberOfItems", 0);
-
-				if (numberOfItems > 0) {
-					defaultLayoutListRetrieverContext.setPagination(
-						Pagination.of(numberOfItems, 0));
-				}
-			}
-
-			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-				segmentsEntryIds);
-
-			InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
-				listObjectReferenceFactory.getListObjectReference(jsonObject),
-				defaultLayoutListRetrieverContext);
-
-			return infoPage.getPageItems();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get collection: " + value, exception);
-			}
-		}
-
-		return Collections.emptyList();
-	}
-
-	private JSONObject _getInfoListObjectEntryJSONObject(String value) {
-		if (Validator.isNull(value)) {
-			return _jsonFactory.createJSONObject();
-		}
-
-		try {
-			return _jsonFactory.createJSONObject(value);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to serialize info list object entry to JSON: " +
-						value,
-					jsonException);
-			}
 		}
 
 		return null;
@@ -909,16 +711,10 @@ public class FragmentEntryConfigurationParserImpl
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

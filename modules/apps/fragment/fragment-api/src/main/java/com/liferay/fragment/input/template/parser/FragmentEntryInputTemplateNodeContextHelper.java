@@ -6,7 +6,6 @@
 package com.liferay.fragment.input.template.parser;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.info.form.InfoForm;
 
 import java.util.Locale;
 
@@ -19,7 +18,7 @@ public interface FragmentEntryInputTemplateNodeContextHelper {
 
 	public InputTemplateNode toInputTemplateNode(
 		String defaultInputLabel, FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoForm infoForm,
+		HttpServletRequest httpServletRequest,
 		Locale locale);
 
 }

@@ -5,9 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -111,22 +108,12 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 						parentSiteNavigationMenuItemId, order);
 				}
 
-				InfoItemDetailsProvider<?> infoItemDetailsProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemDetailsProvider.class,
-						_portal.getClassName(classNameId));
-
-				InfoItemClassDetails infoItemClassDetails =
-					infoItemDetailsProvider.getInfoItemClassDetails();
-
 				SessionMessages.add(
 					actionRequest, "siteNavigationMenuItemsAdded",
 					_language.format(
 						themeDisplay.getLocale(), "x-x-was-added-to-this-menu",
 						Arrays.asList(
-							1,
-							infoItemClassDetails.getLabel(
-								themeDisplay.getLocale()))));
+							1, themeDisplay.getLocale())));
 			}
 			catch (SiteNavigationMenuItemNameException
 						siteNavigationMenuItemNameException) {
@@ -165,9 +152,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

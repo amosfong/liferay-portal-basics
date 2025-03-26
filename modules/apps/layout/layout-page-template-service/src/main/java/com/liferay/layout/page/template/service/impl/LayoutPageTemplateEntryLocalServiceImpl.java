@@ -7,10 +7,6 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -1089,33 +1085,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			throw new NoSuchClassNameException(
 				"Class name does not exist for class name ID " + classNameId);
 		}
-
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, className);
-
-		if (infoItemFormProvider == null) {
-			throw new PortalException(
-				"No item form provider is registered for class name ID " +
-					classNameId);
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		if (infoItemFormVariationsProvider == null) {
-			return;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				groupId, String.valueOf(classTypeId));
-
-		if (infoItemFormVariation == null) {
-			throw new NoSuchClassTypeException(
-				"Class type does not exist for class name ID " + classNameId);
-		}
 	}
 
 	private void _validate(
@@ -1180,9 +1149,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Reference
 	private File _file;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

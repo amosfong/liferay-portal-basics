@@ -11,9 +11,7 @@
 DisplayPageDisplayContext displayPageDisplayContext = (DisplayPageDisplayContext)request.getAttribute(DisplayPageDisplayContext.class.getName());
 
 if (displayPageDisplayContext == null) {
-	InfoItemServiceRegistry infoItemServiceRegistry = (InfoItemServiceRegistry)request.getAttribute(InfoItemServiceRegistry.class.getName());
-
-	displayPageDisplayContext = new DisplayPageDisplayContext(request, infoItemServiceRegistry, liferayPortletRequest, liferayPortletResponse);
+	displayPageDisplayContext = new DisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 }
 %>
 
@@ -35,14 +33,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/layout_page_template_admin/info_panel" var="sidebarPanelURL" />
-
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="<%= displayPageManagementToolbarDisplayContext.getSearchContainerId() %>"
-		title='<%= LanguageUtil.get(request, "info-panel") %>'
-	>
-		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
 
 	<clay:container-fluid
 		cssClass="container-view sidenav-content"

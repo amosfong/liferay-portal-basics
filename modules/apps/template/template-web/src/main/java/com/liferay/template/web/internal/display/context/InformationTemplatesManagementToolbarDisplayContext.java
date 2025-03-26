@@ -11,11 +11,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,7 +29,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
-import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
 
@@ -65,10 +59,6 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 		_informationTemplatesTemplateDisplayContext =
 			informationTemplatesTemplateDisplayContext;
-
-		_infoItemServiceRegistry =
-			(InfoItemServiceRegistry)liferayPortletRequest.getAttribute(
-				InfoItemServiceRegistry.class.getName());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -175,93 +165,12 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			return itemTypesJSONArray;
 		}
 
-		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceRegistry.getInfoItemClassDetails(
-					_themeDisplay.getScopeGroupId(),
-					TemplateInfoItemCapability.KEY,
-					_themeDisplay.getPermissionChecker())) {
-
-			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFormVariationsProvider.class,
-					infoItemClassDetails.getClassName());
-
-			if (infoItemFormVariationsProvider != null) {
-				List<InfoItemFormVariation> infoItemFormVariations =
-					new ArrayList<>(
-						infoItemFormVariationsProvider.
-							getInfoItemFormVariations(
-								_themeDisplay.getScopeGroupId()));
-
-				if (infoItemFormVariations.isEmpty()) {
-					continue;
-				}
-
-				JSONArray itemSubtypesJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				InfoPermissionProvider infoPermissionProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoPermissionProvider.class,
-						infoItemClassDetails.getClassName());
-
-				if (infoPermissionProvider != null) {
-					infoItemFormVariations = ListUtil.filter(
-						infoItemFormVariations,
-						infoItemFormVariation ->
-							infoPermissionProvider.hasViewPermission(
-								infoItemFormVariation.getKey(),
-								_themeDisplay.getScopeGroupId(),
-								_themeDisplay.getPermissionChecker()));
-				}
-
-				infoItemFormVariations = ListUtil.sort(
-					infoItemFormVariations,
-					Comparator.comparing(
-						infoItemFormVariation -> infoItemFormVariation.getLabel(
-							_themeDisplay.getLocale())));
-
-				for (InfoItemFormVariation infoItemFormVariation :
-						infoItemFormVariations) {
-
-					itemSubtypesJSONArray.put(
-						JSONUtil.put(
-							"label",
-							infoItemFormVariation.getLabel(
-								_themeDisplay.getLocale())
-						).put(
-							"value", infoItemFormVariation.getKey()
-						));
-				}
-
-				itemTypesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						infoItemClassDetails.getLabel(_themeDisplay.getLocale())
-					).put(
-						"subtypes", itemSubtypesJSONArray
-					).put(
-						"value", infoItemClassDetails.getClassName()
-					));
-			}
-			else {
-				itemTypesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						infoItemClassDetails.getLabel(_themeDisplay.getLocale())
-					).put(
-						"value", infoItemClassDetails.getClassName()
-					));
-			}
-		}
-
 		return itemTypesJSONArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationTemplatesManagementToolbarDisplayContext.class);
 
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InformationTemplatesTemplateDisplayContext
 		_informationTemplatesTemplateDisplayContext;
 	private final ThemeDisplay _themeDisplay;

@@ -8,9 +8,6 @@ package com.liferay.fragment.entry.processor.helper;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -25,31 +22,7 @@ public interface FragmentEntryProcessorHelper {
 
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
-	public Object getFieldValue(
-			JSONObject editableValueJSONObject,
-			Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
-
-	public long getFileEntryId(
-		InfoItemReference infoItemReference, String fieldName, Locale locale);
-
-	public long getFileEntryId(
-			long classNameId, long classPK, String fieldName, Locale locale)
-		throws PortalException;
-
 	public long getFileEntryId(String className, long classPK);
-
-	public long getFileEntryId(WebImage webImage);
-
-	public InfoItemFieldMapped getInfoItemFieldMapped(
-		JSONObject editableValueJSONObject,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext);
-
-	public Object getMappedInfoItemFieldValue(
-		JSONObject editableValueJSONObject, String fieldName,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext,
-		InfoItemFieldValues infoItemFieldValues);
 
 	public boolean hasViewPermission(
 		JSONObject editableValueJSONObject,

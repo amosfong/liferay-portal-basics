@@ -6,8 +6,6 @@
 package com.liferay.fragment.renderer;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemReference;
 
 import java.util.Locale;
 
@@ -19,13 +17,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentRendererContext {
 
-	public InfoItemReference getContextInfoItemReference();
-
 	public String getFragmentElementId();
 
 	public FragmentEntryLink getFragmentEntryLink();
-
-	public InfoForm getInfoForm();
 
 	public Locale getLocale();
 
@@ -36,8 +30,6 @@ public interface FragmentRendererContext {
 	public long getPreviewClassPK();
 
 	public int getPreviewType();
-
-	public String getPreviewVersion();
 
 	public long[] getSegmentsEntryIds();
 

@@ -7,17 +7,6 @@ package com.liferay.fragment.internal.helper;
 
 import com.liferay.fragment.configuration.DefaultInputFragmentEntryConfiguration;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
-import com.liferay.info.field.type.BooleanInfoFieldType;
-import com.liferay.info.field.type.DateInfoFieldType;
-import com.liferay.info.field.type.DateTimeInfoFieldType;
-import com.liferay.info.field.type.FileInfoFieldType;
-import com.liferay.info.field.type.HTMLInfoFieldType;
-import com.liferay.info.field.type.LongTextInfoFieldType;
-import com.liferay.info.field.type.MultiselectInfoFieldType;
-import com.liferay.info.field.type.NumberInfoFieldType;
-import com.liferay.info.field.type.RelationshipInfoFieldType;
-import com.liferay.info.field.type.SelectInfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -121,41 +110,8 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 
 	private static final JSONObject _defaultInputFragmentEntryKeysJSONObject =
 		JSONUtil.put(
-			BooleanInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-checkbox")
-		).put(
-			DateInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-date-input")
-		).put(
-			DateTimeInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-date-time-input")
-		).put(
-			FileInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-file-upload")
-		).put(
-			HTMLInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-rich-text-input")
-		).put(
-			LongTextInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-textarea")
-		).put(
-			MultiselectInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-multiselect-list")
-		).put(
-			NumberInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-numeric-input")
-		).put(
-			RelationshipInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-select-from-list")
-		).put(
-			SelectInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-select-from-list")
-		).put(
 			FORM_INPUT_SUBMIT_BUTTON,
 			JSONUtil.put("key", "INPUTS-submit-button")
-		).put(
-			TextInfoFieldType.INSTANCE.getName(),
-			JSONUtil.put("key", "INPUTS-text-input")
 		);
 
 	@Reference

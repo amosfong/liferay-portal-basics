@@ -5,9 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
@@ -150,19 +147,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 			return StringPool.BLANK;
 		}
 
-		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemDetailsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		return infoItemClassDetails.getLabel(themeDisplay.getLocale());
+		return StringPool.BLANK;
 	}
 
 	private String _getViewUsagesURL(
@@ -186,9 +171,6 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 			"defaultTemplate", layoutPageTemplateEntry.isDefaultTemplate()
 		).buildString();
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

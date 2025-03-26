@@ -6,8 +6,6 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
-import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,43 +29,6 @@ import javax.servlet.jsp.JspException;
  * @author Eudaldo Alonso
  */
 public class FragmentRendererUtil {
-
-	public static List<InfoItemRenderer<?>> getInfoItemRenderers(
-		String className, Class<?> clazz,
-		InfoItemRendererRegistry infoItemRendererRegistry) {
-
-		if (Validator.isNotNull(className)) {
-			List<InfoItemRenderer<?>> infoItemRenderers =
-				infoItemRendererRegistry.getInfoItemRenderers(className);
-
-			if (!infoItemRenderers.isEmpty()) {
-				return infoItemRenderers;
-			}
-		}
-
-		Class<?>[] interfaces = clazz.getInterfaces();
-
-		if (interfaces.length != 0) {
-			for (Class<?> anInterface : interfaces) {
-				List<InfoItemRenderer<?>> infoItemRenderers =
-					infoItemRendererRegistry.getInfoItemRenderers(
-						anInterface.getName());
-
-				if (!infoItemRenderers.isEmpty()) {
-					return infoItemRenderers;
-				}
-			}
-		}
-
-		Class<?> superClass = clazz.getSuperclass();
-
-		if (superClass != null) {
-			return getInfoItemRenderers(
-				className, superClass, infoItemRendererRegistry);
-		}
-
-		return null;
-	}
 
 	public static void printPortletMessageInfo(
 		HttpServletRequest httpServletRequest,

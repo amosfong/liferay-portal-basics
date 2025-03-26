@@ -8,15 +8,6 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
-import com.liferay.info.type.WebURL;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -73,29 +64,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		long classPK = mappedActionJSONObject.getLong("classPK");
 
 		if ((classNameId == 0) || (classPK == 0)) {
-			InfoItemReference infoItemReference =
-				fragmentEntryProcessorContext.getContextInfoItemReference();
-
-			if (infoItemReference == null) {
-				return;
-			}
-
-			classNameId = _portal.getClassNameId(
-				infoItemReference.getClassName());
-
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-				classPK = classPKInfoItemIdentifier.getClassPK();
-			}
-
-			if ((classNameId == 0) || (classPK == 0)) {
-				return;
-			}
+			return;
 		}
 
 		element.attr("data-lfr-class-name-id", String.valueOf(classNameId));
@@ -153,71 +122,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		if (interaction.equals(
 				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
 
-			if (!resultType.equals("success")) {
-				return;
-			}
-
-			InfoItemObjectProvider<?> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId),
-					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-			if (infoItemObjectProvider == null) {
-				return;
-			}
-
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					_portal.getClassName(classNameId));
-
-			if (infoItemFieldValuesProvider == null) {
-				return;
-			}
-
-			Object infoItem = infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
-
-			if (infoItem == null) {
-				return;
-			}
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValuesProvider.getInfoFieldValue(
-					infoItem, jsonObject.getString("displayPageUniqueFieldId"));
-
-			if (infoFieldValue == null) {
-				return;
-			}
-
-			String url = null;
-
-			Object infoFieldValueValue = infoFieldValue.getValue();
-
-			if (infoFieldValueValue instanceof FunctionInfoLocalizedValue) {
-				FunctionInfoLocalizedValue<?> functionInfoLocalizedValue =
-					(FunctionInfoLocalizedValue<?>)infoFieldValueValue;
-
-				Object value = functionInfoLocalizedValue.getValue();
-
-				if (!(value instanceof WebURL)) {
-					return;
-				}
-
-				WebURL webURL = (WebURL)value;
-
-				url = webURL.getURL();
-			}
-			else if (infoFieldValueValue instanceof String) {
-				url = (String)infoFieldValueValue;
-			}
-
-			if (Validator.isNull(url)) {
-				return;
-			}
-
-			element.attr("data-lfr-on-" + resultType + "-page-url", url);
+			return;
 		}
 
 		if (interaction.equals(
@@ -284,9 +189,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

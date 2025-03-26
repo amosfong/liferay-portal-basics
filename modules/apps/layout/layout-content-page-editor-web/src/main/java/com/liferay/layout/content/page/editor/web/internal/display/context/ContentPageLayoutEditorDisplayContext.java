@@ -9,13 +9,7 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
@@ -80,8 +74,6 @@ public class ContentPageLayoutEditorDisplayContext
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector, JSONFactory jsonFactory, Language language,
 		LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
@@ -106,7 +98,6 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentCollectionManager, fragmentEntryLinkManager,
 			fragmentEntryLinkLocalService, fragmentEntryLocalService,
 			frontendTokenDefinitionRegistry, httpServletRequest,
-			infoItemServiceRegistry, infoSearchClassMapperRegistry,
 			itemSelector, jsonFactory, language, layoutLocalService,
 			layoutLockManager, layoutPageTemplateEntryLocalService,
 			layoutPageTemplateEntryService, layoutPermission,
@@ -132,68 +123,6 @@ public class ContentPageLayoutEditorDisplayContext
 	@Override
 	protected long getSegmentsExperienceId() {
 		return 0;
-	}
-
-	private InfoCollectionProvider<?> _getInfoCollectionProvider(
-		String collectionPK) {
-
-		for (InfoCollectionProvider<?> infoCollectionProvider :
-				(List<InfoCollectionProvider<?>>)
-					(List<?>)infoItemServiceRegistry.getAllInfoItemServices(
-						InfoCollectionProvider.class)) {
-
-			if (Objects.equals(infoCollectionProvider.getKey(), collectionPK)) {
-				return infoCollectionProvider;
-			}
-		}
-
-		return null;
-	}
-
-	private String _getInfoCollectionProviderItemTypeLabel(
-		InfoCollectionProvider<?> infoCollectionProvider) {
-
-		String className = infoCollectionProvider.getCollectionItemClassName();
-
-		if (Validator.isNotNull(className)) {
-			return ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), className);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private JSONArray _getInfoCollectionProviderLinkedCollectionJSONArray(
-		InfoCollectionProvider<?> infoCollectionProvider) {
-
-		return JSONUtil.put(
-			JSONUtil.put(
-				"itemSubtype",
-				() -> {
-					if (infoCollectionProvider instanceof
-							SingleFormVariationInfoCollectionProvider) {
-
-						SingleFormVariationInfoCollectionProvider<?>
-							singleFormVariationInfoCollectionProvider =
-								(SingleFormVariationInfoCollectionProvider<?>)
-									infoCollectionProvider;
-
-						return singleFormVariationInfoCollectionProvider.
-							getFormVariationKey();
-					}
-
-					return null;
-				}
-			).put(
-				"itemType", infoCollectionProvider.getCollectionItemClassName()
-			).put(
-				"key", infoCollectionProvider.getKey()
-			).put(
-				"title",
-				infoCollectionProvider.getLabel(LocaleUtil.getDefault())
-			).put(
-				"type", InfoListProviderItemSelectorReturnType.class.getName()
-			));
 	}
 
 	private List<Map<String, Object>> _getLayoutDataList() throws Exception {
@@ -254,32 +183,6 @@ public class ContentPageLayoutEditorDisplayContext
 		String subtypeLabel = StringPool.BLANK;
 		String typeLabel = StringPool.BLANK;
 		String subtypeURL = StringPool.BLANK;
-
-		if (Objects.equals(
-				collectionType,
-				InfoListProviderItemSelectorReturnType.class.getName())) {
-
-			InfoCollectionProvider<?> infoCollectionProvider =
-				_getInfoCollectionProvider(collectionPK);
-
-			if (infoCollectionProvider != null) {
-				itemTypeLabel = _getInfoCollectionProviderItemTypeLabel(
-					infoCollectionProvider);
-				linkedCollectionJSONArray =
-					_getInfoCollectionProviderLinkedCollectionJSONArray(
-						infoCollectionProvider);
-				subtypeLabel = infoCollectionProvider.getLabel(
-					themeDisplay.getLocale());
-			}
-
-			typeLabel = language.get(httpServletRequest, "collection-provider");
-		}
-		else if (Objects.equals(
-					collectionType,
-					InfoListItemSelectorReturnType.class.getName())) {
-
-			typeLabel = language.get(httpServletRequest, "manual-collection");
-		}
 
 		return HashMapBuilder.<String, Object>put(
 			"itemType",

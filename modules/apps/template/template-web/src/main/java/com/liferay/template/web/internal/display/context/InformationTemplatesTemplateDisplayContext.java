@@ -6,11 +6,6 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -42,9 +37,6 @@ public class InformationTemplatesTemplateDisplayContext
 
 		super(liferayPortletRequest, liferayPortletResponse);
 
-		_infoItemServiceRegistry =
-			(InfoItemServiceRegistry)liferayPortletRequest.getAttribute(
-				InfoItemServiceRegistry.class.getName());
 	}
 
 	public List<DropdownItem> getTemplateEntryActionDropdownItems(
@@ -119,63 +111,16 @@ public class InformationTemplatesTemplateDisplayContext
 			return StringPool.BLANK;
 		}
 
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				templateEntry.getInfoItemClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				themeDisplay.getScopeGroupId(),
-				templateEntry.getInfoItemFormVariationKey());
-
-		if (infoItemFormVariation == null) {
-			return StringPool.BLANK;
-		}
-
-		String label = infoItemFormVariation.getLabel(themeDisplay.getLocale());
-
-		if (label == null) {
-			return StringPool.BLANK;
-		}
-
-		return label;
+		return StringPool.BLANK;
 	}
 
 	public String getTemplateTypeLabel(TemplateEntry templateEntry) {
 		String defaultValue = ResourceActionsUtil.getModelResource(
 			themeDisplay.getLocale(), templateEntry.getInfoItemClassName());
-
-		InfoItemDetailsProvider infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class,
-				templateEntry.getInfoItemClassName());
-
-		if (infoItemDetailsProvider == null) {
-			return defaultValue;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		if (infoItemClassDetails == null) {
-			return defaultValue;
-		}
-
-		String label = infoItemClassDetails.getLabel(themeDisplay.getLocale());
-
-		if (label == null) {
-			return defaultValue;
-		}
-
-		return label;
+		
+		return defaultValue;
 	}
 
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private SearchContainer<TemplateEntry> _templateEntrySearchContainer;
 
 }

@@ -7,9 +7,6 @@ package com.liferay.fragment.processor;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Locale;
@@ -37,11 +34,6 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
-	public InfoItemReference getContextInfoItemReference() {
-		return _infoItemReference;
-	}
-
-	@Override
 	public String getFragmentElementId() {
 		return _fragmentElementId;
 	}
@@ -54,11 +46,6 @@ public class DefaultFragmentEntryProcessorContext
 	@Override
 	public HttpServletResponse getHttpServletResponse() {
 		return _httpServletResponse;
-	}
-
-	@Override
-	public InfoForm getInfoForm() {
-		return _infoForm;
 	}
 
 	@Override
@@ -84,11 +71,6 @@ public class DefaultFragmentEntryProcessorContext
 	@Override
 	public int getPreviewType() {
 		return _previewType;
-	}
-
-	@Override
-	public String getPreviewVersion() {
-		return _previewVersion;
 	}
 
 	@Override
@@ -132,18 +114,8 @@ public class DefaultFragmentEntryProcessorContext
 		return false;
 	}
 
-	public void setContextInfoItemReference(
-		InfoItemReference infoItemReference) {
-
-		_infoItemReference = infoItemReference;
-	}
-
 	public void setFragmentElementId(String fragmentElementId) {
 		_fragmentElementId = fragmentElementId;
-	}
-
-	public void setInfoForm(InfoForm infoForm) {
-		_infoForm = infoForm;
 	}
 
 	public void setPreviewClassNameId(long previewClassNameId) {
@@ -158,10 +130,6 @@ public class DefaultFragmentEntryProcessorContext
 		_previewType = previewType;
 	}
 
-	public void setPreviewVersion(String previewVersion) {
-		_previewVersion = previewVersion;
-	}
-
 	public void setSegmentsEntryIds(long[] segmentsEntryIds) {
 		_segmentsEntryIds = segmentsEntryIds;
 	}
@@ -169,14 +137,11 @@ public class DefaultFragmentEntryProcessorContext
 	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
-	private InfoForm _infoForm;
-	private InfoItemReference _infoItemReference;
 	private final Locale _locale;
 	private final String _mode;
 	private long _previewClassNameId;
 	private long _previewClassPK;
 	private int _previewType = AssetRendererFactory.TYPE_LATEST_APPROVED;
-	private String _previewVersion = InfoItemIdentifier.VERSION_LATEST_APPROVED;
 	private long[] _segmentsEntryIds = new long[0];
 
 }

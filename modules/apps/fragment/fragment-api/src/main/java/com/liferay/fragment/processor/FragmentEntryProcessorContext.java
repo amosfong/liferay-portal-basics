@@ -5,9 +5,6 @@
 
 package com.liferay.fragment.processor;
 
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemReference;
-
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +18,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentEntryProcessorContext {
 
-	public InfoItemReference getContextInfoItemReference();
-
 	public String getFragmentElementId();
 
 	public HttpServletRequest getHttpServletRequest();
 
 	public HttpServletResponse getHttpServletResponse();
-
-	public InfoForm getInfoForm();
 
 	public Locale getLocale();
 
@@ -40,8 +33,6 @@ public interface FragmentEntryProcessorContext {
 	public long getPreviewClassPK();
 
 	public int getPreviewType();
-
-	public String getPreviewVersion();
 
 	public long[] getSegmentsEntryIds();
 

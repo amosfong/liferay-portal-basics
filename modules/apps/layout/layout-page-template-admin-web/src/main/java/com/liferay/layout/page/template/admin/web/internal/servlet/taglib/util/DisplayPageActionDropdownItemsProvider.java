@@ -8,9 +8,6 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -73,9 +70,6 @@ public class DisplayPageActionDropdownItemsProvider {
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_infoItemServiceRegistry =
-			(InfoItemServiceRegistry)renderRequest.getAttribute(
-				InfoItemServiceRegistry.class.getName());
 
 		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
@@ -679,19 +673,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private String _getTypeLabel() {
-		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class,
-				_layoutPageTemplateEntry.getClassName());
-
-		if (infoItemDetailsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+		return StringPool.BLANK;
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -764,7 +746,6 @@ public class DisplayPageActionDropdownItemsProvider {
 	private final Layout _draftLayout;
 	private final boolean _existsMappedContentType;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private final LayoutPageTemplateAdminWebConfiguration
 		_layoutPageTemplateAdminWebConfiguration;

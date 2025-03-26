@@ -10,8 +10,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.type.WebImage;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -83,19 +81,6 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 				fileEntryId = fieldValueJSONObject.getLong("fileEntryId");
 			}
 		}
-		else if (fieldValue instanceof WebImage) {
-			WebImage webImage = (WebImage)fieldValue;
-
-			InfoLocalizedValue<String> infoLocalizedValue =
-				webImage.getAltInfoLocalizedValue();
-
-			if (infoLocalizedValue != null) {
-				alt = infoLocalizedValue.getValue(locale);
-			}
-
-			fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-				webImage);
-		}
 
 		return JSONUtil.put(
 			"alt", alt
@@ -138,11 +123,6 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 				 Validator.isNotNull(fieldValue)) {
 
 			return GetterUtil.getString(fieldValue);
-		}
-		else if (fieldValue instanceof WebImage) {
-			WebImage webImage = (WebImage)fieldValue;
-
-			return GetterUtil.getString(webImage.getURL());
 		}
 
 		return StringPool.BLANK;

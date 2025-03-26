@@ -5,9 +5,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -52,11 +51,7 @@ public class GetFormFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		try {
 			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				MappingContentUtil.getEditableMappingFieldsJSONArray(
-					classTypeId, themeDisplay.getScopeGroupId(),
-					_infoItemServiceRegistry, _portal.getClassName(classNameId),
-					themeDisplay.getLocale()));
+				resourceRequest, resourceResponse, JSONFactoryUtil.createJSONArray());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get form fields", exception);
@@ -73,9 +68,6 @@ public class GetFormFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetFormFieldsMVCResourceCommand.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

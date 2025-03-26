@@ -50,27 +50,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		JSONObject hrefJSONObject = configJSONObject.getJSONObject("href");
 
-		if (_fragmentEntryProcessorHelper.isMapped(configJSONObject) ||
-			_fragmentEntryProcessorHelper.isMappedCollection(
-				configJSONObject) ||
-			_fragmentEntryProcessorHelper.isMappedDisplayPage(
-				configJSONObject)) {
-
-			Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
-				configJSONObject, new HashMap<>(),
-				fragmentEntryProcessorContext);
-
-			if (fieldValue instanceof JSONObject) {
-				JSONObject jsonObject = (JSONObject)fieldValue;
-
-				nofollow = jsonObject.getBoolean("nofollow");
-				href = jsonObject.getString("url");
-			}
-			else {
-				href = GetterUtil.getString(fieldValue);
-			}
-		}
-		else if (_isMappedLayout(configJSONObject)) {
+		if (_isMappedLayout(configJSONObject)) {
 			href = GetterUtil.getString(
 				_getMappedLayoutValue(
 					configJSONObject, fragmentEntryProcessorContext));

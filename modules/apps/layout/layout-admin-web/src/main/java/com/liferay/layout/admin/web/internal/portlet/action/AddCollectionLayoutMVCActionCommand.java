@@ -5,10 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.layout.importer.LayoutsImporter;
@@ -155,80 +151,8 @@ public class AddCollectionLayoutMVCActionCommand
 				draftLayout.getModifiedDate());
 		}
 
-		_updateLayoutPageTemplateData(
-			draftLayout, collectionType, collectionPK);
-
 		return layout;
 	}
-
-	private String _getCollectionPageElementJSON(
-		String className, String classPK) {
-
-		return null;
-	}
-
-	private String _getCollectionProviderPageElementJSON(String className) {
-		InfoCollectionProvider<?> infoCollectionProvider =
-			_infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class, className);
-
-		if (infoCollectionProvider == null) {
-			return null;
-		}
-
-		Map<String, String> values = HashMapBuilder.put(
-			"CLASS_NAME", className
-		).put(
-			"COLLECTION_PROVIDER_NAME",
-			infoCollectionProvider.getLabel(LocaleUtil.getDefault())
-		).build();
-
-		String collectionProviderPageElementJSON = StringUtil.read(
-			AddCollectionLayoutMVCActionCommand.class,
-			"collection-provider-page-element.json");
-
-		return StringUtil.replace(
-			collectionProviderPageElementJSON, "${", "}", values);
-	}
-
-	private void _updateLayoutPageTemplateData(
-			Layout layout, String collectionType, String collectionPK)
-		throws Exception {
-
-		String pageElementJSON = StringPool.BLANK;
-
-		if (Objects.equals(
-				collectionType,
-				InfoListItemSelectorReturnType.class.getName())) {
-
-			pageElementJSON = _getCollectionPageElementJSON(
-				collectionType, collectionPK);
-		}
-		else if (Objects.equals(
-					collectionType,
-					InfoListProviderItemSelectorReturnType.class.getName())) {
-
-			pageElementJSON = _getCollectionProviderPageElementJSON(
-				collectionPK);
-		}
-
-		if (Validator.isNotNull(pageElementJSON)) {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						layout.getGroupId(), layout.getPlid());
-
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-			_layoutsImporter.importPageElement(
-				layout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElementJSON, 0, true);
-		}
-	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

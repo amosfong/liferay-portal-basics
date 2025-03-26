@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.provider;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -145,9 +144,6 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 		return availableLocales;
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

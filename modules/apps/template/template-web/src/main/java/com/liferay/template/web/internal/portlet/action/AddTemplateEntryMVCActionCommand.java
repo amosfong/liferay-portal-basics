@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -156,15 +155,6 @@ public class AddTemplateEntryMVCActionCommand
 	}
 
 	private String _getScript() {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(
-				_portal.getClassNameId(InfoItemFormProvider.class));
-
-		if (templateHandler != null) {
-			return templateHandler.getTemplatesHelpContent(
-				TemplateConstants.LANG_TYPE_FTL);
-		}
-
 		return "<#-- Empty script -->";
 	}
 

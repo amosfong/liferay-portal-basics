@@ -5,14 +5,7 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.display.context;
 
-import com.liferay.info.field.InfoField;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -69,48 +62,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public Map<String, Object> getChooseInfoItemButtonContext() {
-		return HashMapBuilder.<String, Object>put(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectInfoItem"
-		).put(
-			"getItemDetailsURL", getItemDetailsURL()
-		).put(
-			"itemSelectorURL",
-			() -> {
-				InfoItemItemSelectorCriterion itemSelectorCriterion =
-					new InfoItemItemSelectorCriterion();
-
-				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new InfoItemItemSelectorReturnType());
-				itemSelectorCriterion.setItemType(
-					_displayPageTypeContext.getClassName());
-
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						_httpServletRequest);
-
-				PortletURL infoItemSelectorURL =
-					_itemSelector.getItemSelectorURL(
-						requestBackedPortletURLFactory,
-						_liferayPortletResponse.getNamespace() +
-							"selectInfoItem",
-						itemSelectorCriterion);
-
-				if (infoItemSelectorURL == null) {
-					return StringPool.BLANK;
-				}
-
-				return infoItemSelectorURL.toString();
-			}
-		).put(
-			"modalTitle",
-			LanguageUtil.format(
-				_themeDisplay.getLocale(), "select-x",
-				_displayPageTypeContext.getLabel(_themeDisplay.getLocale()))
-		).build();
 	}
 
 	public long getClassNameId() {
@@ -173,8 +124,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
-			"chooseItemProps", getChooseInfoItemButtonContext()
-		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
 		).put(
@@ -254,29 +203,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	public String getItemSubtype() {
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_displayPageTypeContext.getInfoItemFormVariationsProvider();
-
-		if (infoItemFormVariationsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider();
-
-		if (layoutDisplayPageObjectProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				layoutDisplayPageObjectProvider.getGroupId(),
-				String.valueOf(getClassTypeId()));
-
-		if (infoItemFormVariation != null) {
-			return infoItemFormVariation.getLabel(_themeDisplay.getLocale());
-		}
-
 		return StringPool.BLANK;
 	}
 
@@ -339,31 +265,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	private JSONArray _getDataJSONArray() throws Exception {
-		LayoutDisplayPageInfoItemFieldValuesProvider<?>
-			layoutDisplayPageInfoItemFieldValuesProvider =
-				_displayPageTypeContext.
-					getLayoutDisplayPageInfoItemFieldValuesProvider();
-
-		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
-			return JSONFactoryUtil.createJSONArray();
-		}
-
-		InfoItemFieldValues infoItemFieldValues =
-			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
-				getClassPK());
-
-		return JSONUtil.toJSONArray(
-			infoItemFieldValues.getInfoFieldValues(),
-			infoFieldValue -> JSONUtil.put(
-				"title",
-				() -> {
-					InfoField<?> infoField = infoFieldValue.getInfoField();
-
-					return infoField.getLabel(_themeDisplay.getLocale());
-				}
-			).put(
-				"value", infoFieldValue.getValue(_themeDisplay.getLocale())
-			));
+		return JSONFactoryUtil.createJSONArray();
 	}
 
 	private LayoutDisplayPageObjectProvider<?>

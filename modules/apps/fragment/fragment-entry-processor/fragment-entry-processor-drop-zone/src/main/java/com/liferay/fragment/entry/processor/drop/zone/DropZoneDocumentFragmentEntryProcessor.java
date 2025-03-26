@@ -9,8 +9,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.form.InfoForm;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -174,46 +172,28 @@ public class DropZoneDocumentFragmentEntryProcessor
 			return;
 		}
 
-		InfoForm originalInfoForm = null;
+		for (int i = 0; i < elements.size(); i++) {
+			Element element = elements.get(i);
 
-		if (httpServletRequest != null) {
-			originalInfoForm = (InfoForm)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_FORM);
+			String dropZoneHTML = StringPool.BLANK;
 
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_FORM,
-				fragmentEntryProcessorContext.getInfoForm());
-		}
+			if (ListUtil.isNotEmpty(dropZoneItemIds) &&
+				(i < dropZoneItemIds.size())) {
 
-		try {
-			for (int i = 0; i < elements.size(); i++) {
-				Element element = elements.get(i);
-
-				String dropZoneHTML = StringPool.BLANK;
-
-				if (ListUtil.isNotEmpty(dropZoneItemIds) &&
-					(i < dropZoneItemIds.size())) {
-
-					dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
-						fragmentEntryProcessorContext.getHttpServletRequest(),
-						fragmentEntryProcessorContext.getHttpServletResponse(),
-						dropZoneItemIds.get(i),
-						fragmentEntryProcessorContext.getMode(), true);
-				}
-
-				Element dropZoneElement = new Element("div");
-
-				dropZoneElement.html(dropZoneHTML);
-
-				element.replaceWith(dropZoneElement);
+				dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					dropZoneItemIds.get(i),
+					fragmentEntryProcessorContext.getMode(), true);
 			}
+
+			Element dropZoneElement = new Element("div");
+
+			dropZoneElement.html(dropZoneHTML);
+
+			element.replaceWith(dropZoneElement);
 		}
-		finally {
-			if (httpServletRequest != null) {
-				httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_FORM, originalInfoForm);
-			}
-		}
+
 	}
 
 	@Reference

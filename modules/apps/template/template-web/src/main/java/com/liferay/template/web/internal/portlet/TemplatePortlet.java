@@ -6,7 +6,6 @@
 package com.liferay.template.web.internal.portlet;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -72,17 +71,12 @@ public class TemplatePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
 		renderRequest.setAttribute(
-			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
-		renderRequest.setAttribute(
 			PortletDisplayTemplate.class.getName(), _portletDisplayTemplate);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;

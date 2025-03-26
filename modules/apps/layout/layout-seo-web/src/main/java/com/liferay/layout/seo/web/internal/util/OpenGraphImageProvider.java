@@ -10,14 +10,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.type.WebImage;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
-import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,12 +37,11 @@ public class OpenGraphImageProvider {
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlurlHelper,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
-		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal) {
+		Portal portal) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_dlurlHelper = dlurlHelper;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
-		_layoutSEOTemplateProcessor = layoutSEOTemplateProcessor;
 
 		_fileEntryMetadataOpenGraphTagsProvider =
 			new FileEntryMetadataOpenGraphTagsProvider(
@@ -56,18 +50,11 @@ public class OpenGraphImageProvider {
 	}
 
 	public OpenGraphImage getOpenGraphImage(
-		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		Layout layout,
 		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
-		OpenGraphImage openGraphImage = _getMappedOpenGraphImage(
-			infoItemFieldValues, layout, layoutSEOEntry, themeDisplay);
-
-		if (openGraphImage == null) {
-			return _getFileEntryOpenGraphImage(
-				infoItemFieldValues, layout, layoutSEOEntry, themeDisplay);
-		}
-
-		return openGraphImage;
+		return _getFileEntryOpenGraphImage(
+			layout, layoutSEOEntry, themeDisplay);
 	}
 
 	public interface OpenGraphImage {
@@ -91,7 +78,7 @@ public class OpenGraphImageProvider {
 	}
 
 	private OpenGraphImage _getFileEntryOpenGraphImage(
-		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		Layout layout,
 		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
 		try {
@@ -121,7 +108,7 @@ public class OpenGraphImageProvider {
 				@Override
 				public String getAlt() {
 					return _getImageAltTagValue(
-						infoItemFieldValues, layout, layoutSEOEntry,
+						layout, layoutSEOEntry,
 						themeDisplay.getLocale());
 				}
 
@@ -152,15 +139,8 @@ public class OpenGraphImageProvider {
 	}
 
 	private String _getImageAltTagValue(
-		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		Layout layout,
 		LayoutSEOEntry layoutSEOEntry, Locale locale) {
-
-		String mappedImageAltTagValue = _getMappedStringValue(
-			null, "openGraphImageAlt", infoItemFieldValues, layout, locale);
-
-		if (Validator.isNotNull(mappedImageAltTagValue)) {
-			return mappedImageAltTagValue;
-		}
 
 		if ((layoutSEOEntry != null) &&
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
@@ -178,103 +158,12 @@ public class OpenGraphImageProvider {
 			return layoutSEOSite.getOpenGraphImageAlt(locale);
 		}
 
-		String imageAltMappingFieldKey = layout.getTypeSettingsProperty(
-			"mapped-openGraphImageAlt", null);
-
-		if (Validator.isNotNull(imageAltMappingFieldKey)) {
-			return _layoutSEOTemplateProcessor.processTemplate(
-				imageAltMappingFieldKey, infoItemFieldValues, locale);
-		}
-
 		return null;
 	}
 
 	private OpenGraphImage _getMappedOpenGraphImage(
-		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		Layout layout,
 		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
-
-		Object mappedImageObject = _getMappedValue(
-			null, "openGraphImage", infoItemFieldValues, layout,
-			themeDisplay.getLocale());
-
-		if (mappedImageObject instanceof WebImage) {
-			WebImage mappedWebImage = (WebImage)mappedImageObject;
-
-			return new OpenGraphImage() {
-
-				@Override
-				public String getAlt() {
-					String openGraphImageAlt = _getImageAltTagValue(
-						infoItemFieldValues, layout, layoutSEOEntry,
-						themeDisplay.getLocale());
-
-					if (Validator.isNotNull(openGraphImageAlt)) {
-						return openGraphImageAlt;
-					}
-
-					InfoLocalizedValue<String> altInfoLocalizedValue =
-						mappedWebImage.getAltInfoLocalizedValue();
-
-					if (altInfoLocalizedValue != null) {
-						return altInfoLocalizedValue.getValue(
-							themeDisplay.getLocale());
-					}
-
-					return null;
-				}
-
-				@Override
-				public Iterable<KeyValuePair> getMetadataTagKeyValuePairs() {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public String getMimeType() {
-					return null;
-				}
-
-				@Override
-				public String getURL() {
-					return _getAbsoluteURL(
-						themeDisplay, mappedWebImage.getURL());
-				}
-
-			};
-		}
-
-		return null;
-	}
-
-	private String _getMappedStringValue(
-		String defaultFieldName, String fieldName,
-		InfoItemFieldValues infoItemFieldValues, Layout layout, Locale locale) {
-
-		Object mappedValueObject = _getMappedValue(
-			defaultFieldName, fieldName, infoItemFieldValues, layout, locale);
-
-		if (mappedValueObject != null) {
-			return String.valueOf(mappedValueObject);
-		}
-
-		return null;
-	}
-
-	private Object _getMappedValue(
-		String defaultFieldName, String fieldName,
-		InfoItemFieldValues infoItemFieldValues, Layout layout, Locale locale) {
-
-		if (infoItemFieldValues == null) {
-			return null;
-		}
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(
-				layout.getTypeSettingsProperty(
-					"mapped-" + fieldName, defaultFieldName));
-
-		if (infoFieldValue != null) {
-			return infoFieldValue.getValue(locale);
-		}
 
 		return null;
 	}
@@ -309,6 +198,5 @@ public class OpenGraphImageProvider {
 	private final FileEntryMetadataOpenGraphTagsProvider
 		_fileEntryMetadataOpenGraphTagsProvider;
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
-	private final LayoutSEOTemplateProcessor _layoutSEOTemplateProcessor;
 
 }

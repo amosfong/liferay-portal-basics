@@ -9,15 +9,10 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.entry.processor.util.AnalyticsAttributesUtil;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,9 +71,6 @@ public class EditableDocumentFragmentEntryProcessor
 			return;
 		}
 
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
-			new HashMap<>();
-
 		for (Element element :
 				document.select("lfr-editable,*[data-lfr-editable-id]")) {
 
@@ -111,36 +103,7 @@ public class EditableDocumentFragmentEntryProcessor
 				_fragmentEntryProcessorHelper.isMappedDisplayPage(
 					editableValueJSONObject)) {
 
-				Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
-					editableValueJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext);
-
-				if (fieldValue != null) {
-					String fieldId = editableValueJSONObject.getString(
-						"collectionFieldId");
-
-					if (_fragmentEntryProcessorHelper.isMappedDisplayPage(
-							editableValueJSONObject)) {
-
-						fieldId = editableValueJSONObject.getString(
-							"mappedField");
-					}
-					else if (_fragmentEntryProcessorHelper.isMapped(
-								editableValueJSONObject)) {
-
-						fieldId = editableValueJSONObject.getString("fieldId");
-					}
-
-					mappedValueConfigJSONObject =
-						editableElementParser.getFieldTemplateConfigJSONObject(
-							fieldId, fragmentEntryProcessorContext.getLocale(),
-							fieldValue);
-
-					value = editableElementParser.parseFieldValue(fieldValue);
-				}
-				else {
-					value = editableValueJSONObject.getString("defaultValue");
-				}
+				value = editableValueJSONObject.getString("defaultValue");
 			}
 			else {
 				value = _fragmentEntryProcessorHelper.getEditableValue(
@@ -201,36 +164,6 @@ public class EditableDocumentFragmentEntryProcessor
 				element.tagName(tagName);
 
 				element.removeAttr("view-tag-name");
-			}
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
-				fragmentEntryProcessorContext.isViewMode()) {
-
-				AnalyticsAttributesUtil.addAnalyticsAttributes(
-					editableValueJSONObject, element,
-					fragmentEntryProcessorContext,
-					_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
-					_infoItemServiceRegistry);
-			}
-		}
-
-		if ((fragmentEntryProcessorContext.getPreviewClassNameId() > 0) &&
-			(fragmentEntryProcessorContext.getPreviewClassPK() > 0)) {
-
-			InfoItemReference infoItemReference = new InfoItemReference(
-				_portal.getClassName(
-					fragmentEntryProcessorContext.getPreviewClassNameId()),
-				new ClassPKInfoItemIdentifier(
-					fragmentEntryProcessorContext.getPreviewClassPK()));
-
-			if (infoDisplaysFieldValues.containsKey(infoItemReference)) {
-				Element previewElement = new Element("div");
-
-				previewElement.attr("style", "border: 1px solid #0B5FFF");
-
-				Element bodyElement = document.body();
-
-				previewElement.html(bodyElement.html());
 			}
 		}
 	}
@@ -293,9 +226,6 @@ public class EditableDocumentFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

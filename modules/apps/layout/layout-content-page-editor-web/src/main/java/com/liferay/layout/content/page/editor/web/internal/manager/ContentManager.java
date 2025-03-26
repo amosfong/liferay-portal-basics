@@ -13,29 +13,11 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.ERCInfoItemIdentifier;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.info.permission.provider.InfoPermissionProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
-import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
@@ -220,22 +202,6 @@ public class ContentManager {
 				continue;
 			}
 
-			InfoPermissionProvider<?> infoPermissionProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoPermissionProvider.class, className);
-
-			if ((infoPermissionProvider == null) ||
-				(infoPermissionProvider.hasViewPermission(
-					themeDisplay.getPermissionChecker()) &&
-				 infoPermissionProvider.hasViewPermission(
-					 String.valueOf(
-						 formStyledLayoutStructureItem.getClassTypeId()),
-					 themeDisplay.getScopeGroupId(),
-					 PermissionThreadLocal.getPermissionChecker()))) {
-
-				continue;
-			}
-
 			restrictedItemIds.add(formStyledLayoutStructureItem.getItemId());
 		}
 
@@ -253,13 +219,6 @@ public class ContentManager {
 			}
 
 			String type = collectionJSONObject.getString("type");
-
-			LayoutListRetriever<?, ?> layoutListRetriever =
-				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-			if (layoutListRetriever == null) {
-				continue;
-			}
 
 			ListObjectReferenceFactory<?> listObjectReferenceFactory =
 				_listObjectReferenceFactoryRegistry.getListObjectReference(
@@ -405,34 +364,7 @@ public class ContentManager {
 
 		String className = layoutClassedModelUsage.getClassName();
 
-		InfoItemPermissionProvider<?> infoItemPermissionProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemPermissionProvider.class, className);
-
-		InfoItemReference infoItemReference = _getInfoItemIdentifier(
-			layoutClassedModelUsage.getClassName(),
-			layoutClassedModelUsage.getClassPK(),
-			layoutClassedModelUsage.getClassedModelExternalReferenceCode());
-
-		boolean hasUpdatePermission = false;
-
-		try {
-			hasUpdatePermission = infoItemPermissionProvider.hasPermission(
-				themeDisplay.getPermissionChecker(), infoItemReference,
-				ActionKeys.UPDATE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"An error occurred while getting mapped content with ",
-						"class name ", className, " and class PK ",
-						layoutClassedModelUsage.getClassPK()),
-					exception);
-			}
-		}
-
-		boolean finalHasUpdatePermission = hasUpdatePermission;
+		boolean finalHasUpdatePermission = false;
 
 		return JSONUtil.put(
 			"editImage",
@@ -471,38 +403,11 @@ public class ContentManager {
 		).put(
 			"editURL",
 			() -> {
-				if (!finalHasUpdatePermission) {
-					return null;
-				}
-
-				InfoEditURLProvider<Object> infoEditURLProvider =
-					_infoEditURLProviderRegistry.getInfoEditURLProvider(
-						className);
-
-				if (infoEditURLProvider == null) {
-					return null;
-				}
-
-				PortletResponse portletResponse =
-					(PortletResponse)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-				return _layoutLockManager.getUnlockDraftLayoutURL(
-					_portal.getLiferayPortletResponse(portletResponse),
-					() -> infoEditURLProvider.getURL(
-						layoutDisplayPageObjectProvider.getDisplayObject(),
-						httpServletRequest));
+				return null;
 			}
 		).put(
 			"permissionsURL",
 			() -> {
-				if (!infoItemPermissionProvider.hasPermission(
-						themeDisplay.getPermissionChecker(), infoItemReference,
-						ActionKeys.PERMISSIONS)) {
-
-					return null;
-				}
-
 				return PermissionsURLTag.doTag(
 					StringPool.BLANK, className,
 					HtmlUtil.escape(
@@ -515,13 +420,6 @@ public class ContentManager {
 		).put(
 			"viewUsagesURL",
 			() -> {
-				if (!infoItemPermissionProvider.hasPermission(
-						themeDisplay.getPermissionChecker(), infoItemReference,
-						ActionKeys.VIEW)) {
-
-					return null;
-				}
-
 				return PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(
 						httpServletRequest,
@@ -655,65 +553,6 @@ public class ContentManager {
 		return "web-content";
 	}
 
-	private String _getInfoCollectionProviderSubtypeLabel(
-		long groupId, InfoCollectionProvider<?> infoCollectionProvider,
-		Locale locale) {
-
-		String className = infoCollectionProvider.getCollectionItemClassName();
-
-		if (Validator.isNull(className)) {
-			return StringPool.BLANK;
-		}
-
-		if (!(infoCollectionProvider instanceof
-				SingleFormVariationInfoCollectionProvider)) {
-
-			return _resourceActions.getModelResource(locale, className);
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		if (infoItemFormVariationsProvider == null) {
-			return _resourceActions.getModelResource(locale, className);
-		}
-
-		SingleFormVariationInfoCollectionProvider<?>
-			singleFormVariationInfoCollectionProvider =
-				(SingleFormVariationInfoCollectionProvider<?>)
-					infoCollectionProvider;
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				groupId,
-				singleFormVariationInfoCollectionProvider.
-					getFormVariationKey());
-
-		if (infoItemFormVariation == null) {
-			return _resourceActions.getModelResource(locale, className);
-		}
-
-		return _resourceActions.getModelResource(locale, className) + " - " +
-			infoItemFormVariation.getLabel(locale);
-	}
-
-	private InfoItemReference _getInfoItemIdentifier(
-		String className, long classPK, String externalReferenceCode) {
-
-		InfoItemIdentifier infoItemIdentifier = null;
-
-		if (classPK > 0) {
-			infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
-		}
-		else {
-			infoItemIdentifier = new ERCInfoItemIdentifier(
-				externalReferenceCode);
-		}
-
-		return new InfoItemReference(className, infoItemIdentifier);
-	}
-
 	private JSONArray _getLayoutClassedModelPageContentsJSONArray(
 		HttpServletRequest httpServletRequest, LayoutStructure layoutStructure,
 		long plid, List<String> hiddenItemIds, List<String> restrictedItemIds,
@@ -778,52 +617,6 @@ public class ContentManager {
 				restricted = restrictedItemIds.contains(
 					layoutStructureItem.getItemId());
 			}
-
-			if ((layoutClassedModelUsage.getContainerType() ==
-					_portal.getClassNameId(Portlet.class.getName())) &&
-				(layoutStructure.isPortletMarkedForDeletion(
-					layoutClassedModelUsage.getContainerKey()) ||
-				 restrictedPortletIds.contains(
-					 layoutClassedModelUsage.getContainerKey()))) {
-
-				continue;
-			}
-
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderRegistry.
-					getLayoutDisplayPageProviderByClassName(
-						layoutClassedModelUsage.getClassName());
-
-			if (layoutDisplayPageProvider == null) {
-				_layoutClassedModelUsageLocalService.
-					deleteLayoutClassedModelUsage(layoutClassedModelUsage);
-
-				continue;
-			}
-
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-					_getInfoItemIdentifier(
-						layoutClassedModelUsage.getClassName(),
-						layoutClassedModelUsage.getClassPK(),
-						layoutClassedModelUsage.
-							getClassedModelExternalReferenceCode()));
-
-			if (layoutDisplayPageObjectProvider == null) {
-				_layoutClassedModelUsageLocalService.
-					deleteLayoutClassedModelUsage(layoutClassedModelUsage);
-
-				continue;
-			}
-
-			mappedContentsJSONArray.put(
-				_getPageContentJSONObject(
-					layoutClassedModelUsage, layoutDisplayPageObjectProvider,
-					httpServletRequest, restricted));
-
-			uniqueLayoutClassedModelUsageKeys.add(
-				_generateUniqueLayoutClassedModelUsageKey(
-					layoutClassedModelUsage));
 		}
 
 		return mappedContentsJSONArray;
@@ -862,30 +655,6 @@ public class ContentManager {
 
 			return;
 		}
-
-		String className = _infoSearchClassMapperRegistry.getClassName(
-			_portal.getClassName(classNameId));
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return;
-		}
-
-		uniqueLayoutClassedModelUsageKeys.add(uniqueLayoutClassedModelUsageKey);
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				_getInfoItemIdentifier(
-					className, classPK, externalReferenceCode));
-
-		if (layoutDisplayPageObjectProvider == null) {
-			return;
-		}
-
-		layoutDisplayPageObjectProviders.add(layoutDisplayPageObjectProvider);
 	}
 
 	private void _getLayoutMappedLayoutDisplayPageObjectProviders(
@@ -1170,15 +939,6 @@ public class ContentManager {
 	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
-	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -1189,15 +949,8 @@ public class ContentManager {
 		_layoutClassedModelUsageLocalService;
 
 	@Reference
-	private LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
-
-	@Reference
 	private LayoutListPermissionProviderRegistry
 		_layoutListPermissionProviderRegistry;
-
-	@Reference
-	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	@Reference
 	private LayoutLockManager _layoutLockManager;

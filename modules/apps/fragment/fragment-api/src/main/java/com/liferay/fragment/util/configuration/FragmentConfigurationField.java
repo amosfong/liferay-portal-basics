@@ -6,10 +6,6 @@
 package com.liferay.fragment.util.configuration;
 
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -159,38 +155,7 @@ public class FragmentConfigurationField {
 			if (defaultValueJSONObject.has("className") &&
 				defaultValueJSONObject.has("classPK")) {
 
-				String className = defaultValueJSONObject.getString(
-					"className");
-
-				LayoutDisplayPageProviderRegistry
-					layoutDisplayPageProviderRegistry =
-						_serviceTracker.getService();
-
-				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-					layoutDisplayPageProviderRegistry.
-						getLayoutDisplayPageProviderByClassName(className);
-
-				if (layoutDisplayPageProvider == null) {
-					return _defaultValue;
-				}
-
-				long classPK = defaultValueJSONObject.getLong("classPK");
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					className, classPK);
-
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						layoutDisplayPageProvider.
-							getLayoutDisplayPageObjectProvider(
-								infoItemReference);
-
-				defaultValueJSONObject.put(
-					"title",
-					layoutDisplayPageObjectProvider.getTitle(
-						LocaleUtil.getMostRelevantLocale()));
-
-				return defaultValueJSONObject.toString();
+				return _defaultValue;
 			}
 		}
 		catch (PortalException portalException) {
@@ -212,21 +177,6 @@ public class FragmentConfigurationField {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentConfigurationField.class);
-
-	private static final ServiceTracker
-		<LayoutDisplayPageProviderRegistry, LayoutDisplayPageProviderRegistry>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FragmentConfigurationField.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), LayoutDisplayPageProviderRegistry.class,
-			null);
-
-		_serviceTracker.open();
-	}
 
 	private final String _dataType;
 	private final String _defaultValue;

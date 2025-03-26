@@ -17,12 +17,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
-import com.liferay.info.exception.NoSuchFormVariationException;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -92,7 +86,6 @@ public class LayoutsSEODisplayContext {
 	public LayoutsSEODisplayContext(
 		DDMStorageEngineManager ddmStorageEngineManager,
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
-		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector, LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
@@ -104,7 +97,6 @@ public class LayoutsSEODisplayContext {
 		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
-		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
@@ -662,32 +654,8 @@ public class LayoutsSEODisplayContext {
 	private HashMap<String, Object> _getBaseSEOMappingData()
 		throws PortalException {
 
-		InfoForm infoForm = _getInfoForm();
-
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguageId", _selLayout.getDefaultLanguageId()
-		).put(
-			"fields",
-			TransformUtil.transform(
-				infoForm.getAllInfoFields(),
-				infoField -> {
-					if (StringUtil.startsWith(
-							infoField.getName(),
-							PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-
-						return null;
-					}
-
-					return JSONUtil.put(
-						"key", infoField.getName()
-					).put(
-						"label", infoField.getLabel(_themeDisplay.getLocale())
-					).put(
-						"type",
-						infoField.getInfoFieldType(
-						).getName()
-					);
-				})
 		).put(
 			"selectedSource",
 			JSONUtil.put(
@@ -714,15 +682,6 @@ public class LayoutsSEODisplayContext {
 			_getLayoutPageTemplateEntry();
 
 		return layoutPageTemplateEntry.getClassTypeId();
-	}
-
-	private InfoForm _getInfoForm() throws NoSuchFormVariationException {
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, _getClassName());
-
-		return infoItemFormProvider.getInfoForm(
-			String.valueOf(_getClassTypeId()), _themeDisplay.getScopeGroupId());
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
@@ -799,18 +758,7 @@ public class LayoutsSEODisplayContext {
 	}
 
 	private String _getTypeLabel() {
-		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, _getClassName());
-
-		if (infoItemDetailsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -823,7 +771,6 @@ public class LayoutsSEODisplayContext {
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;
 	private final LayoutLocalService _layoutLocalService;

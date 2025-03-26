@@ -5,11 +5,6 @@
 
 package com.liferay.layout.page.template.item.selector.web.internal;
 
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
@@ -106,9 +101,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new LayoutPageTemplateEntryItemSelectorReturnType());
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer
@@ -285,42 +277,11 @@ public class LayoutPageTemplateEntryItemSelectorView
 		}
 
 		private String _getSubtypeLabel() {
-			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFormVariationsProvider.class,
-					_layoutPageTemplateEntry.getClassName());
-
-			if (infoItemFormVariationsProvider == null) {
-				return StringPool.BLANK;
-			}
-
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					_layoutPageTemplateEntry.getGroupId(),
-					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
-
-			if (infoItemFormVariation != null) {
-				return infoItemFormVariation.getLabel(
-					_themeDisplay.getLocale());
-			}
-
 			return StringPool.BLANK;
 		}
 
 		private String _getTypeLabel() {
-			InfoItemDetailsProvider<?> infoItemDetailsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemDetailsProvider.class,
-					_layoutPageTemplateEntry.getClassName());
-
-			if (infoItemDetailsProvider == null) {
-				return StringPool.BLANK;
-			}
-
-			InfoItemClassDetails infoItemClassDetails =
-				infoItemDetailsProvider.getInfoItemClassDetails();
-
-			return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+			return StringPool.BLANK;
 		}
 
 		private final HttpServletRequest _httpServletRequest;

@@ -5,11 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.HierarchicalInfoItemReference;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -84,7 +79,6 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			try {
-				List<InfoItemReference> infoItemReferences = new ArrayList<>();
 				Map<Long, JSONObject> jsonObjects = new HashMap<>();
 
 				JSONArray jsonArray = _jsonFactory.createJSONArray(
@@ -98,42 +92,14 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							itemJSONObject.getString("className"),
 							siteNavigationMenuItemTypeString)) {
 
-						infoItemReferences.add(
-							new InfoItemReference(
-								itemJSONObject.getString("className"),
-								itemJSONObject.getLong("classPK")));
-
 						jsonObjects.put(
 							itemJSONObject.getLong("classPK"), itemJSONObject);
 					}
 				}
 
-				LayoutDisplayPageMultiSelectionProvider<?>
-					layoutDisplayPageMultiSelectionProvider =
-						_layoutDisplayPageMultiSelectionProviderRegistry.
-							getLayoutDisplayPageMultiSelectionProvider(
-								siteNavigationMenuItemTypeString);
-
-				if (layoutDisplayPageMultiSelectionProvider != null) {
-					infoItemReferences =
-						layoutDisplayPageMultiSelectionProvider.process(
-							infoItemReferences);
-				}
-
 				int order = ParamUtil.getInteger(actionRequest, "order", -1);
 				long parentSiteNavigationMenuItemId = ParamUtil.getLong(
 					actionRequest, "parentSiteNavigationMenuItemId");
-
-				for (int i = 0; i < infoItemReferences.size(); i++) {
-					InfoItemReference infoItemReference =
-						infoItemReferences.get(i);
-
-					_addSiteNavigationMenuItem(
-						themeDisplay.getScopeGroupId(), infoItemReference,
-						jsonObjects, order + i, parentSiteNavigationMenuItemId,
-						serviceContext, siteNavigationMenuId,
-						siteNavigationMenuItemTypeString);
-				}
 
 				SiteNavigationMenuItemType siteNavigationMenuItemType =
 					_siteNavigationMenuItemTypeRegistry.
@@ -146,17 +112,6 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 						jsonArray.length(),
 						siteNavigationMenuItemType.getLabel(
 							themeDisplay.getLocale())));
-
-				if ((jsonArray.length() > 1) &&
-					(layoutDisplayPageMultiSelectionProvider != null)) {
-
-					message = _language.format(
-						themeDisplay.getLocale(), "x-x-were-added-to-this-menu",
-						Arrays.asList(
-							jsonArray.length(),
-							layoutDisplayPageMultiSelectionProvider.
-								getPluralLabel(themeDisplay.getLocale())));
-				}
 
 				SessionMessages.add(
 					actionRequest, "siteNavigationMenuItemsAdded", message);
@@ -194,13 +149,13 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	}
 
 	private void _addSiteNavigationMenuItem(
-			long groupId, InfoItemReference infoItemReference,
+			long groupId,
 			Map<Long, JSONObject> jsonObjects, int order,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			long siteNavigationMenuId, String siteNavigationMenuItemType)
 		throws PortalException {
 
-		JSONObject jsonObject = jsonObjects.get(_getClassPK(infoItemReference));
+		JSONObject jsonObject = jsonObjects.get(0);
 
 		if (jsonObject == null) {
 			return;
@@ -232,38 +187,6 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				parentSiteNavigationMenuItemId, order);
 		}
-
-		if (!(infoItemReference instanceof HierarchicalInfoItemReference)) {
-			return;
-		}
-
-		HierarchicalInfoItemReference hierarchicalInfoItemReference =
-			(HierarchicalInfoItemReference)infoItemReference;
-
-		for (HierarchicalInfoItemReference childHierarchicalInfoItemReference :
-				hierarchicalInfoItemReference.
-					getChildrenHierarchicalInfoItemReferences()) {
-
-			_addSiteNavigationMenuItem(
-				groupId, childHierarchicalInfoItemReference, jsonObjects, -1,
-				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext, siteNavigationMenuId,
-				siteNavigationMenuItemType);
-		}
-	}
-
-	private long _getClassPK(InfoItemReference infoItemReference) {
-		if (infoItemReference.getInfoItemIdentifier() instanceof
-				ClassPKInfoItemIdentifier) {
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			return classPKInfoItemIdentifier.getClassPK();
-		}
-
-		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -274,10 +197,6 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageMultiSelectionProviderRegistry
-		_layoutDisplayPageMultiSelectionProviderRegistry;
 
 	@Reference
 	private Portal _portal;

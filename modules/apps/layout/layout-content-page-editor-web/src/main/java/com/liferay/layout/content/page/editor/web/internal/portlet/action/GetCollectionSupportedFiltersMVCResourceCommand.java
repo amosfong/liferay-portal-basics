@@ -5,13 +5,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.filter.InfoFilter;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -58,53 +54,10 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 			JSONArray collectionsJSONArray)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		for (int i = 0; i < collectionsJSONArray.length(); i++) {
-			JSONObject collectionJSONObject =
-				collectionsJSONArray.getJSONObject(i);
-
-			JSONObject layoutObjectReferenceJSONObject =
-				collectionJSONObject.getJSONObject("layoutObjectReference");
-
-			String type = layoutObjectReferenceJSONObject.getString("type");
-
-			LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-				(LayoutListRetriever<?, ListObjectReference>)
-					_layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-			if (layoutListRetriever == null) {
-				continue;
-			}
-
-			ListObjectReferenceFactory<?> listObjectReferenceFactory =
-				_listObjectReferenceFactoryRegistry.getListObjectReference(
-					type);
-
-			if (listObjectReferenceFactory == null) {
-				continue;
-			}
-
-			jsonObject.put(
-				collectionJSONObject.getString("collectionId"),
-				JSONUtil.toJSONArray(
-					layoutListRetriever.getSupportedInfoFilters(
-						listObjectReferenceFactory.getListObjectReference(
-							layoutObjectReferenceJSONObject)),
-					InfoFilter::getFilterTypeName));
-		}
-
-		return jsonObject;
+		return _jsonFactory.createJSONObject();
 	}
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-
-	@Reference
-	private ListObjectReferenceFactoryRegistry
-		_listObjectReferenceFactoryRegistry;
 
 }

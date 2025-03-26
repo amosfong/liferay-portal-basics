@@ -21,13 +21,8 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.exception.NoSuchFormVariationException;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -239,10 +234,6 @@ public class FragmentEntryLinkManager {
 
 			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
 				configuration);
-
-			FragmentEntryLinkItemSelectorUtil.
-				addFragmentEntryLinkFieldsSelectorURL(
-					_itemSelector, httpServletRequest, configurationJSONObject);
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(
 				fragmentEntryLink, themeDisplay.getLocale());
@@ -517,9 +508,6 @@ public class FragmentEntryLinkManager {
 			}
 		}
 
-		defaultFragmentRendererContext.setInfoForm(
-			_getInfoForm(fragmentEntryLink, layoutStructure));
-
 		String languageId = ParamUtil.getString(
 			httpServletRequest, "languageId",
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
@@ -616,69 +604,6 @@ public class FragmentEntryLinkManager {
 		return jsonArray;
 	}
 
-	private InfoForm _getInfoForm(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		long groupId) {
-
-		if (formStyledLayoutStructureItem == null) {
-			return null;
-		}
-
-		String className = formStyledLayoutStructureItem.getClassName();
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, className);
-
-		if (infoItemFormProvider != null) {
-			try {
-				return infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()),
-					groupId);
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-
-				return null;
-			}
-		}
-
-		return null;
-	}
-
-	private InfoForm _getInfoForm(
-		FragmentEntryLink fragmentEntryLink, LayoutStructure layoutStructure) {
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					fragmentEntryLink.getFragmentEntryLinkId());
-
-		if (fragmentStyledLayoutStructureItem == null) {
-			return null;
-		}
-
-		LayoutStructureItem layoutStructureItem =
-			LayoutStructureItemUtil.getAncestor(
-				fragmentStyledLayoutStructureItem.getItemId(),
-				LayoutDataItemTypeConstants.TYPE_FORM, layoutStructure);
-
-		if (!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
-			return null;
-		}
-
-		return _getInfoForm(
-			(FormStyledLayoutStructureItem)layoutStructureItem,
-			fragmentEntryLink.getGroupId());
-	}
-
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
 		FragmentEntryProcessorConstants.
 			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
@@ -712,9 +637,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

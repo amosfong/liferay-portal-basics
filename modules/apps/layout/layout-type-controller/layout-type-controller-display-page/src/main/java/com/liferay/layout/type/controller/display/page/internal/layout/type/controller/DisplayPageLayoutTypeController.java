@@ -5,16 +5,12 @@
 
 package com.liferay.layout.type.controller.display.page.internal.layout.type.controller;
 
-import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
-import com.liferay.layout.type.controller.display.page.internal.display.context.DisplayPageLayoutTypeControllerDisplayContext;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -154,23 +150,6 @@ public class DisplayPageLayoutTypeController
 				httpServletRequest);
 		}
 
-		DisplayPageLayoutTypeControllerDisplayContext
-			displayPageLayoutTypeControllerDisplayContext =
-				new DisplayPageLayoutTypeControllerDisplayContext(
-					httpServletRequest, _infoItemServiceRegistry,
-					_infoSearchClassMapperRegistry);
-
-		httpServletRequest.setAttribute(
-			DisplayPageLayoutTypeControllerWebKeys.
-				DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT,
-			displayPageLayoutTypeControllerDisplayContext);
-
-		if (!displayPageLayoutTypeControllerDisplayContext.hasInfoItem() &&
-			!themeDisplay.isSignedIn()) {
-
-			throw new NoSuchLayoutException();
-		}
-
 		String page = getViewPage();
 
 		if (layoutMode.equals(Constants.EDIT)) {
@@ -190,30 +169,6 @@ public class DisplayPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			boolean hasViewPermission =
-				displayPageLayoutTypeControllerDisplayContext.hasPermission(
-					themeDisplay.getPermissionChecker(), ActionKeys.VIEW);
-
-			if (!hasViewPermission && themeDisplay.isSignedIn()) {
-				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			}
-			else if (!hasViewPermission) {
-				if (themeDisplay.isSignedIn()) {
-					httpServletResponse.setStatus(
-						HttpServletResponse.SC_FORBIDDEN);
-				}
-				else if (AuthLoginGroupSettingsUtil.isPromptEnabled(
-							layout.getGroupId())) {
-
-					redirect = HttpComponentsUtil.setParameter(
-						themeDisplay.getURLSignIn(), "redirect",
-						themeDisplay.getURLCurrent());
-				}
-				else {
-					throw new NoSuchLayoutException();
-				}
-			}
-
 			if (Validator.isNotNull(redirect)) {
 				httpServletResponse.sendRedirect(redirect);
 			}
@@ -286,13 +241,6 @@ public class DisplayPageLayoutTypeController
 
 	@Override
 	protected void addAttributes(HttpServletRequest httpServletRequest) {
-		for (InfoDisplayRequestAttributesContributor
-				infoDisplayRequestAttributesContributor :
-					_infoDisplayRequestAttributesContributors) {
-
-			infoDisplayRequestAttributesContributor.addAttributes(
-				httpServletRequest);
-		}
 	}
 
 	@Override
@@ -370,16 +318,6 @@ public class DisplayPageLayoutTypeController
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageLayoutTypeController.class);
-
-	@Reference
-	private volatile List<InfoDisplayRequestAttributesContributor>
-		_infoDisplayRequestAttributesContributors;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

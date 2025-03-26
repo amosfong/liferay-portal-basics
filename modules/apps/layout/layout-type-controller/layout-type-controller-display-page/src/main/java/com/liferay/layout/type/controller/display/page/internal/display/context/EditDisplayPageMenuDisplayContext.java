@@ -7,7 +7,6 @@ package com.liferay.layout.type.controller.display.page.internal.display.context
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -31,11 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 public class EditDisplayPageMenuDisplayContext {
 
 	public EditDisplayPageMenuDisplayContext(
-		HttpServletRequest httpServletRequest,
-		InfoEditURLProvider<Object> infoEditURLProvider) {
+		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
-		_infoEditURLProvider = infoEditURLProvider;
 
 		_layoutDisplayPageObjectProvider =
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
@@ -46,8 +43,7 @@ public class EditDisplayPageMenuDisplayContext {
 
 	public List<DropdownItem> getDropdownItems() {
 		UnsafeConsumer<DropdownItem, Exception>
-			editURLDropdownItemUnsafeConsumer =
-				_getEditURLDropdownItemUnsafeConsumer(_infoEditURLProvider);
+			editURLDropdownItemUnsafeConsumer = null;
 
 		return DropdownItemListBuilder.add(
 			() -> editURLDropdownItemUnsafeConsumer != null,
@@ -77,31 +73,7 @@ public class EditDisplayPageMenuDisplayContext {
 		).build();
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditURLDropdownItemUnsafeConsumer(
-			InfoEditURLProvider<Object> infoEditURLProvider) {
-
-		if (infoEditURLProvider == null) {
-			return null;
-		}
-
-		return dropdownItem -> {
-			String editURL = _infoEditURLProvider.getURL(
-				_layoutDisplayPageObjectProvider.getDisplayObject(),
-				_httpServletRequest);
-
-			dropdownItem.setHref(editURL);
-
-			dropdownItem.setLabel(
-				LanguageUtil.format(
-					_httpServletRequest, "edit-x",
-					_layoutDisplayPageObjectProvider.getTitle(
-						_themeDisplay.getLocale())));
-		};
-	}
-
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoEditURLProvider<Object> _infoEditURLProvider;
 	private final LayoutDisplayPageObjectProvider<?>
 		_layoutDisplayPageObjectProvider;
 	private final ThemeDisplay _themeDisplay;

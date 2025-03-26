@@ -5,10 +5,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -78,16 +77,11 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 			long classNameId, String classTypeId, long groupId, Locale locale)
 		throws Exception {
 
-		return MappingContentUtil.getMappingFieldsJSONArray(
-			classTypeId, groupId, _infoItemServiceRegistry,
-			_portal.getClassName(classNameId), locale);
+		return JSONFactoryUtil.createJSONArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetMappingFieldsMVCResourceCommand.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

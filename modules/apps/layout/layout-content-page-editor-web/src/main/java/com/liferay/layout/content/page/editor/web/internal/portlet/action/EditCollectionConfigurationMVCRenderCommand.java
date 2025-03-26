@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.EditCollectionConfigurationDisplayContext;
@@ -42,7 +41,7 @@ public class EditCollectionConfigurationMVCRenderCommand
 			EditCollectionConfigurationDisplayContext.class.getName(),
 			new EditCollectionConfigurationDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
-				_infoItemServiceRegistry, _itemSelector, renderResponse));
+				_itemSelector, renderResponse));
 
 		LiferayRenderRequest liferayRenderRequest =
 			(LiferayRenderRequest)renderRequest;
@@ -54,9 +53,6 @@ public class EditCollectionConfigurationMVCRenderCommand
 
 		return "/edit_collection_configuration.jsp";
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

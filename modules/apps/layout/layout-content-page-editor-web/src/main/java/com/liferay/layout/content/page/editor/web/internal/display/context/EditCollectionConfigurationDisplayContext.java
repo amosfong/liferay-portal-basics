@@ -5,12 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
-import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -38,11 +33,9 @@ public class EditCollectionConfigurationDisplayContext {
 
 	public EditCollectionConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector, RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_renderResponse = renderResponse;
 
@@ -92,17 +85,6 @@ public class EditCollectionConfigurationDisplayContext {
 			"collectionLabel", _getCollectionLabel()
 		).put(
 			"configurationDefinition", _getConfigurationJSONObject()
-		).put(
-			"getCollectionItemCountURL",
-			ResourceURLBuilder.createResourceURL(
-				_renderResponse
-			).setParameter(
-				"classNameId", getClassNameId()
-			).setParameter(
-				"classPK", getClassPK()
-			).setResourceID(
-				"/layout_content_page_editor/get_collection_item_count"
-			).buildString()
 		).put(
 			"languageId", _themeDisplay.getLanguageId()
 		).build();
@@ -159,23 +141,8 @@ public class EditCollectionConfigurationDisplayContext {
 		return _type;
 	}
 
-	private String _getCollectionItemTypeLabel() {
-		if (_collectionItemTypeLabel != null) {
-			return _collectionItemTypeLabel;
-		}
-
-		InfoCollectionProvider<?> infoCollectionProvider =
-			_getInfoCollectionProvider();
-
-		if (infoCollectionProvider == null) {
-			return null;
-		}
-
-		_collectionItemTypeLabel = ResourceActionsUtil.getModelResource(
-			_themeDisplay.getLocale(),
-			infoCollectionProvider.getCollectionItemClassName());
-
-		return _collectionItemTypeLabel;
+	private String _getCollectionItemTypeLabel() {		
+		return null;
 	}
 
 	private JSONObject _getCollectionJSONObject() throws Exception {
@@ -208,59 +175,11 @@ public class EditCollectionConfigurationDisplayContext {
 	}
 
 	private String _getCollectionLabel() {
-		if (_collectionLabel != null) {
-			return _collectionLabel;
-		}
-
-		InfoCollectionProvider<?> infoCollectionProvider =
-			_getInfoCollectionProvider();
-
-		if (infoCollectionProvider == null) {
-			return null;
-		}
-
-		_collectionLabel = infoCollectionProvider.getLabel(
-			_themeDisplay.getLocale());
-
-		return _collectionLabel;
+		return null;
 	}
 
 	private JSONObject _getConfigurationJSONObject() {
-		InfoCollectionProvider<?> infoCollectionProvider =
-			_getInfoCollectionProvider();
-
-		if (!(infoCollectionProvider instanceof
-				ConfigurableInfoCollectionProvider)) {
-
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		ConfigurableInfoCollectionProvider<?>
-			configurableInfoCollectionProvider =
-				(ConfigurableInfoCollectionProvider<?>)infoCollectionProvider;
-
-		return InfoFormUtil.getConfigurationJSONObject(
-			configurableInfoCollectionProvider.getConfigurationInfoForm(),
-			_themeDisplay.getLocale());
-	}
-
-	private InfoCollectionProvider _getInfoCollectionProvider() {
-		String collectionKey = getCollectionKey();
-
-		if (Validator.isBlank(collectionKey)) {
-			return null;
-		}
-
-		InfoCollectionProvider<?> infoCollectionProvider =
-			_infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class, collectionKey);
-
-		if (infoCollectionProvider != null) {
-			return infoCollectionProvider;
-		}
-
-		return _infoItemServiceRegistry.getInfoItemService(
-			RelatedInfoItemCollectionProvider.class, collectionKey);
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private Long _classNameId;
@@ -269,7 +188,6 @@ public class EditCollectionConfigurationDisplayContext {
 	private String _collectionKey;
 	private String _collectionLabel;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private String _itemId;
 	private final ItemSelector _itemSelector;
 	private Long _plid;

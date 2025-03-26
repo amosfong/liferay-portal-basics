@@ -5,10 +5,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemStatusProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -40,21 +39,14 @@ public class GetFormConfigMVCResourceCommand extends BaseMVCResourceCommand {
 
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 
-		InfoItemStatusProvider<Object> infoItemStatusProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemStatusProvider.class,
-				_portal.getClassName(classNameId));
-
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"supportStatus", infoItemStatusProvider.supportsStatus()));
+			resourceRequest, resourceResponse, _jsonFactory.createJSONObject());
 	}
 
 	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
+	private Portal _portal;
 
 	@Reference
-	private Portal _portal;
+	private JSONFactory _jsonFactory;
 
 }

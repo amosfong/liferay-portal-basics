@@ -10,11 +10,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -59,9 +54,6 @@ public class DisplayPageVerticalCard
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_infoItemServiceRegistry =
-			(InfoItemServiceRegistry)renderRequest.getAttribute(
-				InfoItemServiceRegistry.class.getName());
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -192,41 +184,11 @@ public class DisplayPageVerticalCard
 	}
 
 	private String _getSubtypeLabel() {
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				_layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				_layoutPageTemplateEntry.getGroupId(),
-				String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
-
-		if (infoItemFormVariation != null) {
-			return infoItemFormVariation.getLabel(_themeDisplay.getLocale());
-		}
-
 		return StringPool.BLANK;
 	}
 
 	private String _getTypeLabel() {
-		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class,
-				_layoutPageTemplateEntry.getClassName());
-
-		if (infoItemDetailsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -235,7 +197,6 @@ public class DisplayPageVerticalCard
 	private final boolean _allowedMappedContentType;
 	private final Layout _draftLayout;
 	private final boolean _existsMappedContentType;
-	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

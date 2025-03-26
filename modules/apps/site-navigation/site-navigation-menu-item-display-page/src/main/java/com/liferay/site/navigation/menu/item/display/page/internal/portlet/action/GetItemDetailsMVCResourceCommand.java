@@ -5,19 +5,7 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
-import com.liferay.info.field.InfoField;
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -71,19 +59,6 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			String itemType = _getItemType(className, themeDisplay);
-
-			if (Validator.isNotNull(itemType)) {
-				jsonObject.put("itemType", itemType);
-			}
-
-			String itemSubtype = _getItemSubtype(
-				className, classPK, classTypeId, themeDisplay);
-
-			if (Validator.isNotNull(itemSubtype)) {
-				jsonObject.put("itemSubtype", itemSubtype);
-			}
-
 			jsonObject.put(
 				"data", _getDetailsJSONArray(className, classPK, themeDisplay));
 
@@ -107,111 +82,17 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		LayoutDisplayPageInfoItemFieldValuesProvider
-			layoutDisplayPageInfoItemFieldValuesProvider =
-				_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
-					getLayoutDisplayPageInfoItemFieldValuesProvider(className);
-
-		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
-			return _jsonFactory.createJSONArray();
-		}
-
-		InfoItemFieldValues infoItemFieldValues =
-			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
-				classPK);
-
-		return JSONUtil.toJSONArray(
-			infoItemFieldValues.getInfoFieldValues(),
-			infoFieldValue -> JSONUtil.put(
-				"title",
-				() -> {
-					InfoField infoField = infoFieldValue.getInfoField();
-
-					return infoField.getLabel(themeDisplay.getLocale());
-				}
-			).put(
-				"value", infoFieldValue.getValue(themeDisplay.getLocale())
-			));
-	}
-
-	private String _getItemSubtype(
-		String className, long classPK, long classTypeId,
-		ThemeDisplay themeDisplay) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		if (infoItemFormVariationsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(className, classPK));
-
-		if (layoutDisplayPageObjectProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				layoutDisplayPageObjectProvider.getGroupId(),
-				String.valueOf(classTypeId));
-
-		if (infoItemFormVariation != null) {
-			return infoItemFormVariation.getLabel(themeDisplay.getLocale());
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private String _getItemType(String className, ThemeDisplay themeDisplay) {
-		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, className);
-
-		if (infoItemDetailsProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		InfoItemClassDetails infoItemClassDetails =
-			infoItemDetailsProvider.getInfoItemClassDetails();
-
-		if (infoItemClassDetails != null) {
-			return infoItemClassDetails.getLabel(themeDisplay.getLocale());
-		}
-
-		return StringPool.BLANK;
+		return _jsonFactory.createJSONArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetItemDetailsMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageInfoItemFieldValuesProviderRegistry
-		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
-
-	@Reference
-	private LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private Portal _portal;

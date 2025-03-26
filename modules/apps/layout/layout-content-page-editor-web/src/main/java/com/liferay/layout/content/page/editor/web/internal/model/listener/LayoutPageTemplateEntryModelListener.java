@@ -12,14 +12,8 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.info.permission.provider.InfoPermissionProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -112,100 +106,6 @@ public class LayoutPageTemplateEntryModelListener
 		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutPageTemplateEntry originalLayoutPageTemplateEntry,
 		LayoutStructure layoutStructure, long segmentsExperienceId) {
-
-		if (!Objects.equals(
-				formStyledLayoutStructureItem.getClassNameId(),
-				originalLayoutPageTemplateEntry.getClassNameId()) ||
-			!Objects.equals(
-				formStyledLayoutStructureItem.getClassTypeId(),
-				originalLayoutPageTemplateEntry.getClassTypeId())) {
-
-			return Collections.emptyList();
-		}
-
-		_formItemManager.removeLayoutStructureItemsJSONArray(
-			formStyledLayoutStructureItem, layoutStructure, null);
-
-		formStyledLayoutStructureItem.setClassNameId(0);
-		formStyledLayoutStructureItem.setClassTypeId(0);
-
-		if (layoutPageTemplateEntry.getClassNameId() == 0) {
-			return Collections.emptyList();
-		}
-
-		String className = _infoSearchClassMapperRegistry.getClassName(
-			_portal.getClassName(layoutPageTemplateEntry.getClassNameId()));
-
-		if (!ListUtil.exists(
-				_infoItemServiceRegistry.getInfoItemCapabilities(className),
-				infoItemCapability -> Objects.equals(
-					infoItemCapability.getKey(),
-					EditPageInfoItemCapability.KEY))) {
-
-			return Collections.emptyList();
-		}
-
-		InfoPermissionProvider infoPermissionProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoPermissionProvider.class, className);
-
-		if ((infoPermissionProvider != null) &&
-			!infoPermissionProvider.hasViewPermission(
-				PermissionThreadLocal.getPermissionChecker())) {
-
-			return Collections.emptyList();
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		if (infoItemFormVariationsProvider != null) {
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layout.getGroupId(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
-
-			if ((infoItemFormVariation == null) ||
-				((infoPermissionProvider != null) &&
-				 !infoPermissionProvider.hasViewPermission(
-					 infoItemFormVariation.getKey(), layout.getGroupId(),
-					 PermissionThreadLocal.getPermissionChecker()))) {
-
-				return Collections.emptyList();
-			}
-		}
-		else if (layoutPageTemplateEntry.getClassTypeId() != 0) {
-			return Collections.emptyList();
-		}
-
-		formStyledLayoutStructureItem.setClassNameId(
-			layoutPageTemplateEntry.getClassNameId());
-		formStyledLayoutStructureItem.setClassTypeId(
-			layoutPageTemplateEntry.getClassTypeId());
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return Collections.emptyList();
-		}
-
-		try (SafeCloseable safeCloseable =
-				UpdateLayoutStatusThreadLocal.
-					setUpdateLayoutStatusWithSafeCloseable(false)) {
-
-			return _formItemManager.addFragmentEntryLinks(
-				_jsonFactory.createJSONObject(), formStyledLayoutStructureItem,
-				true, layout, layoutStructure,
-				LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
-				serviceContext, null);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
 
 		return Collections.emptyList();
 	}
@@ -398,12 +298,6 @@ public class LayoutPageTemplateEntryModelListener
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

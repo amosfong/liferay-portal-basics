@@ -8,13 +8,6 @@ package com.liferay.layout.type.controller.display.page.internal.product.navigat
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemDetails;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -77,20 +70,6 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		InfoItemDetails infoItemDetails =
-			(InfoItemDetails)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-		InfoEditURLProvider<Object> infoEditURLProvider =
-			_infoEditURLProviderRegistry.getInfoEditURLProvider(
-				infoItemDetails.getClassName());
-
-		httpServletRequest.setAttribute(
-			DisplayPageLayoutTypeControllerWebKeys.
-				EDIT_DISPLAY_PAGE_MENU_DISPLAY_CONTEXT,
-			new EditDisplayPageMenuDisplayContext(
-				httpServletRequest, infoEditURLProvider));
-
 		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
 
@@ -123,59 +102,14 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		InfoItemDetails infoItemDetails =
-			(InfoItemDetails)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-		if (infoItemDetails == null) {
-			return false;
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				infoItemDetails.getClassName());
-
-		AssetRenderer<?> assetRenderer = null;
-
-		if (assetRendererFactory != null) {
-			InfoItemReference infoItemReference =
-				infoItemDetails.getInfoItemReference();
-
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-				return false;
-			}
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			assetRenderer = assetRendererFactory.getAssetRenderer(
-				classPKInfoItemIdentifier.getClassPK());
-		}
-
-		if (((assetRenderer == null) ||
-			 !assetRenderer.hasEditPermission(
-				 themeDisplay.getPermissionChecker())) &&
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		return true;
+	
+		return false;
 	}
 
 	@Override
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
-
-	@Reference
-	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)"

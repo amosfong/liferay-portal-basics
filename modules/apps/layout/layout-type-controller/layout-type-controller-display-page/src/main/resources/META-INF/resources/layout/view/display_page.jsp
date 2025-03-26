@@ -31,24 +31,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		<liferay-layout:render-state-max-layout-structure />
 	</c:when>
 	<c:otherwise>
-
-		<%
-		DisplayPageLayoutTypeControllerDisplayContext displayPageLayoutTypeControllerDisplayContext = (DisplayPageLayoutTypeControllerDisplayContext)request.getAttribute(DisplayPageLayoutTypeControllerWebKeys.DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT);
-		%>
-
 		<c:choose>
-			<c:when test="<%= displayPageLayoutTypeControllerDisplayContext.isForbidden(response) %>">
-				<div class="layout-content" id="main-content" role="main">
-					<clay:container-fluid
-						cssClass="pt-3"
-					>
-						<clay:alert
-							displayType="danger"
-							message="you-do-not-have-the-required-permissions-to-view-the-content-of-this-page"
-						/>
-					</clay:container-fluid>
-				</div>
-			</c:when>
 			<c:when test="<%= layout.getMasterLayoutPlid() > 0 %>">
 				<div>
 					<liferay-layout:render-fragment-layout

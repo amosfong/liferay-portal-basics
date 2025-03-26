@@ -8,19 +8,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.ERCInfoItemIdentifier;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -126,82 +116,12 @@ public class GetFragmentEntryLinksMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
-			(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
-
-		if (Validator.isNotNull(itemClassName) &&
-			((itemClassPK > 0) ||
-			 Validator.isNotNull(itemExternalReferenceCode))) {
-
-			InfoItemIdentifier infoItemIdentifier = null;
-
-			if (itemClassPK > 0) {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(itemClassPK);
-			}
-			else {
-				infoItemIdentifier = new ERCInfoItemIdentifier(
-					itemExternalReferenceCode);
-			}
-
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, itemClassName,
-					infoItemIdentifier.getInfoItemServiceFilter());
-
-			if (infoItemObjectProvider != null) {
-				Object infoItemObject = infoItemObjectProvider.getInfoItem(
-					infoItemIdentifier);
-
-				defaultFragmentRendererContext.setContextInfoItemReference(
-					new InfoItemReference(itemClassName, infoItemIdentifier));
-
-				httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_ITEM, infoItemObject);
-
-				InfoItemDetailsProvider infoItemDetailsProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemDetailsProvider.class, itemClassName);
-
-				if (infoItemDetailsProvider != null) {
-					httpServletRequest.setAttribute(
-						InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-						infoItemDetailsProvider.getInfoItemDetails(
-							infoItemObject));
-				}
-
-				httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
-					new InfoItemReference(itemClassName, infoItemIdentifier));
-			}
-
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderRegistry.
-					getLayoutDisplayPageProviderByClassName(itemClassName);
-
-			if (layoutDisplayPageProvider != null) {
-				httpServletRequest.setAttribute(
-					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-					layoutDisplayPageProvider);
-			}
-		}
-
-		try {
-			jsonObject =
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					defaultFragmentRendererContext, fragmentEntryLink,
-					_portal.getHttpServletRequest(resourceRequest),
-					_portal.getHttpServletResponse(resourceResponse),
-					layoutStructure);
-		}
-		finally {
-			httpServletRequest.removeAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-
-			httpServletRequest.setAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-				currentLayoutDisplayPageProvider);
-		}
+		jsonObject =
+			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+				defaultFragmentRendererContext, fragmentEntryLink,
+				_portal.getHttpServletRequest(resourceRequest),
+				_portal.getHttpServletResponse(resourceResponse),
+				layoutStructure);
 
 		if (SessionErrors.contains(
 				httpServletRequest, "fragmentEntryContentInvalid")) {
@@ -224,14 +144,7 @@ public class GetFragmentEntryLinksMVCResourceCommand
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private Portal _portal;

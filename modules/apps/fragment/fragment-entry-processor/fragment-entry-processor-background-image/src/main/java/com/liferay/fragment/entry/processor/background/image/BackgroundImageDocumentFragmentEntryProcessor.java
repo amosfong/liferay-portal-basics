@@ -7,14 +7,9 @@ package com.liferay.fragment.entry.processor.background.image;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.entry.processor.util.AnalyticsAttributesUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,9 +55,6 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 			return;
 		}
 
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
-			new HashMap<>();
-
 		for (Element element :
 				document.getElementsByAttribute(
 					"data-lfr-background-image-id")) {
@@ -77,14 +69,6 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				editableValuesJSONObject.getJSONObject(id);
 
 			String value = StringPool.BLANK;
-
-			Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
-				editableValueJSONObject, infoDisplaysFieldValues,
-				fragmentEntryProcessorContext);
-
-			if (fieldValue != null) {
-				value = _getImageURL(fieldValue);
-			}
 
 			if (Validator.isNull(value)) {
 				value = _fragmentEntryProcessorHelper.getEditableValue(
@@ -117,33 +101,6 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				sb.append(value);
 				sb.append("); background-size: cover;");
 
-				if (fileEntryId == 0) {
-					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						editableValueJSONObject.getLong("classNameId"),
-						editableValueJSONObject.getLong("classPK"),
-						editableValueJSONObject.getString("fieldId"),
-						fragmentEntryProcessorContext.getLocale());
-				}
-
-				InfoItemReference contextInfoItemReference =
-					fragmentEntryProcessorContext.getContextInfoItemReference();
-
-				if ((fileEntryId == 0) && (contextInfoItemReference != null)) {
-					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						contextInfoItemReference,
-						editableValueJSONObject.getString("collectionFieldId"),
-						fragmentEntryProcessorContext.getLocale());
-
-					if (fileEntryId == 0) {
-						fileEntryId =
-							_fragmentEntryProcessorHelper.getFileEntryId(
-								contextInfoItemReference,
-								editableValueJSONObject.getString(
-									"mappedField"),
-								fragmentEntryProcessorContext.getLocale());
-					}
-				}
-
 				if (fileEntryId > 0) {
 					sb.append(" --background-image-file-entry-id: ");
 					sb.append(fileEntryId);
@@ -158,16 +115,6 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 				element.removeAttr("data-lfr-background-image-id");
 			}
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
-				fragmentEntryProcessorContext.isViewMode()) {
-
-				AnalyticsAttributesUtil.addAnalyticsAttributes(
-					editableValueJSONObject, element,
-					fragmentEntryProcessorContext,
-					_fragmentEntryProcessorHelper, infoDisplaysFieldValues,
-					_infoItemServiceRegistry);
-			}
 		}
 	}
 
@@ -178,20 +125,11 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 			return fieldValueJSONObject.getString("url");
 		}
 
-		if (fieldValue instanceof WebImage) {
-			WebImage webImage = (WebImage)fieldValue;
-
-			return String.valueOf(webImage.toJSONObject());
-		}
-
 		return String.valueOf(fieldValue);
 	}
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

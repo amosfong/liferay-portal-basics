@@ -11,11 +11,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,54 +61,6 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 
-		InfoItemReference infoItemReference =
-			fragmentRendererContext.getContextInfoItemReference();
-
-		if (infoItemReference != null) {
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					infoItemReference.getClassName(),
-					infoItemIdentifier.getInfoItemServiceFilter());
-
-			try {
-				Object infoItem = infoItemObjectProvider.getInfoItem(
-					infoItemIdentifier);
-
-				if (infoItem instanceof ClassedModel) {
-					ClassedModel classedModel = (ClassedModel)infoItem;
-
-					Serializable primaryKeyObj =
-						classedModel.getPrimaryKeyObj();
-
-					if (!Objects.equals(
-							classedModel.getModelClassName(),
-							AssetEntry.class.getName())) {
-
-						return new Tuple(
-							classedModel.getModelClassName(), primaryKeyObj);
-					}
-
-					assetEntry = assetEntryLocalService.fetchAssetEntry(
-						(Long)primaryKeyObj);
-
-					if (assetEntry != null) {
-						return new Tuple(
-							portal.getClassName(assetEntry.getClassNameId()),
-							assetEntry.getClassPK());
-					}
-				}
-			}
-			catch (NoSuchInfoItemException noSuchInfoItemException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchInfoItemException);
-				}
-			}
-		}
-
 		return new Tuple(
 			fragmentEntryLink.getClassName(), fragmentEntryLink.getClassPK());
 	}
@@ -123,9 +70,6 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;
-
-	@Reference
-	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	protected Portal portal;

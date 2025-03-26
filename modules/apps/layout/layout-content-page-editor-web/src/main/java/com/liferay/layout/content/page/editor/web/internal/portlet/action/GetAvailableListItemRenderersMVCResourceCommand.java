@@ -5,11 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
-import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
-import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -51,86 +46,9 @@ public class GetAvailableListItemRenderersMVCResourceCommand
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		String itemType = ParamUtil.getString(resourceRequest, "itemType");
-		String itemSubtype = ParamUtil.getString(
-			resourceRequest, "itemSubtype");
-
-		String listStyle = ParamUtil.getString(resourceRequest, "listStyle");
-
-		InfoListRenderer<?> infoListRenderer =
-			_infoListRendererRegistry.getInfoListRenderer(listStyle);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		for (InfoItemRenderer<?> infoItemRenderer :
-				infoListRenderer.getAvailableInfoItemRenderers()) {
-
-			if (!infoItemRenderer.isAvailable()) {
-				continue;
-			}
-
-			if (infoItemRenderer instanceof InfoItemTemplatedRenderer) {
-				JSONArray templatesJSONArray = _jsonFactory.createJSONArray();
-
-				InfoItemTemplatedRenderer<Object> infoItemTemplatedRenderer =
-					(InfoItemTemplatedRenderer<Object>)infoItemRenderer;
-
-				List<InfoItemRendererTemplate> infoItemRendererTemplates =
-					infoItemTemplatedRenderer.getInfoItemRendererTemplates(
-						itemType, itemSubtype, themeDisplay.getLocale());
-
-				if (infoItemRendererTemplates.isEmpty()) {
-					continue;
-				}
-
-				Collections.sort(
-					infoItemRendererTemplates,
-					Comparator.comparing(InfoItemRendererTemplate::getLabel));
-
-				for (InfoItemRendererTemplate infoItemRendererTemplate :
-						infoItemRendererTemplates) {
-
-					templatesJSONArray.put(
-						JSONUtil.put(
-							"key", infoItemRenderer.getKey()
-						).put(
-							"label", infoItemRendererTemplate.getLabel()
-						).put(
-							"templateKey",
-							infoItemRendererTemplate.getTemplateKey()
-						));
-				}
-
-				jsonArray.put(
-					JSONUtil.put(
-						"key", infoItemRenderer.getKey()
-					).put(
-						"label",
-						infoItemTemplatedRenderer.
-							getInfoItemRendererTemplatesGroupLabel(
-								itemType, itemSubtype, themeDisplay.getLocale())
-					).put(
-						"templates", templatesJSONArray
-					));
-			}
-			else {
-				jsonArray.put(
-					JSONUtil.put(
-						"key", infoItemRenderer.getKey()
-					).put(
-						"label",
-						infoItemRenderer.getLabel(themeDisplay.getLocale())
-					));
-			}
-		}
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
-
-	@Reference
-	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

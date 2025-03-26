@@ -5,11 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.RelatedInfoItem;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.RelatedInfoItemProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -59,57 +54,10 @@ public class GetInfoItemOneToManyRelationshipsMVCResourceCommand
 
 			return;
 		}
-
-		RelatedInfoItemProvider<?> relatedInfoItemProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				RelatedInfoItemProvider.class, className.getValue());
-
-		if (relatedInfoItemProvider == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONArray());
-
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		for (RelatedInfoItem relatedInfoItem :
-				relatedInfoItemProvider.getRelatedInfoItems()) {
-
-			InfoItemDetailsProvider<?> infoItemDetailsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemDetailsProvider.class,
-					relatedInfoItem.getClassName());
-
-			InfoItemClassDetails infoItemClassDetails =
-				infoItemDetailsProvider.getInfoItemClassDetails();
-
-			jsonArray.put(
-				JSONUtil.put(
-					"classNameId",
-					_classNameLocalService.getClassNameId(
-						infoItemClassDetails.getClassName())
-				).put(
-					"label",
-					infoItemClassDetails.getLabel(themeDisplay.getLocale())
-				).put(
-					"name", relatedInfoItem.getName()
-				));
-		}
-
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonArray);
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

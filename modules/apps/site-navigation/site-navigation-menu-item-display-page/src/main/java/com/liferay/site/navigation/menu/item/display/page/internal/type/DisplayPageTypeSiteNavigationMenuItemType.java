@@ -7,11 +7,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -121,16 +117,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public String getAddTitle(Locale locale) {
 		String label = _displayPageTypeContext.getLabel(locale);
 
-		LayoutDisplayPageMultiSelectionProvider<?>
-			layoutDisplayPageMultiSelectionProvider =
-				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProvider();
-
-		if (layoutDisplayPageMultiSelectionProvider != null) {
-			label = layoutDisplayPageMultiSelectionProvider.getPluralLabel(
-				locale);
-		}
-
 		return LanguageUtil.format(locale, "select-x", label);
 	}
 
@@ -167,20 +153,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		InfoItemItemSelectorCriterion itemSelectorCriterion =
-			new InfoItemItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoItemItemSelectorReturnType());
-		itemSelectorCriterion.setItemType(
-			_displayPageTypeContext.getClassName());
-		itemSelectorCriterion.setMultiSelection(isMultiSelection());
-
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectItem",
-				itemSelectorCriterion)
+				renderResponse.getNamespace() + "selectItem")
 		).buildString();
 	}
 
@@ -311,18 +287,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws PortalException {
 
-		InfoItemPermissionProvider infoItemPermissionProvider =
-			_displayPageTypeContext.getInfoItemPermissionProvider();
-
-		if (infoItemPermissionProvider == null) {
-			return true;
-		}
-
-		return infoItemPermissionProvider.hasPermission(
-			permissionChecker,
-			_displayPageTypeContext.getInfoItemReference(
-				siteNavigationMenuItem),
-			ActionKeys.VIEW);
+		return true;
 	}
 
 	@Override
@@ -381,15 +346,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean isMultiSelection() {
-		LayoutDisplayPageMultiSelectionProvider<?>
-			layoutDisplayPageMultiSelectionProvider =
-				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProvider();
-
-		if (layoutDisplayPageMultiSelectionProvider != null) {
-			return true;
-		}
-
 		return false;
 	}
 

@@ -5,8 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
@@ -135,11 +133,8 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 			DisplayPageDisplayContext.class.getName(),
 			new DisplayPageDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
-				_infoItemServiceRegistry,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse)));
-		renderRequest.setAttribute(
-			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
 		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebConfiguration.class.getName(),
 			_layoutPageTemplateAdminWebConfiguration);
@@ -157,12 +152,6 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesPortlet.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;
