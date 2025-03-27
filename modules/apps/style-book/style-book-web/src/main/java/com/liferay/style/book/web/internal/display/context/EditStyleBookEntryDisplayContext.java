@@ -5,13 +5,8 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
-import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
@@ -89,9 +84,6 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_fragmentCollectionContributorRegistry =
-			(FragmentCollectionContributorRegistry)renderRequest.getAttribute(
-				StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
@@ -187,19 +179,10 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getFragmentCollectionItemSelectorURL() {
-		FragmentCollectionItemSelectorCriterion
-			fragmentCollectionItemSelectorCriterion =
-				new FragmentCollectionItemSelectorCriterion();
-
-		fragmentCollectionItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(
-				new FragmentCollectionItemSelectorReturnType());
-
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "selectPreviewItem",
-				fragmentCollectionItemSelectorCriterion));
+				_renderResponse.getNamespace() + "selectPreviewItem"));
 	}
 
 	private JSONObject _getFragmentCollectionOptionJSONObject() {
@@ -220,56 +203,20 @@ public class EditStyleBookEntryDisplayContext {
 						FragmentCollectionCreateDateComparator.getInstance(
 							false));
 
-				JSONObject[] fragmentCollectionContributorJSONObjects =
-					new JSONObject[0];
-
-				if (fragmentCollections.size() < 4) {
-					List<FragmentCollectionContributor>
-						fragmentCollectionContributors =
-							_fragmentCollectionContributorRegistry.
-								getFragmentCollectionContributors();
-
-					Collections.sort(
-						fragmentCollectionContributors,
-						new FragmentCollectionContributorNameComparator(
-							_themeDisplay.getLocale()));
-
-					List<FragmentCollectionContributor>
-						filteredFragmentCollectionContributors =
-							ListUtil.subList(
-								fragmentCollectionContributors, 0,
-								4 - fragmentCollections.size());
-
-					fragmentCollectionContributorJSONObjects =
-						TransformUtil.transformToArray(
-							filteredFragmentCollectionContributors,
-							fragmentCollectionContributor -> JSONUtil.put(
-								"name", fragmentCollectionContributor.getName()
-							).put(
-								"url",
-								_getPreviewFragmentCollectionURL(
-									fragmentCollectionContributor.
-										getFragmentCollectionKey(),
-									CompanyConstants.SYSTEM)
-							),
-							JSONObject.class);
-				}
-
 				return JSONUtil.putAll(
-					ArrayUtil.append(
-						(JSONObject[])TransformUtil.transformToArray(
-							fragmentCollections,
-							fragmentCollection -> JSONUtil.put(
-								"name", fragmentCollection.getName()
-							).put(
-								"url",
-								_getPreviewFragmentCollectionURL(
-									fragmentCollection.
-										getFragmentCollectionKey(),
-									fragmentCollection.getGroupId())
-							),
-							JSONObject.class),
-						fragmentCollectionContributorJSONObjects));
+					(JSONObject[])TransformUtil.transformToArray(
+						fragmentCollections,
+						fragmentCollection -> JSONUtil.put(
+							"name", fragmentCollection.getName()
+						).put(
+							"url",
+							_getPreviewFragmentCollectionURL(
+								fragmentCollection.
+									getFragmentCollectionKey(),
+								fragmentCollection.getGroupId())
+						),
+						JSONObject.class)
+					);
 			}
 		).put(
 			"totalLayouts", fragmentCollectionsCount
@@ -284,15 +231,7 @@ public class EditStyleBookEntryDisplayContext {
 					_themeDisplay.getCompanyGroupId()
 				});
 
-		if (_fragmentCollectionContributorRegistry == null) {
-			return fragmentCollectionsCount;
-		}
-
-		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorRegistry.
-				getFragmentCollectionContributors();
-
-		return fragmentCollectionsCount + fragmentCollectionContributors.size();
+		return fragmentCollectionsCount;
 	}
 
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
@@ -593,8 +532,6 @@ public class EditStyleBookEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());
 
-	private final FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;

@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.renderer.react.internal.renderer;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -130,31 +129,11 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		_fragmentEntryLinkJSModuleInitializerHelper.ensureInitialized();
 	}
 
-	private FragmentEntry _getContributedFragmentEntry(
-		FragmentEntryLink fragmentEntryLink) {
-
-		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
-			_fragmentCollectionContributorRegistry.getFragmentEntries();
-
-		return fragmentCollectionContributorEntries.get(
-			fragmentEntryLink.getRendererKey());
-	}
-
 	private FragmentEntryLink _getFragmentEntryLink(
 		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
-
-		FragmentEntry fragmentEntry = _getContributedFragmentEntry(
-			fragmentEntryLink);
-
-		if (fragmentEntry != null) {
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setType(fragmentEntry.getType());
-		}
 
 		return fragmentEntryLink;
 	}
@@ -250,10 +229,6 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 		return sb.toString();
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

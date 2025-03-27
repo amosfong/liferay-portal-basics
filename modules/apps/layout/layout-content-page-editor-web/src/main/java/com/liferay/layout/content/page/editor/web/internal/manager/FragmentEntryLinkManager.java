@@ -7,7 +7,6 @@ package com.liferay.layout.content.page.editor.web.internal.manager;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
@@ -89,10 +88,7 @@ public class FragmentEntryLinkManager {
 			return fragmentEntry;
 		}
 
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorRegistry.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
+		return null;
 	}
 
 	public Set<String> getFragmentEntryLinkFieldTypes(
@@ -615,10 +611,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

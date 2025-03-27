@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -57,10 +56,6 @@ public class PreviewFragmentCollectionMVCResourceCommand
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
-
-		httpServletRequest.setAttribute(
-			StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-			_fragmentCollectionContributorRegistry);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
@@ -121,10 +116,6 @@ public class PreviewFragmentCollectionMVCResourceCommand
 
 		return unsyncStringWriter.toString();
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

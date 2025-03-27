@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -140,18 +139,8 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				groupId, fragmentEntryKey);
 
-		if (fragmentEntry == null) {
-			fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					fragmentEntryKey);
-		}
-
 		return fragmentEntry;
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

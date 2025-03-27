@@ -5,8 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.manager;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.fragment.model.FragmentEntry;
@@ -94,78 +92,14 @@ public class FormItemManager {
 			String[] uniqueInfoFieldIds)
 		throws PortalException {
 
-		FragmentCollectionContributor fragmentCollectionContributor =
-			_fragmentCollectionContributorRegistry.
-				getFragmentCollectionContributor("INPUTS");
+		errorJSONObject.put(
+			"errorMessage",
+			_language.get(
+				locale,
+				"your-form-could-not-be-loaded-because-fragments-are-not-" +
+					"available"));
 
-		if (fragmentCollectionContributor == null) {
-			errorJSONObject.put(
-				"errorMessage",
-				_language.get(
-					locale,
-					"your-form-could-not-be-loaded-because-fragments-are-not-" +
-						"available"));
-
-			return Collections.emptyList();
-		}
-
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem =
-			_getMasterDropZoneLayoutStructureItem(layout);
-		TreeSet<String> missingInputTypes = new TreeSet<>();
-
-		JSONObject defaultInputFragmentEntryKeysJSONObject =
-			_defaultInputFragmentEntryConfigurationProvider.
-				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
-
-		if (includeSubmitButton) {
-			FragmentEntry fragmentEntry = _getFragmentEntry(
-				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
-				DefaultInputFragmentEntryConfigurationProvider.
-					FORM_INPUT_SUBMIT_BUTTON);
-
-			if ((fragmentEntry == null) ||
-				!_isAllowedFragmentEntryKey(
-					fragmentEntry.getFragmentEntryKey(),
-					masterDropZoneLayoutStructureItem)) {
-
-				missingInputTypes.add(_language.get(locale, "submit-button"));
-			}
-			else {
-				addedFragmentEntryLinks.add(
-					_addFragmentEntryLink(
-						formStyledLayoutStructureItem, fragmentEntry,
-						layout, layoutStructure, segmentsExperienceId,
-						serviceContext));
-			}
-		}
-
-		if (missingInputTypes.size() == 1) {
-			errorJSONObject.put(
-				"errorMessage",
-				_language.format(
-					locale,
-					"some-fragments-are-missing.-x-fields-cannot-have-an-" +
-						"associated-fragment-or-cannot-be-available-in-master",
-					missingInputTypes.first()));
-		}
-		else if (missingInputTypes.size() > 1) {
-			errorJSONObject.put(
-				"errorMessage",
-				_language.format(
-					locale,
-					"some-fragments-are-missing.-x-and-x-fields-cannot-have-" +
-						"an-associated-fragment-or-cannot-be-available-in-" +
-							"master",
-					new String[] {
-						StringUtil.merge(
-							missingInputTypes.headSet(missingInputTypes.last()),
-							StringPool.COMMA_AND_SPACE),
-						missingInputTypes.last()
-					}));
-		}
-
-		return addedFragmentEntryLinks;
+		return Collections.emptyList();
 	}
 
 	public LayoutStructureItemChanges changeToMultistepFormType(
@@ -506,14 +440,6 @@ public class FormItemManager {
 			return null;
 		}
 
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				jsonObject.getString("key"));
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
 		Group group = _groupLocalService.fetchGroup(
 			companyId, jsonObject.getString("groupKey"));
 
@@ -586,10 +512,6 @@ public class FormItemManager {
 	@Reference
 	private DefaultInputFragmentEntryConfigurationProvider
 		_defaultInputFragmentEntryConfigurationProvider;
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -110,32 +109,16 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			return fragmentEntryKey;
 		}
 
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntryKey;
-		}
-
-		FragmentComposition fragmentComposition =
-			_fragmentCollectionContributorRegistry.getFragmentComposition(
-				fragmentEntryKey);
-
-		if (fragmentComposition != null) {
-			return fragmentEntryKey;
-		}
-
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+		FragmentEntry fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
 			groupId, fragmentEntryKey);
 
 		if (fragmentEntry != null) {
 			return _getFragmentUniqueKey(fragmentEntryKey, groupId);
 		}
 
-		fragmentComposition =
+		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.fetchFragmentComposition(
 				groupId, fragmentEntryKey);
 
@@ -276,14 +259,8 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			}
 
 			FragmentComposition fragmentComposition =
-				_fragmentCollectionContributorRegistry.getFragmentComposition(
-					key);
-
-			if (fragmentComposition == null) {
-				fragmentComposition =
-					_fragmentCompositionService.fetchFragmentComposition(
-						groupId, key);
-			}
+				_fragmentCompositionService.fetchFragmentComposition(
+					groupId, key);
 
 			if (fragmentComposition == null) {
 				continue;
@@ -320,30 +297,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 	private Map<String, Map<String, Object>> _getLayoutElementMaps(
 		PermissionChecker permissionChecker) {
 
-		if (_layoutElementMaps != null) {
-			return _layoutElementMaps;
-		}
-
-		Map<String, Map<String, Object>> layoutElementMaps = new HashMap<>();
-
-		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
-			_fragmentCollectionManager.getLayoutElementMapsListMap(
-				permissionChecker);
-
-		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				layoutElementMapsListMap.entrySet()) {
-
-			for (Map<String, Object> layoutElementMap : entry.getValue()) {
-				String fragmentEntryKey = (String)layoutElementMap.get(
-					"fragmentEntryKey");
-
-				layoutElementMaps.put(fragmentEntryKey, layoutElementMap);
-			}
-		}
-
-		_layoutElementMaps = layoutElementMaps;
-
-		return _layoutElementMaps;
+		return new HashMap<>();
 	}
 
 	private DropZoneLayoutStructureItem _getMasterDropZoneLayoutStructureItem(
@@ -461,10 +415,6 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateFragmentsHighlightedConfigurationMVCActionCommand.class);
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCollectionManager _fragmentCollectionManager;

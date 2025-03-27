@@ -361,10 +361,6 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_collection_field")
 			).put(
-				"getCollectionFiltersURL",
-				_getResourceURL(
-					"/layout_content_page_editor/get_collection_filters")
-			).put(
 				"getCollectionSupportedFiltersURL",
 				_getResourceURL(
 					"/layout_content_page_editor" +

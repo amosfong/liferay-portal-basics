@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -200,25 +199,12 @@ public class FragmentRendererControllerImpl
 	private String _translateConfigurationFields(
 		JSONObject jsonObject, Locale locale) {
 
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_fragmentCollectionContributorRegistry.
-					getResourceBundleLoader());
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
 		return _fragmentEntryConfigurationParser.translateConfiguration(
-			jsonObject, resourceBundle);
+			jsonObject, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentRendererControllerImpl.class);
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

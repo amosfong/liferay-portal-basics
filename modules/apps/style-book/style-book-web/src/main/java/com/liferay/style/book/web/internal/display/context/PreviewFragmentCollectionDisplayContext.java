@@ -5,8 +5,6 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
@@ -39,11 +37,6 @@ public class PreviewFragmentCollectionDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
-
-		_fragmentCollectionContributorRegistry =
-			(FragmentCollectionContributorRegistry)
-				httpServletRequest.getAttribute(
-					StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 	}
 
 	public String getFragmentCollectionKey() {
@@ -69,15 +62,6 @@ public class PreviewFragmentCollectionDisplayContext {
 		if (fragmentCollection != null) {
 			fragmentEntries = FragmentEntryLocalServiceUtil.getFragmentEntries(
 				fragmentCollection.getFragmentCollectionId());
-		}
-
-		FragmentCollectionContributor fragmentCollectionContributor =
-			_fragmentCollectionContributorRegistry.
-				getFragmentCollectionContributor(getFragmentCollectionKey());
-
-		if (fragmentCollectionContributor != null) {
-			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
-				_httpServletRequest.getLocale());
 		}
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
@@ -140,8 +124,6 @@ public class PreviewFragmentCollectionDisplayContext {
 		return _groupId;
 	}
 
-	private final FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 	private String _fragmentCollectionKey;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;

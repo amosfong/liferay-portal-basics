@@ -6,7 +6,6 @@
 package com.liferay.fragment.model.impl;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,20 +34,6 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 		if (Validator.isNull(getRendererKey())) {
 			return false;
-		}
-
-		FragmentCollectionContributorRegistry
-			fragmentCollectionContributorRegistry =
-				_fragmentCollectionContributorRegistrySnapshot.get();
-
-		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorRegistry.getFragmentEntries();
-
-		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
-			getRendererKey());
-
-		if (contributedFragmentEntry != null) {
-			return contributedFragmentEntry.isCacheable();
 		}
 
 		return false;
@@ -139,10 +124,5 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 		return false;
 	}
-
-	private static final Snapshot<FragmentCollectionContributorRegistry>
-		_fragmentCollectionContributorRegistrySnapshot = new Snapshot<>(
-			FragmentEntryLinkImpl.class,
-			FragmentCollectionContributorRegistry.class);
 
 }

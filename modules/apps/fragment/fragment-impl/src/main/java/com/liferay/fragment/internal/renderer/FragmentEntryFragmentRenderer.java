@@ -7,7 +7,6 @@ package com.liferay.fragment.internal.renderer;
 
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.configuration.FragmentJavaScriptConfiguration;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntry;
@@ -112,45 +111,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private FragmentEntry _getContributedFragmentEntry(
-		FragmentEntryLink fragmentEntryLink) {
-
-		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
-			_fragmentCollectionContributorRegistry.getFragmentEntries();
-
-		return fragmentCollectionContributorEntries.get(
-			fragmentEntryLink.getRendererKey());
-	}
-
 	private FragmentEntryLink _getFragmentEntryLink(
 		FragmentRendererContext fragmentRendererContext) {
 
-		FragmentEntryLink fragmentEntryLink =
-			fragmentRendererContext.getFragmentEntryLink();
-
-		FragmentEntry fragmentEntry = _getContributedFragmentEntry(
-			fragmentEntryLink);
-
-		if (fragmentEntry != null) {
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setConfiguration(
-				fragmentEntry.getConfiguration());
-			fragmentEntryLink.setType(fragmentEntry.getType());
-		}
-
-		return fragmentEntryLink;
+		return fragmentRendererContext.getFragmentEntryLink();
 	}
 
 	private String _getFragmentEntryName(FragmentEntryLink fragmentEntryLink) {
 		FragmentEntry fragmentEntry = null;
-
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
-			fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					fragmentEntryLink.getRendererKey());
-		}
 
 		if (fragmentEntry == null) {
 			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
@@ -202,13 +170,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntry fragmentEntry = null;
 
 		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
-			fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					fragmentEntryLink.getRendererKey());
-
-			if (fragmentEntry == null) {
-				return false;
-			}
+			return false;
 		}
 
 		if (fragmentEntry == null) {
@@ -492,10 +454,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

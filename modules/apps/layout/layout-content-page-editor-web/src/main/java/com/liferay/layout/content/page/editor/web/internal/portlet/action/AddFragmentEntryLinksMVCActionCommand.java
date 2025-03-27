@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
@@ -130,18 +129,12 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 			String fragmentEntryKey = ParamUtil.getString(
 				actionRequest, "fragmentEntryKey");
+			
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 			FragmentComposition fragmentComposition =
-				_fragmentCollectionContributorRegistry.getFragmentComposition(
-					fragmentEntryKey);
-
-			if (fragmentComposition == null) {
-				long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-				fragmentComposition =
-					_fragmentCompositionService.fetchFragmentComposition(
-						groupId, fragmentEntryKey);
-			}
+				_fragmentCompositionService.fetchFragmentComposition(
+					groupId, fragmentEntryKey);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -210,10 +203,6 @@ public class AddFragmentEntryLinksMVCActionCommand
 			);
 		}
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCompositionService _fragmentCompositionService;

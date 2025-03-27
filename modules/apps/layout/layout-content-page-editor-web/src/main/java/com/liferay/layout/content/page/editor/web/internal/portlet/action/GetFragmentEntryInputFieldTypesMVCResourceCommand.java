@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
@@ -93,12 +92,6 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				groupId, fragmentEntryKey);
 
-		if (fragmentEntry == null) {
-			fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					fragmentEntryKey);
-		}
-
 		if (fragmentEntry != null) {
 			return fragmentEntry.getTypeOptions();
 		}
@@ -112,10 +105,6 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 
 		return StringPool.BLANK;
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

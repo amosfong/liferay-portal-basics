@@ -6,8 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.manager;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -16,7 +14,6 @@ import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.util.PortalPreferencesUtil;
@@ -327,73 +324,6 @@ public class FragmentCollectionManager {
 		return _jsonFactory.createJSONArray();
 	}
 
-	private Map<String, Map<String, Object>>
-		_getFragmentCollectionContributorMaps(
-			boolean hideInputFragments,
-			Set<String> highlightedFragmentEntryKeys,
-			DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem,
-			ThemeDisplay themeDisplay) {
-
-		Map<String, Map<String, Object>> fragmentCollectionContributorMaps =
-			new LinkedHashMap<>();
-
-		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorRegistry.
-				getFragmentCollectionContributors();
-
-		Collections.sort(
-			fragmentCollectionContributors,
-			new FragmentCollectionContributorNameComparator(
-				themeDisplay.getLocale()));
-
-		for (FragmentCollectionContributor fragmentCollectionContributor :
-				fragmentCollectionContributors) {
-
-			List<FragmentComposition> fragmentCompositions =
-				fragmentCollectionContributor.getFragmentCompositions(
-					themeDisplay.getLocale());
-			List<FragmentEntry> fragmentEntries =
-				fragmentCollectionContributor.getFragmentEntries(
-					themeDisplay.getLocale());
-
-			if (ListUtil.isEmpty(fragmentCompositions) &&
-				ListUtil.isEmpty(fragmentEntries)) {
-
-				continue;
-			}
-
-			List<Map<String, Object>> fragmentEntryMapsList =
-				_getFragmentEntryMapsList(
-					hideInputFragments, fragmentEntries,
-					highlightedFragmentEntryKeys,
-					masterDropZoneLayoutStructureItem, themeDisplay);
-
-			fragmentEntryMapsList.addAll(
-				_getFragmentCompositionMapsList(
-					fragmentCompositions, highlightedFragmentEntryKeys,
-					masterDropZoneLayoutStructureItem, themeDisplay));
-
-			if (ListUtil.isEmpty(fragmentEntryMapsList)) {
-				continue;
-			}
-
-			fragmentCollectionContributorMaps.put(
-				fragmentCollectionContributor.getFragmentCollectionKey(),
-				HashMapBuilder.<String, Object>put(
-					"fragmentCollectionId",
-					fragmentCollectionContributor.getFragmentCollectionKey()
-				).put(
-					"fragmentEntries", fragmentEntryMapsList
-				).put(
-					"name",
-					fragmentCollectionContributor.getName(
-						themeDisplay.getLocale())
-				).build());
-		}
-
-		return fragmentCollectionContributorMaps;
-	}
-
 	private List<Map<String, Object>> _getFragmentCompositionMapsList(
 		List<FragmentComposition> fragmentCompositions,
 		Set<String> highlightedFragmentEntryKeys,
@@ -561,9 +491,7 @@ public class FragmentCollectionManager {
 		ThemeDisplay themeDisplay) {
 
 		Map<String, Map<String, Object>> fragmentCollectionMaps =
-			_getFragmentCollectionContributorMaps(
-				hideInputFragments, highlightedFragmentEntryKeys,
-				masterDropZoneLayoutStructureItem, themeDisplay);
+			new HashMap<>();
 
 		fragmentCollectionMaps = _getDynamicFragmentCollectionMaps(
 			fragmentCollectionMaps, hideInputFragments,
@@ -678,10 +606,6 @@ public class FragmentCollectionManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionManager.class);
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
