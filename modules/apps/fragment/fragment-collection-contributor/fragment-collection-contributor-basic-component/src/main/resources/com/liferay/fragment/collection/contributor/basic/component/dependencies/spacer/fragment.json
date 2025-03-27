@@ -1,8 +1,0 @@
-{
-	"cacheable": true,
-	"fragmentEntryKey": "spacer",
-	"icon": "separator",
-	"name": "spacer",
-	"thumbnail": "spacer.png",
-	"type": "component"
-}

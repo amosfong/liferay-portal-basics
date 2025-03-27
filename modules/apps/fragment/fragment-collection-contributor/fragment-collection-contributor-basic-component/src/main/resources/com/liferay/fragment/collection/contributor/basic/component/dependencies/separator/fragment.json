@@ -1,8 +1,0 @@
-{
-	"cacheable": true,
-	"fragmentEntryKey": "separator",
-	"icon": "hr",
-	"name": "separator",
-	"thumbnail": "separator.png",
-	"type": "component"
-}
