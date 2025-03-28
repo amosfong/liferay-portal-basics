@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -71,9 +70,6 @@ public class DDMFormValuesTransformer {
 
 			if (StringUtil.equals(type, DDMFormFieldType.DOCUMENT_LIBRARY)) {
 				type = DDMFormFieldTypeConstants.DOCUMENT_LIBRARY;
-			}
-			else if (StringUtil.equals(type, DDMFormFieldType.LINK_TO_PAGE)) {
-				type = LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT;
 			}
 			else if (StringUtil.equals(type, DDMFormFieldType.TEXT_HTML)) {
 				type = DDMFormFieldTypeConstants.RICH_TEXT;
