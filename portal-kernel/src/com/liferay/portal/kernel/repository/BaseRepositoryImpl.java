@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.repository;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -315,13 +314,6 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		this.assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -480,7 +472,6 @@ public abstract class BaseRepositoryImpl
 		RepositoryEntryUtil.update(repositoryEntry);
 	}
 
-	protected AssetEntryLocalService assetEntryLocalService;
 	protected CompanyLocalService companyLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected DLFolderLocalService dlFolderLocalService;

@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -57,8 +55,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 	@Override
 	public void verifyPolicy(
-		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
-		List<AssetTag> oldAssetTags,
+		Group group, Group oldGroup,
 		Map<String, Serializable> oldExpandoAttributes,
 		UnicodeProperties oldTypeSettingsUnicodeProperties) {
 	}

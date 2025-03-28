@@ -5,9 +5,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
@@ -116,25 +113,7 @@ public class PortletProviderUtil {
 		PortletProvider portletProvider = _getPortletProvider(
 			action, _serviceTrackerMap.getService(className));
 
-		if ((portletProvider == null) && _isAssetObject(className)) {
-			portletProvider = _getPortletProvider(
-				action,
-				_serviceTrackerMap.getService(AssetEntry.class.getName()));
-		}
-
 		return portletProvider;
-	}
-
-	private static boolean _isAssetObject(String className) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final ServiceTrackerMap<String, List<PortletProvider>>

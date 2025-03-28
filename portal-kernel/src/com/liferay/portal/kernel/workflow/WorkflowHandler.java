@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -39,11 +37,6 @@ public interface WorkflowHandler<T> {
 	public default void contributeServiceContext(
 		ServiceContext serviceContext) {
 	}
-
-	public AssetRenderer<T> getAssetRenderer(long classPK)
-		throws PortalException;
-
-	public AssetRendererFactory<T> getAssetRendererFactory();
 
 	public String getClassName();
 
@@ -91,8 +84,6 @@ public interface WorkflowHandler<T> {
 	public boolean include(
 		long classPK, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String template);
-
-	public boolean isAssetTypeSearchable();
 
 	public default boolean isCommentable() {
 		return true;

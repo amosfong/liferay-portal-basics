@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -338,14 +336,11 @@ public interface SiteMembershipPolicy {
 	 *
 	 * @param group the added or updated site to verify
 	 * @param oldGroup the old site
-	 * @param oldAssetCategories the old categories
-	 * @param oldAssetTags the old tags
 	 * @param oldExpandoAttributes the old expando attributes
 	 * @param oldTypeSettingsUnicodeProperties the old type settings properties
 	 */
 	public void verifyPolicy(
-			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
-			List<AssetTag> oldAssetTags,
+			Group group, Group oldGroup,
 			Map<String, Serializable> oldExpandoAttributes,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException;

@@ -5,8 +5,6 @@
 
 package com.liferay.expando.kernel.model;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 
 /**
@@ -21,14 +19,6 @@ public abstract class BaseCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getIconCssClass();
-		}
-
 		return StringPool.BLANK;
 	}
 

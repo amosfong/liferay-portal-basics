@@ -229,7 +229,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 	@Override
 	public void verifyPolicy(Group group) throws PortalException {
-		verifyPolicy(group, null, null, null, null, null);
+		verifyPolicy(group, null, null, null);
 	}
 
 	@Override
