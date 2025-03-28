@@ -104,17 +104,15 @@ public class FragmentRendererControllerImpl
 				throwable = throwable.getCause();
 			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(),
-						" with fragment entry link ",
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						" and PLID ", fragmentEntryLink.getPlid(), ": ",
-						throwable.getMessage()),
-					exception);
-			}
+			_log.error(
+				StringBundler.concat(
+					"Unable to render content of fragment entry ",
+					fragmentEntryLink.getFragmentEntryId(),
+					" with fragment entry link ",
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					" and PLID ", fragmentEntryLink.getPlid(), ": ",
+					throwable.getMessage()),
+				exception);
 
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");
