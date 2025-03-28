@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -22,8 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface UserGroupGroupRoleModel
-	extends BaseModel<UserGroupGroupRole>, CTModel<UserGroupGroupRole>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<UserGroupGroupRole>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -36,7 +33,6 @@ public interface UserGroupGroupRoleModel
 	 *
 	 * @return the primary key of this user group group role
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -44,7 +40,6 @@ public interface UserGroupGroupRoleModel
 	 *
 	 * @param primaryKey the primary key of this user group group role
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -62,22 +57,6 @@ public interface UserGroupGroupRoleModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this user group group role.
-	 *
-	 * @return the ct collection ID of this user group group role
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this user group group role.
-	 *
-	 * @param ctCollectionId the ct collection ID of this user group group role
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the user group group role ID of this user group group role.

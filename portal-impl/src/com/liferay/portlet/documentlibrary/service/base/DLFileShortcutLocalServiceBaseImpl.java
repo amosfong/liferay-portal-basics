@@ -16,7 +16,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -676,23 +674,8 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 		return DLFileShortcutLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<DLFileShortcut> getCTPersistence() {
-		return dlFileShortcutPersistence;
-	}
-
-	@Override
-	public Class<DLFileShortcut> getModelClass() {
+	protected Class<?> getModelClass() {
 		return DLFileShortcut.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLFileShortcut>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(dlFileShortcutPersistence);
 	}
 
 	protected String getModelClassName() {

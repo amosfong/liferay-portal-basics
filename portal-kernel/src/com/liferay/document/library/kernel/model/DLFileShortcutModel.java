@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -32,9 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileShortcutModel
-	extends BaseModel<DLFileShortcut>, CTModel<DLFileShortcut>,
-			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<DLFileShortcut>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -47,7 +45,6 @@ public interface DLFileShortcutModel
 	 *
 	 * @return the primary key of this document library file shortcut
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -55,7 +52,6 @@ public interface DLFileShortcutModel
 	 *
 	 * @param primaryKey the primary key of this document library file shortcut
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -73,22 +69,6 @@ public interface DLFileShortcutModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this document library file shortcut.
-	 *
-	 * @return the ct collection ID of this document library file shortcut
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this document library file shortcut.
-	 *
-	 * @param ctCollectionId the ct collection ID of this document library file shortcut
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this document library file shortcut.

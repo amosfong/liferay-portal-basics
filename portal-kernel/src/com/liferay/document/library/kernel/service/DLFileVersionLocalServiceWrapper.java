@@ -5,11 +5,8 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DLFileVersionLocalService}.
@@ -43,7 +40,11 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the document library file version that was added
 	 */
 	@Override
-	public DLFileVersion addDLFileVersion(DLFileVersion dlFileVersion) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		addDLFileVersion(
+			com.liferay.document.library.kernel.model.DLFileVersion
+				dlFileVersion) {
+
 		return _dlFileVersionLocalService.addDLFileVersion(dlFileVersion);
 	}
 
@@ -54,7 +55,9 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the new document library file version
 	 */
 	@Override
-	public DLFileVersion createDLFileVersion(long fileVersionId) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		createDLFileVersion(long fileVersionId) {
+
 		return _dlFileVersionLocalService.createDLFileVersion(fileVersionId);
 	}
 
@@ -80,7 +83,11 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the document library file version that was removed
 	 */
 	@Override
-	public DLFileVersion deleteDLFileVersion(DLFileVersion dlFileVersion) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		deleteDLFileVersion(
+			com.liferay.document.library.kernel.model.DLFileVersion
+				dlFileVersion) {
+
 		return _dlFileVersionLocalService.deleteDLFileVersion(dlFileVersion);
 	}
 
@@ -96,7 +103,8 @@ public class DLFileVersionLocalServiceWrapper
 	 * @throws PortalException if a document library file version with the primary key could not be found
 	 */
 	@Override
-	public DLFileVersion deleteDLFileVersion(long fileVersionId)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			deleteDLFileVersion(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.deleteDLFileVersion(fileVersionId);
@@ -217,7 +225,9 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DLFileVersion fetchDLFileVersion(long fileVersionId) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		fetchDLFileVersion(long fileVersionId) {
+
 		return _dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 	}
 
@@ -229,24 +239,25 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	@Override
-	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		fetchDLFileVersionByUuidAndGroupId(String uuid, long groupId) {
 
 		return _dlFileVersionLocalService.fetchDLFileVersionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
 	@Override
-	public DLFileVersion fetchLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		fetchLatestFileVersion(long fileEntryId, boolean excludeWorkingCopy) {
 
 		return _dlFileVersionLocalService.fetchLatestFileVersion(
 			fileEntryId, excludeWorkingCopy);
 	}
 
 	@Override
-	public DLFileVersion fetchLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy, int status) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		fetchLatestFileVersion(
+			long fileEntryId, boolean excludeWorkingCopy, int status) {
 
 		return _dlFileVersionLocalService.fetchLatestFileVersion(
 			fileEntryId, excludeWorkingCopy, status);
@@ -267,7 +278,8 @@ public class DLFileVersionLocalServiceWrapper
 	 * @throws PortalException if a document library file version with the primary key could not be found
 	 */
 	@Override
-	public DLFileVersion getDLFileVersion(long fileVersionId)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getDLFileVersion(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getDLFileVersion(fileVersionId);
@@ -282,8 +294,8 @@ public class DLFileVersionLocalServiceWrapper
 	 * @throws PortalException if a matching document library file version could not be found
 	 */
 	@Override
-	public DLFileVersion getDLFileVersionByUuidAndGroupId(
-			String uuid, long groupId)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getDLFileVersionByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getDLFileVersionByUuidAndGroupId(
@@ -302,7 +314,10 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the range of document library file versions
 	 */
 	@Override
-	public java.util.List<DLFileVersion> getDLFileVersions(int start, int end) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getDLFileVersions(int start, int end) {
+
 		return _dlFileVersionLocalService.getDLFileVersions(start, end);
 	}
 
@@ -314,8 +329,9 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the matching document library file versions, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getDLFileVersionsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _dlFileVersionLocalService.getDLFileVersionsByUuidAndCompanyId(
 			uuid, companyId);
@@ -332,10 +348,13 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the range of matching document library file versions, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
-			orderByComparator) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getDLFileVersionsByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFileVersion>
+						orderByComparator) {
 
 		return _dlFileVersionLocalService.getDLFileVersionsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -362,37 +381,41 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DLFileVersion getFileVersion(long fileVersionId)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getFileVersion(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getFileVersion(fileVersionId);
 	}
 
 	@Override
-	public DLFileVersion getFileVersion(long fileEntryId, String version)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getFileVersion(long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getFileVersion(fileEntryId, version);
 	}
 
 	@Override
-	public DLFileVersion getFileVersionByUuidAndGroupId(
-		String uuid, long groupId) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		getFileVersionByUuidAndGroupId(String uuid, long groupId) {
 
 		return _dlFileVersionLocalService.getFileVersionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
 	@Override
-	public java.util.List<DLFileVersion> getFileVersions(
-		long fileEntryId, int status) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getFileVersions(long fileEntryId, int status) {
 
 		return _dlFileVersionLocalService.getFileVersions(fileEntryId, status);
 	}
 
 	@Override
-	public java.util.List<DLFileVersion> getFileVersions(
-		long fileEntryId, int status, int start, int end) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+			getFileVersions(long fileEntryId, int status, int start, int end) {
 
 		return _dlFileVersionLocalService.getFileVersions(
 			fileEntryId, status, start, end);
@@ -418,8 +441,8 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DLFileVersion getLatestFileVersion(
-			long fileEntryId, boolean excludeWorkingCopy)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getLatestFileVersion(long fileEntryId, boolean excludeWorkingCopy)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getLatestFileVersion(
@@ -427,7 +450,8 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
+	public com.liferay.document.library.kernel.model.DLFileVersion
+			getLatestFileVersion(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileVersionLocalService.getLatestFileVersion(
@@ -480,33 +504,17 @@ public class DLFileVersionLocalServiceWrapper
 	 * @return the document library file version that was updated
 	 */
 	@Override
-	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion) {
+	public com.liferay.document.library.kernel.model.DLFileVersion
+		updateDLFileVersion(
+			com.liferay.document.library.kernel.model.DLFileVersion
+				dlFileVersion) {
+
 		return _dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _dlFileVersionLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<DLFileVersion> getCTPersistence() {
-		return _dlFileVersionLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DLFileVersion> getModelClass() {
-		return _dlFileVersionLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLFileVersion>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _dlFileVersionLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

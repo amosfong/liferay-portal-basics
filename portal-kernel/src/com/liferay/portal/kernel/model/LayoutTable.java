@@ -26,8 +26,6 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 
 	public final Column<LayoutTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<LayoutTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> externalReferenceCode =

@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.EmailAddress;
-
 /**
  * Provides a wrapper for {@link EmailAddressService}.
  *
@@ -26,10 +24,10 @@ public class EmailAddressServiceWrapper
 	}
 
 	@Override
-	public EmailAddress addEmailAddress(
-			String externalReferenceCode, String className, long classPK,
-			String address, long typeId, boolean primary,
-			ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
+			java.lang.String externalReferenceCode, java.lang.String className,
+			long classPK, java.lang.String address, long typeId,
+			boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.addEmailAddress(
@@ -53,15 +51,17 @@ public class EmailAddressServiceWrapper
 	 the user did not have permission to view the email address
 	 */
 	@Override
-	public EmailAddress fetchEmailAddress(long emailAddressId)
+	public com.liferay.portal.kernel.model.EmailAddress fetchEmailAddress(
+			long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.fetchEmailAddress(emailAddressId);
 	}
 
 	@Override
-	public EmailAddress fetchEmailAddressByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public com.liferay.portal.kernel.model.EmailAddress
+			fetchEmailAddressByExternalReferenceCode(
+				java.lang.String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.fetchEmailAddressByExternalReferenceCode(
@@ -69,15 +69,16 @@ public class EmailAddressServiceWrapper
 	}
 
 	@Override
-	public EmailAddress getEmailAddress(long emailAddressId)
+	public com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
+			long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.getEmailAddress(emailAddressId);
 	}
 
 	@Override
-	public java.util.List<EmailAddress> getEmailAddresses(
-			String className, long classPK)
+	public java.util.List<com.liferay.portal.kernel.model.EmailAddress>
+			getEmailAddresses(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.getEmailAddresses(className, classPK);
@@ -89,14 +90,14 @@ public class EmailAddressServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _emailAddressService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public EmailAddress updateEmailAddress(
-			String externalReferenceCode, long emailAddressId, String address,
-			long typeId, boolean primary)
+	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+			java.lang.String externalReferenceCode, long emailAddressId,
+			java.lang.String address, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.updateEmailAddress(

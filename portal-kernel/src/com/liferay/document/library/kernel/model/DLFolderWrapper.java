@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -37,7 +35,6 @@ public class DLFolderWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("folderId", getFolderId());
@@ -72,12 +69,6 @@ public class DLFolderWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -291,16 +282,6 @@ public class DLFolderWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
-	}
-
-	/**
-	 * Returns the ct collection ID of this document library folder.
-	 *
-	 * @return the ct collection ID of this document library folder
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -775,16 +756,6 @@ public class DLFolderWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this document library folder.
-	 *
-	 * @param ctCollectionId the ct collection ID of this document library folder
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the default file entry type ID of this document library folder.
 	 *
 	 * @param defaultFileEntryTypeId the default file entry type ID of this document library folder
@@ -1062,20 +1033,6 @@ public class DLFolderWrapper
 	@Override
 	public void updateTreePath(String treePath) {
 		model.updateTreePath(treePath);
-	}
-
-	@Override
-	public Map<String, Function<DLFolder, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<DLFolder, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

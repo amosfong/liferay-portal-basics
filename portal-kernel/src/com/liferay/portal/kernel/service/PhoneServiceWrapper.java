@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.Phone;
-
 /**
  * Provides a wrapper for {@link PhoneService}.
  *
@@ -26,10 +24,10 @@ public class PhoneServiceWrapper
 	}
 
 	@Override
-	public Phone addPhone(
-			String externalReferenceCode, String className, long classPK,
-			String number, String extension, long typeId, boolean primary,
-			ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.Phone addPhone(
+			java.lang.String externalReferenceCode, java.lang.String className,
+			long classPK, java.lang.String number, java.lang.String extension,
+			long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.addPhone(
@@ -45,8 +43,9 @@ public class PhoneServiceWrapper
 	}
 
 	@Override
-	public Phone fetchPhoneByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public com.liferay.portal.kernel.model.Phone
+			fetchPhoneByExternalReferenceCode(
+				java.lang.String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.fetchPhoneByExternalReferenceCode(
@@ -59,20 +58,21 @@ public class PhoneServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _phoneService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public Phone getPhone(long phoneId)
+	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.getPhone(phoneId);
 	}
 
 	@Override
-	public Phone getPhoneByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public com.liferay.portal.kernel.model.Phone
+			getPhoneByExternalReferenceCode(
+				java.lang.String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.getPhoneByExternalReferenceCode(
@@ -80,16 +80,18 @@ public class PhoneServiceWrapper
 	}
 
 	@Override
-	public java.util.List<Phone> getPhones(String className, long classPK)
+	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
+			java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.getPhones(className, classPK);
 	}
 
 	@Override
-	public Phone updatePhone(
-			String externalReferenceCode, long phoneId, String number,
-			String extension, long typeId, boolean primary)
+	public com.liferay.portal.kernel.model.Phone updatePhone(
+			java.lang.String externalReferenceCode, long phoneId,
+			java.lang.String number, java.lang.String extension, long typeId,
+			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.updatePhone(

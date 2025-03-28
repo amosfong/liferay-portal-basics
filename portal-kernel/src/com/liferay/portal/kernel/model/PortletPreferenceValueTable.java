@@ -27,9 +27,6 @@ public class PortletPreferenceValueTable
 	public final Column<PortletPreferenceValueTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<PortletPreferenceValueTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<PortletPreferenceValueTable, Long>
 		portletPreferenceValueId = createColumn(
 			"portletPreferenceValueId", Long.class, Types.BIGINT,

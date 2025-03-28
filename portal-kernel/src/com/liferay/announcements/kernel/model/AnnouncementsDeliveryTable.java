@@ -26,9 +26,6 @@ public class AnnouncementsDeliveryTable
 	public final Column<AnnouncementsDeliveryTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<AnnouncementsDeliveryTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnnouncementsDeliveryTable, Long> deliveryId =
 		createColumn(
 			"deliveryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

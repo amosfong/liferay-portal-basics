@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.UserGroup;
-
 /**
  * Provides a wrapper for {@link UserGroupService}.
  *
@@ -39,9 +37,9 @@ public class UserGroupServiceWrapper
 	}
 
 	@Override
-	public UserGroup addOrUpdateUserGroup(
-			String externalReferenceCode, String name, String description,
-			ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.UserGroup addOrUpdateUserGroup(
+			java.lang.String externalReferenceCode, java.lang.String name,
+			java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.addOrUpdateUserGroup(
@@ -77,8 +75,9 @@ public class UserGroupServiceWrapper
 	 * @return the user group
 	 */
 	@Override
-	public UserGroup addUserGroup(
-			String name, String description, ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.UserGroup addUserGroup(
+			java.lang.String name, java.lang.String description,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.addUserGroup(
@@ -104,15 +103,17 @@ public class UserGroupServiceWrapper
 	 * @return the user group with the primary key
 	 */
 	@Override
-	public UserGroup fetchUserGroup(long userGroupId)
+	public com.liferay.portal.kernel.model.UserGroup fetchUserGroup(
+			long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.fetchUserGroup(userGroupId);
 	}
 
 	@Override
-	public UserGroup fetchUserGroupByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+	public com.liferay.portal.kernel.model.UserGroup
+			fetchUserGroupByExternalReferenceCode(
+				long companyId, java.lang.String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.fetchUserGroupByExternalReferenceCode(
@@ -120,8 +121,10 @@ public class UserGroupServiceWrapper
 	}
 
 	@Override
-	public java.util.List<UserGroup> getGtUserGroups(
-		long gtUserGroupId, long companyId, long parentUserGroupId, int size) {
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		getGtUserGroups(
+			long gtUserGroupId, long companyId, long parentUserGroupId,
+			int size) {
 
 		return _userGroupService.getGtUserGroups(
 			gtUserGroupId, companyId, parentUserGroupId, size);
@@ -133,7 +136,7 @@ public class UserGroupServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _userGroupService.getOSGiServiceIdentifier();
 	}
 
@@ -144,7 +147,8 @@ public class UserGroupServiceWrapper
 	 * @return the user group with the primary key
 	 */
 	@Override
-	public UserGroup getUserGroup(long userGroupId)
+	public com.liferay.portal.kernel.model.UserGroup getUserGroup(
+			long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserGroup(userGroupId);
@@ -157,15 +161,17 @@ public class UserGroupServiceWrapper
 	 * @return the user group with the name
 	 */
 	@Override
-	public UserGroup getUserGroup(String name)
+	public com.liferay.portal.kernel.model.UserGroup getUserGroup(
+			java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserGroup(name);
 	}
 
 	@Override
-	public UserGroup getUserGroupByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public com.liferay.portal.kernel.model.UserGroup
+			getUserGroupByExternalReferenceCode(
+				java.lang.String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserGroupByExternalReferenceCode(
@@ -173,21 +179,23 @@ public class UserGroupServiceWrapper
 	}
 
 	@Override
-	public java.util.List<UserGroup> getUserGroups(long companyId)
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+			getUserGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserGroups(companyId);
 	}
 
 	@Override
-	public java.util.List<UserGroup> getUserGroups(
-		long companyId, String name, int start, int end) {
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		getUserGroups(
+			long companyId, java.lang.String name, int start, int end) {
 
 		return _userGroupService.getUserGroups(companyId, name, start, end);
 	}
 
 	@Override
-	public int getUserGroupsCount(long companyId, String name) {
+	public int getUserGroupsCount(long companyId, java.lang.String name) {
 		return _userGroupService.getUserGroupsCount(companyId, name);
 	}
 
@@ -198,7 +206,8 @@ public class UserGroupServiceWrapper
 	 * @return the user groups to which the user belongs
 	 */
 	@Override
-	public java.util.List<UserGroup> getUserUserGroups(long userId)
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+			getUserUserGroups(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserUserGroups(userId);
@@ -232,11 +241,12 @@ public class UserGroupServiceWrapper
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Override
-	public java.util.List<UserGroup> search(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator) {
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
 
 		return _userGroupService.search(
 			companyId, keywords, params, start, end, orderByComparator);
@@ -274,12 +284,12 @@ public class UserGroupServiceWrapper
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Override
-	public java.util.List<UserGroup> search(
-		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
-			orderByComparator) {
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
 
 		return _userGroupService.search(
 			companyId, name, description, params, andOperator, start, end,
@@ -300,8 +310,8 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params) {
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 
 		return _userGroupService.searchCount(companyId, keywords, params);
 	}
@@ -323,8 +333,9 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator) {
 
 		return _userGroupService.searchCount(
 			companyId, name, description, params, andOperator);
@@ -357,8 +368,10 @@ public class UserGroupServiceWrapper
 	}
 
 	@Override
-	public UserGroup updateExternalReferenceCode(
-			UserGroup userGroup, String externalReferenceCode)
+	public com.liferay.portal.kernel.model.UserGroup
+			updateExternalReferenceCode(
+				com.liferay.portal.kernel.model.UserGroup userGroup,
+				java.lang.String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.updateExternalReferenceCode(
@@ -377,9 +390,9 @@ public class UserGroupServiceWrapper
 	 * @return the user group
 	 */
 	@Override
-	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description,
-			ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
+			long userGroupId, java.lang.String name,
+			java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.updateUserGroup(

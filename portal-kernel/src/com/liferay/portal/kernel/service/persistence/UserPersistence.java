@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface UserPersistence
-	extends BasePersistence<User>, CTPersistence<User> {
+public interface UserPersistence extends BasePersistence<User> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

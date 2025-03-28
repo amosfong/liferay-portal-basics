@@ -5,10 +5,8 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.async.Async;
@@ -39,7 +37,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLAppHelperLocalServiceUtil
  * @generated
  */
-@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
@@ -63,10 +60,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void cancelCheckOuts(long groupId) throws PortalException;
-
-	public void checkAssetEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion)
-		throws PortalException;
 
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
 
@@ -172,21 +165,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void restoreFolderFromTrash(long userId, Folder folder)
-		throws PortalException;
-
-	public AssetEntry updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long assetClassPK)
-		throws PortalException;
-
-	public AssetEntry updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public AssetEntry updateAsset(
-			long userId, Folder folder, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException;
 
 	public void updateFileEntry(

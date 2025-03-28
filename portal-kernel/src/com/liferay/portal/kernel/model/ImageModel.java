@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ImageModel
-	extends BaseModel<Image>, CTModel<Image>, MVCCModel, ShardedModel {
+public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -38,7 +36,6 @@ public interface ImageModel
 	 *
 	 * @return the primary key of this image
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -46,7 +43,6 @@ public interface ImageModel
 	 *
 	 * @param primaryKey the primary key of this image
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -64,22 +60,6 @@ public interface ImageModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this image.
-	 *
-	 * @return the ct collection ID of this image
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this image.
-	 *
-	 * @param ctCollectionId the ct collection ID of this image
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the image ID of this image.

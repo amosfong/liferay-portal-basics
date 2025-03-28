@@ -5,10 +5,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -34,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.PhoneUtil;
-import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,13 +48,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -166,111 +157,106 @@ public class PhonePersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		uuid = Objects.toString(uuid, "");
 
-			uuid = Objects.toString(uuid, "");
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid;
-					finderArgs = new Object[] {uuid};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid;
-				finderArgs = new Object[] {uuid, start, end, orderByComparator};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if (!uuid.equals(phone.getUuid())) {
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if (!uuid.equals(phone.getUuid())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_UUID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -567,64 +553,59 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		uuid = Objects.toString(uuid, "");
 
-			uuid = Objects.toString(uuid, "");
+		FinderPath finderPath = _finderPathCountByUuid;
 
-			FinderPath finderPath = _finderPathCountByUuid;
+		Object[] finderArgs = new Object[] {uuid};
 
-			Object[] finderArgs = new Object[] {uuid};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			boolean bindUuid = false;
 
-				boolean bindUuid = false;
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
 
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				sb.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
-			return count.intValue();
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "phone.uuid = ?";
@@ -712,119 +693,114 @@ public class PhonePersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		uuid = Objects.toString(uuid, "");
 
-			uuid = Objects.toString(uuid, "");
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid_C;
-					finderArgs = new Object[] {uuid, companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid_C;
-				finderArgs = new Object[] {
-					uuid, companyId, start, end, orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if (!uuid.equals(phone.getUuid()) ||
-							(companyId != phone.getCompanyId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByUuid_C;
+			finderArgs = new Object[] {
+				uuid, companyId, start, end, orderByComparator
+			};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if (!uuid.equals(phone.getUuid()) ||
+						(companyId != phone.getCompanyId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(companyId);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -1145,68 +1121,63 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		uuid = Objects.toString(uuid, "");
 
-			uuid = Objects.toString(uuid, "");
+		FinderPath finderPath = _finderPathCountByUuid_C;
 
-			FinderPath finderPath = _finderPathCountByUuid_C;
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
-			Object[] finderArgs = new Object[] {uuid, companyId};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			boolean bindUuid = false;
 
-				boolean bindUuid = false;
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
 
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
-			return count.intValue();
+			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
@@ -1291,100 +1262,95 @@ public class PhonePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByCompanyId;
-					finderArgs = new Object[] {companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByCompanyId;
-				finderArgs = new Object[] {
-					companyId, start, end, orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if (companyId != phone.getCompanyId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByCompanyId;
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if (companyId != phone.getCompanyId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -1669,51 +1635,46 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
-			FinderPath finderPath = _finderPathCountByCompanyId;
+		Object[] finderArgs = new Object[] {companyId};
 
-			Object[] finderArgs = new Object[] {companyId};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+			String sql = sb.toString();
 
-				String sql = sb.toString();
+			Session session = null;
 
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(sql);
 
-					Query query = session.createQuery(sql);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				queryPos.add(companyId);
 
-					queryPos.add(companyId);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
@@ -1791,100 +1752,93 @@ public class PhonePersistenceImpl
 		long userId, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUserId;
-					finderArgs = new Object[] {userId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUserId;
-				finderArgs = new Object[] {
-					userId, start, end, orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if (userId != phone.getUserId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(userId);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByUserId;
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if (userId != phone.getUserId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			sb.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -2169,51 +2123,46 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = _finderPathCountByUserId;
 
-			FinderPath finderPath = _finderPathCountByUserId;
+		Object[] finderArgs = new Object[] {userId};
 
-			Object[] finderArgs = new Object[] {userId};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			sb.append(_FINDER_COLUMN_USERID_USERID_2);
 
-				sb.append(_FINDER_COLUMN_USERID_USERID_2);
+			String sql = sb.toString();
 
-				String sql = sb.toString();
+			Session session = null;
 
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(sql);
 
-					Query query = session.createQuery(sql);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				queryPos.add(userId);
 
-					queryPos.add(userId);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 =
@@ -2299,106 +2248,101 @@ public class PhonePersistenceImpl
 		long companyId, long classNameId, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_C;
-					finderArgs = new Object[] {companyId, classNameId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_C;
-				finderArgs = new Object[] {
-					companyId, classNameId, start, end, orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if ((companyId != phone.getCompanyId()) ||
-							(classNameId != phone.getClassNameId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {companyId, classNameId};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C;
+			finderArgs = new Object[] {
+				companyId, classNameId, start, end, orderByComparator
+			};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if ((companyId != phone.getCompanyId()) ||
+						(classNameId != phone.getClassNameId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -2710,55 +2654,50 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = _finderPathCountByC_C;
 
-			FinderPath finderPath = _finderPathCountByC_C;
+		Object[] finderArgs = new Object[] {companyId, classNameId};
 
-			Object[] finderArgs = new Object[] {companyId, classNameId};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			String sql = sb.toString();
 
-				String sql = sb.toString();
+			Session session = null;
 
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(sql);
 
-					Query query = session.createQuery(sql);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				queryPos.add(companyId);
 
-					queryPos.add(companyId);
+				queryPos.add(classNameId);
 
-					queryPos.add(classNameId);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
@@ -2855,112 +2794,106 @@ public class PhonePersistenceImpl
 		long companyId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<Phone> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_C_C;
-					finderArgs = new Object[] {companyId, classNameId, classPK};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_C_C;
-				finderArgs = new Object[] {
-					companyId, classNameId, classPK, start, end,
-					orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if ((companyId != phone.getCompanyId()) ||
-							(classNameId != phone.getClassNameId()) ||
-							(classPK != phone.getClassPK())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByC_C_C;
+				finderArgs = new Object[] {companyId, classNameId, classPK};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C_C;
+			finderArgs = new Object[] {
+				companyId, classNameId, classPK, start, end, orderByComparator
+			};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if ((companyId != phone.getCompanyId()) ||
+						(classNameId != phone.getClassNameId()) ||
+						(classPK != phone.getClassPK())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -3291,61 +3224,54 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long companyId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = _finderPathCountByC_C_C;
 
-			FinderPath finderPath = _finderPathCountByC_C_C;
+		Object[] finderArgs = new Object[] {companyId, classNameId, classPK};
 
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK
-			};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+			String sql = sb.toString();
 
-				String sql = sb.toString();
+			Session session = null;
 
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(sql);
 
-					Query query = session.createQuery(sql);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				queryPos.add(companyId);
 
-					queryPos.add(companyId);
+				queryPos.add(classNameId);
 
-					queryPos.add(classNameId);
+				queryPos.add(classPK);
 
-					queryPos.add(classPK);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_COMPANYID_2 =
@@ -3452,119 +3378,114 @@ public class PhonePersistenceImpl
 		int start, int end, OrderByComparator<Phone> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_C_C_P;
-					finderArgs = new Object[] {
-						companyId, classNameId, classPK, primary
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_C_C_P;
-				finderArgs = new Object[] {
-					companyId, classNameId, classPK, primary, start, end,
-					orderByComparator
-				};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Phone phone : list) {
-						if ((companyId != phone.getCompanyId()) ||
-							(classNameId != phone.getClassNameId()) ||
-							(classPK != phone.getClassPK()) ||
-							(primary != phone.isPrimary())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
+				finderPath = _finderPathWithoutPaginationFindByC_C_C_P;
+				finderArgs = new Object[] {
+					companyId, classNameId, classPK, primary
+				};
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						6 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(6);
-				}
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(primary);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C_C_P;
+			finderArgs = new Object[] {
+				companyId, classNameId, classPK, primary, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Phone phone : list) {
+					if ((companyId != phone.getCompanyId()) ||
+						(classNameId != phone.getClassNameId()) ||
+						(classPK != phone.getClassPK()) ||
+						(primary != phone.isPrimary())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_PHONE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				queryPos.add(primary);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -3916,65 +3837,60 @@ public class PhonePersistenceImpl
 	public int countByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = _finderPathCountByC_C_C_P;
 
-			FinderPath finderPath = _finderPathCountByC_C_C_P;
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, classPK, primary
+		};
 
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK, primary
-			};
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
 
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
+			sb.append(_SQL_COUNT_PHONE_WHERE);
 
-				sb.append(_SQL_COUNT_PHONE_WHERE);
+			sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
 
-				sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			String sql = sb.toString();
 
-				String sql = sb.toString();
+			Session session = null;
 
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(sql);
 
-					Query query = session.createQuery(sql);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-					QueryPos queryPos = QueryPos.getInstance(query);
+				queryPos.add(companyId);
 
-					queryPos.add(companyId);
+				queryPos.add(classNameId);
 
-					queryPos.add(classNameId);
+				queryPos.add(classPK);
 
-					queryPos.add(classPK);
+				queryPos.add(primary);
 
-					queryPos.add(primary);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_P_COMPANYID_2 =
@@ -4052,102 +3968,96 @@ public class PhonePersistenceImpl
 	public Phone fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		Object[] finderArgs = null;
 
-			Object[] finderArgs = null;
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {externalReferenceCode, companyId};
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof Phone) {
+			Phone phone = (Phone)result;
+
+			if (!Objects.equals(
+					externalReferenceCode, phone.getExternalReferenceCode()) ||
+				(companyId != phone.getCompanyId())) {
+
+				result = null;
 			}
+		}
 
-			Object result = null;
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
 
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByERC_C, finderArgs, this);
-			}
+			sb.append(_SQL_SELECT_PHONE_WHERE);
 
-			if (result instanceof Phone) {
-				Phone phone = (Phone)result;
+			boolean bindExternalReferenceCode = false;
 
-				if (!Objects.equals(
-						externalReferenceCode,
-						phone.getExternalReferenceCode()) ||
-					(companyId != phone.getCompanyId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_PHONE_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(companyId);
-
-					List<Phone> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByERC_C, finderArgs, list);
-						}
-					}
-					else {
-						Phone phone = list.get(0);
-
-						result = phone;
-
-						cacheResult(phone);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
-				return (Phone)result;
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<Phone> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					Phone phone = list.get(0);
+
+					result = phone;
+
+					cacheResult(phone);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Phone)result;
 		}
 	}
 
@@ -4218,20 +4128,15 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(Phone phone) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					phone.getCtCollectionId())) {
+		EntityCacheUtil.putResult(
+			PhoneImpl.class, phone.getPrimaryKey(), phone);
 
-			EntityCacheUtil.putResult(
-				PhoneImpl.class, phone.getPrimaryKey(), phone);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					phone.getExternalReferenceCode(), phone.getCompanyId()
-				},
-				phone);
-		}
+		FinderCacheUtil.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				phone.getExternalReferenceCode(), phone.getCompanyId()
+			},
+			phone);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -4251,15 +4156,10 @@ public class PhonePersistenceImpl
 		}
 
 		for (Phone phone : phones) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						phone.getCtCollectionId())) {
+			if (EntityCacheUtil.getResult(
+					PhoneImpl.class, phone.getPrimaryKey()) == null) {
 
-				if (EntityCacheUtil.getResult(
-						PhoneImpl.class, phone.getPrimaryKey()) == null) {
-
-					cacheResult(phone);
-				}
+				cacheResult(phone);
 			}
 		}
 	}
@@ -4307,18 +4207,13 @@ public class PhonePersistenceImpl
 	}
 
 	protected void cacheUniqueFindersCache(PhoneModelImpl phoneModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					phoneModelImpl.getCtCollectionId())) {
+		Object[] args = new Object[] {
+			phoneModelImpl.getExternalReferenceCode(),
+			phoneModelImpl.getCompanyId()
+		};
 
-			Object[] args = new Object[] {
-				phoneModelImpl.getExternalReferenceCode(),
-				phoneModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, phoneModelImpl);
-		}
+		FinderCacheUtil.putResult(
+			_finderPathFetchByERC_C, args, phoneModelImpl);
 	}
 
 	/**
@@ -4405,7 +4300,7 @@ public class PhonePersistenceImpl
 					PhoneImpl.class, phone.getPrimaryKeyObj());
 			}
 
-			if ((phone != null) && CTPersistenceHelperUtil.isRemove(phone)) {
+			if (phone != null) {
 				session.delete(phone);
 			}
 		}
@@ -4539,11 +4434,7 @@ public class PhonePersistenceImpl
 		try {
 			session = openSession();
 
-			if (CTPersistenceHelperUtil.isInsert(phone)) {
-				if (!isNew) {
-					session.evict(PhoneImpl.class, phone.getPrimaryKeyObj());
-				}
-
+			if (isNew) {
 				session.save(phone);
 			}
 			else {
@@ -4610,179 +4501,12 @@ public class PhonePersistenceImpl
 	/**
 	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the phone
-	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
-	 */
-	@Override
-	public Phone fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(Phone.class, primaryKey)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		Phone phone = (Phone)EntityCacheUtil.getResult(
-			PhoneImpl.class, primaryKey);
-
-		if (phone != null) {
-			return phone;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			phone = (Phone)session.get(PhoneImpl.class, primaryKey);
-
-			if (phone != null) {
-				cacheResult(phone);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return phone;
-	}
-
-	/**
-	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param phoneId the primary key of the phone
 	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
 	 */
 	@Override
 	public Phone fetchByPrimaryKey(long phoneId) {
 		return fetchByPrimaryKey((Serializable)phoneId);
-	}
-
-	@Override
-	public Map<Serializable, Phone> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(Phone.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Phone> map = new HashMap<Serializable, Phone>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Phone phone = fetchByPrimaryKey(primaryKey);
-
-			if (phone != null) {
-				map.put(primaryKey, phone);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						Phone.class, primaryKey)) {
-
-				Phone phone = (Phone)EntityCacheUtil.getResult(
-					PhoneImpl.class, primaryKey);
-
-				if (phone == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, phone);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (Phone phone : (List<Phone>)query.list()) {
-				map.put(phone.getPrimaryKeyObj(), phone);
-
-				cacheResult(phone);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4848,80 +4572,75 @@ public class PhonePersistenceImpl
 		int start, int end, OrderByComparator<Phone> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<Phone> list = null;
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				list = (List<Phone>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
 			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_PHONE);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_PHONE;
-
-					sql = sql.concat(PhoneModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<Phone>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
 		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
+		}
+
+		List<Phone> list = null;
+
+		if (useFinderCache) {
+			list = (List<Phone>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+			String sql = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
+
+				sb.append(_SQL_SELECT_PHONE);
+
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+				sql = sb.toString();
+			}
+			else {
+				sql = _SQL_SELECT_PHONE;
+
+				sql = sql.concat(PhoneModelImpl.ORDER_BY_JPQL);
+			}
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				list = (List<Phone>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	/**
@@ -4942,36 +4661,31 @@ public class PhonePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Phone.class)) {
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		if (count == null) {
+			Session session = null;
 
-			if (count == null) {
-				Session session = null;
+			try {
+				session = openSession();
 
-				try {
-					session = openSession();
+				Query query = session.createQuery(_SQL_COUNT_PHONE);
 
-					Query query = session.createQuery(_SQL_COUNT_PHONE);
+				count = (Long)query.uniqueResult();
 
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
-
-			return count.intValue();
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
+
+		return count.intValue();
 	}
 
 	@Override
@@ -4995,75 +4709,8 @@ public class PhonePersistenceImpl
 	}
 
 	@Override
-	public Set<String> getCTColumnNames(
-		CTColumnResolutionType ctColumnResolutionType) {
-
-		return _ctColumnNamesMap.getOrDefault(
-			ctColumnResolutionType, Collections.emptySet());
-	}
-
-	@Override
-	public List<String> getMappingTableNames() {
-		return _mappingTableNames;
-	}
-
-	@Override
-	public Map<String, Integer> getTableColumnsMap() {
+	protected Map<String, Integer> getTableColumnsMap() {
 		return PhoneModelImpl.TABLE_COLUMNS_MAP;
-	}
-
-	@Override
-	public String getTableName() {
-		return "Phone";
-	}
-
-	@Override
-	public List<String[]> getUniqueIndexColumnNames() {
-		return _uniqueIndexColumnNames;
-	}
-
-	private static final Map<CTColumnResolutionType, Set<String>>
-		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
-			CTColumnResolutionType.class);
-	private static final List<String> _mappingTableNames =
-		new ArrayList<String>();
-	private static final List<String[]> _uniqueIndexColumnNames =
-		new ArrayList<String[]>();
-
-	static {
-		Set<String> ctControlColumnNames = new HashSet<String>();
-		Set<String> ctIgnoreColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
-		Set<String> ctStrictColumnNames = new HashSet<String>();
-
-		ctControlColumnNames.add("mvccVersion");
-		ctControlColumnNames.add("ctCollectionId");
-		ctStrictColumnNames.add("uuid_");
-		ctStrictColumnNames.add("externalReferenceCode");
-		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("userId");
-		ctStrictColumnNames.add("userName");
-		ctStrictColumnNames.add("createDate");
-		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("classNameId");
-		ctStrictColumnNames.add("classPK");
-		ctMergeColumnNames.add("number_");
-		ctMergeColumnNames.add("extension");
-		ctMergeColumnNames.add("listTypeId");
-		ctMergeColumnNames.add("primary_");
-
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.CONTROL, ctControlColumnNames);
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.PK, Collections.singleton("phoneId"));
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.STRICT, ctStrictColumnNames);
-
-		_uniqueIndexColumnNames.add(
-			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**

@@ -64,17 +64,6 @@ public class DLAppHelperLocalServiceWrapper
 	}
 
 	@Override
-	public void checkAssetEntry(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlAppHelperLocalService.checkAssetEntry(
-			userId, fileEntry, fileVersion);
-	}
-
-	@Override
 	public void deleteFileEntry(
 			com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -309,42 +298,6 @@ public class DLAppHelperLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlAppHelperLocalService.restoreFolderFromTrash(userId, folder);
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			long assetClassPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, assetClassPK);
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, serviceContext);
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.Folder folder,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlAppHelperLocalService.updateAsset(
-			userId, folder, assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
 	@Override

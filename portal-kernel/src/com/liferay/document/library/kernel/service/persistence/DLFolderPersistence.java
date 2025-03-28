@@ -8,7 +8,6 @@ package com.liferay.document.library.kernel.service.persistence;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DLFolderPersistence
-	extends BasePersistence<DLFolder>, CTPersistence<DLFolder> {
+public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

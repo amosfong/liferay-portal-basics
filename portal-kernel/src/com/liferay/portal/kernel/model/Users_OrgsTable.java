@@ -28,10 +28,6 @@ public class Users_OrgsTable extends BaseTable<Users_OrgsTable> {
 		"organizationId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<Users_OrgsTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<Users_OrgsTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<Users_OrgsTable, Boolean> ctChangeType = createColumn(
-		"ctChangeType", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private Users_OrgsTable() {
 		super("Users_Orgs", Users_OrgsTable::new);

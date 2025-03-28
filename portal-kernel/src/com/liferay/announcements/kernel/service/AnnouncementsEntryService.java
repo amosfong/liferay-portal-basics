@@ -6,7 +6,6 @@
 package com.liferay.announcements.kernel.service;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -30,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @AccessControlled
-@CTAware
 @JSONWebService
 @ProviderType
 @Transactional(

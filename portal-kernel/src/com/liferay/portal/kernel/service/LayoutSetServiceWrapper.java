@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.LayoutSet;
-
 /**
  * Provides a wrapper for {@link LayoutSetService}.
  *
@@ -31,7 +29,7 @@ public class LayoutSetServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _layoutSetService.getOSGiServiceIdentifier();
 	}
 
@@ -66,7 +64,7 @@ public class LayoutSetServiceWrapper
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
-			String layoutSetPrototypeUuid)
+			java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_layoutSetService.updateLayoutSetPrototypeLinkEnabled(
@@ -112,9 +110,9 @@ public class LayoutSetServiceWrapper
 	}
 
 	@Override
-	public LayoutSet updateLookAndFeel(
-			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css)
+	public com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
+			long groupId, boolean privateLayout, java.lang.String themeId,
+			java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateLookAndFeel(
@@ -122,8 +120,8 @@ public class LayoutSetServiceWrapper
 	}
 
 	@Override
-	public LayoutSet updateSettings(
-			long groupId, boolean privateLayout, String settings)
+	public com.liferay.portal.kernel.model.LayoutSet updateSettings(
+			long groupId, boolean privateLayout, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateSettings(
@@ -131,9 +129,10 @@ public class LayoutSetServiceWrapper
 	}
 
 	@Override
-	public LayoutSet updateVirtualHosts(
+	public com.liferay.portal.kernel.model.LayoutSet updateVirtualHosts(
 			long groupId, boolean privateLayout,
-			java.util.TreeMap<String, String> virtualHostnames)
+			java.util.TreeMap<java.lang.String, java.lang.String>
+				virtualHostnames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateVirtualHosts(

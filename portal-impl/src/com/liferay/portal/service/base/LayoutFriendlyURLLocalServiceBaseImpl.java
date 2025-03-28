@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -604,23 +602,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 		return LayoutFriendlyURLLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<LayoutFriendlyURL> getCTPersistence() {
-		return layoutFriendlyURLPersistence;
-	}
-
-	@Override
-	public Class<LayoutFriendlyURL> getModelClass() {
+	protected Class<?> getModelClass() {
 		return LayoutFriendlyURL.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<LayoutFriendlyURL>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(layoutFriendlyURLPersistence);
 	}
 
 	protected String getModelClassName() {

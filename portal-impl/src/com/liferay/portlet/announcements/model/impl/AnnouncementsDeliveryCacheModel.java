@@ -66,12 +66,10 @@ public class AnnouncementsDeliveryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", deliveryId=");
 		sb.append(deliveryId);
 		sb.append(", companyId=");
@@ -97,7 +95,6 @@ public class AnnouncementsDeliveryCacheModel
 			new AnnouncementsDeliveryImpl();
 
 		announcementsDeliveryImpl.setMvccVersion(mvccVersion);
-		announcementsDeliveryImpl.setCtCollectionId(ctCollectionId);
 		announcementsDeliveryImpl.setDeliveryId(deliveryId);
 		announcementsDeliveryImpl.setCompanyId(companyId);
 		announcementsDeliveryImpl.setUserId(userId);
@@ -122,8 +119,6 @@ public class AnnouncementsDeliveryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		deliveryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -141,8 +136,6 @@ public class AnnouncementsDeliveryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(deliveryId);
 
@@ -165,7 +158,6 @@ public class AnnouncementsDeliveryCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long deliveryId;
 	public long companyId;
 	public long userId;

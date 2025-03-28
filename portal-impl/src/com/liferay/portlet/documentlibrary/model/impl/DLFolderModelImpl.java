@@ -65,15 +65,15 @@ public class DLFolderModelImpl
 	public static final String TABLE_NAME = "DLFolder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"folderId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"repositoryId", Types.BIGINT},
-		{"mountPoint", Types.BOOLEAN}, {"parentFolderId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPostDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"folderId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"repositoryId", Types.BIGINT}, {"mountPoint", Types.BOOLEAN},
+		{"parentFolderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"lastPostDate", Types.TIMESTAMP},
 		{"defaultFileEntryTypeId", Types.BIGINT}, {"hidden_", Types.BOOLEAN},
 		{"restrictionType", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
@@ -86,7 +86,6 @@ public class DLFolderModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
@@ -114,7 +113,7 @@ public class DLFolderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFolder (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,folderId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (folderId, ctCollectionId))";
+		"create table DLFolder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 
@@ -234,7 +233,7 @@ public class DLFolderModelImpl
 
 	public static final String
 		MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
-			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (fileEntryTypeId, folderId, ctCollectionId))";
+			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -342,8 +341,6 @@ public class DLFolderModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DLFolder::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DLFolder::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DLFolder::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode", DLFolder::getExternalReferenceCode);
@@ -398,9 +395,6 @@ public class DLFolderModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DLFolder, Long>)DLFolder::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DLFolder, Long>)DLFolder::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<DLFolder, String>)DLFolder::setUuid);
 			attributeSetterBiConsumers.put(
@@ -488,21 +482,6 @@ public class DLFolderModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1248,7 +1227,6 @@ public class DLFolderModelImpl
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
 		dlFolderImpl.setMvccVersion(getMvccVersion());
-		dlFolderImpl.setCtCollectionId(getCtCollectionId());
 		dlFolderImpl.setUuid(getUuid());
 		dlFolderImpl.setExternalReferenceCode(getExternalReferenceCode());
 		dlFolderImpl.setFolderId(getFolderId());
@@ -1285,8 +1263,6 @@ public class DLFolderModelImpl
 
 		dlFolderImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		dlFolderImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		dlFolderImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		dlFolderImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1418,8 +1394,6 @@ public class DLFolderModelImpl
 		DLFolderCacheModel dlFolderCacheModel = new DLFolderCacheModel();
 
 		dlFolderCacheModel.mvccVersion = getMvccVersion();
-
-		dlFolderCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFolderCacheModel.uuid = getUuid();
 
@@ -1610,7 +1584,6 @@ public class DLFolderModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _folderId;
@@ -1668,7 +1641,6 @@ public class DLFolderModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1721,55 +1693,53 @@ public class DLFolderModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("folderId", 8L);
 
-		columnBitmasks.put("folderId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("repositoryId", 1024L);
 
-		columnBitmasks.put("repositoryId", 2048L);
+		columnBitmasks.put("mountPoint", 2048L);
 
-		columnBitmasks.put("mountPoint", 4096L);
+		columnBitmasks.put("parentFolderId", 4096L);
 
-		columnBitmasks.put("parentFolderId", 8192L);
+		columnBitmasks.put("treePath", 8192L);
 
-		columnBitmasks.put("treePath", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("description", 32768L);
 
-		columnBitmasks.put("description", 65536L);
+		columnBitmasks.put("lastPostDate", 65536L);
 
-		columnBitmasks.put("lastPostDate", 131072L);
+		columnBitmasks.put("defaultFileEntryTypeId", 131072L);
 
-		columnBitmasks.put("defaultFileEntryTypeId", 262144L);
+		columnBitmasks.put("hidden_", 262144L);
 
-		columnBitmasks.put("hidden_", 524288L);
+		columnBitmasks.put("restrictionType", 524288L);
 
-		columnBitmasks.put("restrictionType", 1048576L);
+		columnBitmasks.put("lastPublishDate", 1048576L);
 
-		columnBitmasks.put("lastPublishDate", 2097152L);
+		columnBitmasks.put("status", 2097152L);
 
-		columnBitmasks.put("status", 4194304L);
+		columnBitmasks.put("statusByUserId", 4194304L);
 
-		columnBitmasks.put("statusByUserId", 8388608L);
+		columnBitmasks.put("statusByUserName", 8388608L);
 
-		columnBitmasks.put("statusByUserName", 16777216L);
-
-		columnBitmasks.put("statusDate", 33554432L);
+		columnBitmasks.put("statusDate", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

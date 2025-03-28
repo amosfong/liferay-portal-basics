@@ -16,7 +16,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.search.asset.SearchableAssetClassNamesProvider" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortlet" %><%@
@@ -34,9 +33,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 
 TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = assetEntriesSearchFacetDisplayContext.getTypeFacetPortletInstanceConfiguration();
 
-SearchableAssetClassNamesProvider searchableAssetClassNamesProvider = (SearchableAssetClassNamesProvider)request.getAttribute(SearchableAssetClassNamesProvider.class.getName());
-
-TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl(portletPreferences, searchableAssetClassNamesProvider);
+TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -84,17 +81,6 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 			</aui:select>
 
 			<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= typeFacetPortletPreferences.isFrequenciesVisible() %>" />
-
-			<aui:input name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>" type="hidden" value="<%= typeFacetPortletPreferences.getAssetTypes() %>" />
-
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentAssetTypes"
-				leftList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				leftTitle="current"
-				rightBoxName="availableAssetTypes"
-				rightList="<%= typeFacetPortletPreferences.getAvailableAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				rightTitle="available"
-			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
@@ -107,18 +93,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
 
-		var currentAssetTypes = Liferay.Util.getFormElement(
-			form,
-			'currentAssetTypes'
-		);
-
 		var data = {};
-
-		if (currentAssetTypes) {
-			data[
-				'<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>'
-			] = Liferay.Util.getSelectedOptionValues(currentAssetTypes);
-		}
 
 		Liferay.Util.postForm(form, {data: data});
 	}

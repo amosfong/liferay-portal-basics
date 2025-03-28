@@ -68,12 +68,10 @@ public class EmailAddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -110,7 +108,6 @@ public class EmailAddressCacheModel
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
 
 		emailAddressImpl.setMvccVersion(mvccVersion);
-		emailAddressImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			emailAddressImpl.setUuid("");
@@ -172,8 +169,6 @@ public class EmailAddressCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -199,8 +194,6 @@ public class EmailAddressCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -249,7 +242,6 @@ public class EmailAddressCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long emailAddressId;

@@ -5,11 +5,8 @@
 
 package com.liferay.announcements.kernel.service;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AnnouncementsEntryLocalService}.
@@ -43,15 +40,17 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the announcements entry that was added
 	 */
 	@Override
-	public AnnouncementsEntry addAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		addAnnouncementsEntry(
+			com.liferay.announcements.kernel.model.AnnouncementsEntry
+				announcementsEntry) {
 
 		return _announcementsEntryLocalService.addAnnouncementsEntry(
 			announcementsEntry);
 	}
 
 	@Override
-	public AnnouncementsEntry addEntry(
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
 			String content, String url, String type, java.util.Date displayDate,
 			java.util.Date expirationDate, int priority, boolean alert)
@@ -83,7 +82,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the new announcements entry
 	 */
 	@Override
-	public AnnouncementsEntry createAnnouncementsEntry(long entryId) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		createAnnouncementsEntry(long entryId) {
+
 		return _announcementsEntryLocalService.createAnnouncementsEntry(
 			entryId);
 	}
@@ -111,8 +112,10 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the announcements entry that was removed
 	 */
 	@Override
-	public AnnouncementsEntry deleteAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		deleteAnnouncementsEntry(
+			com.liferay.announcements.kernel.model.AnnouncementsEntry
+				announcementsEntry) {
 
 		return _announcementsEntryLocalService.deleteAnnouncementsEntry(
 			announcementsEntry);
@@ -130,7 +133,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @throws PortalException if a announcements entry with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+			deleteAnnouncementsEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryLocalService.deleteAnnouncementsEntry(
@@ -158,7 +162,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteEntry(AnnouncementsEntry entry)
+	public void deleteEntry(
+			com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_announcementsEntryLocalService.deleteEntry(entry);
@@ -287,7 +292,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public AnnouncementsEntry fetchAnnouncementsEntry(long entryId) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		fetchAnnouncementsEntry(long entryId) {
+
 		return _announcementsEntryLocalService.fetchAnnouncementsEntry(entryId);
 	}
 
@@ -299,8 +306,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
 	@Override
-	public AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		fetchAnnouncementsEntryByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _announcementsEntryLocalService.
 			fetchAnnouncementsEntryByUuidAndCompanyId(uuid, companyId);
@@ -325,8 +332,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the range of announcements entries
 	 */
 	@Override
-	public java.util.List<AnnouncementsEntry> getAnnouncementsEntries(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
+			getAnnouncementsEntries(int start, int end) {
 
 		return _announcementsEntryLocalService.getAnnouncementsEntries(
 			start, end);
@@ -350,7 +358,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @throws PortalException if a announcements entry with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsEntry getAnnouncementsEntry(long entryId)
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+			getAnnouncementsEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryLocalService.getAnnouncementsEntry(entryId);
@@ -365,8 +374,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @throws PortalException if a matching announcements entry could not be found
 	 */
 	@Override
-	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
-			String uuid, long companyId)
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+			getAnnouncementsEntryByUuidAndCompanyId(String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryLocalService.
@@ -374,22 +383,24 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
-		boolean alert, int flagValue, int start, int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+			long userId, java.util.LinkedHashMap<Long, long[]> scopes,
+			boolean alert, int flagValue, int start, int end) {
 
 		return _announcementsEntryLocalService.getEntries(
 			userId, scopes, alert, flagValue, start, end);
 	}
 
 	@Override
-	public java.util.List<AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean alert, int flagValue, int start,
-		int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+			long userId, java.util.LinkedHashMap<Long, long[]> scopes,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute, boolean alert,
+			int flagValue, int start, int end) {
 
 		return _announcementsEntryLocalService.getEntries(
 			userId, scopes, displayDateMonth, displayDateDay, displayDateYear,
@@ -399,22 +410,24 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<AnnouncementsEntry> getEntries(
-		long companyId, long classNameId, long classPK, boolean alert,
-		int start, int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+			long companyId, long classNameId, long classPK, boolean alert,
+			int start, int end) {
 
 		return _announcementsEntryLocalService.getEntries(
 			companyId, classNameId, classPK, alert, start, end);
 	}
 
 	@Override
-	public java.util.List<AnnouncementsEntry> getEntries(
-		long userId, long classNameId, long[] classPKs, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean alert, int flagValue, int start,
-		int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+			long userId, long classNameId, long[] classPKs,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute, boolean alert,
+			int flagValue, int start, int end) {
 
 		return _announcementsEntryLocalService.getEntries(
 			userId, classNameId, classPKs, displayDateMonth, displayDateDay,
@@ -481,7 +494,8 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public AnnouncementsEntry getEntry(long entryId)
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
+			long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryLocalService.getEntry(entryId);
@@ -527,8 +541,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<AnnouncementsEntry> getUserEntries(
-		long userId, int start, int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
+			getUserEntries(long userId, int start, int end) {
 
 		return _announcementsEntryLocalService.getUserEntries(
 			userId, start, end);
@@ -550,18 +565,21 @@ public class AnnouncementsEntryLocalServiceWrapper
 	 * @return the announcements entry that was updated
 	 */
 	@Override
-	public AnnouncementsEntry updateAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) {
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+		updateAnnouncementsEntry(
+			com.liferay.announcements.kernel.model.AnnouncementsEntry
+				announcementsEntry) {
 
 		return _announcementsEntryLocalService.updateAnnouncementsEntry(
 			announcementsEntry);
 	}
 
 	@Override
-	public AnnouncementsEntry updateEntry(
-			long entryId, String title, String content, String url, String type,
-			java.util.Date displayDate, java.util.Date expirationDate,
-			int priority)
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry
+			updateEntry(
+				long entryId, String title, String content, String url,
+				String type, java.util.Date displayDate,
+				java.util.Date expirationDate, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryLocalService.updateEntry(
@@ -572,26 +590,6 @@ public class AnnouncementsEntryLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _announcementsEntryLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<AnnouncementsEntry> getCTPersistence() {
-		return _announcementsEntryLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<AnnouncementsEntry> getModelClass() {
-		return _announcementsEntryLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<AnnouncementsEntry>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _announcementsEntryLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

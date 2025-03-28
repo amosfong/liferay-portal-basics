@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -708,22 +706,8 @@ public abstract class LayoutLocalServiceBaseImpl
 		return LayoutLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<Layout> getCTPersistence() {
-		return layoutPersistence;
-	}
-
-	@Override
-	public Class<Layout> getModelClass() {
+	protected Class<?> getModelClass() {
 		return Layout.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Layout>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(layoutPersistence);
 	}
 
 	protected String getModelClassName() {

@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ResourcePermissionPersistence
-	extends BasePersistence<ResourcePermission>,
-			CTPersistence<ResourcePermission> {
+	extends BasePersistence<ResourcePermission> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

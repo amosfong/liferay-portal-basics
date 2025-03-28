@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -487,23 +485,8 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 		return WorkflowDefinitionLinkLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<WorkflowDefinitionLink> getCTPersistence() {
-		return workflowDefinitionLinkPersistence;
-	}
-
-	@Override
-	public Class<WorkflowDefinitionLink> getModelClass() {
+	protected Class<?> getModelClass() {
 		return WorkflowDefinitionLink.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<WorkflowDefinitionLink>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(workflowDefinitionLinkPersistence);
 	}
 
 	protected String getModelClassName() {

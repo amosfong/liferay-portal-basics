@@ -67,12 +67,10 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(89);
+		StringBundler sb = new StringBundler(87);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -167,7 +165,6 @@ public class LayoutCacheModel
 		LayoutImpl layoutImpl = new LayoutImpl();
 
 		layoutImpl.setMvccVersion(mvccVersion);
-		layoutImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			layoutImpl.setUuid("");
@@ -361,8 +358,6 @@ public class LayoutCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -430,8 +425,6 @@ public class LayoutCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -602,7 +595,6 @@ public class LayoutCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long plid;

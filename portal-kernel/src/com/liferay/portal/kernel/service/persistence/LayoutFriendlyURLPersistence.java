@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutFriendlyURLPersistence
-	extends BasePersistence<LayoutFriendlyURL>,
-			CTPersistence<LayoutFriendlyURL> {
+	extends BasePersistence<LayoutFriendlyURL> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

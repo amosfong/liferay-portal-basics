@@ -5,11 +5,8 @@
 
 package com.liferay.announcements.kernel.service;
 
-import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AnnouncementsFlagLocalService}.
@@ -43,15 +40,19 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @return the announcements flag that was added
 	 */
 	@Override
-	public AnnouncementsFlag addAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+		addAnnouncementsFlag(
+			com.liferay.announcements.kernel.model.AnnouncementsFlag
+				announcementsFlag) {
 
 		return _announcementsFlagLocalService.addAnnouncementsFlag(
 			announcementsFlag);
 	}
 
 	@Override
-	public AnnouncementsFlag addFlag(long userId, long entryId, int value) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag addFlag(
+		long userId, long entryId, int value) {
+
 		return _announcementsFlagLocalService.addFlag(userId, entryId, value);
 	}
 
@@ -62,7 +63,9 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @return the new announcements flag
 	 */
 	@Override
-	public AnnouncementsFlag createAnnouncementsFlag(long flagId) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+		createAnnouncementsFlag(long flagId) {
+
 		return _announcementsFlagLocalService.createAnnouncementsFlag(flagId);
 	}
 
@@ -89,8 +92,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @return the announcements flag that was removed
 	 */
 	@Override
-	public AnnouncementsFlag deleteAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+		deleteAnnouncementsFlag(
+			com.liferay.announcements.kernel.model.AnnouncementsFlag
+				announcementsFlag) {
 
 		return _announcementsFlagLocalService.deleteAnnouncementsFlag(
 			announcementsFlag);
@@ -108,14 +113,17 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @throws PortalException if a announcements flag with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsFlag deleteAnnouncementsFlag(long flagId)
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+			deleteAnnouncementsFlag(long flagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsFlagLocalService.deleteAnnouncementsFlag(flagId);
 	}
 
 	@Override
-	public void deleteFlag(AnnouncementsFlag flag) {
+	public void deleteFlag(
+		com.liferay.announcements.kernel.model.AnnouncementsFlag flag) {
+
 		_announcementsFlagLocalService.deleteFlag(flag);
 	}
 
@@ -247,7 +255,9 @@ public class AnnouncementsFlagLocalServiceWrapper
 	}
 
 	@Override
-	public AnnouncementsFlag fetchAnnouncementsFlag(long flagId) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+		fetchAnnouncementsFlag(long flagId) {
+
 		return _announcementsFlagLocalService.fetchAnnouncementsFlag(flagId);
 	}
 
@@ -266,7 +276,8 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @throws PortalException if a announcements flag with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsFlag getAnnouncementsFlag(long flagId)
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+			getAnnouncementsFlag(long flagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsFlagLocalService.getAnnouncementsFlag(flagId);
@@ -284,8 +295,9 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @return the range of announcements flags
 	 */
 	@Override
-	public java.util.List<AnnouncementsFlag> getAnnouncementsFlags(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsFlag>
+			getAnnouncementsFlags(int start, int end) {
 
 		return _announcementsFlagLocalService.getAnnouncementsFlags(start, end);
 	}
@@ -301,7 +313,8 @@ public class AnnouncementsFlagLocalServiceWrapper
 	}
 
 	@Override
-	public AnnouncementsFlag getFlag(long userId, long entryId, int value)
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
+			long userId, long entryId, int value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsFlagLocalService.getFlag(userId, entryId, value);
@@ -347,8 +360,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	 * @return the announcements flag that was updated
 	 */
 	@Override
-	public AnnouncementsFlag updateAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) {
+	public com.liferay.announcements.kernel.model.AnnouncementsFlag
+		updateAnnouncementsFlag(
+			com.liferay.announcements.kernel.model.AnnouncementsFlag
+				announcementsFlag) {
 
 		return _announcementsFlagLocalService.updateAnnouncementsFlag(
 			announcementsFlag);
@@ -357,26 +372,6 @@ public class AnnouncementsFlagLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _announcementsFlagLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<AnnouncementsFlag> getCTPersistence() {
-		return _announcementsFlagLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<AnnouncementsFlag> getModelClass() {
-		return _announcementsFlagLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<AnnouncementsFlag>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _announcementsFlagLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

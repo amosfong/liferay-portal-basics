@@ -61,15 +61,6 @@ public class DLAppHelperLocalServiceUtil {
 		getService().cancelCheckOuts(groupId);
 	}
 
-	public static void checkAssetEntry(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws PortalException {
-
-		getService().checkAssetEntry(userId, fileEntry, fileVersion);
-	}
-
 	public static void deleteFileEntry(
 			com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws PortalException {
@@ -276,39 +267,6 @@ public class DLAppHelperLocalServiceUtil {
 		throws PortalException {
 
 		getService().restoreFolderFromTrash(userId, folder);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			long assetClassPK)
-		throws PortalException {
-
-		return getService().updateAsset(
-			userId, fileEntry, fileVersion, assetClassPK);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateAsset(
-			userId, fileEntry, fileVersion, serviceContext);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.Folder folder,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws PortalException {
-
-		return getService().updateAsset(
-			userId, folder, assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
 	public static void updateFileEntry(

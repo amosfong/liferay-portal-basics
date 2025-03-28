@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface UserGroupGroupRolePersistence
-	extends BasePersistence<UserGroupGroupRole>,
-			CTPersistence<UserGroupGroupRole> {
+	extends BasePersistence<UserGroupGroupRole> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

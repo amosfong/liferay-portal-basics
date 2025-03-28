@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -543,8 +541,6 @@ public abstract class RegionLocalServiceBaseImpl
 				regionLocalizationPersistence.remove(regionLocalization);
 			}
 			else {
-				regionLocalization.setCtCollectionId(
-					region.getCtCollectionId());
 				regionLocalization.setCompanyId(region.getCompanyId());
 
 				regionLocalization.setTitle(localizedValues[0]);
@@ -568,7 +564,6 @@ public abstract class RegionLocalServiceBaseImpl
 			RegionLocalization regionLocalization =
 				regionLocalizationPersistence.create(++batchCounter);
 
-			regionLocalization.setCtCollectionId(region.getCtCollectionId());
 			regionLocalization.setRegionId(region.getRegionId());
 			regionLocalization.setCompanyId(region.getCompanyId());
 
@@ -599,7 +594,6 @@ public abstract class RegionLocalServiceBaseImpl
 			regionLocalization.setLanguageId(languageId);
 		}
 
-		regionLocalization.setCtCollectionId(region.getCtCollectionId());
 		regionLocalization.setCompanyId(region.getCompanyId());
 
 		regionLocalization.setTitle(title);
@@ -704,22 +698,8 @@ public abstract class RegionLocalServiceBaseImpl
 		return RegionLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<Region> getCTPersistence() {
-		return regionPersistence;
-	}
-
-	@Override
-	public Class<Region> getModelClass() {
+	protected Class<?> getModelClass() {
 		return Region.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Region>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(regionPersistence);
 	}
 
 	protected String getModelClassName() {

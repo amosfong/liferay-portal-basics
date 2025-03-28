@@ -6,9 +6,7 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -25,8 +23,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -51,7 +47,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OrganizationLocalServiceUtil
  * @generated
  */
-@CTAware
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portal.kernel.model.Organization"}
 )
@@ -61,8 +56,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface OrganizationLocalService
-	extends BaseLocalService, CTService<Organization>,
-			PersistedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1333,20 +1327,5 @@ public interface OrganizationLocalService
 			boolean hasLogo, byte[] logoBytes, boolean site,
 			ServiceContext serviceContext)
 		throws PortalException;
-
-	@Override
-	@Transactional(enabled = false)
-	public CTPersistence<Organization> getCTPersistence();
-
-	@Override
-	@Transactional(enabled = false)
-	public Class<Organization> getModelClass();
-
-	@Override
-	@Transactional(rollbackFor = Throwable.class)
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Organization>, R, E>
-				updateUnsafeFunction)
-		throws E;
 
 }

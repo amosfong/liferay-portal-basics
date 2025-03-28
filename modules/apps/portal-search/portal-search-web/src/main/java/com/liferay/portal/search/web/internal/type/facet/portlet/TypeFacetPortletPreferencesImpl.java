@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
 import java.util.List;
@@ -26,57 +25,9 @@ public class TypeFacetPortletPreferencesImpl
 	extends BasePortletPreferences implements TypeFacetPortletPreferences {
 
 	public TypeFacetPortletPreferencesImpl(
-		PortletPreferences portletPreferences,
-		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider) {
+		PortletPreferences portletPreferences) {
 
 		super(portletPreferences);
-
-		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;
-	}
-
-	@Override
-	public String getAssetTypes() {
-		return getString(
-			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES,
-			StringPool.BLANK);
-	}
-
-	@Override
-	public List<KeyValuePair> getAvailableAssetTypes(
-		long companyId, Locale locale) {
-
-		String[] assetTypes = getCurrentAssetTypesArray(companyId);
-
-		return TransformUtil.transformToList(
-			getAllAssetTypes(companyId),
-			assetType -> {
-				if (ArrayUtil.contains(assetTypes, assetType)) {
-					return null;
-				}
-
-				return _getKeyValuePair(assetType, companyId, locale);
-			});
-	}
-
-	@Override
-	public List<KeyValuePair> getCurrentAssetTypes(
-		long companyId, Locale locale) {
-
-		return TransformUtil.transformToList(
-			getCurrentAssetTypesArray(companyId),
-			assetType -> _getKeyValuePair(assetType, companyId, locale));
-	}
-
-	@Override
-	public String[] getCurrentAssetTypesArray(long companyId) {
-		String assetTypes = getString(
-			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES, null);
-
-		if (assetTypes != null) {
-			return StringUtil.split(assetTypes);
-		}
-
-		return getAllAssetTypes(companyId);
 	}
 
 	@Override
@@ -104,10 +55,6 @@ public class TypeFacetPortletPreferencesImpl
 			true);
 	}
 
-	protected String[] getAllAssetTypes(long companyId) {
-		return _searchableAssetClassNamesProvider.getClassNames(companyId);
-	}
-
 	private KeyValuePair _getKeyValuePair(
 		String className, long companyId, Locale locale) {
 
@@ -116,8 +63,5 @@ public class TypeFacetPortletPreferencesImpl
 
 		return new KeyValuePair(className, modelResource);
 	}
-
-	private final SearchableAssetClassNamesProvider
-		_searchableAssetClassNamesProvider;
 
 }

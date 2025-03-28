@@ -66,23 +66,23 @@ public class DLFileVersionModelImpl
 	public static final String TABLE_NAME = "DLFileVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"fileVersionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"fileName", Types.VARCHAR}, {"extension", Types.VARCHAR},
-		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"changeLog", Types.VARCHAR},
-		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
-		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
-		{"checksum", Types.VARCHAR}, {"storeUUID", Types.VARCHAR},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"reviewDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"fileVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"repositoryId", Types.BIGINT},
+		{"folderId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"fileName", Types.VARCHAR},
+		{"extension", Types.VARCHAR}, {"mimeType", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"changeLog", Types.VARCHAR}, {"extraSettings", Types.CLOB},
+		{"fileEntryTypeId", Types.BIGINT}, {"version", Types.VARCHAR},
+		{"size_", Types.BIGINT}, {"checksum", Types.VARCHAR},
+		{"storeUUID", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,7 +90,6 @@ public class DLFileVersionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -126,7 +125,7 @@ public class DLFileVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,storeUUID VARCHAR(255) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fileVersionId, ctCollectionId))";
+		"create table DLFileVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,storeUUID VARCHAR(255) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 
@@ -341,8 +340,6 @@ public class DLFileVersionModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DLFileVersion::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DLFileVersion::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DLFileVersion::getUuid);
 			attributeGetterFunctions.put(
 				"fileVersionId", DLFileVersion::getFileVersionId);
@@ -420,10 +417,6 @@ public class DLFileVersionModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DLFileVersion, Long>)DLFileVersion::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DLFileVersion, Long>)
-					DLFileVersion::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<DLFileVersion, String>)DLFileVersion::setUuid);
@@ -550,21 +543,6 @@ public class DLFileVersionModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1410,7 +1388,6 @@ public class DLFileVersionModelImpl
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
 
 		dlFileVersionImpl.setMvccVersion(getMvccVersion());
-		dlFileVersionImpl.setCtCollectionId(getCtCollectionId());
 		dlFileVersionImpl.setUuid(getUuid());
 		dlFileVersionImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionImpl.setGroupId(getGroupId());
@@ -1455,8 +1432,6 @@ public class DLFileVersionModelImpl
 
 		dlFileVersionImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		dlFileVersionImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		dlFileVersionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		dlFileVersionImpl.setFileVersionId(
 			this.<Long>getColumnOriginalValue("fileVersionId"));
@@ -1615,8 +1590,6 @@ public class DLFileVersionModelImpl
 			new DLFileVersionCacheModel();
 
 		dlFileVersionCacheModel.mvccVersion = getMvccVersion();
-
-		dlFileVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFileVersionCacheModel.uuid = getUuid();
 
@@ -1877,7 +1850,6 @@ public class DLFileVersionModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _fileVersionId;
 	private long _groupId;
@@ -1943,7 +1915,6 @@ public class DLFileVersionModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("fileVersionId", _fileVersionId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -2002,71 +1973,69 @@ public class DLFileVersionModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("fileVersionId", 4L);
 
-		columnBitmasks.put("fileVersionId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("repositoryId", 512L);
 
-		columnBitmasks.put("repositoryId", 1024L);
+		columnBitmasks.put("folderId", 1024L);
 
-		columnBitmasks.put("folderId", 2048L);
+		columnBitmasks.put("fileEntryId", 2048L);
 
-		columnBitmasks.put("fileEntryId", 4096L);
+		columnBitmasks.put("treePath", 4096L);
 
-		columnBitmasks.put("treePath", 8192L);
+		columnBitmasks.put("fileName", 8192L);
 
-		columnBitmasks.put("fileName", 16384L);
+		columnBitmasks.put("extension", 16384L);
 
-		columnBitmasks.put("extension", 32768L);
+		columnBitmasks.put("mimeType", 32768L);
 
-		columnBitmasks.put("mimeType", 65536L);
+		columnBitmasks.put("title", 65536L);
 
-		columnBitmasks.put("title", 131072L);
+		columnBitmasks.put("description", 131072L);
 
-		columnBitmasks.put("description", 262144L);
+		columnBitmasks.put("changeLog", 262144L);
 
-		columnBitmasks.put("changeLog", 524288L);
+		columnBitmasks.put("extraSettings", 524288L);
 
-		columnBitmasks.put("extraSettings", 1048576L);
+		columnBitmasks.put("fileEntryTypeId", 1048576L);
 
-		columnBitmasks.put("fileEntryTypeId", 2097152L);
+		columnBitmasks.put("version", 2097152L);
 
-		columnBitmasks.put("version", 4194304L);
+		columnBitmasks.put("size_", 4194304L);
 
-		columnBitmasks.put("size_", 8388608L);
+		columnBitmasks.put("checksum", 8388608L);
 
-		columnBitmasks.put("checksum", 16777216L);
+		columnBitmasks.put("storeUUID", 16777216L);
 
-		columnBitmasks.put("storeUUID", 33554432L);
+		columnBitmasks.put("displayDate", 33554432L);
 
-		columnBitmasks.put("displayDate", 67108864L);
+		columnBitmasks.put("expirationDate", 67108864L);
 
-		columnBitmasks.put("expirationDate", 134217728L);
+		columnBitmasks.put("reviewDate", 134217728L);
 
-		columnBitmasks.put("reviewDate", 268435456L);
+		columnBitmasks.put("lastPublishDate", 268435456L);
 
-		columnBitmasks.put("lastPublishDate", 536870912L);
+		columnBitmasks.put("status", 536870912L);
 
-		columnBitmasks.put("status", 1073741824L);
+		columnBitmasks.put("statusByUserId", 1073741824L);
 
-		columnBitmasks.put("statusByUserId", 2147483648L);
+		columnBitmasks.put("statusByUserName", 2147483648L);
 
-		columnBitmasks.put("statusByUserName", 4294967296L);
-
-		columnBitmasks.put("statusDate", 8589934592L);
+		columnBitmasks.put("statusDate", 4294967296L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

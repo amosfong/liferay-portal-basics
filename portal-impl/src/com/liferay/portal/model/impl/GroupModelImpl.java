@@ -69,16 +69,15 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String TABLE_NAME = "Group_";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"creatorUserId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"parentGroupId", Types.BIGINT}, {"liveGroupId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"groupKey", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"typeSettings", Types.CLOB},
-		{"manualMembership", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"creatorUserId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"parentGroupId", Types.BIGINT},
+		{"liveGroupId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"groupKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"typeSettings", Types.CLOB}, {"manualMembership", Types.BOOLEAN},
 		{"membershipRestriction", Types.INTEGER},
 		{"friendlyURL", Types.VARCHAR}, {"site", Types.BOOLEAN},
 		{"remoteStagingGroupCount", Types.INTEGER},
@@ -90,7 +89,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -117,7 +115,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Group_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,groupId LONG not null,companyId LONG,creatorUserId LONG,modifiedDate DATE null,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN,primary key (groupId, ctCollectionId))";
+		"create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,modifiedDate DATE null,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
@@ -253,7 +251,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
-		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, organizationId, ctCollectionId))";
+		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -269,7 +267,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
-		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, roleId, ctCollectionId))";
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -286,7 +284,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE =
-		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userGroupId, ctCollectionId))";
+		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -302,7 +300,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
-		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userId, ctCollectionId))";
+		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -404,8 +402,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 				new LinkedHashMap<String, Function<Group, Object>>();
 
 			attributeGetterFunctions.put("mvccVersion", Group::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", Group::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Group::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode", Group::getExternalReferenceCode);
@@ -456,9 +452,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 			attributeSetterBiConsumers.put(
 				"mvccVersion", (BiConsumer<Group, Long>)Group::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<Group, Long>)Group::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Group, String>)Group::setUuid);
 			attributeSetterBiConsumers.put(
@@ -536,21 +529,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1480,7 +1458,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		GroupImpl groupImpl = new GroupImpl();
 
 		groupImpl.setMvccVersion(getMvccVersion());
-		groupImpl.setCtCollectionId(getCtCollectionId());
 		groupImpl.setUuid(getUuid());
 		groupImpl.setExternalReferenceCode(getExternalReferenceCode());
 		groupImpl.setGroupId(getGroupId());
@@ -1516,8 +1493,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		groupImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		groupImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		groupImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1630,8 +1605,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		GroupCacheModel groupCacheModel = new GroupCacheModel();
 
 		groupCacheModel.mvccVersion = getMvccVersion();
-
-		groupCacheModel.ctCollectionId = getCtCollectionId();
 
 		groupCacheModel.uuid = getUuid();
 
@@ -1797,7 +1770,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _groupId;
@@ -1856,7 +1828,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1910,53 +1881,51 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("creatorUserId", 32L);
 
-		columnBitmasks.put("creatorUserId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("parentGroupId", 512L);
 
-		columnBitmasks.put("parentGroupId", 1024L);
+		columnBitmasks.put("liveGroupId", 1024L);
 
-		columnBitmasks.put("liveGroupId", 2048L);
+		columnBitmasks.put("treePath", 2048L);
 
-		columnBitmasks.put("treePath", 4096L);
+		columnBitmasks.put("groupKey", 4096L);
 
-		columnBitmasks.put("groupKey", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("name", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("description", 32768L);
+		columnBitmasks.put("type_", 32768L);
 
-		columnBitmasks.put("type_", 65536L);
+		columnBitmasks.put("typeSettings", 65536L);
 
-		columnBitmasks.put("typeSettings", 131072L);
+		columnBitmasks.put("manualMembership", 131072L);
 
-		columnBitmasks.put("manualMembership", 262144L);
+		columnBitmasks.put("membershipRestriction", 262144L);
 
-		columnBitmasks.put("membershipRestriction", 524288L);
+		columnBitmasks.put("friendlyURL", 524288L);
 
-		columnBitmasks.put("friendlyURL", 1048576L);
+		columnBitmasks.put("site", 1048576L);
 
-		columnBitmasks.put("site", 2097152L);
+		columnBitmasks.put("remoteStagingGroupCount", 2097152L);
 
-		columnBitmasks.put("remoteStagingGroupCount", 4194304L);
+		columnBitmasks.put("inheritContent", 4194304L);
 
-		columnBitmasks.put("inheritContent", 8388608L);
-
-		columnBitmasks.put("active_", 16777216L);
+		columnBitmasks.put("active_", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -26,9 +26,6 @@ public class UserGroupGroupRoleTable
 	public final Column<UserGroupGroupRoleTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<UserGroupGroupRoleTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<UserGroupGroupRoleTable, Long> userGroupGroupRoleId =
 		createColumn(
 			"userGroupGroupRoleId", Long.class, Types.BIGINT,

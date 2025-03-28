@@ -30,7 +30,6 @@
 	</hint-collection>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsDelivery">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="deliveryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -41,7 +40,6 @@
 	</model>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsEntry">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
@@ -71,7 +69,6 @@
 	</model>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsFlag">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="flagId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -200,7 +197,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntry">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="fileEntryId" type="long" />
@@ -253,7 +249,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryMetadata">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="fileEntryMetadataId" type="long" />
@@ -265,7 +260,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryType">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="fileEntryTypeId" type="long" />
@@ -289,7 +283,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="fileShortcutId" type="long" />
@@ -314,7 +307,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileVersion">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fileVersionId" type="long" />
 		<field name="groupId" type="long" />
@@ -367,7 +359,6 @@
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFolder">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="folderId" type="long" />
@@ -478,7 +469,6 @@
 			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="addressId" type="long" />
@@ -616,7 +606,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Country">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="countryId" type="long" />
@@ -651,7 +640,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.CountryLocalization">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="countryLocalizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="countryId" type="long" />
@@ -660,7 +648,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.EmailAddress">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="emailAddressId" type="long" />
@@ -681,7 +668,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Group">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="groupId" type="long" />
@@ -722,7 +708,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Image">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="imageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="modifiedDate" type="Date" />
@@ -733,7 +718,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Layout">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="plid" type="long" />
@@ -820,7 +804,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutFriendlyURL">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutFriendlyURLId" type="long" />
 		<field name="groupId" type="long" />
@@ -839,7 +822,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutPrototype">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="companyId" type="long" />
@@ -903,7 +885,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutSet">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1006,7 +987,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Organization">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="organizationId" type="long" />
@@ -1135,7 +1115,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Phone">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="phoneId" type="long" />
@@ -1221,7 +1200,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortletPreferences">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="portletPreferencesId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="ownerId" type="long" />
@@ -1233,7 +1211,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortletPreferenceValue">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="portletPreferenceValueId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="portletPreferencesId" type="long" />
@@ -1280,7 +1257,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Region">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="regionId" type="long" />
@@ -1304,7 +1280,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.RegionLocalization">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="regionLocalizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="regionId" type="long" />
@@ -1339,7 +1314,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Repository">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="repositoryId" type="long" />
@@ -1367,7 +1341,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.RepositoryEntry">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="repositoryEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -1394,7 +1367,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.ResourcePermission">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="resourcePermissionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="name" type="String">
@@ -1412,7 +1384,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Role">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="roleId" type="long" />
@@ -1461,7 +1432,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.SystemEvent">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="systemEventId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1481,7 +1451,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Team">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="teamId" type="long" />
 		<field name="companyId" type="long" />
@@ -1519,7 +1488,6 @@
 			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="userId" type="long" />
@@ -1586,7 +1554,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroup">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="userGroupId" type="long" />
@@ -1608,7 +1575,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="userGroupGroupRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userGroupId" type="long" />
@@ -1617,7 +1583,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupRole">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="userGroupRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -1695,7 +1660,6 @@
 			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="virtualHostId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="layoutSetId" type="long" />
@@ -1741,7 +1705,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.WorkflowDefinitionLink">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="workflowDefinitionLinkId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1757,7 +1720,6 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.WorkflowInstanceLink">
 		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
 		<field name="workflowInstanceLinkId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-
 /**
  * Provides a wrapper for {@link WorkflowDefinitionLinkService}.
  *
@@ -29,10 +27,12 @@ public class WorkflowDefinitionLinkServiceWrapper
 	}
 
 	@Override
-	public WorkflowDefinitionLink addWorkflowDefinitionLink(
-			long userId, long companyId, long groupId, String className,
-			long classPK, long typePK, String workflowDefinitionName,
-			int workflowDefinitionVersion)
+	public com.liferay.portal.kernel.model.WorkflowDefinitionLink
+			addWorkflowDefinitionLink(
+				long userId, long companyId, long groupId,
+				java.lang.String className, long classPK, long typePK,
+				java.lang.String workflowDefinitionName,
+				int workflowDefinitionVersion)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _workflowDefinitionLinkService.addWorkflowDefinitionLink(
@@ -46,15 +46,17 @@ public class WorkflowDefinitionLinkServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _workflowDefinitionLinkService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.util.List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
-			long companyId, String workflowDefinitionName,
-			int workflowDefinitionVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List
+		<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
+				getWorkflowDefinitionLinks(
+					long companyId, java.lang.String workflowDefinitionName,
+					int workflowDefinitionVersion)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _workflowDefinitionLinkService.getWorkflowDefinitionLinks(
 			companyId, workflowDefinitionName, workflowDefinitionVersion);

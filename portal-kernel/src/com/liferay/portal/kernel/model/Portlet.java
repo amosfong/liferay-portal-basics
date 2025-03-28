@@ -965,6 +965,41 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public boolean getSinglePageApplication();
 
 	/**
+	 * Returns the names of the classes that represent social activity
+	 * interpreters associated with the portlet.
+	 *
+	 * @return the names of the classes that represent social activity
+	 interpreters associated with the portlet
+	 */
+	public java.util.List<String> getSocialActivityInterpreterClasses();
+
+	/**
+	 * Returns the social activity interpreter instances of the portlet.
+	 *
+	 * @return the social activity interpreter instances of the portlet
+	 */
+	public java.util.List
+		<com.liferay.social.kernel.model.SocialActivityInterpreter>
+			getSocialActivityInterpreterInstances();
+
+	/**
+	 * Returns the name of the social request interpreter class of the portlet.
+	 *
+	 * @return the name of the social request interpreter class of the portlet
+	 */
+	public String getSocialRequestInterpreterClass();
+
+	/**
+	 * Returns the name of the social request interpreter instance of the
+	 * portlet.
+	 *
+	 * @return the name of the social request interpreter instance of the
+	 portlet
+	 */
+	public com.liferay.social.kernel.model.SocialRequestInterpreter
+		getSocialRequestInterpreterInstance();
+
+	/**
 	 * Returns the names of the classes that represent staged model data
 	 * handlers associated with the portlet.
 	 *
@@ -2306,6 +2341,25 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 portlet uses Single Page Application
 	 */
 	public void setSinglePageApplication(boolean singlePageApplication);
+
+	/**
+	 * Sets the names of the classes that represent social activity interpreters
+	 * associated with the portlet.
+	 *
+	 * @param socialActivityInterpreterClasses the names of the classes that
+	 represent social activity interpreters associated with the portlet
+	 */
+	public void setSocialActivityInterpreterClasses(
+		java.util.List<String> socialActivityInterpreterClasses);
+
+	/**
+	 * Sets the name of the social request interpreter class of the portlet.
+	 *
+	 * @param socialRequestInterpreterClass the name of the request interpreter
+	 class of the portlet
+	 */
+	public void setSocialRequestInterpreterClass(
+		String socialRequestInterpreterClass);
 
 	/**
 	 * Sets the names of the classes that represent staged model data handlers

@@ -8,7 +8,6 @@ package com.liferay.announcements.kernel.service.persistence;
 import com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnnouncementsDeliveryPersistence
-	extends BasePersistence<AnnouncementsDelivery>,
-			CTPersistence<AnnouncementsDelivery> {
+	extends BasePersistence<AnnouncementsDelivery> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

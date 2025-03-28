@@ -15,8 +15,6 @@ import java.util.Locale;
  */
 public interface TypeFacetPortletPreferences {
 
-	public static final String PREFERENCE_KEY_ASSET_TYPES = "assetTypes";
-
 	public static final String PREFERENCE_KEY_FREQUENCIES_VISIBLE =
 		"frequenciesVisible";
 
@@ -26,16 +24,6 @@ public interface TypeFacetPortletPreferences {
 	public static final String PREFERENCE_KEY_ORDER = "order";
 
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
-
-	public String getAssetTypes();
-
-	public List<KeyValuePair> getAvailableAssetTypes(
-		long companyId, Locale locale);
-
-	public List<KeyValuePair> getCurrentAssetTypes(
-		long companyId, Locale locale);
-
-	public String[] getCurrentAssetTypesArray(long companyId);
 
 	public int getFrequencyThreshold();
 

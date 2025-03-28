@@ -23,8 +23,6 @@ public class VirtualHostTable extends BaseTable<VirtualHostTable> {
 
 	public final Column<VirtualHostTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<VirtualHostTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<VirtualHostTable, Long> virtualHostId = createColumn(
 		"virtualHostId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<VirtualHostTable, Long> companyId = createColumn(

@@ -63,13 +63,12 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public static final String TABLE_NAME = "Team";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"teamId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"groupId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"teamId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"groupId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,7 +76,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("teamId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,7 +90,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Team (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null,primary key (teamId, ctCollectionId))";
+		"create table Team (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Team";
 
@@ -159,7 +157,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE =
-		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (teamId, userId, ctCollectionId))";
+		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -176,7 +174,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	};
 
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE =
-		"create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (teamId, userGroupId, ctCollectionId))";
+		"create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -278,8 +276,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 				new LinkedHashMap<String, Function<Team, Object>>();
 
 			attributeGetterFunctions.put("mvccVersion", Team::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", Team::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Team::getUuid);
 			attributeGetterFunctions.put("teamId", Team::getTeamId);
 			attributeGetterFunctions.put("companyId", Team::getCompanyId);
@@ -310,9 +306,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 			attributeSetterBiConsumers.put(
 				"mvccVersion", (BiConsumer<Team, Long>)Team::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<Team, Long>)Team::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Team, String>)Team::setUuid);
 			attributeSetterBiConsumers.put(
@@ -356,21 +349,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -680,7 +658,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TeamImpl teamImpl = new TeamImpl();
 
 		teamImpl.setMvccVersion(getMvccVersion());
-		teamImpl.setCtCollectionId(getCtCollectionId());
 		teamImpl.setUuid(getUuid());
 		teamImpl.setTeamId(getTeamId());
 		teamImpl.setCompanyId(getCompanyId());
@@ -704,8 +681,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		teamImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		teamImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		teamImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		teamImpl.setTeamId(this.<Long>getColumnOriginalValue("teamId"));
 		teamImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
@@ -796,8 +771,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TeamCacheModel teamCacheModel = new TeamCacheModel();
 
 		teamCacheModel.mvccVersion = getMvccVersion();
-
-		teamCacheModel.ctCollectionId = getCtCollectionId();
 
 		teamCacheModel.uuid = getUuid();
 
@@ -927,7 +900,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _teamId;
 	private long _companyId;
@@ -972,7 +944,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("teamId", _teamId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1009,29 +980,27 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("teamId", 4L);
 
-		columnBitmasks.put("teamId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("groupId", 256L);
 
-		columnBitmasks.put("groupId", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("description", 2048L);
-
-		columnBitmasks.put("lastPublishDate", 4096L);
+		columnBitmasks.put("lastPublishDate", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

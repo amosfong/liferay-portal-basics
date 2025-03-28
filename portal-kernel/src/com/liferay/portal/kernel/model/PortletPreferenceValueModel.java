@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -23,8 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface PortletPreferenceValueModel
-	extends BaseModel<PortletPreferenceValue>, CTModel<PortletPreferenceValue>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<PortletPreferenceValue>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -37,7 +35,6 @@ public interface PortletPreferenceValueModel
 	 *
 	 * @return the primary key of this portlet preference value
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -45,7 +42,6 @@ public interface PortletPreferenceValueModel
 	 *
 	 * @param primaryKey the primary key of this portlet preference value
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -63,22 +59,6 @@ public interface PortletPreferenceValueModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this portlet preference value.
-	 *
-	 * @return the ct collection ID of this portlet preference value
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this portlet preference value.
-	 *
-	 * @param ctCollectionId the ct collection ID of this portlet preference value
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the portlet preference value ID of this portlet preference value.
