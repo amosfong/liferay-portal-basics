@@ -5,9 +5,6 @@
 
 package com.liferay.portal.kernel.templateparser;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
@@ -337,53 +334,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getDDMJournalArticleFriendlyURL() {
-		if (_themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		String data = _getData();
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						jsonObject.getString("className"));
-
-			if (assetRendererFactory == null) {
-				return StringPool.BLANK;
-			}
-
-			long classPK = GetterUtil.getLong(jsonObject.getLong("classPK"));
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			if (assetRenderer == null) {
-				return StringPool.BLANK;
-			}
-
-			HttpServletRequest httpServletRequest = _themeDisplay.getRequest();
-
-			PortletRequest portletRequest =
-				(PortletRequest)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-			PortletResponse portletResponse =
-				(PortletResponse)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-			return assetRenderer.getURLViewInContext(
-				PortalUtil.getLiferayPortletRequest(portletRequest),
-				PortalUtil.getLiferayPortletResponse(portletResponse),
-				StringPool.BLANK);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
 		return StringPool.BLANK;
 	}
 
@@ -453,70 +403,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getLatestArticleData() {
-		String data = _getData();
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						jsonObject.getString("className"));
-
-			if (assetRendererFactory == null) {
-				return StringPool.BLANK;
-			}
-
-			long classPK = GetterUtil.getLong(jsonObject.getLong("classPK"));
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			if (assetRenderer == null) {
-				return StringPool.BLANK;
-			}
-
-			if (Objects.equals(
-					jsonObject.getString("uuid"), assetRenderer.getUuid())) {
-
-				return data;
-			}
-
-			String updatedTitle = assetRenderer.getTitle(
-				LocaleUtil.fromLanguageId(
-					assetRenderer.getDefaultLanguageId()));
-
-			jsonObject.put("title", updatedTitle);
-
-			Map<Locale, String> titleMap = new HashMap<>();
-
-			for (String languageId : assetRenderer.getAvailableLanguageIds()) {
-				Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-				if (locale != null) {
-					titleMap.put(locale, assetRenderer.getTitle(locale));
-				}
-			}
-
-			jsonObject.put(
-				"titleMap", titleMap
-			).put(
-				"uuid", assetRenderer.getUuid()
-			);
-
-			return jsonObject.toString();
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON from data: " + data);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
 		return _getData();
 	}
 

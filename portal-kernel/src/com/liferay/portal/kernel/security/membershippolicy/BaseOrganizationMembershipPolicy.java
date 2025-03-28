@@ -246,7 +246,7 @@ public abstract class BaseOrganizationMembershipPolicy
 
 	@Override
 	public void verifyPolicy(Organization organization) throws PortalException {
-		verifyPolicy(organization, null, null, null, null);
+		verifyPolicy(organization, null, null);
 	}
 
 	@Override

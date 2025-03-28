@@ -5,9 +5,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -205,8 +202,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 			BooleanFilter fullQueryBooleanFilter = new BooleanFilter();
 
-			addSearchAssetCategoryIds(fullQueryBooleanFilter, searchContext);
-			addSearchAssetTagNames(fullQueryBooleanFilter, searchContext);
 			addSearchFolderId(fullQueryBooleanFilter, searchContext);
 			addSearchLayout(fullQueryBooleanFilter, searchContext);
 			addSearchUserId(fullQueryBooleanFilter, searchContext);
@@ -571,8 +566,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
-		queryConfig.addHighlightFieldNames(Field.ASSET_CATEGORY_TITLES);
-
 		if (queryConfig.isHighlightEnabled()) {
 			queryConfig.addHighlightFieldNames(
 				Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
@@ -691,32 +684,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				LocalizationUtil.getLocalizedName(field, languageId),
 				entry.getValue());
 		}
-	}
-
-	protected void addSearchAssetCategoryIds(
-			BooleanFilter queryBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.ASSET_CATEGORY_IDS);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetCategoryIds());
-
-		searchContext.addFacet(multiValueFacet);
-	}
-
-	protected void addSearchAssetTagNames(
-			BooleanFilter queryBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.ASSET_TAG_NAMES);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetTagNames());
-
-		searchContext.addFacet(multiValueFacet);
 	}
 
 	protected Filter addSearchClassTypeIds(
@@ -1267,9 +1234,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected Locale getSnippetLocale(Document document, Locale locale) {
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String localizedAssetCategoryTitlesName =
-			prefix +
-				Field.getLocalizedName(locale, Field.ASSET_CATEGORY_TITLES);
 		String localizedContentName =
 			prefix + Field.getLocalizedName(locale, Field.CONTENT);
 		String localizedDescriptionName =
@@ -1277,8 +1241,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		String localizedTitleName =
 			prefix + Field.getLocalizedName(locale, Field.TITLE);
 
-		if ((document.getField(localizedAssetCategoryTitlesName) != null) ||
-			(document.getField(localizedContentName) != null) ||
+		if ((document.getField(localizedContentName) != null) ||
 			(document.getField(localizedDescriptionName) != null) ||
 			(document.getField(localizedTitleName) != null)) {
 
@@ -1380,13 +1343,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		document.addText("zip", zips.toArray(new String[0]));
 	}
 
-	protected Map<Locale, String> populateMap(
-		AssetEntry assetEntry, Map<Locale, String> map) {
-
-		return LocalizationUtil.populateLocalizationMap(
-			map, assetEntry.getDefaultLanguageId(), assetEntry.getGroupId());
-	}
-
 	protected void postProcessFullQuery(
 			BooleanQuery fullQuery, SearchContext searchContext)
 		throws Exception {
@@ -1465,29 +1421,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	private <T> long _getEntryClassPK(T entry, String className, long classPK) {
-		AssetRendererFactory<T> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return classPK;
-		}
-
-		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(entry);
-
-			if (assetEntry != null) {
-				return assetEntry.getClassPK();
-			}
-
-			return 0;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
 		return classPK;
 	}
 

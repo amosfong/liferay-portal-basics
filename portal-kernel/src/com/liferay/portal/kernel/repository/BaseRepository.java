@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.repository;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,9 +29,6 @@ public interface BaseRepository extends Repository {
 	public String[][] getSupportedParameters();
 
 	public void initRepository() throws PortalException;
-
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService);
 
 	public void setCompanyId(long companyId);
 

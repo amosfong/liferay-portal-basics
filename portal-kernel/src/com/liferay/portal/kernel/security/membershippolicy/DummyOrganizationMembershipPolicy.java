@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Organization;
 
 import java.io.Serializable;
@@ -60,7 +58,6 @@ public class DummyOrganizationMembershipPolicy
 	@Override
 	public void verifyPolicy(
 		Organization organization, Organization oldOrganization,
-		List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes) {
 	}
 

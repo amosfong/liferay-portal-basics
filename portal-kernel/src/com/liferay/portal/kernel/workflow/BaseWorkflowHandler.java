@@ -5,9 +5,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -50,36 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 	@Override
-	public AssetRenderer<T> getAssetRenderer(long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<T> assetRendererFactory =
-			getAssetRendererFactory();
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getAssetRenderer(
-				classPK, AssetRendererFactory.TYPE_LATEST);
-		}
-
-		return null;
-	}
-
-	@Override
-	public AssetRendererFactory<T> getAssetRendererFactory() {
-		return (AssetRendererFactory<T>)
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-	}
-
-	@Override
 	public String getIconCssClass() {
-		AssetRendererFactory<?> assetRendererFactory =
-			getAssetRendererFactory();
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getIconCssClass();
-		}
-
 		return StringPool.BLANK;
 	}
 
@@ -135,38 +103,11 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		long classPK, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getSummary(
-					portletRequest, portletResponse);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
 		return null;
 	}
 
 	@Override
 	public String getTitle(long classPK, Locale locale) {
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getTitle(locale);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
 		return null;
 	}
 
@@ -174,20 +115,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 	public PortletURL getURLEdit(
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
-
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getURLEdit(
-					liferayPortletRequest, liferayPortletResponse);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
 
 		return null;
 	}
@@ -197,20 +124,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getURLViewDiffs(
-					liferayPortletRequest, liferayPortletResponse);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
 		return null;
 	}
 
@@ -219,21 +132,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
-
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getURLViewInContext(
-					liferayPortletRequest, liferayPortletResponse,
-					noSuchEntryRedirect);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
 
 		return null;
 	}
@@ -256,26 +154,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		long classPK, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String template) {
 
-		try {
-			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.include(
-					httpServletRequest, httpServletResponse, template);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
 		return false;
-	}
-
-	@Override
-	public boolean isAssetTypeSearchable() {
-		return _ASSET_TYPE_SEARCHABLE;
 	}
 
 	@Override
@@ -298,8 +177,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 			companyId, groupId, userId, getClassName(), classPK,
 			workflowContext);
 	}
-
-	private static final boolean _ASSET_TYPE_SEARCHABLE = true;
 
 	private static final boolean _SCOPEABLE = true;
 

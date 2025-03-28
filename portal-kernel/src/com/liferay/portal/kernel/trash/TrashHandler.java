@@ -363,15 +363,6 @@ public interface TrashHandler {
 	}
 
 	/**
-	 * Returns the trash renderer associated to the model entity with the
-	 * primary key.
-	 *
-	 * @param  classPK the primary key of the model entity
-	 * @return the trash renderer associated to the model entity
-	 */
-	public TrashRenderer getTrashRenderer(long classPK) throws PortalException;
-
-	/**
 	 * Returns <code>true</code> if the user has the required permission to
 	 * perform the trash action on the model entity with the primary key.
 	 *

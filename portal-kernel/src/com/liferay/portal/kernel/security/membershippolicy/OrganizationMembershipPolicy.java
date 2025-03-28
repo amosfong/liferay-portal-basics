@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -349,13 +347,10 @@ public interface OrganizationMembershipPolicy {
 	 *
 	 * @param organization the added or updated organization to verify
 	 * @param oldOrganization the old organization
-	 * @param oldAssetCategories the old categories
-	 * @param oldAssetTags the old tags
 	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			Organization organization, Organization oldOrganization,
-			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException;
 

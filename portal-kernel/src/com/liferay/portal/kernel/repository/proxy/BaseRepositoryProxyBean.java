@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.repository.proxy;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -722,13 +721,6 @@ public class BaseRepositoryProxyBean
 		throws SearchException {
 
 		return _baseRepository.search(searchContext, query);
-	}
-
-	@Override
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_baseRepository.setAssetEntryLocalService(assetEntryLocalService);
 	}
 
 	@Override

@@ -1946,12 +1946,6 @@ public class ThemeDisplay
 			}
 		}
 
-		if (layout.getCtCollectionId() !=
-				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
-
-			return layout.getFriendlyURL(_locale);
-		}
-
 		String layoutFriendlyURL = _layoutFriendlyURLs.get(layout.getPlid());
 
 		if (layoutFriendlyURL == null) {

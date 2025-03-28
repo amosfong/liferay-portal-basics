@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -33,18 +31,6 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 
 	public WorkflowHandlerWrapper(WorkflowHandler<T> workflowHandler) {
 		_workflowHandler = workflowHandler;
-	}
-
-	@Override
-	public AssetRenderer<T> getAssetRenderer(long classPK)
-		throws PortalException {
-
-		return _workflowHandler.getAssetRenderer(classPK);
-	}
-
-	@Override
-	public AssetRendererFactory<T> getAssetRendererFactory() {
-		return _workflowHandler.getAssetRendererFactory();
 	}
 
 	@Override
@@ -137,11 +123,6 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 
 		return _workflowHandler.include(
 			classPK, httpServletRequest, httpServletResponse, template);
-	}
-
-	@Override
-	public boolean isAssetTypeSearchable() {
-		return _workflowHandler.isAssetTypeSearchable();
 	}
 
 	@Override

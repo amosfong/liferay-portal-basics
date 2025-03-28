@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 import java.util.List;
 import java.util.Locale;
@@ -142,19 +140,6 @@ public interface PortletBag extends Cloneable {
 	public String getResourceBundleBaseName();
 
 	public ServletContext getServletContext();
-
-	public List<SocialActivityInterpreter>
-		getSocialActivityInterpreterInstances();
-
-	public SocialRequestInterpreter getSocialRequestInterpreterInstance();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getSocialRequestInterpreterInstance()}
-	 */
-	@Deprecated
-	public List<SocialRequestInterpreter>
-		getSocialRequestInterpreterInstances();
 
 	public List<StagedModelDataHandler<?>> getStagedModelDataHandlerInstances();
 
