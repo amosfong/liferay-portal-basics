@@ -5,10 +5,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link PortletPreferenceValueLocalService}.
@@ -43,8 +40,10 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @return the portlet preference value that was added
 	 */
 	@Override
-	public PortletPreferenceValue addPortletPreferenceValue(
-		PortletPreferenceValue portletPreferenceValue) {
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+		addPortletPreferenceValue(
+			com.liferay.portal.kernel.model.PortletPreferenceValue
+				portletPreferenceValue) {
 
 		return _portletPreferenceValueLocalService.addPortletPreferenceValue(
 			portletPreferenceValue);
@@ -69,8 +68,8 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @return the new portlet preference value
 	 */
 	@Override
-	public PortletPreferenceValue createPortletPreferenceValue(
-		long portletPreferenceValueId) {
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+		createPortletPreferenceValue(long portletPreferenceValueId) {
 
 		return _portletPreferenceValueLocalService.createPortletPreferenceValue(
 			portletPreferenceValueId);
@@ -100,8 +99,8 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @throws PortalException if a portlet preference value with the primary key could not be found
 	 */
 	@Override
-	public PortletPreferenceValue deletePortletPreferenceValue(
-			long portletPreferenceValueId)
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+			deletePortletPreferenceValue(long portletPreferenceValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _portletPreferenceValueLocalService.deletePortletPreferenceValue(
@@ -119,8 +118,10 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @return the portlet preference value that was removed
 	 */
 	@Override
-	public PortletPreferenceValue deletePortletPreferenceValue(
-		PortletPreferenceValue portletPreferenceValue) {
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+		deletePortletPreferenceValue(
+			com.liferay.portal.kernel.model.PortletPreferenceValue
+				portletPreferenceValue) {
 
 		return _portletPreferenceValueLocalService.deletePortletPreferenceValue(
 			portletPreferenceValue);
@@ -231,8 +232,8 @@ public class PortletPreferenceValueLocalServiceWrapper
 	}
 
 	@Override
-	public PortletPreferenceValue fetchPortletPreferenceValue(
-		long portletPreferenceValueId) {
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+		fetchPortletPreferenceValue(long portletPreferenceValueId) {
 
 		return _portletPreferenceValueLocalService.fetchPortletPreferenceValue(
 			portletPreferenceValueId);
@@ -283,8 +284,8 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @throws PortalException if a portlet preference value with the primary key could not be found
 	 */
 	@Override
-	public PortletPreferenceValue getPortletPreferenceValue(
-			long portletPreferenceValueId)
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+			getPortletPreferenceValue(long portletPreferenceValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _portletPreferenceValueLocalService.getPortletPreferenceValue(
@@ -303,8 +304,9 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @return the range of portlet preference values
 	 */
 	@Override
-	public java.util.List<PortletPreferenceValue> getPortletPreferenceValues(
-		int start, int end) {
+	public java.util.List
+		<com.liferay.portal.kernel.model.PortletPreferenceValue>
+			getPortletPreferenceValues(int start, int end) {
 
 		return _portletPreferenceValueLocalService.getPortletPreferenceValues(
 			start, end);
@@ -348,8 +350,10 @@ public class PortletPreferenceValueLocalServiceWrapper
 	 * @return the portlet preference value that was updated
 	 */
 	@Override
-	public PortletPreferenceValue updatePortletPreferenceValue(
-		PortletPreferenceValue portletPreferenceValue) {
+	public com.liferay.portal.kernel.model.PortletPreferenceValue
+		updatePortletPreferenceValue(
+			com.liferay.portal.kernel.model.PortletPreferenceValue
+				portletPreferenceValue) {
 
 		return _portletPreferenceValueLocalService.updatePortletPreferenceValue(
 			portletPreferenceValue);
@@ -358,26 +362,6 @@ public class PortletPreferenceValueLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _portletPreferenceValueLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<PortletPreferenceValue> getCTPersistence() {
-		return _portletPreferenceValueLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<PortletPreferenceValue> getModelClass() {
-		return _portletPreferenceValueLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<PortletPreferenceValue>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _portletPreferenceValueLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

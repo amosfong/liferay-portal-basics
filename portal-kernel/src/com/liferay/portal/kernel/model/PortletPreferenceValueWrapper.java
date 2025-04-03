@@ -9,8 +9,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -36,7 +34,6 @@ public class PortletPreferenceValueWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put(
 			"portletPreferenceValueId", getPortletPreferenceValueId());
 		attributes.put("companyId", getCompanyId());
@@ -56,12 +53,6 @@ public class PortletPreferenceValueWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long portletPreferenceValueId = (Long)attributes.get(
@@ -128,16 +119,6 @@ public class PortletPreferenceValueWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this portlet preference value.
-	 *
-	 * @return the ct collection ID of this portlet preference value
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -261,16 +242,6 @@ public class PortletPreferenceValueWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this portlet preference value.
-	 *
-	 * @param ctCollectionId the ct collection ID of this portlet preference value
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the index of this portlet preference value.
 	 *
 	 * @param index the index of this portlet preference value
@@ -368,20 +339,6 @@ public class PortletPreferenceValueWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<PortletPreferenceValue, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<PortletPreferenceValue, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

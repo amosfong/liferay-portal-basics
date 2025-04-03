@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.PortletPreferences;
-
 /**
  * Provides a wrapper for {@link PortletPreferencesService}.
  *
@@ -41,14 +39,14 @@ public class PortletPreferencesServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _portletPreferencesService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public void restoreArchivedPreferences(
 			long groupId, com.liferay.portal.kernel.model.Layout layout,
-			String portletId, long portletItemId,
+			java.lang.String portletId, long portletItemId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -59,7 +57,7 @@ public class PortletPreferencesServiceWrapper
 	@Override
 	public void restoreArchivedPreferences(
 			long groupId, com.liferay.portal.kernel.model.Layout layout,
-			String portletId,
+			java.lang.String portletId,
 			com.liferay.portal.kernel.model.PortletItem portletItem,
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -70,8 +68,9 @@ public class PortletPreferencesServiceWrapper
 
 	@Override
 	public void restoreArchivedPreferences(
-			long groupId, String name,
-			com.liferay.portal.kernel.model.Layout layout, String portletId,
+			long groupId, java.lang.String name,
+			com.liferay.portal.kernel.model.Layout layout,
+			java.lang.String portletId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -81,7 +80,8 @@ public class PortletPreferencesServiceWrapper
 
 	@Override
 	public void updateArchivePreferences(
-			long userId, long groupId, String name, String portletId,
+			long userId, long groupId, java.lang.String name,
+			java.lang.String portletId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

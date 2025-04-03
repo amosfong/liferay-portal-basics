@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -25,9 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WorkflowInstanceLinkModel
-	extends AttachedModel, BaseModel<WorkflowInstanceLink>,
-			CTModel<WorkflowInstanceLink>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends AttachedModel, BaseModel<WorkflowInstanceLink>, GroupedModel,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -40,7 +38,6 @@ public interface WorkflowInstanceLinkModel
 	 *
 	 * @return the primary key of this workflow instance link
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -48,7 +45,6 @@ public interface WorkflowInstanceLinkModel
 	 *
 	 * @param primaryKey the primary key of this workflow instance link
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -66,22 +62,6 @@ public interface WorkflowInstanceLinkModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this workflow instance link.
-	 *
-	 * @return the ct collection ID of this workflow instance link
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this workflow instance link.
-	 *
-	 * @param ctCollectionId the ct collection ID of this workflow instance link
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the workflow instance link ID of this workflow instance link.

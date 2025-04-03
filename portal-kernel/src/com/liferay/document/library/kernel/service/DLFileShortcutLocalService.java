@@ -7,9 +7,7 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -24,9 +22,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -50,7 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileShortcutLocalServiceUtil
  * @generated
  */
-@CTAware
 @OSGiBeanProperties(
 	property = {
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut"
@@ -62,8 +57,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface DLFileShortcutLocalService
-	extends BaseLocalService, CTService<DLFileShortcut>,
-			PersistedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -402,11 +396,6 @@ public interface DLFileShortcutLocalService
 	public void setTreePaths(long folderId, String treePath)
 		throws PortalException;
 
-	public void updateAsset(
-			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException;
-
 	/**
 	 * Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -434,20 +423,5 @@ public interface DLFileShortcutLocalService
 			long userId, long fileShortcutId, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
-
-	@Override
-	@Transactional(enabled = false)
-	public CTPersistence<DLFileShortcut> getCTPersistence();
-
-	@Override
-	@Transactional(enabled = false)
-	public Class<DLFileShortcut> getModelClass();
-
-	@Override
-	@Transactional(rollbackFor = Throwable.class)
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLFileShortcut>, R, E>
-				updateUnsafeFunction)
-		throws E;
 
 }

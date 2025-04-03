@@ -5,10 +5,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link PhoneLocalService}.
@@ -39,12 +36,14 @@ public class PhoneLocalServiceWrapper
 	 * @return the phone that was added
 	 */
 	@Override
-	public Phone addPhone(Phone phone) {
+	public com.liferay.portal.kernel.model.Phone addPhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+
 		return _phoneLocalService.addPhone(phone);
 	}
 
 	@Override
-	public Phone addPhone(
+	public com.liferay.portal.kernel.model.Phone addPhone(
 			String externalReferenceCode, long userId, String className,
 			long classPK, String number, String extension, long listTypeId,
 			boolean primary, ServiceContext serviceContext)
@@ -73,7 +72,7 @@ public class PhoneLocalServiceWrapper
 	 * @return the new phone
 	 */
 	@Override
-	public Phone createPhone(long phoneId) {
+	public com.liferay.portal.kernel.model.Phone createPhone(long phoneId) {
 		return _phoneLocalService.createPhone(phoneId);
 	}
 
@@ -100,7 +99,7 @@ public class PhoneLocalServiceWrapper
 	 * @throws PortalException if a phone with the primary key could not be found
 	 */
 	@Override
-	public Phone deletePhone(long phoneId)
+	public com.liferay.portal.kernel.model.Phone deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneLocalService.deletePhone(phoneId);
@@ -117,7 +116,9 @@ public class PhoneLocalServiceWrapper
 	 * @return the phone that was removed
 	 */
 	@Override
-	public Phone deletePhone(Phone phone) {
+	public com.liferay.portal.kernel.model.Phone deletePhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+
 		return _phoneLocalService.deletePhone(phone);
 	}
 
@@ -228,13 +229,14 @@ public class PhoneLocalServiceWrapper
 	}
 
 	@Override
-	public Phone fetchPhone(long phoneId) {
+	public com.liferay.portal.kernel.model.Phone fetchPhone(long phoneId) {
 		return _phoneLocalService.fetchPhone(phoneId);
 	}
 
 	@Override
-	public Phone fetchPhoneByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
+	public com.liferay.portal.kernel.model.Phone
+		fetchPhoneByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
 
 		return _phoneLocalService.fetchPhoneByExternalReferenceCode(
 			externalReferenceCode, companyId);
@@ -248,7 +250,9 @@ public class PhoneLocalServiceWrapper
 	 * @return the matching phone, or <code>null</code> if a matching phone could not be found
 	 */
 	@Override
-	public Phone fetchPhoneByUuidAndCompanyId(String uuid, long companyId) {
+	public com.liferay.portal.kernel.model.Phone fetchPhoneByUuidAndCompanyId(
+		String uuid, long companyId) {
+
 		return _phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -305,15 +309,16 @@ public class PhoneLocalServiceWrapper
 	 * @throws PortalException if a phone with the primary key could not be found
 	 */
 	@Override
-	public Phone getPhone(long phoneId)
+	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneLocalService.getPhone(phoneId);
 	}
 
 	@Override
-	public Phone getPhoneByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public com.liferay.portal.kernel.model.Phone
+			getPhoneByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneLocalService.getPhoneByExternalReferenceCode(
@@ -329,14 +334,15 @@ public class PhoneLocalServiceWrapper
 	 * @throws PortalException if a matching phone could not be found
 	 */
 	@Override
-	public Phone getPhoneByUuidAndCompanyId(String uuid, long companyId)
+	public com.liferay.portal.kernel.model.Phone getPhoneByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneLocalService.getPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
-	public java.util.List<Phone> getPhones() {
+	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones() {
 		return _phoneLocalService.getPhones();
 	}
 
@@ -352,12 +358,14 @@ public class PhoneLocalServiceWrapper
 	 * @return the range of phones
 	 */
 	@Override
-	public java.util.List<Phone> getPhones(int start, int end) {
+	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
+		int start, int end) {
+
 		return _phoneLocalService.getPhones(start, end);
 	}
 
 	@Override
-	public java.util.List<Phone> getPhones(
+	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
 		long companyId, String className, long classPK) {
 
 		return _phoneLocalService.getPhones(companyId, className, classPK);
@@ -384,12 +392,14 @@ public class PhoneLocalServiceWrapper
 	 * @return the phone that was updated
 	 */
 	@Override
-	public Phone updatePhone(Phone phone) {
+	public com.liferay.portal.kernel.model.Phone updatePhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+
 		return _phoneLocalService.updatePhone(phone);
 	}
 
 	@Override
-	public Phone updatePhone(
+	public com.liferay.portal.kernel.model.Phone updatePhone(
 			String externalReferenceCode, long phoneId, String number,
 			String extension, long listTypeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -402,25 +412,6 @@ public class PhoneLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _phoneLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<Phone> getCTPersistence() {
-		return _phoneLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<Phone> getModelClass() {
-		return _phoneLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Phone>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return _phoneLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

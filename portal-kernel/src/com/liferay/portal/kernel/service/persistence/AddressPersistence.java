@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -23,8 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AddressPersistence
-	extends BasePersistence<Address>, CTPersistence<Address> {
+public interface AddressPersistence extends BasePersistence<Address> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

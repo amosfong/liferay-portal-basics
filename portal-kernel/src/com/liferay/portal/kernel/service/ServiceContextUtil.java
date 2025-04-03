@@ -52,13 +52,6 @@ public class ServiceContextUtil {
 					StringUtil.split(guestPermissions)));
 		}
 
-		// Asset
-
-		serviceContext.setAssetCategoryIds(
-			StringUtil.split(jsonObject.getString("assetCategoryIds"), 0L));
-		serviceContext.setAssetTagNames(
-			StringUtil.split(jsonObject.getString("assetTagNames")));
-
 		// Workflow
 
 		serviceContext.setWorkflowAction(jsonObject.getInt("workflowAction"));

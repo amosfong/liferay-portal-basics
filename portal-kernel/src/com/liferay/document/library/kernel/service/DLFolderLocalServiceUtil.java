@@ -664,10 +664,6 @@ public class DLFolderLocalServiceUtil {
 		return getService().getMountFoldersCount(groupId, parentFolderId);
 	}
 
-	public static List<DLFolder> getNoAssetFolders() {
-		return getService().getNoAssetFolders();
-	}
-
 	public static List<DLFolder> getNotInTrashFolders(
 		long groupId, boolean mountPoint, String treePath, boolean hidden) {
 

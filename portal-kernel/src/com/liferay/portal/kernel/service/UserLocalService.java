@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -52,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserLocalServiceUtil
  * @generated
  */
-@CTAware
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portal.kernel.model.User"}
 )
@@ -62,7 +58,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface UserLocalService
-	extends BaseLocalService, CTService<User>, PersistedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1202,113 +1198,6 @@ public interface UserLocalService
 	public int getRoleUsersCount(long roleId, int status)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(
-			long userId, int socialRelationType,
-			String socialRelationTypeComparator, int start, int end,
-			OrderByComparator<User> orderByComparator)
-		throws PortalException;
-
-	/**
-	 * Returns an ordered range of all the users with a mutual social relation
-	 * of the type with both of the given users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param userId1 the primary key of the first user
-	 * @param userId2 the primary key of the second user
-	 * @param socialRelationType the type of social relation. The possible
-	 types can be found in {@link SocialRelationConstants}.
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param orderByComparator the comparator to order the users by
-	 (optionally <code>null</code>)
-	 * @return the ordered range of users with a mutual social relation of the
-	 type with the user
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(
-			long userId1, long userId2, int socialRelationType, int start,
-			int end, OrderByComparator<User> orderByComparator)
-		throws PortalException;
-
-	/**
-	 * Returns an ordered range of all the users with a mutual social relation
-	 * with both of the given users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param userId1 the primary key of the first user
-	 * @param userId2 the primary key of the second user
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param orderByComparator the comparator to order the users by
-	 (optionally <code>null</code>)
-	 * @return the ordered range of users with a mutual social relation with the
-	 user
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(
-			long userId1, long userId2, int start, int end,
-			OrderByComparator<User> orderByComparator)
-		throws PortalException;
-
-	/**
-	 * Returns the number of users with a social relation with the user.
-	 *
-	 * @param userId the primary key of the user
-	 * @param socialRelationType the type of social relation. The possible
-	 types can be found in {@link SocialRelationConstants}.
-	 * @return the number of users with a social relation with the user
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSocialUsersCount(
-			long userId, int socialRelationType,
-			String socialRelationTypeComparator)
-		throws PortalException;
-
-	/**
-	 * Returns the number of users with a mutual social relation with both of
-	 * the given users.
-	 *
-	 * @param userId1 the primary key of the first user
-	 * @param userId2 the primary key of the second user
-	 * @return the number of users with a mutual social relation with the user
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSocialUsersCount(long userId1, long userId2)
-		throws PortalException;
-
-	/**
-	 * Returns the number of users with a mutual social relation of the type
-	 * with both of the given users.
-	 *
-	 * @param userId1 the primary key of the first user
-	 * @param userId2 the primary key of the second user
-	 * @param socialRelationType the type of social relation. The possible
-	 types can be found in {@link SocialRelationConstants}.
-	 * @return the number of users with a mutual social relation of the type
-	 with the user
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSocialUsersCount(
-			long userId1, long userId2, int socialRelationType)
-		throws PortalException;
-
 	/**
 	 * Returns the teamIds of the teams associated with the user.
 	 *
@@ -1794,28 +1683,6 @@ public interface UserLocalService
 		LinkedHashMap<String, Object> params, boolean andSearch, int start,
 		int end, Sort[] sorts);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchBySocial(
-			long userId, int[] socialRelationTypes, String keywords, int start,
-			int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchBySocial(
-		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchBySocial(
-		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
-		int start, int end, OrderByComparator<User> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchBySocial(
-			long[] groupIds, long userId, int[] socialRelationTypes,
-			String keywords, int start, int end)
-		throws PortalException;
-
 	/**
 	 * Returns the number of users who match the keywords and status.
 	 *
@@ -2094,20 +1961,6 @@ public interface UserLocalService
 	@CTAware(onProduction = true)
 	public User updateAgreedToTermsOfUse(
 			long userId, boolean agreedToTermsOfUse)
-		throws PortalException;
-
-	/**
-	 * Updates the user's asset with the new asset categories and tag names,
-	 * removing and adding asset categories and tag names as necessary.
-	 *
-	 * @param userId the primary key of the user
-	 * @param user ID the primary key of the user
-	 * @param assetCategoryIds the primary key's of the new asset categories
-	 * @param assetTagNames the new asset tag names
-	 */
-	public void updateAsset(
-			long userId, User user, long[] assetCategoryIds,
-			String[] assetTagNames)
 		throws PortalException;
 
 	/**
@@ -2573,19 +2426,5 @@ public interface UserLocalService
 	 * @param ticketKey the ticket key
 	 */
 	public void verifyEmailAddress(String ticketKey) throws PortalException;
-
-	@Override
-	@Transactional(enabled = false)
-	public CTPersistence<User> getCTPersistence();
-
-	@Override
-	@Transactional(enabled = false)
-	public Class<User> getModelClass();
-
-	@Override
-	@Transactional(rollbackFor = Throwable.class)
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<User>, R, E> updateUnsafeFunction)
-		throws E;
 
 }

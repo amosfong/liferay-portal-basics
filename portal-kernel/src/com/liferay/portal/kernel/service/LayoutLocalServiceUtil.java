@@ -1630,15 +1630,6 @@ public class LayoutLocalServiceUtil {
 			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
-	public static void updateAsset(
-			long userId, Layout layout, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		getService().updateAsset(
-			userId, layout, assetCategoryIds, assetTagNames);
-	}
-
 	/**
 	 * Updates the friendly URL of the layout.
 	 *

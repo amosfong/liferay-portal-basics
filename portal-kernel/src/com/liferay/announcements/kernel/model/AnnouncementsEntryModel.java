@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -30,9 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnnouncementsEntryModel
-	extends AttachedModel, BaseModel<AnnouncementsEntry>,
-			CTModel<AnnouncementsEntry>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<AnnouncementsEntry>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,7 +43,6 @@ public interface AnnouncementsEntryModel
 	 *
 	 * @return the primary key of this announcements entry
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -53,7 +50,6 @@ public interface AnnouncementsEntryModel
 	 *
 	 * @param primaryKey the primary key of this announcements entry
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -71,22 +67,6 @@ public interface AnnouncementsEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this announcements entry.
-	 *
-	 * @return the ct collection ID of this announcements entry
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this announcements entry.
-	 *
-	 * @param ctCollectionId the ct collection ID of this announcements entry
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this announcements entry.

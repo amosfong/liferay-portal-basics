@@ -5,9 +5,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -18,8 +16,6 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -44,7 +40,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ImageLocalServiceUtil
  * @generated
  */
-@CTAware
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portal.kernel.model.Image"}
 )
@@ -54,7 +49,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface ImageLocalService
-	extends BaseLocalService, CTService<Image>, PersistedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -339,19 +334,5 @@ public interface ImageLocalService
 			long companyId, long imageId, InputStream inputStream,
 			boolean cleanUpStream)
 		throws PortalException;
-
-	@Override
-	@Transactional(enabled = false)
-	public CTPersistence<Image> getCTPersistence();
-
-	@Override
-	@Transactional(enabled = false)
-	public Class<Image> getModelClass();
-
-	@Override
-	@Transactional(rollbackFor = Throwable.class)
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Image>, R, E> updateUnsafeFunction)
-		throws E;
 
 }

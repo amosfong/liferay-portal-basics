@@ -296,58 +296,6 @@ public class ServiceContextFactory {
 		serviceContext.setRemoteHost(httpServletRequest.getRemoteHost());
 		serviceContext.setRequest(httpServletRequest);
 
-		// Asset
-
-		long[] assetCategoryIds = new long[0];
-
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
-
-		Set<Long> assetCategoryIdsSet = new HashSet<>();
-
-		boolean updateAssetCategoryIds = false;
-
-		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String name = entry.getKey();
-
-			if (!name.startsWith("assetCategoryIds")) {
-				continue;
-			}
-
-			updateAssetCategoryIds = true;
-
-			long[] assetVocabularyAssetCategoryIds = ParamUtil.getLongValues(
-				httpServletRequest, name);
-
-			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
-				assetCategoryIdsSet.add(assetCategoryId);
-			}
-		}
-
-		if (updateAssetCategoryIds) {
-			assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsSet.toArray(new Long[0]));
-		}
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-
-		serviceContext.setAssetEntryVisible(
-			ParamUtil.getBoolean(
-				httpServletRequest, "assetEntryVisible", true));
-
-		String assetLinkEntryIdsString = httpServletRequest.getParameter(
-			"assetLinksSearchContainerPrimaryKeys");
-
-		if (assetLinkEntryIdsString != null) {
-			serviceContext.setAssetLinkEntryIds(
-				StringUtil.split(assetLinkEntryIdsString, 0L));
-		}
-
-		serviceContext.setAssetPriority(
-			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
-		serviceContext.setAssetTagNames(
-			ParamUtil.getStringValues(httpServletRequest, "assetTagNames"));
-
 		// Workflow
 
 		serviceContext.setWorkflowAction(
@@ -457,56 +405,6 @@ public class ServiceContextFactory {
 		serviceContext.setRemoteAddr(httpServletRequest.getRemoteAddr());
 		serviceContext.setRemoteHost(httpServletRequest.getRemoteHost());
 		serviceContext.setRequest(httpServletRequest);
-
-		// Asset
-
-		long[] assetCategoryIds = new long[0];
-
-		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
-
-		List<Long> assetCategoryIdsList = new ArrayList<>();
-
-		boolean updateAssetCategoryIds = false;
-
-		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String name = entry.getKey();
-
-			if (!name.startsWith("assetCategoryIds")) {
-				continue;
-			}
-
-			updateAssetCategoryIds = true;
-
-			long[] assetVocabularyAssetCategoryIds = ParamUtil.getLongValues(
-				portletRequest, name);
-
-			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
-				assetCategoryIdsList.add(assetCategoryId);
-			}
-		}
-
-		if (updateAssetCategoryIds) {
-			assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(new Long[0]));
-		}
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-
-		serviceContext.setAssetEntryVisible(
-			ParamUtil.getBoolean(portletRequest, "assetEntryVisible", true));
-
-		String assetLinkEntryIdsString = httpServletRequest.getParameter(
-			"assetLinksSearchContainerPrimaryKeys");
-
-		if (assetLinkEntryIdsString != null) {
-			serviceContext.setAssetLinkEntryIds(
-				StringUtil.split(assetLinkEntryIdsString, 0L));
-		}
-
-		serviceContext.setAssetPriority(
-			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
-		serviceContext.setAssetTagNames(
-			ParamUtil.getStringValues(httpServletRequest, "assetTagNames"));
 
 		// Workflow
 

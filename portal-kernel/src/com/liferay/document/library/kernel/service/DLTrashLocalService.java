@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -26,7 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLTrashLocalServiceUtil
  * @generated
  */
-@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

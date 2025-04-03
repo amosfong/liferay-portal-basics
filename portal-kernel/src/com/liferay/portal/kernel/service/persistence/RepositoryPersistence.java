@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -23,8 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RepositoryPersistence
-	extends BasePersistence<Repository>, CTPersistence<Repository> {
+public interface RepositoryPersistence extends BasePersistence<Repository> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

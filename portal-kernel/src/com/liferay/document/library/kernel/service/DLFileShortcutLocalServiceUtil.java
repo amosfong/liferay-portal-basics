@@ -500,15 +500,6 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().setTreePaths(folderId, treePath);
 	}
 
-	public static void updateAsset(
-			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		getService().updateAsset(
-			userId, fileShortcut, assetCategoryIds, assetTagNames);
-	}
-
 	/**
 	 * Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

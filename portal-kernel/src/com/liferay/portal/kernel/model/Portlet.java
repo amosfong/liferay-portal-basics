@@ -192,15 +192,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 			getApplicationTypes();
 
 	/**
-	 * Returns the names of the classes that represent asset types associated
-	 * with the portlet.
-	 *
-	 * @return the names of the classes that represent asset types associated
-	 with the portlet
-	 */
-	public java.util.List<String> getAssetRendererFactoryClasses();
-
-	/**
 	 * Returns the names of the parameters that will be automatically propagated
 	 * through the portlet.
 	 *
@@ -1620,16 +1611,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 		java.util.Set
 			<com.liferay.portal.kernel.application.type.ApplicationType>
 				applicationTypes);
-
-	/**
-	 * Sets the names of the classes that represent asset types associated with
-	 * the portlet.
-	 *
-	 * @param assetRendererFactoryClasses the names of the classes that
-	 represent asset types associated with the portlet
-	 */
-	public void setAssetRendererFactoryClasses(
-		java.util.List<String> assetRendererFactoryClasses);
 
 	/**
 	 * Set to <code>true</code> if the portlet supports asynchronous processing

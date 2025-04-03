@@ -28,9 +28,6 @@ public class WorkflowInstanceLinkTable
 	public final Column<WorkflowInstanceLinkTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<WorkflowInstanceLinkTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<WorkflowInstanceLinkTable, Long>
 		workflowInstanceLinkId = createColumn(
 			"workflowInstanceLinkId", Long.class, Types.BIGINT,

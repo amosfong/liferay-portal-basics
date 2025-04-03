@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.model.Image;
-
 /**
  * Provides a wrapper for {@link ImageService}.
  *
@@ -26,7 +24,7 @@ public class ImageServiceWrapper
 	}
 
 	@Override
-	public Image getImage(long imageId)
+	public com.liferay.portal.kernel.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageService.getImage(imageId);
@@ -38,7 +36,7 @@ public class ImageServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _imageService.getOSGiServiceIdentifier();
 	}
 

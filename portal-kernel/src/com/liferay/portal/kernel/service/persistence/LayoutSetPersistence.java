@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -23,8 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface LayoutSetPersistence
-	extends BasePersistence<LayoutSet>, CTPersistence<LayoutSet> {
+public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

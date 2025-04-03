@@ -25,8 +25,6 @@ public class OrganizationTable extends BaseTable<OrganizationTable> {
 
 	public final Column<OrganizationTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<OrganizationTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<OrganizationTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OrganizationTable, String> externalReferenceCode =

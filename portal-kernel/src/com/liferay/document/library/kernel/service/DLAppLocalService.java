@@ -6,7 +6,6 @@
 package com.liferay.document.library.kernel.service;
 
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -36,7 +35,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLAppLocalServiceUtil
  * @generated
  */
-@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
@@ -577,24 +575,6 @@ public interface DLAppLocalService extends BaseLocalService {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void unsubscribeFolder(long userId, long groupId, long folderId)
-		throws PortalException;
-
-	/**
-	 * Updates the file entry's asset replacing its asset categories, tags, and
-	 * links.
-	 *
-	 * @param userId the primary key of the user
-	 * @param fileEntry the file entry to update
-	 * @param fileVersion the file version to update
-	 * @param assetCategoryIds the primary keys of the new asset categories
-	 * @param assetTagNames the new asset tag names
-	 * @param assetLinkEntryIds the primary keys of the new asset link entries
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public void updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
 		throws PortalException;
 
 	/**

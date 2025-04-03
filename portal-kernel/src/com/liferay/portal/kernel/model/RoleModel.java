@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -28,9 +27,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RoleModel
-	extends AttachedModel, BaseModel<Role>, CTModel<Role>,
-			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<Role>, ExternalReferenceCodeModel,
+			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -43,7 +41,6 @@ public interface RoleModel
 	 *
 	 * @return the primary key of this role
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -51,7 +48,6 @@ public interface RoleModel
 	 *
 	 * @param primaryKey the primary key of this role
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -69,22 +65,6 @@ public interface RoleModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this role.
-	 *
-	 * @return the ct collection ID of this role
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this role.
-	 *
-	 * @param ctCollectionId the ct collection ID of this role
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this role.

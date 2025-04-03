@@ -759,32 +759,6 @@ public class DLAppLocalServiceWrapper
 	}
 
 	/**
-	 * Updates the file entry's asset replacing its asset categories, tags, and
-	 * links.
-	 *
-	 * @param userId the primary key of the user
-	 * @param fileEntry the file entry to update
-	 * @param fileVersion the file version to update
-	 * @param assetCategoryIds the primary keys of the new asset categories
-	 * @param assetTagNames the new asset tag names
-	 * @param assetLinkEntryIds the primary keys of the new asset link entries
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void updateAsset(
-			long userId,
-			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_dlAppLocalService.updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
-	}
-
-	/**
 	 * Updates a file entry and associated metadata based on a byte array
 	 * object. If the file data is <code>null</code>, then only the associated
 	 * metadata (i.e., <code>title</code>, <code>description</code>, and

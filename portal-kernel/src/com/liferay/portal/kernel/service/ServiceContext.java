@@ -82,11 +82,6 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		serviceContext.setAddGroupPermissions(isAddGroupPermissions());
 		serviceContext.setAddGuestPermissions(isAddGuestPermissions());
-		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
-		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
-		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
-		serviceContext.setAssetPriority(getAssetPriority());
-		serviceContext.setAssetTagNames(getAssetTagNames());
 		serviceContext.setAttributes(getAttributes());
 		serviceContext.setCommand(getCommand());
 		serviceContext.setCompanyId(getCompanyId());
@@ -199,49 +194,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		return UserLocalServiceUtil.fetchUserById(_userId);
-	}
-
-	/**
-	 * Returns the asset category IDs to be applied to an asset entry if the
-	 * service context is being passed as a parameter to a method which
-	 * manipulates the asset entry.
-	 *
-	 * @return the asset category IDs
-	 */
-	public long[] getAssetCategoryIds() {
-		return _assetCategoryIds;
-	}
-
-	/**
-	 * Returns the primary keys of the asset entries linked to an asset entry if
-	 * the service context is being passed as a parameter to a method which
-	 * manipulates the asset entry.
-	 *
-	 * @return the primary keys of the asset entries
-	 */
-	public long[] getAssetLinkEntryIds() {
-		return _assetLinkEntryIds;
-	}
-
-	/**
-	 * Returns the priority of an asset entry if this service context is being
-	 * passed as a parameter to a method which manipulates the asset entry.
-	 *
-	 * @return the asset entry's priority
-	 */
-	public double getAssetPriority() {
-		return _assetPriority;
-	}
-
-	/**
-	 * Returns the asset tag names to be applied to an asset entry if the
-	 * service context is being passed as a parameter to a method which
-	 * manipulates the asset entry.
-	 *
-	 * @return the asset tag names
-	 */
-	public String[] getAssetTagNames() {
-		return _assetTagNames;
 	}
 
 	/**
@@ -807,10 +759,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _addGuestPermissions;
 	}
 
-	public boolean isAssetEntryVisible() {
-		return _assetEntryVisible;
-	}
-
 	/**
 	 * Returns <code>true</code> if this service context contains an add command
 	 * (i.e. has command value {@link Constants#ADD})
@@ -921,24 +869,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	public void merge(ServiceContext serviceContext) {
 		setAddGroupPermissions(serviceContext.isAddGroupPermissions());
 		setAddGuestPermissions(serviceContext.isAddGuestPermissions());
-
-		if (serviceContext.getAssetCategoryIds() != null) {
-			setAssetCategoryIds(serviceContext.getAssetCategoryIds());
-		}
-
-		setAssetEntryVisible(serviceContext.isAssetEntryVisible());
-
-		if (serviceContext.getAssetLinkEntryIds() != null) {
-			setAssetLinkEntryIds(serviceContext.getAssetLinkEntryIds());
-		}
-
-		if (serviceContext.getAssetPriority() > 0) {
-			setAssetPriority(serviceContext.getAssetPriority());
-		}
-
-		if (serviceContext.getAssetTagNames() != null) {
-			setAssetTagNames(serviceContext.getAssetTagNames());
-		}
 
 		if (serviceContext.getAttributes() != null) {
 			setAttributes(serviceContext.getAttributes());
@@ -1098,54 +1028,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setAddGuestPermissions(boolean addGuestPermissions) {
 		_addGuestPermissions = addGuestPermissions;
-	}
-
-	/**
-	 * Sets an array of asset category IDs to be applied to an asset entry if
-	 * this service context is being passed as a parameter to a method which
-	 * manipulates the asset entry.
-	 *
-	 * @param assetCategoryIds the primary keys of the asset categories
-	 */
-	public void setAssetCategoryIds(long[] assetCategoryIds) {
-		_assetCategoryIds = assetCategoryIds;
-	}
-
-	public void setAssetEntryVisible(boolean assetEntryVisible) {
-		_assetEntryVisible = assetEntryVisible;
-	}
-
-	/**
-	 * Sets an array of the primary keys of asset entries to be linked to an
-	 * asset entry if this service context is being passed as a parameter to a
-	 * method which manipulates the asset entry.
-	 *
-	 * @param assetLinkEntryIds the primary keys of the asset entries to be
-	 *        linked to an asset entry
-	 */
-	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
-		_assetLinkEntryIds = assetLinkEntryIds;
-	}
-
-	/**
-	 * Sets the priority of an asset entry if this service context is being
-	 * passed as a parameter to a method which manipulates the asset entry.
-	 *
-	 * @param assetPriority the priority of an asset entry
-	 */
-	public void setAssetPriority(double assetPriority) {
-		_assetPriority = assetPriority;
-	}
-
-	/**
-	 * Sets an array of asset tag names to be applied to an asset entry if this
-	 * service context is being passed as a parameter to a method which
-	 * manipulates the asset entry.
-	 *
-	 * @param assetTagNames the tag names to be applied to an asset entry
-	 */
-	public void setAssetTagNames(String[] assetTagNames) {
-		_assetTagNames = assetTagNames;
 	}
 
 	/**
@@ -1541,11 +1423,6 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	private boolean _addGroupPermissions;
 	private boolean _addGuestPermissions;
-	private long[] _assetCategoryIds;
-	private boolean _assetEntryVisible = true;
-	private long[] _assetLinkEntryIds;
-	private double _assetPriority;
-	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes = new LinkedHashMap<>();
 	private String _command;
 	private long _companyId;

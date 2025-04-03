@@ -39,7 +39,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @AccessControlled
-@CTAware
 @JSONWebService
 @ProviderType
 @Transactional(

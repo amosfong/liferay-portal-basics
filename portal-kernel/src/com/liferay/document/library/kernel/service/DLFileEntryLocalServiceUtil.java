@@ -814,10 +814,6 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static List<DLFileEntry> getNoAssetFileEntries() {
-		return getService().getNoAssetFileEntries();
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *

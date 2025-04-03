@@ -26,9 +26,6 @@ public class ResourcePermissionTable
 	public final Column<ResourcePermissionTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<ResourcePermissionTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ResourcePermissionTable, Long> resourcePermissionId =
 		createColumn(
 			"resourcePermissionId", Long.class, Types.BIGINT,

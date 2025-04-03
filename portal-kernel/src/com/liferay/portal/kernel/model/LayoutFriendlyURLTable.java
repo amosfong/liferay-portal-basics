@@ -27,9 +27,6 @@ public class LayoutFriendlyURLTable extends BaseTable<LayoutFriendlyURLTable> {
 	public final Column<LayoutFriendlyURLTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<LayoutFriendlyURLTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutFriendlyURLTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutFriendlyURLTable, Long> layoutFriendlyURLId =

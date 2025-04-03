@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -29,10 +28,11 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
-	public DLFileShortcut addFileShortcut(
-			String externalReferenceCode, long groupId, long repositoryId,
-			long folderId, long toFileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.document.library.kernel.model.DLFileShortcut
+			addFileShortcut(
+				String externalReferenceCode, long groupId, long repositoryId,
+				long folderId, long toFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutService.addFileShortcut(
@@ -56,8 +56,9 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
-	public DLFileShortcut getDLFileShortcutByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
+	public com.liferay.document.library.kernel.model.DLFileShortcut
+			getDLFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutService.getDLFileShortcutByExternalReferenceCode(
@@ -65,20 +66,25 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
-	public DLFileShortcut getFileShortcut(long fileShortcutId)
+	public com.liferay.document.library.kernel.model.DLFileShortcut
+			getFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutService.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
-	public java.util.List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileShortcut>
+			getGroupFileShortcuts(long groupId) {
+
 		return _dlFileShortcutService.getGroupFileShortcuts(groupId);
 	}
 
 	@Override
-	public java.util.List<DLFileShortcut> getGroupFileShortcuts(
-		long groupId, int start, int end) {
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileShortcut>
+			getGroupFileShortcuts(long groupId, int start, int end) {
 
 		return _dlFileShortcutService.getGroupFileShortcuts(
 			groupId, start, end);
@@ -100,10 +106,11 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
-	public DLFileShortcut updateFileShortcut(
-			long fileShortcutId, long repositoryId, long folderId,
-			long toFileEntryId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.document.library.kernel.model.DLFileShortcut
+			updateFileShortcut(
+				long fileShortcutId, long repositoryId, long folderId,
+				long toFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutService.updateFileShortcut(

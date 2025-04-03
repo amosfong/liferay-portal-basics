@@ -545,10 +545,6 @@ public class OrganizationLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static List<Organization> getNoAssetOrganizations() {
-		return getService().getNoAssetOrganizations();
-	}
-
 	/**
 	 * Returns the organization with the primary key.
 	 *
@@ -1563,24 +1559,6 @@ public class OrganizationLocalServiceUtil {
 
 		getService().unsetPasswordPolicyOrganizations(
 			passwordPolicyId, organizationIds);
-	}
-
-	/**
-	 * Updates the organization's asset with the new asset categories and tag
-	 * names, removing and adding asset categories and tag names as necessary.
-	 *
-	 * @param userId the primary key of the user
-	 * @param organization the organization
-	 * @param assetCategoryIds the primary keys of the asset categories
-	 * @param assetTagNames the asset tag names
-	 */
-	public static void updateAsset(
-			long userId, Organization organization, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		getService().updateAsset(
-			userId, organization, assetCategoryIds, assetTagNames);
 	}
 
 	public static Organization updateLogo(long organizationId, byte[] logoBytes)

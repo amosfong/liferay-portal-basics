@@ -25,8 +25,6 @@ public class ImageTable extends BaseTable<ImageTable> {
 
 	public final Column<ImageTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<ImageTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ImageTable, Long> imageId = createColumn(
 		"imageId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ImageTable, Long> companyId = createColumn(

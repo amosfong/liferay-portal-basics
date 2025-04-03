@@ -2562,25 +2562,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	 * Updates the group's asset replacing categories and tag names.
-	 *
-	 * @param userId the primary key of the user
-	 * @param group the group
-	 * @param assetCategoryIds the primary keys of the asset categories
-	 (optionally <code>null</code>)
-	 * @param assetTagNames the asset tag names (optionally <code>null</code>)
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static void updateAsset(
-			long userId, Group group, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		getService().updateAsset(
-			userId, group, assetCategoryIds, assetTagNames);
-	}
-
-	/**
 	 * Updates the group's friendly URL.
 	 *
 	 * @param groupId the primary key of the group

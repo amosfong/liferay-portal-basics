@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -25,8 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SystemEventModel
-	extends AttachedModel, BaseModel<SystemEvent>, CTModel<SystemEvent>,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<SystemEvent>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -39,7 +37,6 @@ public interface SystemEventModel
 	 *
 	 * @return the primary key of this system event
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -47,7 +44,6 @@ public interface SystemEventModel
 	 *
 	 * @param primaryKey the primary key of this system event
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -65,22 +61,6 @@ public interface SystemEventModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this system event.
-	 *
-	 * @return the ct collection ID of this system event
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this system event.
-	 *
-	 * @param ctCollectionId the ct collection ID of this system event
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the system event ID of this system event.
