@@ -5,11 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
@@ -173,9 +168,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.initializer.kernel.util.SiteInitializerThreadLocal;
-import com.liferay.social.kernel.service.SocialActivityLocalService;
-import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
-import com.liferay.social.kernel.service.SocialRequestLocalService;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
@@ -537,14 +529,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			_userLocalService.addGroupUsers(
 				group.getGroupId(), new long[] {userId});
-
-			// Asset
-
-			if (serviceContext != null) {
-				updateAsset(
-					userId, group, serviceContext.getAssetCategoryIds(),
-					serviceContext.getAssetTagNames());
-			}
 		}
 
 		addPortletDefaultData(group);
@@ -1116,33 +1100,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			deletePortletData(group);
 
-			// Asset
-
-			if (group.isRegularSite()) {
-				_assetEntryLocalService.deleteEntry(
-					Group.class.getName(), group.getGroupId());
-			}
-
-			_assetEntryLocalService.deleteGroupEntries(group.getGroupId());
-
-			_assetTagLocalService.deleteGroupTags(group.getGroupId());
-
-			_assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
-
 			// Expando
 
 			_expandoRowLocalService.deleteRows(
 				group.getCompanyId(),
 				_classNameLocalService.getClassNameId(Group.class.getName()),
-				group.getGroupId());
-
-			// Social
-
-			_socialActivityLocalService.deleteActivities(group.getGroupId());
-			_socialActivitySettingLocalService.deleteActivitySettings(
-				group.getGroupId());
-			_socialRequestLocalService.deleteRequests(
-				_classNameLocalService.getClassNameId(Group.class),
 				group.getGroupId());
 
 			// Workflow
@@ -3748,37 +3710,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the group's asset replacing categories and tag names.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  group the group
-	 * @param  assetCategoryIds the primary keys of the asset categories
-	 *         (optionally <code>null</code>)
-	 * @param  assetTagNames the asset tag names (optionally <code>null</code>)
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void updateAsset(
-			long userId, Group group, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		User user = _userPersistence.findByPrimaryKey(userId);
-
-		Company company = _companyPersistence.findByPrimaryKey(
-			user.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		_assetEntryLocalService.updateEntry(
-			userId, companyGroup.getGroupId(), null, null,
-			Group.class.getName(), group.getGroupId(), null, 0,
-			assetCategoryIds, assetTagNames, true, false, null, null, null,
-			null, null, group.getDescriptiveName(), group.getDescription(),
-			null, null, null, 0, 0, null);
-	}
-
-	/**
 	 * Updates the group's friendly URL.
 	 *
 	 * @param  groupId the primary key of the group
@@ -3945,28 +3876,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			groupPersistence.update(stagingGroup);
 		}
-
-		// Asset
-
-		if ((serviceContext == null) || !group.isSite()) {
-			return group;
-		}
-
-		User user = _userPersistence.fetchByPrimaryKey(
-			group.getCreatorUserId());
-
-		if (user == null) {
-			user = _userPersistence.fetchByPrimaryKey(
-				serviceContext.getUserId());
-		}
-
-		if (user == null) {
-			user = _userLocalService.getGuestUser(group.getCompanyId());
-		}
-
-		updateAsset(
-			user.getUserId(), group, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
 
 		return group;
 	}
@@ -4336,15 +4245,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 
 			boolean containsName = matches(group.getNameCurrentValue(), names);
-
-			if (!containsName) {
-				AssetEntry assetEntry = _assetEntryPersistence.fetchByC_C(
-					group.getClassNameId(), group.getGroupId());
-
-				if (assetEntry != null) {
-					containsName = matches(assetEntry.getTitle(), names);
-				}
-			}
 
 			boolean containsDescription = matches(
 				group.getDescriptionCurrentValue(), descriptions);
@@ -5549,18 +5449,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	private static final DCLSingleton<Map<Long, Long>>
 		_stagingGroupIdsDCLSingleton = new DCLSingleton<>();
 
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@BeanReference(type = AssetEntryPersistence.class)
-	private AssetEntryPersistence _assetEntryPersistence;
-
-	@BeanReference(type = AssetTagLocalService.class)
-	private AssetTagLocalService _assetTagLocalService;
-
-	@BeanReference(type = AssetVocabularyLocalService.class)
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
 	private volatile Supplier<long[]> _classNameIdsSupplier;
 
 	@BeanReference(type = ClassNameLocalService.class)
@@ -5633,16 +5521,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	private RolePersistence _rolePersistence;
 
 	private ServiceRegistration<?> _serviceRegistration;
-
-	@BeanReference(type = SocialActivityLocalService.class)
-	private SocialActivityLocalService _socialActivityLocalService;
-
-	@BeanReference(type = SocialActivitySettingLocalService.class)
-	private SocialActivitySettingLocalService
-		_socialActivitySettingLocalService;
-
-	@BeanReference(type = SocialRequestLocalService.class)
-	private SocialRequestLocalService _socialRequestLocalService;
 
 	@BeanReference(type = StagingLocalService.class)
 	private StagingLocalService _stagingLocalService;

@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
@@ -585,11 +584,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<DLFolder> getNoAssetFolders() {
-		return dlFolderFinder.findF_ByNoAssets();
-	}
-
-	@Override
 	public List<DLFolder> getNotInTrashFolders(
 		long groupId, boolean mountPoint, String treePath, boolean hidden) {
 
@@ -1104,17 +1098,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlFolder = dlFolderPersistence.update(dlFolder);
 
-		// Asset
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			_assetEntryLocalService.updateVisible(
-				DLFolder.class.getName(), dlFolder.getFolderId(), true);
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			_assetEntryLocalService.updateVisible(
-				DLFolder.class.getName(), dlFolder.getFolderId(), false);
-		}
-
 		// Indexer
 
 		if (((status == WorkflowConstants.STATUS_APPROVED) ||
@@ -1468,9 +1451,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
 		new Snapshot<>(DLFolderLocalServiceImpl.class, TrashHelper.class);
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

@@ -5,10 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -815,13 +811,6 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		Organization oldOrganization = organization;
 
-		List<AssetCategory> oldAssetCategories =
-			_assetCategoryLocalService.getCategories(
-				Organization.class.getName(), organizationId);
-
-		List<AssetTag> oldAssetTags = _assetTagLocalService.getTags(
-			Organization.class.getName(), organizationId);
-
 		ExpandoBridge oldExpandoBridge = oldOrganization.getExpandoBridge();
 
 		Map<String, Serializable> oldExpandoAttributes =
@@ -834,8 +823,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			serviceContext);
 
 		OrganizationMembershipPolicyUtil.verifyPolicy(
-			organization, oldOrganization, oldAssetCategories, oldAssetTags,
-			oldExpandoAttributes);
+			organization, oldOrganization, oldExpandoAttributes);
 
 		return organization;
 	}
@@ -873,11 +861,5 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			type, regionId, countryId, statusListTypeId, comments, true, null,
 			site, null, null, null, null, null, serviceContext);
 	}
-
-	@BeanReference(type = AssetCategoryLocalService.class)
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@BeanReference(type = AssetTagLocalService.class)
-	private AssetTagLocalService _assetTagLocalService;
 
 }

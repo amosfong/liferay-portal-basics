@@ -5,10 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1069,13 +1065,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if (group.isSite()) {
 			Group oldGroup = group;
 
-			List<AssetCategory> oldAssetCategories =
-				_assetCategoryLocalService.getCategories(
-					Group.class.getName(), groupId);
-
-			List<AssetTag> oldAssetTags = _assetTagLocalService.getTags(
-				Group.class.getName(), groupId);
-
 			ExpandoBridge oldExpandoBridge = oldGroup.getExpandoBridge();
 
 			Map<String, Serializable> oldExpandoAttributes =
@@ -1087,8 +1076,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				inheritContent, active, serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
-				group, oldGroup, oldAssetCategories, oldAssetTags,
-				oldExpandoAttributes, null);
+				group, oldGroup, oldExpandoAttributes, null);
 
 			return group;
 		}
@@ -1130,8 +1118,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				group.getTypeSettingsProperties());
 
 			SiteMembershipPolicyUtil.verifyPolicy(
-				group, oldGroup, null, null, null,
-				oldTypeSettingsUnicodeProperties);
+				group, oldGroup, null, oldTypeSettingsUnicodeProperties);
 
 			return group;
 		}
@@ -1187,12 +1174,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupServiceImpl.class);
-
-	@BeanReference(type = AssetCategoryLocalService.class)
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@BeanReference(type = AssetTagLocalService.class)
-	private AssetTagLocalService _assetTagLocalService;
 
 	@BeanReference(type = CompanyPersistence.class)
 	private CompanyPersistence _companyPersistence;

@@ -38,7 +38,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(5, 0, 3),
 			UpgradeModulesFactory.create(
 				new String[] {
-					"com.liferay.asset.service",
 					"com.liferay.document.library.repository.cmis.impl"
 				},
 				null));

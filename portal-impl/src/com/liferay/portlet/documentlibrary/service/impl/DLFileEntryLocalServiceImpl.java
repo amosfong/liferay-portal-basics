@@ -5,8 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
@@ -1632,11 +1630,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntryPersistence.countByG_U(groupId, userId);
-	}
-
-	@Override
-	public List<DLFileEntry> getNoAssetFileEntries() {
-		return dlFileEntryFinder.findByNoAssets();
 	}
 
 	@Override
@@ -3583,22 +3576,6 @@ public class DLFileEntryLocalServiceImpl
 				"validateDDMFormValues", validateDDMFormValues);
 		}
 
-		// Asset
-
-		AssetEntry latestDLFileVersionAssetEntry =
-			_assetEntryLocalService.fetchEntry(
-				DLFileEntryConstants.getClassName(),
-				latestDLFileVersion.getPrimaryKey());
-
-		if (latestDLFileVersionAssetEntry != null) {
-			_assetEntryLocalService.updateEntry(
-				lastDLFileVersion.getUserId(), lastDLFileVersion.getGroupId(),
-				DLFileEntryConstants.getClassName(),
-				lastDLFileVersion.getPrimaryKey(),
-				latestDLFileVersionAssetEntry.getCategoryIds(),
-				latestDLFileVersionAssetEntry.getTagNames());
-		}
-
 		// File
 
 		DLFileVersion previousDLFileVersion =
@@ -3711,9 +3688,6 @@ public class DLFileEntryLocalServiceImpl
 
 		_dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
 			dlFileVersion.getFileVersionId());
-
-		_assetEntryLocalService.deleteEntry(
-			DLFileEntryConstants.getClassName(), dlFileVersion.getPrimaryKey());
 
 		_deleteFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -4125,9 +4099,6 @@ public class DLFileEntryLocalServiceImpl
 	private static final Snapshot<ViewCountManager> _viewCountManagerSnapshot =
 		new Snapshot<>(
 			DLFileEntryLocalServiceImpl.class, ViewCountManager.class);
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

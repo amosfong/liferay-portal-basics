@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.sharepoint;
 
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -276,11 +275,6 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 				file = FileUtil.createTempFile(inputStream);
 
-				serviceContext.setAssetTagNames(
-					AssetTagLocalServiceUtil.getTagNames(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId()));
-
 				fileEntry = DLAppServiceUtil.updateFileEntry(
 					fileEntryId, newName, mimeType, newName, StringPool.BLANK,
 					description, changeLog,
@@ -370,11 +364,6 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 				FileEntry fileEntry = getFileEntry(sharepointRequest);
 
 				description = fileEntry.getDescription();
-
-				serviceContext.setAssetTagNames(
-					AssetTagLocalServiceUtil.getTagNames(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId()));
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), title, contentType, title,

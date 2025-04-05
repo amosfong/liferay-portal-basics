@@ -5,9 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -108,19 +105,6 @@ public class DLFileShortcutLocalServiceImpl
 				folderId, fileShortcut.getModifiedDate());
 		}
 
-		// Asset
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
-
-		copyAssetTags(fileEntry, serviceContext);
-
-		updateAsset(
-			userId, fileShortcut,
-			_assetCategoryLocalService.getCategoryIds(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId()),
-			serviceContext.getAssetTagNames());
-
 		return fileShortcut;
 	}
 
@@ -186,12 +170,6 @@ public class DLFileShortcutLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			fileShortcut.getCompanyId(), DLFileShortcutConstants.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			fileShortcut.getFileShortcutId());
-
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
-			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId());
 	}
 
@@ -381,26 +359,6 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
-	public void updateAsset(
-			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			fileShortcut.getToFileEntryId());
-
-		_assetEntryLocalService.updateEntry(
-			userId, fileShortcut.getGroupId(), fileShortcut.getCreateDate(),
-			fileShortcut.getModifiedDate(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, false, null, null,
-			fileShortcut.getCreateDate(), null, fileEntry.getMimeType(),
-			fileEntry.getTitle(), fileEntry.getDescription(), null, null, null,
-			0, 0, null);
-	}
-
-	@Override
 	public DLFileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long repositoryId, long folderId,
 			long toFileEntryId, ServiceContext serviceContext)
@@ -427,19 +385,6 @@ public class DLFileShortcutLocalServiceImpl
 			_dlFolderLocalService.updateLastPostDate(
 				folderId, fileShortcut.getModifiedDate());
 		}
-
-		// Asset
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
-
-		copyAssetTags(fileEntry, serviceContext);
-
-		updateAsset(
-			userId, fileShortcut,
-			_assetCategoryLocalService.getCategoryIds(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId()),
-			serviceContext.getAssetTagNames());
 
 		return fileShortcut;
 	}
@@ -489,20 +434,6 @@ public class DLFileShortcutLocalServiceImpl
 		return dlFileShortcutPersistence.update(fileShortcut);
 	}
 
-	protected void copyAssetTags(
-			FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
-		_assetTagLocalService.checkTags(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			assetTagNames);
-
-		serviceContext.setAssetTagNames(assetTagNames);
-	}
-
 	protected long getFolderId(long companyId, long folderId) {
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -544,15 +475,6 @@ public class DLFileShortcutLocalServiceImpl
 
 	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
 		new Snapshot<>(DLFileShortcutLocalServiceImpl.class, TrashHelper.class);
-
-	@BeanReference(type = AssetCategoryLocalService.class)
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@BeanReference(type = AssetTagLocalService.class)
-	private AssetTagLocalService _assetTagLocalService;
 
 	@BeanReference(type = DLAppLocalService.class)
 	private DLAppLocalService _dlAppLocalService;

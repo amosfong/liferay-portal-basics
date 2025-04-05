@@ -10,11 +10,6 @@ import com.liferay.portal.upgrade.v7_2_x.util.AccountTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AddressTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AnnouncementsEntryTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AnnouncementsFlagTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AssetCategoryTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AssetEntryTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AssetLinkTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AssetTagTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AssetVocabularyTable;
 import com.liferay.portal.upgrade.v7_2_x.util.ContactTable;
 import com.liferay.portal.upgrade.v7_2_x.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v7_2_x.util.DLFileEntryTypeTable;
@@ -68,9 +63,7 @@ public class UpgradeSQLServerDatetime
 
 	private static final Class<?>[] _TABLE_CLASSES = {
 		AccountTable.class, AddressTable.class, AnnouncementsEntryTable.class,
-		AnnouncementsFlagTable.class, AssetCategoryTable.class,
-		AssetEntryTable.class, AssetLinkTable.class, AssetTagTable.class,
-		AssetVocabularyTable.class, ContactTable.class, DLFileEntryTable.class,
+		AnnouncementsFlagTable.class, ContactTable.class, DLFileEntryTable.class,
 		DLFileEntryTypeTable.class, DLFileShortcutTable.class,
 		DLFileVersionTable.class, DLFolderTable.class, EmailAddressTable.class,
 		ExpandoRowTable.class, ExportImportConfigurationTable.class,

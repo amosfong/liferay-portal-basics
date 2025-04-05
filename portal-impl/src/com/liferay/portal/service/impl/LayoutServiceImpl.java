@@ -15,7 +15,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -1045,14 +1044,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					group.getCtCollectionId())) {
-
-			return TempFileEntryUtil.getTempFileNames(
-				groupId, getUserId(),
-				DigesterUtil.digestHex(Digester.SHA_256, folderName));
-		}
+		return TempFileEntryUtil.getTempFileNames(
+			groupId, getUserId(),
+			DigesterUtil.digestHex(Digester.SHA_256, folderName));
 	}
 
 	/**

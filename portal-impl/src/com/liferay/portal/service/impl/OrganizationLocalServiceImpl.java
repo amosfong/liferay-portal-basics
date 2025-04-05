@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -359,14 +358,6 @@ public class OrganizationLocalServiceImpl
 
 		addOrganizationResources(userId, organization);
 
-		// Asset
-
-		if (serviceContext != null) {
-			updateAsset(
-				userId, organization, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames());
-		}
-
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
@@ -558,11 +549,6 @@ public class OrganizationLocalServiceImpl
 			}
 		}
 
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
-			Organization.class.getName(), organization.getOrganizationId());
-
 		// Addresses
 
 		_addressLocalService.deleteAddresses(
@@ -693,11 +679,6 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organizations;
-	}
-
-	@Override
-	public List<Organization> getNoAssetOrganizations() {
-		return organizationFinder.findO_ByNoAssets();
 	}
 
 	/**
@@ -2010,36 +1991,6 @@ public class OrganizationLocalServiceImpl
 			passwordPolicyId, Organization.class.getName(), organizationIds);
 	}
 
-	/**
-	 * Updates the organization's asset with the new asset categories and tag
-	 * names, removing and adding asset categories and tag names as necessary.
-	 *
-	 * @param userId the primary key of the user
-	 * @param organization the organization
-	 * @param assetCategoryIds the primary keys of the asset categories
-	 * @param assetTagNames the asset tag names
-	 */
-	@Override
-	public void updateAsset(
-			long userId, Organization organization, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		User user = _userPersistence.findByPrimaryKey(userId);
-
-		Company company = _companyPersistence.findByPrimaryKey(
-			user.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		_assetEntryLocalService.updateEntry(
-			userId, companyGroup.getGroupId(), null, null,
-			Organization.class.getName(), organization.getOrganizationId(),
-			organization.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			false, null, null, null, null, null, organization.getName(),
-			StringPool.BLANK, null, null, null, 0, 0, null);
-	}
-
 	@Override
 	public Organization updateLogo(long organizationId, byte[] logoBytes)
 		throws PortalException {
@@ -2201,15 +2152,6 @@ public class OrganizationLocalServiceImpl
 					_groupLocalService.updateGroup(childGroup);
 				}
 			}
-		}
-
-		// Asset
-
-		if (serviceContext != null) {
-			updateAsset(
-				serviceContext.getUserId(), organization,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames());
 		}
 
 		// Indexer
@@ -2697,9 +2639,6 @@ public class OrganizationLocalServiceImpl
 
 	@BeanReference(type = AddressLocalService.class)
 	private AddressLocalService _addressLocalService;
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = CompanyPersistence.class)
 	private CompanyPersistence _companyPersistence;

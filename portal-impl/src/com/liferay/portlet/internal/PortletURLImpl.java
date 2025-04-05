@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1093,21 +1092,6 @@ public class PortletURLImpl
 
 				sb.append(URLCodec.encodeURL(removedPublicParameter));
 				sb.append(StringPool.EQUAL);
-				sb.append(StringPool.AMPERSAND);
-			}
-		}
-
-		Object layoutAssetEntry = _httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (layoutAssetEntry instanceof AssetEntry) {
-			AssetEntry assetEntry = (AssetEntry)layoutAssetEntry;
-
-			if ((_layout != null) && _layout.isTypeAssetDisplay() &&
-				(assetEntry != null)) {
-
-				sb.append("assetEntryId=");
-				sb.append(assetEntry.getEntryId());
 				sb.append(StringPool.AMPERSAND);
 			}
 		}

@@ -207,7 +207,6 @@ import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 import com.liferay.sites.kernel.util.Sites;
-import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.util.JS;
 
 import java.awt.image.RenderedImage;
@@ -6267,17 +6266,6 @@ public class PortalImpl implements Portal {
 				ResourceConstants.SCOPE_GROUP,
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				SocialRelationConstants.TYPE_BI_COWORKER,
-				SocialRelationConstants.TYPE_BI_FRIEND,
-				SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER,
-				SocialRelationConstants.TYPE_BI_SIBLING,
-				SocialRelationConstants.TYPE_BI_SPOUSE,
-				SocialRelationConstants.TYPE_UNI_CHILD,
-				SocialRelationConstants.TYPE_UNI_ENEMY,
-				SocialRelationConstants.TYPE_UNI_FOLLOWER,
-				SocialRelationConstants.TYPE_UNI_PARENT,
-				SocialRelationConstants.TYPE_UNI_SUBORDINATE,
-				SocialRelationConstants.TYPE_UNI_SUPERVISOR,
 				db.getTemplateFalse(), db.getTemplateTrue()
 			});
 	}
@@ -8062,17 +8050,7 @@ public class PortalImpl implements Portal {
 		"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFOLDER$]",
 		"[$RESOURCE_SCOPE_COMPANY$]", "[$RESOURCE_SCOPE_GROUP$]",
 		"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]", "[$RESOURCE_SCOPE_INDIVIDUAL$]",
-		"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
-		"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
-		"[$SOCIAL_RELATION_TYPE_BI_ROMANTIC_PARTNER$]",
-		"[$SOCIAL_RELATION_TYPE_BI_SIBLING$]",
-		"[$SOCIAL_RELATION_TYPE_BI_SPOUSE$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_CHILD$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_ENEMY$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
-		"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]", "[$FALSE$]", "[$TRUE$]"
+		"[$FALSE$]", "[$TRUE$]"
 	};
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";

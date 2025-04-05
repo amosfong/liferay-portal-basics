@@ -5,7 +5,6 @@
 
 package com.liferay.portal.repository.external;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -110,7 +109,6 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 		com.liferay.portal.kernel.model.Repository repository,
 		BaseRepository baseRepository) {
 
-		baseRepository.setAssetEntryLocalService(_assetEntryLocalService);
 		baseRepository.setCompanyId(repository.getCompanyId());
 		baseRepository.setCompanyLocalService(_companyLocalService);
 		baseRepository.setDLAppHelperLocalService(_dlAppHelperLocalService);
@@ -123,9 +121,6 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 			repository.getTypeSettingsProperties());
 		baseRepository.setUserLocalService(_userLocalService);
 	}
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

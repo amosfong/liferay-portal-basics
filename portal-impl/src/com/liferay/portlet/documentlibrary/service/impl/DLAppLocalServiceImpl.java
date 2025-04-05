@@ -1040,35 +1040,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the file entry's asset replacing its asset categories, tags, and
-	 * links.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  fileEntry the file entry to update
-	 * @param  fileVersion the file version to update
-	 * @param  assetCategoryIds the primary keys of the new asset categories
-	 * @param  assetTagNames the new asset tag names
-	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
-		serviceContext.setAssetTagNames(assetTagNames);
-
-		_dlAppHelperLocalService.updateAsset(
-			userId, fileEntry, fileVersion, serviceContext);
-	}
-
-	/**
 	 * Updates a file entry and associated metadata based on a byte array
 	 * object. If the file data is <code>null</code>, then only the associated
 	 * metadata (i.e., <code>title</code>, <code>description</code>, and

@@ -1680,23 +1680,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("pop-message-listener-class"),
 				portletModel.getPopMessageListenerClass()));
-
-		List<String> socialActivityInterpreterClasses = new ArrayList<>();
-
-		for (Element socialActivityInterpreterClassElement :
-				portletElement.elements("social-activity-interpreter-class")) {
-
-			socialActivityInterpreterClasses.add(
-				socialActivityInterpreterClassElement.getText());
-		}
-
-		portletModel.setSocialActivityInterpreterClasses(
-			socialActivityInterpreterClasses);
-
-		portletModel.setSocialRequestInterpreterClass(
-			GetterUtil.getString(
-				portletElement.elementText("social-request-interpreter-class"),
-				portletModel.getSocialRequestInterpreterClass()));
 		portletModel.setUserNotificationDefinitions(
 			GetterUtil.getString(
 				portletElement.elementText("user-notification-definitions"),
@@ -1756,18 +1739,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("control-panel-entry-class"),
 				portletModel.getControlPanelEntryClass()));
-
-		List<String> assetRendererFactoryClasses = new ArrayList<>();
-
-		for (Element assetRendererFactoryClassElement :
-				portletElement.elements("asset-renderer-factory")) {
-
-			assetRendererFactoryClasses.add(
-				assetRendererFactoryClassElement.getText());
-		}
-
-		portletModel.setAssetRendererFactoryClasses(
-			assetRendererFactoryClasses);
 
 		List<String> customAttributesDisplayClasses = new ArrayList<>();
 

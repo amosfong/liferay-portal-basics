@@ -46,9 +46,6 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			title, urlTitle, description, changeLog, file, displayDate,
 			expirationDate, reviewDate, serviceContext);
 
-		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
-
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
@@ -67,9 +64,6 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
 			title, urlTitle, description, changeLog, inputStream, size,
 			displayDate, expirationDate, reviewDate, serviceContext);
-
-		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 
@@ -113,9 +107,6 @@ public class LiferayWorkflowRepositoryWrapper extends RepositoryWrapper {
 
 		FileEntry fileEntry = super.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
-
-		DLAppHelperLocalServiceUtil.updateAsset(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		_workflowSupport.addFileEntry(userId, fileEntry, serviceContext);
 

@@ -65,8 +65,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +107,6 @@ public class PortletImpl extends PortletBaseImpl {
 		setActive(true);
 		setStrutsPath(portletId);
 
-		_assetRendererFactoryClasses = new ArrayList<>();
 		_autopropagatedParameters = new LinkedHashSet<>();
 		_categoryNames = new LinkedHashSet<>();
 		_customAttributesDisplayClasses = new ArrayList<>();
@@ -132,7 +129,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_roleMappers = new LinkedHashMap<>();
 		_rootPortlet = this;
 		_schedulerEntries = new ArrayList<>();
-		_socialActivityInterpreterClasses = new ArrayList<>();
 		_stagedModelDataHandlerClasses = new ArrayList<>();
 		_supportedLocales = new HashSet<>();
 		_trashHandlerClasses = new ArrayList<>();
@@ -159,13 +155,11 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> stagedModelDataHandlerClasses, String templateHandlerClass,
 		String portletConfigurationListenerClass,
 		String portletLayoutListenerClass, String popMessageListenerClass,
-		List<String> socialActivityInterpreterClasses,
-		String socialRequestInterpreterClass,
 		String userNotificationDefinitions,
 		List<String> userNotificationHandlerClasses, String webDAVStorageToken,
 		String webDAVStorageClass, String xmlRpcMethodClass,
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
-		String controlPanelEntryClass, List<String> assetRendererFactoryClasses,
+		String controlPanelEntryClass,
 		List<String> customAttributesDisplayClasses,
 		String permissionPropagatorClass, List<String> trashHandlerClasses,
 		List<String> workflowHandlerClasses, String defaultPreferences,
@@ -237,8 +231,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_portletConfigurationListenerClass = portletConfigurationListenerClass;
 		_portletLayoutListenerClass = portletLayoutListenerClass;
 		_popMessageListenerClass = popMessageListenerClass;
-		_socialActivityInterpreterClasses = socialActivityInterpreterClasses;
-		_socialRequestInterpreterClass = socialRequestInterpreterClass;
 		_userNotificationDefinitions = userNotificationDefinitions;
 		_userNotificationHandlerClasses = userNotificationHandlerClasses;
 		_webDAVStorageToken = webDAVStorageToken;
@@ -247,7 +239,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_controlPanelEntryCategory = controlPanelEntryCategory;
 		_controlPanelEntryWeight = controlPanelEntryWeight;
 		_controlPanelEntryClass = controlPanelEntryClass;
-		_assetRendererFactoryClasses = assetRendererFactoryClasses;
 		_customAttributesDisplayClasses = customAttributesDisplayClasses;
 		_permissionPropagatorClass = permissionPropagatorClass;
 		_trashHandlerClasses = trashHandlerClasses;
@@ -405,13 +396,11 @@ public class PortletImpl extends PortletBaseImpl {
 			getPortletDataHandlerClass(), getStagedModelDataHandlerClasses(),
 			getTemplateHandlerClass(), getPortletConfigurationListenerClass(),
 			getPortletLayoutListenerClass(), getPopMessageListenerClass(),
-			getSocialActivityInterpreterClasses(),
-			getSocialRequestInterpreterClass(),
 			getUserNotificationDefinitions(),
 			getUserNotificationHandlerClasses(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
-			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
+			getControlPanelEntryClass(),
 			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
 			getTrashHandlerClasses(), getWorkflowHandlerClasses(),
 			getDefaultPreferences(), getPreferencesValidator(),
@@ -582,18 +571,6 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public Set<ApplicationType> getApplicationTypes() {
 		return _applicationTypes;
-	}
-
-	/**
-	 * Returns the names of the classes that represent asset types associated
-	 * with the portlet.
-	 *
-	 * @return the names of the classes that represent asset types associated
-	 *         with the portlet
-	 */
-	@Override
-	public List<String> getAssetRendererFactoryClasses() {
-		return _assetRendererFactoryClasses;
 	}
 
 	/**
@@ -1728,60 +1705,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns the names of the classes that represent social activity
-	 * interpreters associated with the portlet.
-	 *
-	 * @return the names of the classes that represent social activity
-	 *         interpreters associated with the portlet
-	 */
-	@Override
-	public List<String> getSocialActivityInterpreterClasses() {
-		return _socialActivityInterpreterClasses;
-	}
-
-	/**
-	 * Returns the social activity interpreter instances of the portlet.
-	 *
-	 * @return the social activity interpreter instances of the portlet
-	 */
-	@Override
-	public List<SocialActivityInterpreter>
-		getSocialActivityInterpreterInstances() {
-
-		if (_socialActivityInterpreterClasses.isEmpty()) {
-			return null;
-		}
-
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getSocialActivityInterpreterInstances();
-	}
-
-	/**
-	 * Returns the name of the social request interpreter class of the portlet.
-	 *
-	 * @return the name of the social request interpreter class of the portlet
-	 */
-	@Override
-	public String getSocialRequestInterpreterClass() {
-		return _socialRequestInterpreterClass;
-	}
-
-	/**
-	 * Returns the name of the social request interpreter instance of the
-	 * portlet.
-	 *
-	 * @return the name of the social request interpreter instance of the
-	 *         portlet
-	 */
-	@Override
-	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getSocialRequestInterpreterInstance();
-	}
-
-	/**
 	 * Returns the names of the classes that represent staged model data
 	 * handlers associated with the portlet.
 	 *
@@ -2872,20 +2795,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the names of the classes that represent asset types associated with
-	 * the portlet.
-	 *
-	 * @param assetRendererFactoryClasses the names of the classes that
-	 *        represent asset types associated with the portlet
-	 */
-	@Override
-	public void setAssetRendererFactoryClasses(
-		List<String> assetRendererFactoryClasses) {
-
-		_assetRendererFactoryClasses = assetRendererFactoryClasses;
-	}
-
-	/**
 	 * Set to <code>true</code> if the portlet supports asynchronous processing
 	 * in resource requests.
 	 *
@@ -3876,33 +3785,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the names of the classes that represent social activity interpreters
-	 * associated with the portlet.
-	 *
-	 * @param socialActivityInterpreterClasses the names of the classes that
-	 *        represent social activity interpreters associated with the portlet
-	 */
-	@Override
-	public void setSocialActivityInterpreterClasses(
-		List<String> socialActivityInterpreterClasses) {
-
-		_socialActivityInterpreterClasses = socialActivityInterpreterClasses;
-	}
-
-	/**
-	 * Sets the name of the social request interpreter class of the portlet.
-	 *
-	 * @param socialRequestInterpreterClass the name of the request interpreter
-	 *        class of the portlet
-	 */
-	@Override
-	public void setSocialRequestInterpreterClass(
-		String socialRequestInterpreterClass) {
-
-		_socialRequestInterpreterClass = socialRequestInterpreterClass;
-	}
-
-	/**
 	 * Sets the names of the classes that represent staged model data handlers
 	 * associated with the portlet.
 	 *
@@ -4214,12 +4096,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The application types of the portlet.
 	 */
 	private final Set<ApplicationType> _applicationTypes = new HashSet<>();
-
-	/**
-	 * The names of the classes that represents asset types associated with the
-	 * portlet.
-	 */
-	private List<String> _assetRendererFactoryClasses;
 
 	/**
 	 * <code>True</code> if the portlet supports asynchronous processing in
@@ -4681,17 +4557,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * <code>True</code> if the portlet uses Single Page Application.
 	 */
 	private boolean _singlePageApplication = true;
-
-	/**
-	 * The names of the classes that represents social activity interpreters
-	 * associated with the portlet.
-	 */
-	private List<String> _socialActivityInterpreterClasses;
-
-	/**
-	 * The name of the social request interpreter class of the portlet.
-	 */
-	private String _socialRequestInterpreterClass;
 
 	/**
 	 * The names of the classes that represent staged model data handlers

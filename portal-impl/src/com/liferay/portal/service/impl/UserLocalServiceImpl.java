@@ -6,7 +6,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
@@ -193,10 +192,6 @@ import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-import com.liferay.social.kernel.model.SocialRelation;
-import com.liferay.social.kernel.service.SocialActivityLocalService;
-import com.liferay.social.kernel.service.SocialRequestLocalService;
-import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -1410,14 +1405,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, 0, creatorUserId, User.class.getName(), user.getUserId(),
 			false, false, false);
 
-		// Asset
-
-		if (serviceContext != null) {
-			updateAsset(
-				creatorUserId, user, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames());
-		}
-
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
@@ -2037,11 +2024,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		_announcementsDeliveryLocalService.deleteDeliveries(user.getUserId());
 
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
-			User.class.getName(), user.getUserId());
-
 		// Expando
 
 		_expandoRowLocalService.deleteRows(user.getUserId());
@@ -2071,12 +2053,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		_ratingsStatsLocalService.deleteStats(
 			User.class.getName(), user.getUserId());
-
-		// Social
-
-		_socialActivityLocalService.deleteUserActivities(user.getUserId());
-		_socialRequestLocalService.deleteReceiverUserRequests(user.getUserId());
-		_socialRequestLocalService.deleteUserRequests(user.getUserId());
 
 		// Ticket
 
@@ -2634,225 +2610,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			role.getCompanyId(), null, status,
 			LinkedHashMapBuilder.<String, Object>put(
 				"usersRoles", Long.valueOf(roleId)
-			).build());
-	}
-
-	@Override
-	public List<User> getSocialUsers(
-			long userId, int socialRelationType,
-			String socialRelationTypeComparator, int start, int end,
-			OrderByComparator<User> orderByComparator)
-		throws PortalException {
-
-		if (!socialRelationTypeComparator.equals(StringPool.EQUAL) &&
-			!socialRelationTypeComparator.equals(StringPool.NOT_EQUAL)) {
-
-			throw new IllegalArgumentException(
-				"Invalid social relation type comparator " +
-					socialRelationTypeComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			List<SocialRelation> socialRelations =
-				_socialRelationPersistence.findByU1_T(
-					userId, socialRelationType);
-
-			if (socialRelationTypeComparator.equals(StringPool.NOT_EQUAL)) {
-				socialRelations = ListUtil.remove(
-					_socialRelationPersistence.findByUserId1(userId),
-					socialRelations);
-			}
-
-			List<User> users = new ArrayList<>();
-
-			for (SocialRelation socialRelation : socialRelations) {
-				User user = userPersistence.findByPrimaryKey(
-					socialRelation.getUserId2());
-
-				if (user.isGuestUser() ||
-					(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
-					continue;
-				}
-
-				if (!users.contains(user)) {
-					users.add(user);
-				}
-			}
-
-			if (orderByComparator != null) {
-				users = ListUtil.sort(users, orderByComparator);
-			}
-
-			return users;
-		}
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		return userFinder.findBySocialUsers(
-			user.getCompanyId(), userId, socialRelationType,
-			socialRelationTypeComparator, WorkflowConstants.STATUS_APPROVED,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the users with a mutual social relation
-	 * of the type with both of the given users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  userId1 the primary key of the first user
-	 * @param  userId2 the primary key of the second user
-	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link SocialRelationConstants}.
-	 * @param  start the lower bound of the range of users
-	 * @param  end the upper bound of the range of users (not inclusive)
-	 * @param  orderByComparator the comparator to order the users by
-	 *         (optionally <code>null</code>)
-	 * @return the ordered range of users with a mutual social relation of the
-	 *         type with the user
-	 */
-	@Override
-	public List<User> getSocialUsers(
-			long userId1, long userId2, int socialRelationType, int start,
-			int end, OrderByComparator<User> orderByComparator)
-		throws PortalException {
-
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-
-		return search(
-			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialMutualRelationType",
-				new Long[] {
-					userId1, Long.valueOf(socialRelationType), userId2,
-					Long.valueOf(socialRelationType)
-				}
-			).build(),
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the users with a mutual social relation
-	 * with both of the given users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  userId1 the primary key of the first user
-	 * @param  userId2 the primary key of the second user
-	 * @param  start the lower bound of the range of users
-	 * @param  end the upper bound of the range of users (not inclusive)
-	 * @param  orderByComparator the comparator to order the users by
-	 *         (optionally <code>null</code>)
-	 * @return the ordered range of users with a mutual social relation with the
-	 *         user
-	 */
-	@Override
-	public List<User> getSocialUsers(
-			long userId1, long userId2, int start, int end,
-			OrderByComparator<User> orderByComparator)
-		throws PortalException {
-
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-
-		return search(
-			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialMutualRelation", new Long[] {userId1, userId2}
-			).build(),
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of users with a social relation with the user.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link SocialRelationConstants}.
-	 * @return the number of users with a social relation with the user
-	 */
-	@Override
-	public int getSocialUsersCount(
-			long userId, int socialRelationType,
-			String socialRelationTypeComparator)
-		throws PortalException {
-
-		if (!socialRelationTypeComparator.equals(StringPool.EQUAL) &&
-			!socialRelationTypeComparator.equals(StringPool.NOT_EQUAL)) {
-
-			throw new IllegalArgumentException(
-				"Invalid social relation type comparator " +
-					socialRelationTypeComparator);
-		}
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		return userFinder.countBySocialUsers(
-			user.getCompanyId(), user.getUserId(), socialRelationType,
-			socialRelationTypeComparator, WorkflowConstants.STATUS_APPROVED);
-	}
-
-	/**
-	 * Returns the number of users with a mutual social relation with both of
-	 * the given users.
-	 *
-	 * @param  userId1 the primary key of the first user
-	 * @param  userId2 the primary key of the second user
-	 * @return the number of users with a mutual social relation with the user
-	 */
-	@Override
-	public int getSocialUsersCount(long userId1, long userId2)
-		throws PortalException {
-
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-
-		return searchCount(
-			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialMutualRelation", new Long[] {userId1, userId2}
-			).build());
-	}
-
-	/**
-	 * Returns the number of users with a mutual social relation of the type
-	 * with both of the given users.
-	 *
-	 * @param  userId1 the primary key of the first user
-	 * @param  userId2 the primary key of the second user
-	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link SocialRelationConstants}.
-	 * @return the number of users with a mutual social relation of the type
-	 *         with the user
-	 */
-	@Override
-	public int getSocialUsersCount(
-			long userId1, long userId2, int socialRelationType)
-		throws PortalException {
-
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-
-		return searchCount(
-			user1.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialMutualRelationType",
-				new Long[] {
-					userId1, Long.valueOf(socialRelationType), userId2,
-					Long.valueOf(socialRelationType)
-				}
 			).build());
 	}
 
@@ -3449,92 +3206,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
-	}
-
-	@Override
-	public List<User> searchBySocial(
-			long userId, int[] socialRelationTypes, String keywords, int start,
-			int end)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		return userFinder.findByKeywords(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialRelationType",
-				new Long[][] {
-					{userId}, ArrayUtil.toLongArray(socialRelationTypes)
-				}
-			).put(
-				"wildcardMode", WildcardMode.TRAILING
-			).build(),
-			start, end, null);
-	}
-
-	@Override
-	public List<User> searchBySocial(
-		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
-		int start, int end) {
-
-		return searchBySocial(
-			companyId, groupIds, userGroupIds, keywords, start, end, null);
-	}
-
-	@Override
-	public List<User> searchBySocial(
-		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
-		int start, int end, OrderByComparator<User> orderByComparator) {
-
-		return userFinder.findByKeywords(
-			companyId, keywords, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"usersGroups",
-				() -> {
-					if (ArrayUtil.isNotEmpty(groupIds)) {
-						return ArrayUtil.toLongArray(groupIds);
-					}
-
-					return null;
-				}
-			).put(
-				"usersUserGroups",
-				() -> {
-					if (ArrayUtil.isNotEmpty(userGroupIds)) {
-						return ArrayUtil.toLongArray(userGroupIds);
-					}
-
-					return null;
-				}
-			).put(
-				"wildcardMode", WildcardMode.TRAILING
-			).build(),
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public List<User> searchBySocial(
-			long[] groupIds, long userId, int[] socialRelationTypes,
-			String keywords, int start, int end)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		return userFinder.findByKeywords(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			LinkedHashMapBuilder.<String, Object>put(
-				"socialRelationType",
-				new Long[][] {
-					{userId}, ArrayUtil.toLongArray(socialRelationTypes)
-				}
-			).put(
-				"socialRelationTypeUnionUserGroups", true
-			).put(
-				"usersGroups", ArrayUtil.toLongArray(groupIds)
-			).put(
-				"wildcardMode", WildcardMode.TRAILING
-			).build(),
-			start, end, null);
 	}
 
 	/**
@@ -4489,36 +4160,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setAgreedToTermsOfUse(agreedToTermsOfUse);
 
 		return userPersistence.update(user);
-	}
-
-	/**
-	 * Updates the user's asset with the new asset categories and tag names,
-	 * removing and adding asset categories and tag names as necessary.
-	 *
-	 * @param userId the primary key of the user
-	 * @param user ID the primary key of the user
-	 * @param assetCategoryIds the primary key's of the new asset categories
-	 * @param assetTagNames the new asset tag names
-	 */
-	@Override
-	public void updateAsset(
-			long userId, User user, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		User owner = userPersistence.findByPrimaryKey(userId);
-
-		Company company = _companyPersistence.findByPrimaryKey(
-			owner.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		_assetEntryLocalService.updateEntry(
-			userId, companyGroup.getGroupId(), user.getCreateDate(),
-			user.getModifiedDate(), User.class.getName(), user.getUserId(),
-			user.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
-			null, null, null, null, null, user.getFullName(), null, null, null,
-			null, 0, 0, null);
 	}
 
 	/**
@@ -5726,14 +5367,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Announcements
 
 		_announcementsDeliveryLocalService.getUserDeliveries(user.getUserId());
-
-		// Asset
-
-		if (serviceContext != null) {
-			updateAsset(
-				userId, user, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames());
-		}
 
 		// Indexer
 
@@ -7506,9 +7139,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
-
 	private BatchProcessor<User> _batchProcessor;
 
 	@BeanReference(type = BrowserTrackerLocalService.class)
@@ -7588,15 +7218,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = RolePersistence.class)
 	private RolePersistence _rolePersistence;
-
-	@BeanReference(type = SocialActivityLocalService.class)
-	private SocialActivityLocalService _socialActivityLocalService;
-
-	@BeanReference(type = SocialRelationPersistence.class)
-	private SocialRelationPersistence _socialRelationPersistence;
-
-	@BeanReference(type = SocialRequestLocalService.class)
-	private SocialRequestLocalService _socialRequestLocalService;
 
 	private final PortalCacheMapSynchronizeUtil.Synchronizer
 		<Serializable, Serializable> _synchronizer =

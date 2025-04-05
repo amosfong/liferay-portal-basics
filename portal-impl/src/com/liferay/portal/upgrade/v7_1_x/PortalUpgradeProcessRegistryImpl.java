@@ -28,9 +28,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(1, 1, 0),
 			UpgradeModulesFactory.create(
 				new String[] {
-					"com.liferay.asset.category.property.service",
-					"com.liferay.asset.entry.rel.service",
-					"com.liferay.asset.tag.stats.service",
 					"com.liferay.blogs.service",
 					"com.liferay.document.library.content.service",
 					"com.liferay.document.library.file.rank.service",
@@ -48,9 +45,6 @@ public class PortalUpgradeProcessRegistryImpl
 				"Counter", "name", "VARCHAR(150) not null"));
 
 		upgradeVersionTreeMap.put(new Version(1, 1, 2), new UpgradeDB2());
-
-		upgradeVersionTreeMap.put(
-			new Version(2, 0, 0), new UpgradeAssetTagsPermission());
 
 		upgradeVersionTreeMap.put(
 			new Version(2, 0, 1),

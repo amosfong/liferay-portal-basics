@@ -5,12 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
@@ -3455,8 +3449,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			if (repositoryEntry instanceof FileEntry) {
 				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
-				long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
-				String[] assetTagNames = serviceContext.getAssetTagNames();
 				long fileEntryTypeId = ParamUtil.getLong(
 					serviceContext, "fileEntryTypeId");
 
@@ -3468,8 +3460,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT),
 					groupIds, serviceContext);
 
-				serviceContext.setAssetCategoryIds(assetCategoryIds);
-				serviceContext.setAssetTagNames(assetTagNames);
 				serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 			}
 			else if (repositoryEntry instanceof FileShortcut) {
@@ -3635,94 +3625,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			companyId, className, sourceResourcePrimKey, targetResourcePrimKey);
 	}
 
-	private long[] _getAssetCategoryIds(
-		String className, long classPK, long[] groupIds, long repositoryId) {
-
-		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-			className, classPK);
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return assetCategoryIds;
-		}
-
-		Set<Long> allowedAssetCategoryIds = new HashSet<>();
-
-		for (long assetCategoryId : assetCategoryIds) {
-			if (_isAssetCategoryIdAllowed(
-					assetCategoryId, repositoryId, groupIds)) {
-
-				allowedAssetCategoryIds.add(assetCategoryId);
-			}
-		}
-
-		return ArrayUtil.toLongArray(allowedAssetCategoryIds);
-	}
-
-	private String[] _getAssetTagNames(
-		String className, long classPK, long[] groupIds) {
-
-		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			className, classPK);
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return assetTagNames;
-		}
-
-		Set<String> allowedAssetTagNames = new HashSet<>();
-
-		for (String assetTagName : assetTagNames) {
-			if (_isAssetTagNameAllowed(groupIds, assetTagName)) {
-				allowedAssetTagNames.add(assetTagName);
-			}
-		}
-
-		return ArrayUtil.toStringArray(allowedAssetTagNames);
-	}
-
-	private boolean _isAssetCategoryIdAllowed(
-		long categoryId, long groupId, long[] groupsIds) {
-
-		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
-			categoryId);
-
-		if ((assetCategory == null) ||
-			!ArrayUtil.contains(groupsIds, assetCategory.getGroupId())) {
-
-			return false;
-		}
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(
-				assetCategory.getVocabularyId());
-
-		if ((assetVocabulary.getVisibilityType() ==
-				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
-			(assetVocabulary.getGroupId() != groupId)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isAssetTagNameAllowed(long[] groupIds, String tagName) {
-		for (Long groupId : groupIds) {
-			if (_assetTagLocalService.hasTag(groupId, tagName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _populateServiceContext(
 		ServiceContext serviceContext, String className, long classPK,
 		long fileEntryTypeId, long[] groupIds, long repositoryId) {
-
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(className, classPK, groupIds, repositoryId));
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(className, classPK, groupIds));
 
 		if (!Objects.equals(
 				fileEntryTypeId,
@@ -3779,15 +3684,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAppServiceImpl.class);
-
-	@BeanReference(type = AssetCategoryLocalService.class)
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@BeanReference(type = AssetTagLocalService.class)
-	private AssetTagLocalService _assetTagLocalService;
-
-	@BeanReference(type = AssetVocabularyLocalService.class)
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;

@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPortletId;
@@ -50,7 +48,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeUser;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 import com.liferay.portal.verify.VerifyUUID;
-import com.liferay.portal.verify.model.AssetTagVerifiableUUIDModel;
 
 /**
  * @author Julio Camarero
@@ -100,8 +97,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeKernelPackage());
 
 		upgrade(new UpgradeAddress());
-		upgrade(new UpgradeAsset());
-		upgrade(new UpgradeAssetTagsResourcePermission());
 		upgrade(new UpgradeCompanyId());
 		upgrade(new UpgradeDocumentLibrary());
 		upgrade(new UpgradeDocumentLibraryPortletId());
@@ -148,18 +143,13 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	protected void populateUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
-				new AssetTagVerifiableUUIDModel(),
 				new RatingsEntryVerifiableUUIDModel(),
 				new TeamVerifiableUUIDModel());
 		}
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.amazon.rankings.web", "com.liferay.asset.browser.web",
-		"com.liferay.asset.categories.navigation.web",
-		"com.liferay.asset.publisher.web",
-		"com.liferay.asset.tags.compiler.web",
-		"com.liferay.asset.tags.navigation.web",
+		"com.liferay.amazon.rankings.web",
 		"com.liferay.blogs.recent.bloggers.web", "com.liferay.blogs.web",
 		"com.liferay.bookmarks.service", "com.liferay.bookmarks.web",
 		"com.liferay.calendar.web", "com.liferay.comment.page.comments.web",

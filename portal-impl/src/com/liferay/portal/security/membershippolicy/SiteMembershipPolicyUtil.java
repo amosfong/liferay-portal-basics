@@ -5,8 +5,6 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -147,8 +145,7 @@ public class SiteMembershipPolicyUtil {
 	}
 
 	public static void verifyPolicy(
-			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
-			List<AssetTag> oldAssetTags,
+			Group group, Group oldGroup,
 			Map<String, Serializable> oldExpandoAttributes,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
@@ -157,8 +154,8 @@ public class SiteMembershipPolicyUtil {
 			_siteMembershipPolicySnapshot.get();
 
 		siteMembershipPolicy.verifyPolicy(
-			group, oldGroup, oldAssetCategories, oldAssetTags,
-			oldExpandoAttributes, oldTypeSettingsUnicodeProperties);
+			group, oldGroup, oldExpandoAttributes,
+			oldTypeSettingsUnicodeProperties);
 	}
 
 	public static void verifyPolicy(Role role) throws PortalException {

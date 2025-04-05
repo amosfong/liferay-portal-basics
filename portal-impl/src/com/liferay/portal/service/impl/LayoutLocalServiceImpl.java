@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
@@ -250,8 +249,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (system &&
-			((Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY) &&
-			  (classPK > 0) &&
+			(((classPK > 0) &&
 			  (classNameId == _classNameLocalService.getClassNameId(
 				  Layout.class.getName()))) ||
 			 Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
@@ -437,16 +435,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setLayoutSet(null);
 
-		// Asset
-
-		updateAsset(
-			userId, layout, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
-
 		// Draft layout
 
 		if (!layout.isDraftLayout() &&
-			(layout.isTypeAssetDisplay() || layout.isTypeContent())) {
+			(layout.isTypeContent())) {
 
 			serviceContext.setModifiedDate(date);
 
@@ -881,11 +873,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		_portletPreferencesLocalService.deletePortletPreferencesByPlid(
 			layout.getPlid());
-
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
-			Layout.class.getName(), layout.getPlid());
 
 		// Ratings
 
@@ -2724,21 +2711,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
-	public void updateAsset(
-			long userId, Layout layout, long[] assetCategoryIds,
-			String[] assetTagNames)
-		throws PortalException {
-
-		_assetEntryLocalService.updateEntry(
-			userId, layout.getGroupId(), layout.getCreateDate(),
-			layout.getModifiedDate(), Layout.class.getName(), layout.getPlid(),
-			layout.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
-			null, null, null, null, ContentTypes.TEXT_HTML,
-			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
-			0, null);
-	}
-
 	/**
 	 * Updates the friendly URL of the layout.
 	 *
@@ -3019,13 +2991,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext.getUserId(), layout.getCompanyId(),
 			layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
 			friendlyURLMap, serviceContext);
-
-		// Asset
-
-		updateAsset(
-			serviceContext.getUserId(), layout,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
 
 		return layout;
 	}
@@ -3632,17 +3597,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				"published", Boolean.TRUE.toString());
 		}
 
-		layout = layoutPersistence.update(layout);
-
-		// Asset
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			_assetEntryLocalService.updateEntry(
-				Layout.class.getName(), layout.getPlid(),
-				layout.getStatusDate(), null, true, false);
-		}
-
-		return layout;
+		return layoutPersistence.update(layout);
 	}
 
 	/**
@@ -3889,7 +3844,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setIncludeInternalAssetCategories(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
 
@@ -4378,9 +4332,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		new CentralizedThreadLocal<>(
 			LayoutLocalServiceImpl.class + "._virtualLayoutTargetGroupId",
 			() -> GroupConstants.DEFAULT_LIVE_GROUP_ID);
-
-	@BeanReference(type = AssetEntryLocalService.class)
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

@@ -5,7 +5,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -65,10 +64,6 @@ import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.internal.FriendlyURLMapperTrackerImpl;
 import com.liferay.portlet.internal.PortletBagImpl;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.social.kernel.model.SocialRequestInterpreter;
-import com.liferay.social.kernel.model.impl.SocialActivityInterpreterImpl;
-import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -154,12 +149,6 @@ public class PortletBagFactory {
 		_registerPOPMessageListeners(
 			bundleContext, portlet, properties, serviceRegistrations);
 
-		_registerSocialActivityInterpreterInstances(
-			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerSocialRequestInterpreterInstances(
-			bundleContext, portlet, properties, serviceRegistrations);
-
 		_registerUserNotificationDefinitionInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
 
@@ -172,9 +161,6 @@ public class PortletBagFactory {
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerControlPanelEntryInstances(
-			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerAssetRendererFactoryInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerCustomAttributesDisplayInstances(
@@ -300,50 +286,6 @@ public class PortletBagFactory {
 		Class<?> clazz = _classLoader.loadClass(implClassName);
 
 		return (T)clazz.newInstance();
-	}
-
-	private void _registerAssetRendererFactoryInstances(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		for (String assetRendererFactoryClass :
-				portlet.getAssetRendererFactoryClasses()) {
-
-			String assetRendererEnabledPropertyKey =
-				PropsKeys.ASSET_RENDERER_ENABLED + assetRendererFactoryClass;
-
-			String assetRendererEnabledPropertyValue = null;
-
-			if (_warFile) {
-				assetRendererEnabledPropertyValue = _getPluginPropertyValue(
-					assetRendererEnabledPropertyKey);
-			}
-			else {
-				assetRendererEnabledPropertyValue = PropsUtil.get(
-					assetRendererEnabledPropertyKey);
-			}
-
-			boolean assetRendererEnabledValue = GetterUtil.getBoolean(
-				assetRendererEnabledPropertyValue, true);
-
-			if (assetRendererEnabledValue) {
-				AssetRendererFactory<?> assetRendererFactory = _newInstance(
-					AssetRendererFactory.class, assetRendererFactoryClass);
-
-				assetRendererFactory.setClassName(
-					assetRendererFactory.getClassName());
-				assetRendererFactory.setPortletId(portlet.getPortletId());
-
-				ServiceRegistration<?> serviceRegistration =
-					bundleContext.registerService(
-						AssetRendererFactory.class, assetRendererFactory,
-						properties);
-
-				serviceRegistrations.add(serviceRegistration);
-			}
-		}
 	}
 
 	private void _registerConfigurationActions(
@@ -619,57 +561,6 @@ public class PortletBagFactory {
 					new SchedulerEntrySchedulerJobConfiguration(
 						schedulerEntry, _classLoader),
 					properties);
-
-			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
-	private void _registerSocialActivityInterpreterInstances(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		for (String socialActivityInterpreterClass :
-				portlet.getSocialActivityInterpreterClasses()) {
-
-			SocialActivityInterpreter socialActivityInterpreterInstance =
-				_newInstance(
-					SocialActivityInterpreter.class,
-					socialActivityInterpreterClass);
-
-			socialActivityInterpreterInstance =
-				new SocialActivityInterpreterImpl(
-					portlet.getPortletId(), socialActivityInterpreterInstance);
-
-			ServiceRegistration<?> serviceRegistration =
-				bundleContext.registerService(
-					SocialActivityInterpreter.class,
-					socialActivityInterpreterInstance, properties);
-
-			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
-	private void _registerSocialRequestInterpreterInstances(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
-			SocialRequestInterpreter socialRequestInterpreterInstance =
-				_newInstance(
-					SocialRequestInterpreter.class,
-					portlet.getSocialRequestInterpreterClass());
-
-			socialRequestInterpreterInstance = new SocialRequestInterpreterImpl(
-				portlet.getPortletId(), socialRequestInterpreterInstance);
-
-			ServiceRegistration<?> serviceRegistration =
-				bundleContext.registerService(
-					SocialRequestInterpreter.class,
-					socialRequestInterpreterInstance, properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}

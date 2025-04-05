@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -110,9 +108,6 @@ public class PortletBagImpl implements PortletBag {
 			true);
 		_preferencesValidatorSnapshot = new Snapshot<>(
 			PortletBagImpl.class, PreferencesValidator.class, _filterString,
-			true);
-		_socialRequestInterpreterSnapshot = new Snapshot<>(
-			PortletBagImpl.class, SocialRequestInterpreter.class, _filterString,
 			true);
 		_templateHandlerSnapshot = new Snapshot<>(
 			PortletBagImpl.class, TemplateHandler.class, _filterString, true);
@@ -346,30 +341,6 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<SocialActivityInterpreter>
-		getSocialActivityInterpreterInstances() {
-
-		return _getList(SocialActivityInterpreter.class);
-	}
-
-	@Override
-	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		return _socialRequestInterpreterSnapshot.get();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getSocialRequestInterpreterInstance()}
-	 */
-	@Deprecated
-	@Override
-	public List<SocialRequestInterpreter>
-		getSocialRequestInterpreterInstances() {
-
-		return _getList(SocialRequestInterpreter.class);
-	}
-
-	@Override
 	public List<StagedModelDataHandler<?>>
 		getStagedModelDataHandlerInstances() {
 
@@ -509,8 +480,6 @@ public class PortletBagImpl implements PortletBag {
 	private final Map<Class<?>, ServiceTrackerList<Class<?>>>
 		_serviceTrackerListMap = new ConcurrentHashMap<>();
 	private final ServletContext _servletContext;
-	private final Snapshot<SocialRequestInterpreter>
-		_socialRequestInterpreterSnapshot;
 	private final Snapshot<TemplateHandler> _templateHandlerSnapshot;
 	private final Snapshot<URLEncoder> _urlEncoderSnapshot;
 	private final Snapshot<WebDAVStorage> _webDAVStorageSnapshot;

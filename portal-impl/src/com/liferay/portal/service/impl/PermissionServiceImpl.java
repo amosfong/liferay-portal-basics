@@ -5,8 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -148,26 +146,6 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		}
 		else if (!permissionChecker.hasPermission(
 					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(name);
-
-			if (assetRendererFactory != null) {
-				try {
-					if (assetRendererFactory.hasPermission(
-							permissionChecker, GetterUtil.getLong(primKey),
-							ActionKeys.PERMISSIONS)) {
-
-						return;
-					}
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
 
 			ResourcePermission resourcePermission =
 				_resourcePermissionLocalService.getResourcePermission(

@@ -77,9 +77,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(10, 0, 0), new UpgradePortletPreferences());
 
 		upgradeVersionTreeMap.put(
-			new Version(11, 0, 0), new UpgradeAssetEntry());
-
-		upgradeVersionTreeMap.put(
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
 		upgradeVersionTreeMap.put(
@@ -105,11 +102,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(12, 2, 0), new UpgradeCompanyId());
 
 		upgradeVersionTreeMap.put(
-			new Version(12, 2, 1),
-			UpgradeProcessFactory.alterColumnType(
-				"AssetEntry", "title", "TEXT null"));
-
-		upgradeVersionTreeMap.put(
 			new Version(12, 2, 2),
 			UpgradeProcessFactory.runSQL(
 				StringBundler.concat(
@@ -121,12 +113,6 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(new Version(13, 0, 0), new UpgradeAccount());
 
 		upgradeVersionTreeMap.put(new Version(13, 0, 1), new UpgradeLayout());
-
-		upgradeVersionTreeMap.put(
-			new Version(13, 1, 0), new UpgradeAssetVocabulary());
-
-		upgradeVersionTreeMap.put(
-			new Version(13, 2, 0), new UpgradeAssetCategory());
 
 		upgradeVersionTreeMap.put(
 			new Version(13, 3, 0),
@@ -337,11 +323,6 @@ public class PortalUpgradeProcessRegistryImpl
 			});
 
 		upgradeVersionTreeMap.put(
-			new Version(26, 5, 0),
-			UpgradeModulesFactory.create(
-				new String[] {"com.liferay.asset.link.service"}, null));
-
-		upgradeVersionTreeMap.put(
 			new Version(27, 0, 0),
 			new UpgradePartitionedControlTable("ClassName_"),
 			UpgradeModulesFactory.create(
@@ -501,17 +482,6 @@ public class PortalUpgradeProcessRegistryImpl
 				@Override
 				protected String[][] getTableAndPrimaryKeyColumnNames() {
 					return new String[][] {{"Phone", "phoneId"}};
-				}
-
-			});
-
-		upgradeVersionTreeMap.put(
-			new Version(31, 12, 0),
-			new BaseExternalReferenceCodeUpgradeProcess() {
-
-				@Override
-				protected String[][] getTableAndPrimaryKeyColumnNames() {
-					return new String[][] {{"AssetTag", "tagId"}};
 				}
 
 			});

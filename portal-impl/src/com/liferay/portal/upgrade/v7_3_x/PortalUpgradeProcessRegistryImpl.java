@@ -36,41 +36,16 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.runSQL("DROP_TABLE_IF_EXISTS(ClusterGroup)"));
 
 		upgradeVersionTreeMap.put(
-			new Version(6, 0, 4), new UpgradeAssetCategory());
-
-		upgradeVersionTreeMap.put(
 			new Version(7, 0, 0), new UpgradeRatingsStats());
 
 		upgradeVersionTreeMap.put(
 			new Version(7, 1, 0),
 			new CTModelUpgradeProcess(
-				"AssetCategory", "AssetCategoryProperty", "AssetEntry",
-				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
+				"Layout",
 				"LayoutFriendlyURL", "PortletPreferences",
 				"ResourcePermission"));
 
 		upgradeVersionTreeMap.put(new Version(8, 0, 0), new UpgradeSchema());
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 1, 0),
-			new CTModelUpgradeProcess(
-				"AssetEntries_AssetCategories", "AssetEntries_AssetTags"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 1, 1),
-			UpgradeProcessFactory.alterColumnType(
-				"AssetCategory", "name", "VARCHAR(255) null"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 2, 0),
-			UpgradeProcessFactory.dropColumns(
-				"AssetEntries_AssetCategories", "changeType"),
-			UpgradeProcessFactory.dropColumns(
-				"AssetEntries_AssetTags", "changeType"),
-			UpgradeProcessFactory.addColumns(
-				"AssetEntries_AssetCategories", "ctChangeType BOOLEAN"),
-			UpgradeProcessFactory.addColumns(
-				"AssetEntries_AssetTags", "ctChangeType BOOLEAN"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 3, 0), new UpgradeUserGroupGroupRole());
@@ -136,9 +111,6 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 16, 0), new UpgradeDLFileEntryType());
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 17, 0), new UpgradeAssetVocabulary());
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 18, 0), new UpgradeLayoutStyleBookEntry());

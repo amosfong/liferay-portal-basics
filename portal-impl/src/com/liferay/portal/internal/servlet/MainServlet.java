@@ -93,7 +93,6 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -304,26 +303,6 @@ public class MainServlet extends HttpServlet {
 
 		try {
 			_initLayoutTemplates(pluginPackage);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize social");
-		}
-
-		try {
-			SocialConfigurationUtil.read(
-				PortalClassLoaderUtil.getClassLoader(),
-				new String[] {
-					StreamUtil.toString(
-						servletContext.getResourceAsStream(
-							"/WEB-INF/liferay-social.xml")),
-					StreamUtil.toString(
-						servletContext.getResourceAsStream(
-							"/WEB-INF/liferay-social-ext.xml"))
-				});
 		}
 		catch (Exception exception) {
 			_log.error(exception);

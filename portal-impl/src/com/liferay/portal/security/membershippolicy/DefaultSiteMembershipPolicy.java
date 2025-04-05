@@ -5,8 +5,6 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,8 +94,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 	@Override
 	public void verifyPolicy(
-			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
-			List<AssetTag> oldAssetTags,
+			Group group, Group oldGroup, 
 			Map<String, Serializable> oldExpandoAttributes,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
