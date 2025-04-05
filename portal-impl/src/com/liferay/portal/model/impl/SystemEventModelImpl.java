@@ -63,12 +63,12 @@ public class SystemEventModelImpl
 	public static final String TABLE_NAME = "SystemEvent";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"systemEventId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"classUuid", Types.VARCHAR}, {"referrerClassNameId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"systemEventId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"classUuid", Types.VARCHAR},
+		{"referrerClassNameId", Types.BIGINT},
 		{"parentSystemEventId", Types.BIGINT},
 		{"systemEventSetKey", Types.BIGINT}, {"type_", Types.INTEGER},
 		{"extraData", Types.CLOB}
@@ -79,7 +79,6 @@ public class SystemEventModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("systemEventId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +96,7 @@ public class SystemEventModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SystemEvent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,systemEventId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null,primary key (systemEventId, ctCollectionId))";
+		"create table SystemEvent (mvccVersion LONG default 0 not null,systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 
@@ -270,8 +269,6 @@ public class SystemEventModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", SystemEvent::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", SystemEvent::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"systemEventId", SystemEvent::getSystemEventId);
 			attributeGetterFunctions.put("groupId", SystemEvent::getGroupId);
 			attributeGetterFunctions.put(
@@ -313,9 +310,6 @@ public class SystemEventModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<SystemEvent, Long>)SystemEvent::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<SystemEvent, Long>)SystemEvent::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"systemEventId",
 				(BiConsumer<SystemEvent, Long>)SystemEvent::setSystemEventId);
@@ -379,20 +373,6 @@ public class SystemEventModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -747,7 +727,6 @@ public class SystemEventModelImpl
 		SystemEventImpl systemEventImpl = new SystemEventImpl();
 
 		systemEventImpl.setMvccVersion(getMvccVersion());
-		systemEventImpl.setCtCollectionId(getCtCollectionId());
 		systemEventImpl.setSystemEventId(getSystemEventId());
 		systemEventImpl.setGroupId(getGroupId());
 		systemEventImpl.setCompanyId(getCompanyId());
@@ -774,8 +753,6 @@ public class SystemEventModelImpl
 
 		systemEventImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		systemEventImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		systemEventImpl.setSystemEventId(
 			this.<Long>getColumnOriginalValue("systemEventId"));
 		systemEventImpl.setGroupId(
@@ -880,8 +857,6 @@ public class SystemEventModelImpl
 			new SystemEventCacheModel();
 
 		systemEventCacheModel.mvccVersion = getMvccVersion();
-
-		systemEventCacheModel.ctCollectionId = getCtCollectionId();
 
 		systemEventCacheModel.systemEventId = getSystemEventId();
 
@@ -998,7 +973,6 @@ public class SystemEventModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _systemEventId;
 	private long _groupId;
 	private long _companyId;
@@ -1045,7 +1019,6 @@ public class SystemEventModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("systemEventId", _systemEventId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1085,35 +1058,33 @@ public class SystemEventModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("systemEventId", 2L);
 
-		columnBitmasks.put("systemEventId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classUuid", 512L);
 
-		columnBitmasks.put("classUuid", 1024L);
+		columnBitmasks.put("referrerClassNameId", 1024L);
 
-		columnBitmasks.put("referrerClassNameId", 2048L);
+		columnBitmasks.put("parentSystemEventId", 2048L);
 
-		columnBitmasks.put("parentSystemEventId", 4096L);
+		columnBitmasks.put("systemEventSetKey", 4096L);
 
-		columnBitmasks.put("systemEventSetKey", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
-
-		columnBitmasks.put("extraData", 32768L);
+		columnBitmasks.put("extraData", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

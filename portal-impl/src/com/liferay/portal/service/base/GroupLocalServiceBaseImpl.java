@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1022,22 +1020,8 @@ public abstract class GroupLocalServiceBaseImpl
 		return GroupLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<Group> getCTPersistence() {
-		return groupPersistence;
-	}
-
-	@Override
-	public Class<Group> getModelClass() {
+	protected Class<?> getModelClass() {
 		return Group.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<Group>, R, E> updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(groupPersistence);
 	}
 
 	protected String getModelClassName() {

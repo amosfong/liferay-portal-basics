@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -37,7 +35,6 @@ public class RatingsEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
 		attributes.put("companyId", getCompanyId());
@@ -58,12 +55,6 @@ public class RatingsEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -180,16 +171,6 @@ public class RatingsEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
-	}
-
-	/**
-	 * Returns the ct collection ID of this ratings entry.
-	 *
-	 * @return the ct collection ID of this ratings entry
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -333,16 +314,6 @@ public class RatingsEntryWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this ratings entry.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ratings entry
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the entry ID of this ratings entry.
 	 *
 	 * @param entryId the entry ID of this ratings entry
@@ -435,20 +406,6 @@ public class RatingsEntryWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<RatingsEntry, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<RatingsEntry, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

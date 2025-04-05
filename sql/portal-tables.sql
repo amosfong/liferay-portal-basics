@@ -498,51 +498,43 @@ create table EmailAddress (
 
 create table ExpandoColumn (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	columnId LONG not null,
+	columnId LONG not null primary key,
 	companyId LONG,
 	modifiedDate DATE null,
 	tableId LONG,
 	name VARCHAR(75) null,
 	type_ INTEGER,
 	defaultData TEXT null,
-	typeSettings TEXT null,
-	primary key (columnId, ctCollectionId)
+	typeSettings TEXT null
 );
 
 create table ExpandoRow (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	rowId_ LONG not null,
+	rowId_ LONG not null primary key,
 	companyId LONG,
 	modifiedDate DATE null,
 	tableId LONG,
-	classPK LONG,
-	primary key (rowId_, ctCollectionId)
+	classPK LONG
 );
 
 create table ExpandoTable (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	tableId LONG not null,
+	tableId LONG not null primary key,
 	companyId LONG,
 	classNameId LONG,
-	name VARCHAR(75) null,
-	primary key (tableId, ctCollectionId)
+	name VARCHAR(75) null
 );
 
 create table ExpandoValue (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	valueId LONG not null,
+	valueId LONG not null primary key,
 	companyId LONG,
 	tableId LONG,
 	columnId LONG,
 	rowId_ LONG,
 	classNameId LONG,
 	classPK LONG,
-	data_ TEXT null,
-	primary key (valueId, ctCollectionId)
+	data_ TEXT null
 );
 
 create table ExportImportConfiguration (
@@ -1050,9 +1042,8 @@ create table PortletPreferences (
 
 create table RatingsEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	entryId LONG not null,
+	entryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -1060,14 +1051,12 @@ create table RatingsEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	score DOUBLE,
-	primary key (entryId, ctCollectionId)
+	score DOUBLE
 );
 
 create table RatingsStats (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	statsId LONG not null,
+	statsId LONG not null primary key,
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -1075,8 +1064,7 @@ create table RatingsStats (
 	classPK LONG,
 	totalEntries INTEGER,
 	totalScore DOUBLE,
-	averageScore DOUBLE,
-	primary key (statsId, ctCollectionId)
+	averageScore DOUBLE
 );
 
 create table RecentLayoutBranch (

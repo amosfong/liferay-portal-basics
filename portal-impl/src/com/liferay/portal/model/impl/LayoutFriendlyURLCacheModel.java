@@ -69,12 +69,10 @@ public class LayoutFriendlyURLCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutFriendlyURLId=");
@@ -112,7 +110,6 @@ public class LayoutFriendlyURLCacheModel
 			new LayoutFriendlyURLImpl();
 
 		layoutFriendlyURLImpl.setMvccVersion(mvccVersion);
-		layoutFriendlyURLImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			layoutFriendlyURLImpl.setUuid("");
@@ -179,8 +176,6 @@ public class LayoutFriendlyURLCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutFriendlyURLId = objectInput.readLong();
@@ -205,8 +200,6 @@ public class LayoutFriendlyURLCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -255,7 +248,6 @@ public class LayoutFriendlyURLCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public long layoutFriendlyURLId;
 	public long groupId;

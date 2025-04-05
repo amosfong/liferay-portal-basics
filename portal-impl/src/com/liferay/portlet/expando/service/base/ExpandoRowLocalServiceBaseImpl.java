@@ -9,7 +9,6 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -448,23 +446,8 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 		return ExpandoRowLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<ExpandoRow> getCTPersistence() {
-		return expandoRowPersistence;
-	}
-
-	@Override
-	public Class<ExpandoRow> getModelClass() {
+	protected Class<?> getModelClass() {
 		return ExpandoRow.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<ExpandoRow>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(expandoRowPersistence);
 	}
 
 	protected String getModelClassName() {

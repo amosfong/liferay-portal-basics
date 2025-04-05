@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -28,8 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RatingsStatsModel
-	extends AttachedModel, BaseModel<RatingsStats>, CTModel<RatingsStats>,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<RatingsStats>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -42,7 +40,6 @@ public interface RatingsStatsModel
 	 *
 	 * @return the primary key of this ratings stats
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -50,7 +47,6 @@ public interface RatingsStatsModel
 	 *
 	 * @param primaryKey the primary key of this ratings stats
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -68,22 +64,6 @@ public interface RatingsStatsModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this ratings stats.
-	 *
-	 * @return the ct collection ID of this ratings stats
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ratings stats.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ratings stats
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the stats ID of this ratings stats.

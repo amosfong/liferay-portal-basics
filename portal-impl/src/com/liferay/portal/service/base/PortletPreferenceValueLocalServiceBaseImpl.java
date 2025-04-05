@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -487,23 +485,8 @@ public abstract class PortletPreferenceValueLocalServiceBaseImpl
 		return PortletPreferenceValueLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<PortletPreferenceValue> getCTPersistence() {
-		return portletPreferenceValuePersistence;
-	}
-
-	@Override
-	public Class<PortletPreferenceValue> getModelClass() {
+	protected Class<?> getModelClass() {
 		return PortletPreferenceValue.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<PortletPreferenceValue>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(portletPreferenceValuePersistence);
 	}
 
 	protected String getModelClassName() {

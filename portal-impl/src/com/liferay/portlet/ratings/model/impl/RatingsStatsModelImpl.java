@@ -59,12 +59,11 @@ public class RatingsStatsModelImpl
 	public static final String TABLE_NAME = "RatingsStats";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"statsId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"totalEntries", Types.INTEGER}, {"totalScore", Types.DOUBLE},
-		{"averageScore", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"statsId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"totalEntries", Types.INTEGER},
+		{"totalScore", Types.DOUBLE}, {"averageScore", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -72,7 +71,6 @@ public class RatingsStatsModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -85,7 +83,7 @@ public class RatingsStatsModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsStats (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,statsId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE,primary key (statsId, ctCollectionId))";
+		"create table RatingsStats (mvccVersion LONG default 0 not null,statsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 
@@ -239,8 +237,6 @@ public class RatingsStatsModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", RatingsStats::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", RatingsStats::getCtCollectionId);
 			attributeGetterFunctions.put("statsId", RatingsStats::getStatsId);
 			attributeGetterFunctions.put(
 				"companyId", RatingsStats::getCompanyId);
@@ -277,10 +273,6 @@ public class RatingsStatsModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<RatingsStats, Long>)RatingsStats::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<RatingsStats, Long>)
-					RatingsStats::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"statsId",
 				(BiConsumer<RatingsStats, Long>)RatingsStats::setStatsId);
@@ -329,20 +321,6 @@ public class RatingsStatsModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -573,7 +551,6 @@ public class RatingsStatsModelImpl
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
 		ratingsStatsImpl.setMvccVersion(getMvccVersion());
-		ratingsStatsImpl.setCtCollectionId(getCtCollectionId());
 		ratingsStatsImpl.setStatsId(getStatsId());
 		ratingsStatsImpl.setCompanyId(getCompanyId());
 		ratingsStatsImpl.setCreateDate(getCreateDate());
@@ -595,8 +572,6 @@ public class RatingsStatsModelImpl
 
 		ratingsStatsImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ratingsStatsImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ratingsStatsImpl.setStatsId(
 			this.<Long>getColumnOriginalValue("statsId"));
 		ratingsStatsImpl.setCompanyId(
@@ -695,8 +670,6 @@ public class RatingsStatsModelImpl
 
 		ratingsStatsCacheModel.mvccVersion = getMvccVersion();
 
-		ratingsStatsCacheModel.ctCollectionId = getCtCollectionId();
-
 		ratingsStatsCacheModel.statsId = getStatsId();
 
 		ratingsStatsCacheModel.companyId = getCompanyId();
@@ -791,7 +764,6 @@ public class RatingsStatsModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _statsId;
 	private long _companyId;
 	private Date _createDate;
@@ -832,7 +804,6 @@ public class RatingsStatsModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("statsId", _statsId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
@@ -857,25 +828,23 @@ public class RatingsStatsModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("statsId", 2L);
 
-		columnBitmasks.put("statsId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("createDate", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("modifiedDate", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("classNameId", 32L);
 
-		columnBitmasks.put("classNameId", 64L);
+		columnBitmasks.put("classPK", 64L);
 
-		columnBitmasks.put("classPK", 128L);
+		columnBitmasks.put("totalEntries", 128L);
 
-		columnBitmasks.put("totalEntries", 256L);
+		columnBitmasks.put("totalScore", 256L);
 
-		columnBitmasks.put("totalScore", 512L);
-
-		columnBitmasks.put("averageScore", 1024L);
+		columnBitmasks.put("averageScore", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

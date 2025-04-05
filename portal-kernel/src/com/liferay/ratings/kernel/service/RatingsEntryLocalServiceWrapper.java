@@ -5,11 +5,8 @@
 
 package com.liferay.ratings.kernel.service;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 
 /**
  * Provides a wrapper for {@link RatingsEntryLocalService}.
@@ -43,7 +40,9 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the ratings entry that was added
 	 */
 	@Override
-	public RatingsEntry addRatingsEntry(RatingsEntry ratingsEntry) {
+	public com.liferay.ratings.kernel.model.RatingsEntry addRatingsEntry(
+		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+
 		return _ratingsEntryLocalService.addRatingsEntry(ratingsEntry);
 	}
 
@@ -65,7 +64,9 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the new ratings entry
 	 */
 	@Override
-	public RatingsEntry createRatingsEntry(long entryId) {
+	public com.liferay.ratings.kernel.model.RatingsEntry createRatingsEntry(
+		long entryId) {
+
 		return _ratingsEntryLocalService.createRatingsEntry(entryId);
 	}
 
@@ -78,7 +79,8 @@ public class RatingsEntryLocalServiceWrapper
 
 	@Override
 	public void deleteEntry(
-			RatingsEntry entry, long userId, String className, long classPK)
+			com.liferay.ratings.kernel.model.RatingsEntry entry, long userId,
+			String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ratingsEntryLocalService.deleteEntry(
@@ -108,7 +110,8 @@ public class RatingsEntryLocalServiceWrapper
 	 * @throws PortalException if a ratings entry with the primary key could not be found
 	 */
 	@Override
-	public RatingsEntry deleteRatingsEntry(long entryId)
+	public com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
+			long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsEntryLocalService.deleteRatingsEntry(entryId);
@@ -125,7 +128,9 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the ratings entry that was removed
 	 */
 	@Override
-	public RatingsEntry deleteRatingsEntry(RatingsEntry ratingsEntry) {
+	public com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
+		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+
 		return _ratingsEntryLocalService.deleteRatingsEntry(ratingsEntry);
 	}
 
@@ -232,14 +237,16 @@ public class RatingsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public RatingsEntry fetchEntry(
+	public com.liferay.ratings.kernel.model.RatingsEntry fetchEntry(
 		long userId, String className, long classPK) {
 
 		return _ratingsEntryLocalService.fetchEntry(userId, className, classPK);
 	}
 
 	@Override
-	public RatingsEntry fetchRatingsEntry(long entryId) {
+	public com.liferay.ratings.kernel.model.RatingsEntry fetchRatingsEntry(
+		long entryId) {
+
 		return _ratingsEntryLocalService.fetchRatingsEntry(entryId);
 	}
 
@@ -251,8 +258,8 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	 */
 	@Override
-	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public com.liferay.ratings.kernel.model.RatingsEntry
+		fetchRatingsEntryByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(
 			uuid, companyId);
@@ -266,23 +273,23 @@ public class RatingsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<Long, RatingsEntry> getEntries(
-		long userId, String className, long[] classPKs) {
+	public java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsEntry>
+		getEntries(long userId, String className, long[] classPKs) {
 
 		return _ratingsEntryLocalService.getEntries(
 			userId, className, classPKs);
 	}
 
 	@Override
-	public java.util.List<RatingsEntry> getEntries(
-		String className, long classPK) {
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry>
+		getEntries(String className, long classPK) {
 
 		return _ratingsEntryLocalService.getEntries(className, classPK);
 	}
 
 	@Override
-	public java.util.List<RatingsEntry> getEntries(
-		String className, long classPK, double score) {
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry>
+		getEntries(String className, long classPK, double score) {
 
 		return _ratingsEntryLocalService.getEntries(className, classPK, score);
 	}
@@ -294,7 +301,8 @@ public class RatingsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public RatingsEntry getEntry(long userId, String className, long classPK)
+	public com.liferay.ratings.kernel.model.RatingsEntry getEntry(
+			long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsEntryLocalService.getEntry(userId, className, classPK);
@@ -350,7 +358,9 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the range of ratings entries
 	 */
 	@Override
-	public java.util.List<RatingsEntry> getRatingsEntries(int start, int end) {
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsEntry>
+		getRatingsEntries(int start, int end) {
+
 		return _ratingsEntryLocalService.getRatingsEntries(start, end);
 	}
 
@@ -372,7 +382,8 @@ public class RatingsEntryLocalServiceWrapper
 	 * @throws PortalException if a ratings entry with the primary key could not be found
 	 */
 	@Override
-	public RatingsEntry getRatingsEntry(long entryId)
+	public com.liferay.ratings.kernel.model.RatingsEntry getRatingsEntry(
+			long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsEntryLocalService.getRatingsEntry(entryId);
@@ -387,8 +398,8 @@ public class RatingsEntryLocalServiceWrapper
 	 * @throws PortalException if a matching ratings entry could not be found
 	 */
 	@Override
-	public RatingsEntry getRatingsEntryByUuidAndCompanyId(
-			String uuid, long companyId)
+	public com.liferay.ratings.kernel.model.RatingsEntry
+			getRatingsEntryByUuidAndCompanyId(String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsEntryLocalService.getRatingsEntryByUuidAndCompanyId(
@@ -396,7 +407,7 @@ public class RatingsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public RatingsEntry updateEntry(
+	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
 			long userId, String className, long classPK, double score,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -416,33 +427,15 @@ public class RatingsEntryLocalServiceWrapper
 	 * @return the ratings entry that was updated
 	 */
 	@Override
-	public RatingsEntry updateRatingsEntry(RatingsEntry ratingsEntry) {
+	public com.liferay.ratings.kernel.model.RatingsEntry updateRatingsEntry(
+		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+
 		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ratingsEntryLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<RatingsEntry> getCTPersistence() {
-		return _ratingsEntryLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<RatingsEntry> getModelClass() {
-		return _ratingsEntryLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<RatingsEntry>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ratingsEntryLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

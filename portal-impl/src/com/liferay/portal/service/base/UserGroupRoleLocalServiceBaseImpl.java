@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -475,23 +473,8 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 		return UserGroupRoleLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<UserGroupRole> getCTPersistence() {
-		return userGroupRolePersistence;
-	}
-
-	@Override
-	public Class<UserGroupRole> getModelClass() {
+	protected Class<?> getModelClass() {
 		return UserGroupRole.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<UserGroupRole>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(userGroupRolePersistence);
 	}
 
 	protected String getModelClassName() {

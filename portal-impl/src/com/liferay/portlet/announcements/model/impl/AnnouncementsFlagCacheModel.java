@@ -68,12 +68,10 @@ public class AnnouncementsFlagCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", flagId=");
 		sb.append(flagId);
 		sb.append(", companyId=");
@@ -97,7 +95,6 @@ public class AnnouncementsFlagCacheModel
 			new AnnouncementsFlagImpl();
 
 		announcementsFlagImpl.setMvccVersion(mvccVersion);
-		announcementsFlagImpl.setCtCollectionId(ctCollectionId);
 		announcementsFlagImpl.setFlagId(flagId);
 		announcementsFlagImpl.setCompanyId(companyId);
 		announcementsFlagImpl.setUserId(userId);
@@ -121,8 +118,6 @@ public class AnnouncementsFlagCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		flagId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -139,8 +134,6 @@ public class AnnouncementsFlagCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(flagId);
 
 		objectOutput.writeLong(companyId);
@@ -154,7 +147,6 @@ public class AnnouncementsFlagCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long flagId;
 	public long companyId;
 	public long userId;

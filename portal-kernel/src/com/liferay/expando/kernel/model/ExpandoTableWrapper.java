@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -35,7 +33,6 @@ public class ExpandoTableWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("tableId", getTableId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -50,12 +47,6 @@ public class ExpandoTableWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -116,16 +107,6 @@ public class ExpandoTableWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this expando table.
-	 *
-	 * @return the ct collection ID of this expando table
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -204,16 +185,6 @@ public class ExpandoTableWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this expando table.
-	 *
-	 * @param ctCollectionId the ct collection ID of this expando table
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the mvcc version of this expando table.
 	 *
 	 * @param mvccVersion the mvcc version of this expando table
@@ -256,20 +227,6 @@ public class ExpandoTableWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<ExpandoTable, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<ExpandoTable, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

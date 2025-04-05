@@ -152,18 +152,18 @@ create unique index IX_B4BA0791 on EmailAddress (companyId, externalReferenceCod
 create index IX_7B43CD8 on EmailAddress (userId);
 create index IX_D24F3956 on EmailAddress (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_4A7D3605 on ExpandoColumn (tableId, name[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_FEFC8DA7 on ExpandoColumn (tableId, name[$COLUMN_LENGTH:75$]);
 
 create index IX_49EB3118 on ExpandoRow (classPK);
-create unique index IX_488E0C53 on ExpandoRow (tableId, classPK, ctCollectionId);
+create unique index IX_81EFBFF5 on ExpandoRow (tableId, classPK);
 
-create unique index IX_87D370E2 on ExpandoTable (companyId, classNameId, name[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_37562284 on ExpandoTable (companyId, classNameId, name[$COLUMN_LENGTH:75$]);
 
 create index IX_CAD04B0D on ExpandoValue (classPK, classNameId);
-create unique index IX_E6D98E43 on ExpandoValue (columnId, rowId_, ctCollectionId);
+create unique index IX_9DDD21E5 on ExpandoValue (columnId, rowId_);
 create index IX_9112A7A0 on ExpandoValue (rowId_);
 create index IX_1BD3F4C on ExpandoValue (tableId, classPK);
-create unique index IX_D8C72C45 on ExpandoValue (tableId, columnId, classPK, ctCollectionId);
+create unique index IX_D27B03E7 on ExpandoValue (tableId, columnId, classPK);
 create index IX_B71E92D5 on ExpandoValue (tableId, rowId_);
 
 create index IX_1827A2E5 on ExportImportConfiguration (companyId);
@@ -306,10 +306,10 @@ create index IX_EF5FCC07 on PortletPreferences (portletId[$COLUMN_LENGTH:200$], 
 create index IX_8DCFD52C on PortletPreferences (portletId[$COLUMN_LENGTH:200$], plid);
 
 create index IX_A1A8CB8B on RatingsEntry (classNameId, classPK, score);
-create unique index IX_119FF2EF on RatingsEntry (classNameId, classPK, userId, ctCollectionId);
+create unique index IX_A07A5E91 on RatingsEntry (classNameId, classPK, userId);
 create index IX_C34DEAF2 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_C286E0E2 on RatingsStats (classNameId, classPK, ctCollectionId);
+create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
 
 create index IX_B91F79BD on RecentLayoutBranch (groupId);
 create index IX_351E86E8 on RecentLayoutBranch (layoutBranchId);

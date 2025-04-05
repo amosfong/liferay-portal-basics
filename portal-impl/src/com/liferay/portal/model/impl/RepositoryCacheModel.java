@@ -68,12 +68,10 @@ public class RepositoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -116,7 +114,6 @@ public class RepositoryCacheModel
 		RepositoryImpl repositoryImpl = new RepositoryImpl();
 
 		repositoryImpl.setMvccVersion(mvccVersion);
-		repositoryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			repositoryImpl.setUuid("");
@@ -207,8 +204,6 @@ public class RepositoryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -236,8 +231,6 @@ public class RepositoryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -306,7 +299,6 @@ public class RepositoryCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long repositoryId;

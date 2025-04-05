@@ -68,12 +68,10 @@ public class RatingsStatsCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", statsId=");
 		sb.append(statsId);
 		sb.append(", companyId=");
@@ -102,7 +100,6 @@ public class RatingsStatsCacheModel
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
 		ratingsStatsImpl.setMvccVersion(mvccVersion);
-		ratingsStatsImpl.setCtCollectionId(ctCollectionId);
 		ratingsStatsImpl.setStatsId(statsId);
 		ratingsStatsImpl.setCompanyId(companyId);
 
@@ -135,8 +132,6 @@ public class RatingsStatsCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		statsId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -158,8 +153,6 @@ public class RatingsStatsCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(statsId);
 
 		objectOutput.writeLong(companyId);
@@ -178,7 +171,6 @@ public class RatingsStatsCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long statsId;
 	public long companyId;
 	public long createDate;

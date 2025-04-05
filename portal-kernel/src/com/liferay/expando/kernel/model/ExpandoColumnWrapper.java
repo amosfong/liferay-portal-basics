@@ -13,8 +13,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -38,7 +36,6 @@ public class ExpandoColumnWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("columnId", getColumnId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -57,12 +54,6 @@ public class ExpandoColumnWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long columnId = (Long)attributes.get("columnId");
@@ -137,16 +128,6 @@ public class ExpandoColumnWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this expando column.
-	 *
-	 * @return the ct collection ID of this expando column
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -272,16 +253,6 @@ public class ExpandoColumnWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this expando column.
-	 *
-	 * @param ctCollectionId the ct collection ID of this expando column
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the default data of this expando column.
 	 *
 	 * @param defaultData the default data of this expando column
@@ -372,20 +343,6 @@ public class ExpandoColumnWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<ExpandoColumn, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<ExpandoColumn, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

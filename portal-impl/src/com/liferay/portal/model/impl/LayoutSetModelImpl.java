@@ -59,14 +59,13 @@ public class LayoutSetModelImpl
 	public static final String TABLE_NAME = "LayoutSet";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"layoutSetId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
-		{"logoId", Types.BIGINT}, {"themeId", Types.VARCHAR},
-		{"colorSchemeId", Types.VARCHAR}, {"faviconFileEntryId", Types.BIGINT},
-		{"css", Types.CLOB}, {"settings_", Types.CLOB},
-		{"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"layoutSetId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"privateLayout", Types.BOOLEAN}, {"logoId", Types.BIGINT},
+		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
+		{"faviconFileEntryId", Types.BIGINT}, {"css", Types.CLOB},
+		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
 		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
 	};
 
@@ -75,7 +74,6 @@ public class LayoutSetModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -93,7 +91,7 @@ public class LayoutSetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSetId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,faviconFileEntryId LONG,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,primary key (layoutSetId, ctCollectionId))";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,faviconFileEntryId LONG,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
@@ -264,8 +262,6 @@ public class LayoutSetModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutSet::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutSet::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"layoutSetId", LayoutSet::getLayoutSetId);
 			attributeGetterFunctions.put("groupId", LayoutSet::getGroupId);
 			attributeGetterFunctions.put("companyId", LayoutSet::getCompanyId);
@@ -307,9 +303,6 @@ public class LayoutSetModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<LayoutSet, Long>)LayoutSet::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutSet, Long>)LayoutSet::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"layoutSetId",
 				(BiConsumer<LayoutSet, Long>)LayoutSet::setLayoutSetId);
@@ -371,21 +364,6 @@ public class LayoutSetModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -763,7 +741,6 @@ public class LayoutSetModelImpl
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
 		layoutSetImpl.setMvccVersion(getMvccVersion());
-		layoutSetImpl.setCtCollectionId(getCtCollectionId());
 		layoutSetImpl.setLayoutSetId(getLayoutSetId());
 		layoutSetImpl.setGroupId(getGroupId());
 		layoutSetImpl.setCompanyId(getCompanyId());
@@ -791,8 +768,6 @@ public class LayoutSetModelImpl
 
 		layoutSetImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutSetImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutSetImpl.setLayoutSetId(
 			this.<Long>getColumnOriginalValue("layoutSetId"));
 		layoutSetImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
@@ -901,8 +876,6 @@ public class LayoutSetModelImpl
 		LayoutSetCacheModel layoutSetCacheModel = new LayoutSetCacheModel();
 
 		layoutSetCacheModel.mvccVersion = getMvccVersion();
-
-		layoutSetCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutSetCacheModel.layoutSetId = getLayoutSetId();
 
@@ -1052,7 +1025,6 @@ public class LayoutSetModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _layoutSetId;
 	private long _groupId;
 	private long _companyId;
@@ -1100,7 +1072,6 @@ public class LayoutSetModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("layoutSetId", _layoutSetId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1142,35 +1113,33 @@ public class LayoutSetModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("layoutSetId", 2L);
 
-		columnBitmasks.put("layoutSetId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("modifiedDate", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("privateLayout", 64L);
 
-		columnBitmasks.put("privateLayout", 128L);
+		columnBitmasks.put("logoId", 128L);
 
-		columnBitmasks.put("logoId", 256L);
+		columnBitmasks.put("themeId", 256L);
 
-		columnBitmasks.put("themeId", 512L);
+		columnBitmasks.put("colorSchemeId", 512L);
 
-		columnBitmasks.put("colorSchemeId", 1024L);
+		columnBitmasks.put("faviconFileEntryId", 1024L);
 
-		columnBitmasks.put("faviconFileEntryId", 2048L);
+		columnBitmasks.put("css", 2048L);
 
-		columnBitmasks.put("css", 4096L);
+		columnBitmasks.put("settings_", 4096L);
 
-		columnBitmasks.put("settings_", 8192L);
+		columnBitmasks.put("layoutSetPrototypeUuid", 8192L);
 
-		columnBitmasks.put("layoutSetPrototypeUuid", 16384L);
-
-		columnBitmasks.put("layoutSetPrototypeLinkEnabled", 32768L);
+		columnBitmasks.put("layoutSetPrototypeLinkEnabled", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -6,7 +6,6 @@
 package com.liferay.ratings.kernel.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RatingsStatsPersistence
-	extends BasePersistence<RatingsStats>, CTPersistence<RatingsStats> {
+public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

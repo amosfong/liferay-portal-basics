@@ -64,8 +64,8 @@ public class OrganizationModelImpl
 	public static final String TABLE_NAME = "Organization_";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"organizationId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -81,7 +81,6 @@ public class OrganizationModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("organizationId", Types.BIGINT);
@@ -103,7 +102,7 @@ public class OrganizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Organization_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusListTypeId LONG,comments STRING null,logoId LONG,primary key (organizationId, ctCollectionId))";
+		"create table Organization_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusListTypeId LONG,comments STRING null,logoId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 
@@ -190,7 +189,7 @@ public class OrganizationModelImpl
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
-		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, organizationId, ctCollectionId))";
+		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -206,7 +205,7 @@ public class OrganizationModelImpl
 	};
 
 	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE =
-		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (organizationId, userId, ctCollectionId))";
+		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (organizationId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -315,8 +314,6 @@ public class OrganizationModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", Organization::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", Organization::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Organization::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode",
@@ -365,10 +362,6 @@ public class OrganizationModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<Organization, Long>)Organization::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<Organization, Long>)
-					Organization::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<Organization, String>)Organization::setUuid);
@@ -447,21 +440,6 @@ public class OrganizationModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -926,7 +904,6 @@ public class OrganizationModelImpl
 		OrganizationImpl organizationImpl = new OrganizationImpl();
 
 		organizationImpl.setMvccVersion(getMvccVersion());
-		organizationImpl.setCtCollectionId(getCtCollectionId());
 		organizationImpl.setUuid(getUuid());
 		organizationImpl.setExternalReferenceCode(getExternalReferenceCode());
 		organizationImpl.setOrganizationId(getOrganizationId());
@@ -957,8 +934,6 @@ public class OrganizationModelImpl
 
 		organizationImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		organizationImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		organizationImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		organizationImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1067,8 +1042,6 @@ public class OrganizationModelImpl
 			new OrganizationCacheModel();
 
 		organizationCacheModel.mvccVersion = getMvccVersion();
-
-		organizationCacheModel.ctCollectionId = getCtCollectionId();
 
 		organizationCacheModel.uuid = getUuid();
 
@@ -1228,7 +1201,6 @@ public class OrganizationModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _organizationId;
@@ -1280,7 +1252,6 @@ public class OrganizationModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1328,43 +1299,41 @@ public class OrganizationModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("organizationId", 8L);
 
-		columnBitmasks.put("organizationId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("parentOrganizationId", 512L);
 
-		columnBitmasks.put("parentOrganizationId", 1024L);
+		columnBitmasks.put("treePath", 1024L);
 
-		columnBitmasks.put("treePath", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("type_", 4096L);
 
-		columnBitmasks.put("type_", 8192L);
+		columnBitmasks.put("recursable", 8192L);
 
-		columnBitmasks.put("recursable", 16384L);
+		columnBitmasks.put("regionId", 16384L);
 
-		columnBitmasks.put("regionId", 32768L);
+		columnBitmasks.put("countryId", 32768L);
 
-		columnBitmasks.put("countryId", 65536L);
+		columnBitmasks.put("statusListTypeId", 65536L);
 
-		columnBitmasks.put("statusListTypeId", 131072L);
+		columnBitmasks.put("comments", 131072L);
 
-		columnBitmasks.put("comments", 262144L);
-
-		columnBitmasks.put("logoId", 524288L);
+		columnBitmasks.put("logoId", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

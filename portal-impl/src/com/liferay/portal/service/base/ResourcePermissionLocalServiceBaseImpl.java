@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -494,23 +492,8 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 		return ResourcePermissionLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<ResourcePermission> getCTPersistence() {
-		return resourcePermissionPersistence;
-	}
-
-	@Override
-	public Class<ResourcePermission> getModelClass() {
+	protected Class<?> getModelClass() {
 		return ResourcePermission.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<ResourcePermission>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(resourcePermissionPersistence);
 	}
 
 	protected String getModelClassName() {

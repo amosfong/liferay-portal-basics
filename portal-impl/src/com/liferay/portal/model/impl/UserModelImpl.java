@@ -62,12 +62,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final String TABLE_NAME = "User_";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"userId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"contactId", Types.BIGINT}, {"password_", Types.VARCHAR},
-		{"passwordEncrypted", Types.BOOLEAN}, {"passwordReset", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"userId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"contactId", Types.BIGINT},
+		{"password_", Types.VARCHAR}, {"passwordEncrypted", Types.BOOLEAN},
+		{"passwordReset", Types.BOOLEAN},
 		{"passwordModifiedDate", Types.TIMESTAMP}, {"digest", Types.VARCHAR},
 		{"reminderQueryQuestion", Types.VARCHAR},
 		{"reminderQueryAnswer", Types.VARCHAR},
@@ -93,7 +93,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -139,7 +138,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table User_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,contactId LONG,password_ VARCHAR(255) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,type_ INTEGER,status INTEGER,primary key (userId, ctCollectionId))";
+		"create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,contactId LONG,password_ VARCHAR(255) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,type_ INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table User_";
 
@@ -269,7 +268,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
-		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userId, ctCollectionId))";
+		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -285,7 +284,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE =
-		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (organizationId, userId, ctCollectionId))";
+		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (organizationId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -301,7 +300,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE =
-		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (roleId, userId, ctCollectionId))";
+		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -317,7 +316,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE =
-		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (teamId, userId, ctCollectionId))";
+		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -334,7 +333,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE =
-		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (userId, userGroupId, ctCollectionId))";
+		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -436,8 +435,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 				new LinkedHashMap<String, Function<User, Object>>();
 
 			attributeGetterFunctions.put("mvccVersion", User::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", User::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", User::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode", User::getExternalReferenceCode);
@@ -510,9 +507,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 			attributeSetterBiConsumers.put(
 				"mvccVersion", (BiConsumer<User, Long>)User::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<User, Long>)User::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<User, String>)User::setUuid);
 			attributeSetterBiConsumers.put(
@@ -631,21 +625,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1639,7 +1618,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		UserImpl userImpl = new UserImpl();
 
 		userImpl.setMvccVersion(getMvccVersion());
-		userImpl.setCtCollectionId(getCtCollectionId());
 		userImpl.setUuid(getUuid());
 		userImpl.setExternalReferenceCode(getExternalReferenceCode());
 		userImpl.setUserId(getUserId());
@@ -1694,8 +1672,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		userImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		userImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		userImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		userImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1838,8 +1814,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		UserCacheModel userCacheModel = new UserCacheModel();
 
 		userCacheModel.mvccVersion = getMvccVersion();
-
-		userCacheModel.ctCollectionId = getCtCollectionId();
 
 		userCacheModel.uuid = getUuid();
 
@@ -2164,7 +2138,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _userId;
@@ -2240,7 +2213,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -2315,91 +2287,89 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("contactId", 128L);
 
-		columnBitmasks.put("contactId", 256L);
+		columnBitmasks.put("password_", 256L);
 
-		columnBitmasks.put("password_", 512L);
+		columnBitmasks.put("passwordEncrypted", 512L);
 
-		columnBitmasks.put("passwordEncrypted", 1024L);
+		columnBitmasks.put("passwordReset", 1024L);
 
-		columnBitmasks.put("passwordReset", 2048L);
+		columnBitmasks.put("passwordModifiedDate", 2048L);
 
-		columnBitmasks.put("passwordModifiedDate", 4096L);
+		columnBitmasks.put("digest", 4096L);
 
-		columnBitmasks.put("digest", 8192L);
+		columnBitmasks.put("reminderQueryQuestion", 8192L);
 
-		columnBitmasks.put("reminderQueryQuestion", 16384L);
+		columnBitmasks.put("reminderQueryAnswer", 16384L);
 
-		columnBitmasks.put("reminderQueryAnswer", 32768L);
+		columnBitmasks.put("graceLoginCount", 32768L);
 
-		columnBitmasks.put("graceLoginCount", 65536L);
+		columnBitmasks.put("screenName", 65536L);
 
-		columnBitmasks.put("screenName", 131072L);
+		columnBitmasks.put("emailAddress", 131072L);
 
-		columnBitmasks.put("emailAddress", 262144L);
+		columnBitmasks.put("facebookId", 262144L);
 
-		columnBitmasks.put("facebookId", 524288L);
+		columnBitmasks.put("googleUserId", 524288L);
 
-		columnBitmasks.put("googleUserId", 1048576L);
+		columnBitmasks.put("ldapServerId", 1048576L);
 
-		columnBitmasks.put("ldapServerId", 2097152L);
+		columnBitmasks.put("openId", 2097152L);
 
-		columnBitmasks.put("openId", 4194304L);
+		columnBitmasks.put("portraitId", 4194304L);
 
-		columnBitmasks.put("portraitId", 8388608L);
+		columnBitmasks.put("languageId", 8388608L);
 
-		columnBitmasks.put("languageId", 16777216L);
+		columnBitmasks.put("timeZoneId", 16777216L);
 
-		columnBitmasks.put("timeZoneId", 33554432L);
+		columnBitmasks.put("greeting", 33554432L);
 
-		columnBitmasks.put("greeting", 67108864L);
+		columnBitmasks.put("comments", 67108864L);
 
-		columnBitmasks.put("comments", 134217728L);
+		columnBitmasks.put("firstName", 134217728L);
 
-		columnBitmasks.put("firstName", 268435456L);
+		columnBitmasks.put("middleName", 268435456L);
 
-		columnBitmasks.put("middleName", 536870912L);
+		columnBitmasks.put("lastName", 536870912L);
 
-		columnBitmasks.put("lastName", 1073741824L);
+		columnBitmasks.put("jobTitle", 1073741824L);
 
-		columnBitmasks.put("jobTitle", 2147483648L);
+		columnBitmasks.put("loginDate", 2147483648L);
 
-		columnBitmasks.put("loginDate", 4294967296L);
+		columnBitmasks.put("loginIP", 4294967296L);
 
-		columnBitmasks.put("loginIP", 8589934592L);
+		columnBitmasks.put("lastLoginDate", 8589934592L);
 
-		columnBitmasks.put("lastLoginDate", 17179869184L);
+		columnBitmasks.put("lastLoginIP", 17179869184L);
 
-		columnBitmasks.put("lastLoginIP", 34359738368L);
+		columnBitmasks.put("lastFailedLoginDate", 34359738368L);
 
-		columnBitmasks.put("lastFailedLoginDate", 68719476736L);
+		columnBitmasks.put("failedLoginAttempts", 68719476736L);
 
-		columnBitmasks.put("failedLoginAttempts", 137438953472L);
+		columnBitmasks.put("lockout", 137438953472L);
 
-		columnBitmasks.put("lockout", 274877906944L);
+		columnBitmasks.put("lockoutDate", 274877906944L);
 
-		columnBitmasks.put("lockoutDate", 549755813888L);
+		columnBitmasks.put("agreedToTermsOfUse", 549755813888L);
 
-		columnBitmasks.put("agreedToTermsOfUse", 1099511627776L);
+		columnBitmasks.put("emailAddressVerified", 1099511627776L);
 
-		columnBitmasks.put("emailAddressVerified", 2199023255552L);
+		columnBitmasks.put("type_", 2199023255552L);
 
-		columnBitmasks.put("type_", 4398046511104L);
-
-		columnBitmasks.put("status", 8796093022208L);
+		columnBitmasks.put("status", 4398046511104L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

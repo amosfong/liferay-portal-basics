@@ -5,11 +5,8 @@
 
 package com.liferay.ratings.kernel.service;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
-import com.liferay.ratings.kernel.model.RatingsStats;
 
 /**
  * Provides a wrapper for {@link RatingsStatsLocalService}.
@@ -43,12 +40,16 @@ public class RatingsStatsLocalServiceWrapper
 	 * @return the ratings stats that was added
 	 */
 	@Override
-	public RatingsStats addRatingsStats(RatingsStats ratingsStats) {
+	public com.liferay.ratings.kernel.model.RatingsStats addRatingsStats(
+		com.liferay.ratings.kernel.model.RatingsStats ratingsStats) {
+
 		return _ratingsStatsLocalService.addRatingsStats(ratingsStats);
 	}
 
 	@Override
-	public RatingsStats addStats(long classNameId, long classPK) {
+	public com.liferay.ratings.kernel.model.RatingsStats addStats(
+		long classNameId, long classPK) {
+
 		return _ratingsStatsLocalService.addStats(classNameId, classPK);
 	}
 
@@ -70,7 +71,9 @@ public class RatingsStatsLocalServiceWrapper
 	 * @return the new ratings stats
 	 */
 	@Override
-	public RatingsStats createRatingsStats(long statsId) {
+	public com.liferay.ratings.kernel.model.RatingsStats createRatingsStats(
+		long statsId) {
+
 		return _ratingsStatsLocalService.createRatingsStats(statsId);
 	}
 
@@ -97,7 +100,8 @@ public class RatingsStatsLocalServiceWrapper
 	 * @throws PortalException if a ratings stats with the primary key could not be found
 	 */
 	@Override
-	public RatingsStats deleteRatingsStats(long statsId)
+	public com.liferay.ratings.kernel.model.RatingsStats deleteRatingsStats(
+			long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsStatsLocalService.deleteRatingsStats(statsId);
@@ -114,7 +118,9 @@ public class RatingsStatsLocalServiceWrapper
 	 * @return the ratings stats that was removed
 	 */
 	@Override
-	public RatingsStats deleteRatingsStats(RatingsStats ratingsStats) {
+	public com.liferay.ratings.kernel.model.RatingsStats deleteRatingsStats(
+		com.liferay.ratings.kernel.model.RatingsStats ratingsStats) {
+
 		return _ratingsStatsLocalService.deleteRatingsStats(ratingsStats);
 	}
 
@@ -226,12 +232,16 @@ public class RatingsStatsLocalServiceWrapper
 	}
 
 	@Override
-	public RatingsStats fetchRatingsStats(long statsId) {
+	public com.liferay.ratings.kernel.model.RatingsStats fetchRatingsStats(
+		long statsId) {
+
 		return _ratingsStatsLocalService.fetchRatingsStats(statsId);
 	}
 
 	@Override
-	public RatingsStats fetchStats(String className, long classPK) {
+	public com.liferay.ratings.kernel.model.RatingsStats fetchStats(
+		String className, long classPK) {
+
 		return _ratingsStatsLocalService.fetchStats(className, classPK);
 	}
 
@@ -278,7 +288,8 @@ public class RatingsStatsLocalServiceWrapper
 	 * @throws PortalException if a ratings stats with the primary key could not be found
 	 */
 	@Override
-	public RatingsStats getRatingsStats(long statsId)
+	public com.liferay.ratings.kernel.model.RatingsStats getRatingsStats(
+			long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsStatsLocalService.getRatingsStats(statsId);
@@ -296,7 +307,9 @@ public class RatingsStatsLocalServiceWrapper
 	 * @return the range of ratings statses
 	 */
 	@Override
-	public java.util.List<RatingsStats> getRatingsStatses(int start, int end) {
+	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats>
+		getRatingsStatses(int start, int end) {
+
 		return _ratingsStatsLocalService.getRatingsStatses(start, end);
 	}
 
@@ -311,22 +324,23 @@ public class RatingsStatsLocalServiceWrapper
 	}
 
 	@Override
-	public RatingsStats getStats(long statsId)
+	public com.liferay.ratings.kernel.model.RatingsStats getStats(long statsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsStatsLocalService.getStats(statsId);
 	}
 
 	@Override
-	public RatingsStats getStats(String className, long classPK)
+	public com.liferay.ratings.kernel.model.RatingsStats getStats(
+			String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ratingsStatsLocalService.getStats(className, classPK);
 	}
 
 	@Override
-	public java.util.Map<Long, RatingsStats> getStats(
-		String className, long[] classPKs) {
+	public java.util.Map<Long, com.liferay.ratings.kernel.model.RatingsStats>
+		getStats(String className, long[] classPKs) {
 
 		return _ratingsStatsLocalService.getStats(className, classPKs);
 	}
@@ -342,33 +356,15 @@ public class RatingsStatsLocalServiceWrapper
 	 * @return the ratings stats that was updated
 	 */
 	@Override
-	public RatingsStats updateRatingsStats(RatingsStats ratingsStats) {
+	public com.liferay.ratings.kernel.model.RatingsStats updateRatingsStats(
+		com.liferay.ratings.kernel.model.RatingsStats ratingsStats) {
+
 		return _ratingsStatsLocalService.updateRatingsStats(ratingsStats);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _ratingsStatsLocalService.getBasePersistence();
-	}
-
-	@Override
-	public CTPersistence<RatingsStats> getCTPersistence() {
-		return _ratingsStatsLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<RatingsStats> getModelClass() {
-		return _ratingsStatsLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<RatingsStats>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _ratingsStatsLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

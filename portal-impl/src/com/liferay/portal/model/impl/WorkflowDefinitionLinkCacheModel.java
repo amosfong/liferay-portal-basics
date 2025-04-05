@@ -69,12 +69,10 @@ public class WorkflowDefinitionLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", workflowDefinitionLinkId=");
 		sb.append(workflowDefinitionLinkId);
 		sb.append(", groupId=");
@@ -110,7 +108,6 @@ public class WorkflowDefinitionLinkCacheModel
 			new WorkflowDefinitionLinkImpl();
 
 		workflowDefinitionLinkImpl.setMvccVersion(mvccVersion);
-		workflowDefinitionLinkImpl.setCtCollectionId(ctCollectionId);
 		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(
 			workflowDefinitionLinkId);
 		workflowDefinitionLinkImpl.setGroupId(groupId);
@@ -162,8 +159,6 @@ public class WorkflowDefinitionLinkCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		workflowDefinitionLinkId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -188,8 +183,6 @@ public class WorkflowDefinitionLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(workflowDefinitionLinkId);
 
@@ -226,7 +219,6 @@ public class WorkflowDefinitionLinkCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long workflowDefinitionLinkId;
 	public long groupId;
 	public long companyId;

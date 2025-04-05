@@ -13,8 +13,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -38,7 +36,6 @@ public class ExpandoValueWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("valueId", getValueId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("tableId", getTableId());
@@ -57,12 +54,6 @@ public class ExpandoValueWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long valueId = (Long)attributes.get("valueId");
@@ -195,16 +186,6 @@ public class ExpandoValueWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this expando value.
-	 *
-	 * @return the ct collection ID of this expando value
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -498,16 +479,6 @@ public class ExpandoValueWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this expando value.
-	 *
-	 * @param ctCollectionId the ct collection ID of this expando value
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the data of this expando value.
 	 *
 	 * @param data the data of this expando value
@@ -726,20 +697,6 @@ public class ExpandoValueWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<ExpandoValue, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<ExpandoValue, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

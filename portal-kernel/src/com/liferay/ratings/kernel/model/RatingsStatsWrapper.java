@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -36,7 +34,6 @@ public class RatingsStatsWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("statsId", getStatsId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
@@ -56,12 +53,6 @@ public class RatingsStatsWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long statsId = (Long)attributes.get("statsId");
@@ -185,16 +176,6 @@ public class RatingsStatsWrapper
 	}
 
 	/**
-	 * Returns the ct collection ID of this ratings stats.
-	 *
-	 * @return the ct collection ID of this ratings stats
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
-	}
-
-	/**
 	 * Returns the modified date of this ratings stats.
 	 *
 	 * @return the modified date of this ratings stats
@@ -315,16 +296,6 @@ public class RatingsStatsWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this ratings stats.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ratings stats
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the modified date of this ratings stats.
 	 *
 	 * @param modifiedDate the modified date of this ratings stats
@@ -387,20 +358,6 @@ public class RatingsStatsWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
-	}
-
-	@Override
-	public Map<String, Function<RatingsStats, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<RatingsStats, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

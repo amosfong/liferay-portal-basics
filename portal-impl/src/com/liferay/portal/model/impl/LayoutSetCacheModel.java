@@ -67,12 +67,10 @@ public class LayoutSetCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", layoutSetId=");
 		sb.append(layoutSetId);
 		sb.append(", groupId=");
@@ -111,7 +109,6 @@ public class LayoutSetCacheModel
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
 		layoutSetImpl.setMvccVersion(mvccVersion);
-		layoutSetImpl.setCtCollectionId(ctCollectionId);
 		layoutSetImpl.setLayoutSetId(layoutSetId);
 		layoutSetImpl.setGroupId(groupId);
 		layoutSetImpl.setCompanyId(companyId);
@@ -189,8 +186,6 @@ public class LayoutSetCacheModel
 
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		layoutSetId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -219,8 +214,6 @@ public class LayoutSetCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(layoutSetId);
 
@@ -278,7 +271,6 @@ public class LayoutSetCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long layoutSetId;
 	public long groupId;
 	public long companyId;

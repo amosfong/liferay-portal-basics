@@ -66,21 +66,21 @@ public class DLFileEntryModelImpl
 	public static final String TABLE_NAME = "DLFileEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
-		{"fileEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"repositoryId", Types.BIGINT},
-		{"folderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"fileName", Types.VARCHAR},
-		{"extension", Types.VARCHAR}, {"mimeType", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
-		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
-		{"smallImageId", Types.BIGINT}, {"largeImageId", Types.BIGINT},
-		{"custom1ImageId", Types.BIGINT}, {"custom2ImageId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"fileEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"fileName", Types.VARCHAR}, {"extension", Types.VARCHAR},
+		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"extraSettings", Types.CLOB},
+		{"fileEntryTypeId", Types.BIGINT}, {"version", Types.VARCHAR},
+		{"size_", Types.BIGINT}, {"smallImageId", Types.BIGINT},
+		{"largeImageId", Types.BIGINT}, {"custom1ImageId", Types.BIGINT},
+		{"custom2ImageId", Types.BIGINT},
 		{"manualCheckInRequired", Types.BOOLEAN},
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"reviewDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP}
@@ -91,7 +91,6 @@ public class DLFileEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
@@ -128,7 +127,7 @@ public class DLFileEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,primary key (fileEntryId, ctCollectionId))";
+		"create table DLFileEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 
@@ -362,8 +361,6 @@ public class DLFileEntryModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DLFileEntry::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", DLFileEntry::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DLFileEntry::getUuid);
 			attributeGetterFunctions.put(
 				"externalReferenceCode", DLFileEntry::getExternalReferenceCode);
@@ -436,9 +433,6 @@ public class DLFileEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DLFileEntry, Long>)DLFileEntry::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<DLFileEntry, Long>)DLFileEntry::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<DLFileEntry, String>)DLFileEntry::setUuid);
 			attributeSetterBiConsumers.put(
@@ -557,21 +551,6 @@ public class DLFileEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1413,7 +1392,6 @@ public class DLFileEntryModelImpl
 		DLFileEntryImpl dlFileEntryImpl = new DLFileEntryImpl();
 
 		dlFileEntryImpl.setMvccVersion(getMvccVersion());
-		dlFileEntryImpl.setCtCollectionId(getCtCollectionId());
 		dlFileEntryImpl.setUuid(getUuid());
 		dlFileEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		dlFileEntryImpl.setFileEntryId(getFileEntryId());
@@ -1459,8 +1437,6 @@ public class DLFileEntryModelImpl
 
 		dlFileEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		dlFileEntryImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		dlFileEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		dlFileEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
@@ -1613,8 +1589,6 @@ public class DLFileEntryModelImpl
 			new DLFileEntryCacheModel();
 
 		dlFileEntryCacheModel.mvccVersion = getMvccVersion();
-
-		dlFileEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFileEntryCacheModel.uuid = getUuid();
 
@@ -1862,7 +1836,6 @@ public class DLFileEntryModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _fileEntryId;
@@ -1929,7 +1902,6 @@ public class DLFileEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1991,73 +1963,71 @@ public class DLFileEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("externalReferenceCode", 8L);
+		columnBitmasks.put("fileEntryId", 8L);
 
-		columnBitmasks.put("fileEntryId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("classNameId", 2048L);
+		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("classPK", 4096L);
+		columnBitmasks.put("repositoryId", 4096L);
 
-		columnBitmasks.put("repositoryId", 8192L);
+		columnBitmasks.put("folderId", 8192L);
 
-		columnBitmasks.put("folderId", 16384L);
+		columnBitmasks.put("treePath", 16384L);
 
-		columnBitmasks.put("treePath", 32768L);
+		columnBitmasks.put("name", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("fileName", 65536L);
 
-		columnBitmasks.put("fileName", 131072L);
+		columnBitmasks.put("extension", 131072L);
 
-		columnBitmasks.put("extension", 262144L);
+		columnBitmasks.put("mimeType", 262144L);
 
-		columnBitmasks.put("mimeType", 524288L);
+		columnBitmasks.put("title", 524288L);
 
-		columnBitmasks.put("title", 1048576L);
+		columnBitmasks.put("description", 1048576L);
 
-		columnBitmasks.put("description", 2097152L);
+		columnBitmasks.put("extraSettings", 2097152L);
 
-		columnBitmasks.put("extraSettings", 4194304L);
+		columnBitmasks.put("fileEntryTypeId", 4194304L);
 
-		columnBitmasks.put("fileEntryTypeId", 8388608L);
+		columnBitmasks.put("version", 8388608L);
 
-		columnBitmasks.put("version", 16777216L);
+		columnBitmasks.put("size_", 16777216L);
 
-		columnBitmasks.put("size_", 33554432L);
+		columnBitmasks.put("smallImageId", 33554432L);
 
-		columnBitmasks.put("smallImageId", 67108864L);
+		columnBitmasks.put("largeImageId", 67108864L);
 
-		columnBitmasks.put("largeImageId", 134217728L);
+		columnBitmasks.put("custom1ImageId", 134217728L);
 
-		columnBitmasks.put("custom1ImageId", 268435456L);
+		columnBitmasks.put("custom2ImageId", 268435456L);
 
-		columnBitmasks.put("custom2ImageId", 536870912L);
+		columnBitmasks.put("manualCheckInRequired", 536870912L);
 
-		columnBitmasks.put("manualCheckInRequired", 1073741824L);
+		columnBitmasks.put("displayDate", 1073741824L);
 
-		columnBitmasks.put("displayDate", 2147483648L);
+		columnBitmasks.put("expirationDate", 2147483648L);
 
-		columnBitmasks.put("expirationDate", 4294967296L);
+		columnBitmasks.put("reviewDate", 4294967296L);
 
-		columnBitmasks.put("reviewDate", 8589934592L);
-
-		columnBitmasks.put("lastPublishDate", 17179869184L);
+		columnBitmasks.put("lastPublishDate", 8589934592L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

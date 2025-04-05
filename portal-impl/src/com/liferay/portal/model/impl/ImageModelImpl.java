@@ -58,11 +58,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final String TABLE_NAME = "Image";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"imageId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"modifiedDate", Types.TIMESTAMP}, {"type_", Types.VARCHAR},
-		{"height", Types.INTEGER}, {"width", Types.INTEGER},
-		{"size_", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"imageId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
+		{"type_", Types.VARCHAR}, {"height", Types.INTEGER},
+		{"width", Types.INTEGER}, {"size_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -70,7 +69,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("imageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -81,7 +79,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Image (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,imageId LONG not null,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER,primary key (imageId, ctCollectionId))";
+		"create table Image (mvccVersion LONG default 0 not null,imageId LONG not null primary key,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table Image";
 
@@ -220,8 +218,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 				new LinkedHashMap<String, Function<Image, Object>>();
 
 			attributeGetterFunctions.put("mvccVersion", Image::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", Image::getCtCollectionId);
 			attributeGetterFunctions.put("imageId", Image::getImageId);
 			attributeGetterFunctions.put("companyId", Image::getCompanyId);
 			attributeGetterFunctions.put(
@@ -248,9 +244,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 			attributeSetterBiConsumers.put(
 				"mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<Image, Long>)Image::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"imageId", (BiConsumer<Image, Long>)Image::setImageId);
 			attributeSetterBiConsumers.put(
@@ -286,21 +279,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -486,7 +464,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		ImageImpl imageImpl = new ImageImpl();
 
 		imageImpl.setMvccVersion(getMvccVersion());
-		imageImpl.setCtCollectionId(getCtCollectionId());
 		imageImpl.setImageId(getImageId());
 		imageImpl.setCompanyId(getCompanyId());
 		imageImpl.setModifiedDate(getModifiedDate());
@@ -506,8 +483,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		imageImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		imageImpl.setImageId(this.<Long>getColumnOriginalValue("imageId"));
 		imageImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
 		imageImpl.setModifiedDate(
@@ -601,8 +576,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageCacheModel.mvccVersion = getMvccVersion();
 
-		imageCacheModel.ctCollectionId = getCtCollectionId();
-
 		imageCacheModel.imageId = getImageId();
 
 		imageCacheModel.companyId = getCompanyId();
@@ -691,7 +664,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _imageId;
 	private long _companyId;
 	private Date _modifiedDate;
@@ -732,7 +704,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("imageId", _imageId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
@@ -766,21 +737,19 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("imageId", 2L);
 
-		columnBitmasks.put("imageId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("modifiedDate", 8L);
 
-		columnBitmasks.put("modifiedDate", 16L);
+		columnBitmasks.put("type_", 16L);
 
-		columnBitmasks.put("type_", 32L);
+		columnBitmasks.put("height", 32L);
 
-		columnBitmasks.put("height", 64L);
+		columnBitmasks.put("width", 64L);
 
-		columnBitmasks.put("width", 128L);
-
-		columnBitmasks.put("size_", 256L);
+		columnBitmasks.put("size_", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

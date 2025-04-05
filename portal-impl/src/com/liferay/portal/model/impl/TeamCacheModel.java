@@ -67,12 +67,10 @@ public class TeamCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", teamId=");
@@ -105,7 +103,6 @@ public class TeamCacheModel
 		TeamImpl teamImpl = new TeamImpl();
 
 		teamImpl.setMvccVersion(mvccVersion);
-		teamImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			teamImpl.setUuid("");
@@ -170,8 +167,6 @@ public class TeamCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		teamId = objectInput.readLong();
@@ -192,8 +187,6 @@ public class TeamCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -238,7 +231,6 @@ public class TeamCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public long teamId;
 	public long companyId;

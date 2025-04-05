@@ -8,7 +8,6 @@ package com.liferay.expando.kernel.service.persistence;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,8 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ExpandoTablePersistence
-	extends BasePersistence<ExpandoTable>, CTPersistence<ExpandoTable> {
+public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

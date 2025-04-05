@@ -65,7 +65,7 @@ public class WorkflowDefinitionLinkModelImpl
 	public static final String TABLE_NAME = "WorkflowDefinitionLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT},
 		{"workflowDefinitionLinkId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -80,7 +80,6 @@ public class WorkflowDefinitionLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowDefinitionLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -96,7 +95,7 @@ public class WorkflowDefinitionLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WorkflowDefinitionLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,workflowDefinitionLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER,primary key (workflowDefinitionLinkId, ctCollectionId))";
+		"create table WorkflowDefinitionLink (mvccVersion LONG default 0 not null,workflowDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowDefinitionLink";
@@ -278,8 +277,6 @@ public class WorkflowDefinitionLinkModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", WorkflowDefinitionLink::getMvccVersion);
 			attributeGetterFunctions.put(
-				"ctCollectionId", WorkflowDefinitionLink::getCtCollectionId);
-			attributeGetterFunctions.put(
 				"workflowDefinitionLinkId",
 				WorkflowDefinitionLink::getWorkflowDefinitionLinkId);
 			attributeGetterFunctions.put(
@@ -329,10 +326,6 @@ public class WorkflowDefinitionLinkModelImpl
 				"mvccVersion",
 				(BiConsumer<WorkflowDefinitionLink, Long>)
 					WorkflowDefinitionLink::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<WorkflowDefinitionLink, Long>)
-					WorkflowDefinitionLink::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"workflowDefinitionLinkId",
 				(BiConsumer<WorkflowDefinitionLink, Long>)
@@ -401,21 +394,6 @@ public class WorkflowDefinitionLinkModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -775,7 +753,6 @@ public class WorkflowDefinitionLinkModelImpl
 			new WorkflowDefinitionLinkImpl();
 
 		workflowDefinitionLinkImpl.setMvccVersion(getMvccVersion());
-		workflowDefinitionLinkImpl.setCtCollectionId(getCtCollectionId());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(
 			getWorkflowDefinitionLinkId());
 		workflowDefinitionLinkImpl.setGroupId(getGroupId());
@@ -804,8 +781,6 @@ public class WorkflowDefinitionLinkModelImpl
 
 		workflowDefinitionLinkImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		workflowDefinitionLinkImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(
 			this.<Long>getColumnOriginalValue("workflowDefinitionLinkId"));
 		workflowDefinitionLinkImpl.setGroupId(
@@ -909,8 +884,6 @@ public class WorkflowDefinitionLinkModelImpl
 			new WorkflowDefinitionLinkCacheModel();
 
 		workflowDefinitionLinkCacheModel.mvccVersion = getMvccVersion();
-
-		workflowDefinitionLinkCacheModel.ctCollectionId = getCtCollectionId();
 
 		workflowDefinitionLinkCacheModel.workflowDefinitionLinkId =
 			getWorkflowDefinitionLinkId();
@@ -1032,7 +1005,6 @@ public class WorkflowDefinitionLinkModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _workflowDefinitionLinkId;
 	private long _groupId;
 	private long _companyId;
@@ -1076,7 +1048,6 @@ public class WorkflowDefinitionLinkModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"workflowDefinitionLinkId", _workflowDefinitionLinkId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1107,31 +1078,29 @@ public class WorkflowDefinitionLinkModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("workflowDefinitionLinkId", 2L);
 
-		columnBitmasks.put("workflowDefinitionLinkId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("classNameId", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("classPK", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("typePK", 1024L);
 
-		columnBitmasks.put("typePK", 2048L);
+		columnBitmasks.put("workflowDefinitionName", 2048L);
 
-		columnBitmasks.put("workflowDefinitionName", 4096L);
-
-		columnBitmasks.put("workflowDefinitionVersion", 8192L);
+		columnBitmasks.put("workflowDefinitionVersion", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

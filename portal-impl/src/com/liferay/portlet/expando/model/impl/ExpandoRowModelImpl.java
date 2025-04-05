@@ -54,10 +54,9 @@ public class ExpandoRowModelImpl
 	public static final String TABLE_NAME = "ExpandoRow";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"rowId_", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"modifiedDate", Types.TIMESTAMP}, {"tableId", Types.BIGINT},
-		{"classPK", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"rowId_", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
+		{"tableId", Types.BIGINT}, {"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -65,7 +64,6 @@ public class ExpandoRowModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -74,7 +72,7 @@ public class ExpandoRowModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoRow (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,rowId_ LONG not null,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG,primary key (rowId_, ctCollectionId))";
+		"create table ExpandoRow (mvccVersion LONG default 0 not null,rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 
@@ -224,8 +222,6 @@ public class ExpandoRowModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", ExpandoRow::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", ExpandoRow::getCtCollectionId);
 			attributeGetterFunctions.put("rowId", ExpandoRow::getRowId);
 			attributeGetterFunctions.put("companyId", ExpandoRow::getCompanyId);
 			attributeGetterFunctions.put(
@@ -251,9 +247,6 @@ public class ExpandoRowModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<ExpandoRow, Long>)ExpandoRow::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<ExpandoRow, Long>)ExpandoRow::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"rowId", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setRowId);
 			attributeSetterBiConsumers.put(
@@ -287,20 +280,6 @@ public class ExpandoRowModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -441,7 +420,6 @@ public class ExpandoRowModelImpl
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
 		expandoRowImpl.setMvccVersion(getMvccVersion());
-		expandoRowImpl.setCtCollectionId(getCtCollectionId());
 		expandoRowImpl.setRowId(getRowId());
 		expandoRowImpl.setCompanyId(getCompanyId());
 		expandoRowImpl.setModifiedDate(getModifiedDate());
@@ -459,8 +437,6 @@ public class ExpandoRowModelImpl
 
 		expandoRowImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		expandoRowImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		expandoRowImpl.setRowId(this.<Long>getColumnOriginalValue("rowId_"));
 		expandoRowImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
@@ -547,8 +523,6 @@ public class ExpandoRowModelImpl
 
 		expandoRowCacheModel.mvccVersion = getMvccVersion();
 
-		expandoRowCacheModel.ctCollectionId = getCtCollectionId();
-
 		expandoRowCacheModel.rowId = getRowId();
 
 		expandoRowCacheModel.companyId = getCompanyId();
@@ -628,7 +602,6 @@ public class ExpandoRowModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _rowId;
 	private long _companyId;
 	private Date _modifiedDate;
@@ -667,7 +640,6 @@ public class ExpandoRowModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("rowId_", _rowId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
@@ -698,17 +670,15 @@ public class ExpandoRowModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("rowId_", 2L);
 
-		columnBitmasks.put("rowId_", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("modifiedDate", 8L);
 
-		columnBitmasks.put("modifiedDate", 16L);
+		columnBitmasks.put("tableId", 16L);
 
-		columnBitmasks.put("tableId", 32L);
-
-		columnBitmasks.put("classPK", 64L);
+		columnBitmasks.put("classPK", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

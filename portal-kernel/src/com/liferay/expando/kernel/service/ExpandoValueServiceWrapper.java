@@ -5,7 +5,6 @@
 
 package com.liferay.expando.kernel.service;
 
-import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -27,7 +26,7 @@ public class ExpandoValueServiceWrapper
 	}
 
 	@Override
-	public ExpandoValue addValue(
+	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -37,7 +36,7 @@ public class ExpandoValueServiceWrapper
 	}
 
 	@Override
-	public ExpandoValue addValue(
+	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, String data)
 		throws com.liferay.portal.kernel.exception.PortalException {

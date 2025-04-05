@@ -62,14 +62,13 @@ public class LayoutFriendlyURLModelImpl
 	public static final String TABLE_NAME = "LayoutFriendlyURL";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"layoutFriendlyURLId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"plid", Types.BIGINT}, {"privateLayout", Types.BOOLEAN},
-		{"friendlyURL", Types.VARCHAR}, {"languageId", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"layoutFriendlyURLId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
+		{"privateLayout", Types.BOOLEAN}, {"friendlyURL", Types.VARCHAR},
+		{"languageId", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,7 +76,6 @@ public class LayoutFriendlyURLModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutFriendlyURLId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -94,7 +92,7 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null,primary key (layoutFriendlyURLId, ctCollectionId))";
+		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 
@@ -279,8 +277,6 @@ public class LayoutFriendlyURLModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutFriendlyURL::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutFriendlyURL::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", LayoutFriendlyURL::getUuid);
 			attributeGetterFunctions.put(
 				"layoutFriendlyURLId",
@@ -328,10 +324,6 @@ public class LayoutFriendlyURLModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutFriendlyURL, Long>)
 					LayoutFriendlyURL::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutFriendlyURL, Long>)
-					LayoutFriendlyURL::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutFriendlyURL, String>)
@@ -403,20 +395,6 @@ public class LayoutFriendlyURLModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -777,7 +755,6 @@ public class LayoutFriendlyURLModelImpl
 			new LayoutFriendlyURLImpl();
 
 		layoutFriendlyURLImpl.setMvccVersion(getMvccVersion());
-		layoutFriendlyURLImpl.setCtCollectionId(getCtCollectionId());
 		layoutFriendlyURLImpl.setUuid(getUuid());
 		layoutFriendlyURLImpl.setLayoutFriendlyURLId(getLayoutFriendlyURLId());
 		layoutFriendlyURLImpl.setGroupId(getGroupId());
@@ -804,8 +781,6 @@ public class LayoutFriendlyURLModelImpl
 
 		layoutFriendlyURLImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutFriendlyURLImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutFriendlyURLImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutFriendlyURLImpl.setLayoutFriendlyURLId(
@@ -911,8 +886,6 @@ public class LayoutFriendlyURLModelImpl
 			new LayoutFriendlyURLCacheModel();
 
 		layoutFriendlyURLCacheModel.mvccVersion = getMvccVersion();
-
-		layoutFriendlyURLCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutFriendlyURLCacheModel.uuid = getUuid();
 
@@ -1050,7 +1023,6 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutFriendlyURLId;
 	private long _groupId;
@@ -1097,7 +1069,6 @@ public class LayoutFriendlyURLModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("layoutFriendlyURLId", _layoutFriendlyURLId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1136,33 +1107,31 @@ public class LayoutFriendlyURLModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("layoutFriendlyURLId", 4L);
 
-		columnBitmasks.put("layoutFriendlyURLId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("plid", 512L);
 
-		columnBitmasks.put("plid", 1024L);
+		columnBitmasks.put("privateLayout", 1024L);
 
-		columnBitmasks.put("privateLayout", 2048L);
+		columnBitmasks.put("friendlyURL", 2048L);
 
-		columnBitmasks.put("friendlyURL", 4096L);
+		columnBitmasks.put("languageId", 4096L);
 
-		columnBitmasks.put("languageId", 8192L);
-
-		columnBitmasks.put("lastPublishDate", 16384L);
+		columnBitmasks.put("lastPublishDate", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -67,12 +67,10 @@ public class DLFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -131,7 +129,6 @@ public class DLFolderCacheModel
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
 		dlFolderImpl.setMvccVersion(mvccVersion);
-		dlFolderImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			dlFolderImpl.setUuid("");
@@ -241,8 +238,6 @@ public class DLFolderCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -284,8 +279,6 @@ public class DLFolderCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -370,7 +363,6 @@ public class DLFolderCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long folderId;

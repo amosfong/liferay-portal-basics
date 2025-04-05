@@ -71,13 +71,12 @@ public class LayoutPrototypeModelImpl
 	public static final String TABLE_NAME = "LayoutPrototype";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"layoutPrototypeId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.CLOB},
-		{"description", Types.CLOB}, {"settings_", Types.VARCHAR},
-		{"active_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"layoutPrototypeId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.CLOB}, {"description", Types.CLOB},
+		{"settings_", Types.VARCHAR}, {"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,7 +84,6 @@ public class LayoutPrototypeModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPrototypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +98,7 @@ public class LayoutPrototypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPrototype (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name TEXT null,description TEXT null,settings_ STRING null,active_ BOOLEAN,primary key (layoutPrototypeId, ctCollectionId))";
+		"create table LayoutPrototype (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name TEXT null,description TEXT null,settings_ STRING null,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 
@@ -264,8 +262,6 @@ public class LayoutPrototypeModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", LayoutPrototype::getMvccVersion);
-			attributeGetterFunctions.put(
-				"ctCollectionId", LayoutPrototype::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", LayoutPrototype::getUuid);
 			attributeGetterFunctions.put(
 				"layoutPrototypeId", LayoutPrototype::getLayoutPrototypeId);
@@ -305,10 +301,6 @@ public class LayoutPrototypeModelImpl
 				"mvccVersion",
 				(BiConsumer<LayoutPrototype, Long>)
 					LayoutPrototype::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"ctCollectionId",
-				(BiConsumer<LayoutPrototype, Long>)
-					LayoutPrototype::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<LayoutPrototype, String>)LayoutPrototype::setUuid);
@@ -370,21 +362,6 @@ public class LayoutPrototypeModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -964,7 +941,6 @@ public class LayoutPrototypeModelImpl
 		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
 
 		layoutPrototypeImpl.setMvccVersion(getMvccVersion());
-		layoutPrototypeImpl.setCtCollectionId(getCtCollectionId());
 		layoutPrototypeImpl.setUuid(getUuid());
 		layoutPrototypeImpl.setLayoutPrototypeId(getLayoutPrototypeId());
 		layoutPrototypeImpl.setCompanyId(getCompanyId());
@@ -988,8 +964,6 @@ public class LayoutPrototypeModelImpl
 
 		layoutPrototypeImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		layoutPrototypeImpl.setCtCollectionId(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutPrototypeImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutPrototypeImpl.setLayoutPrototypeId(
@@ -1091,8 +1065,6 @@ public class LayoutPrototypeModelImpl
 			new LayoutPrototypeCacheModel();
 
 		layoutPrototypeCacheModel.mvccVersion = getMvccVersion();
-
-		layoutPrototypeCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutPrototypeCacheModel.uuid = getUuid();
 
@@ -1222,7 +1194,6 @@ public class LayoutPrototypeModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutPrototypeId;
 	private long _companyId;
@@ -1269,7 +1240,6 @@ public class LayoutPrototypeModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("layoutPrototypeId", _layoutPrototypeId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1308,29 +1278,27 @@ public class LayoutPrototypeModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("layoutPrototypeId", 4L);
 
-		columnBitmasks.put("layoutPrototypeId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("description", 1024L);
+		columnBitmasks.put("settings_", 1024L);
 
-		columnBitmasks.put("settings_", 2048L);
-
-		columnBitmasks.put("active_", 4096L);
+		columnBitmasks.put("active_", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

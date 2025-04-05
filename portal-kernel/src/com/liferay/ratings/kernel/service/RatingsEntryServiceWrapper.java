@@ -6,7 +6,6 @@
 package com.liferay.ratings.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 
 /**
  * Provides a wrapper for {@link RatingsEntryService}.
@@ -44,7 +43,7 @@ public class RatingsEntryServiceWrapper
 	}
 
 	@Override
-	public RatingsEntry updateEntry(
+	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
 			String className, long classPK, double score)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
