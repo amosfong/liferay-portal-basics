@@ -1,9 +1,8 @@
 create table Address (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	addressId LONG not null,
+	addressId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -26,28 +25,24 @@ create table Address (
 	street3 VARCHAR(255) null,
 	validationDate DATE null,
 	validationStatus INTEGER,
-	zip VARCHAR(75) null,
-	primary key (addressId, ctCollectionId)
+	zip VARCHAR(75) null
 );
 
 create table AnnouncementsDelivery (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	deliveryId LONG not null,
+	deliveryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	type_ VARCHAR(75) null,
 	email BOOLEAN,
 	sms BOOLEAN,
-	website BOOLEAN,
-	primary key (deliveryId, ctCollectionId)
+	website BOOLEAN
 );
 
 create table AnnouncementsEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	entryId LONG not null,
+	entryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -62,20 +57,17 @@ create table AnnouncementsEntry (
 	displayDate DATE null,
 	expirationDate DATE null,
 	priority INTEGER,
-	alert BOOLEAN,
-	primary key (entryId, ctCollectionId)
+	alert BOOLEAN
 );
 
 create table AnnouncementsFlag (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	flagId LONG not null,
+	flagId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
 	entryId LONG,
-	value INTEGER,
-	primary key (flagId, ctCollectionId)
+	value INTEGER
 );
 
 create table AssetCategory (
@@ -265,10 +257,9 @@ create table Counter (
 
 create table Country (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
-	countryId LONG not null,
+	countryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -286,27 +277,23 @@ create table Country (
 	shippingAllowed BOOLEAN,
 	subjectToVAT BOOLEAN,
 	zipRequired BOOLEAN,
-	lastPublishDate DATE null,
-	primary key (countryId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table CountryLocalization (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	countryLocalizationId LONG not null,
+	countryLocalizationId LONG not null primary key,
 	companyId LONG,
 	countryId LONG,
 	languageId VARCHAR(75) null,
-	title VARCHAR(75) null,
-	primary key (countryLocalizationId, ctCollectionId)
+	title VARCHAR(75) null
 );
 
 create table DLFileEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	fileEntryId LONG not null,
+	fileEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -336,30 +323,26 @@ create table DLFileEntry (
 	displayDate DATE null,
 	expirationDate DATE null,
 	reviewDate DATE null,
-	lastPublishDate DATE null,
-	primary key (fileEntryId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table DLFileEntryMetadata (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	fileEntryMetadataId LONG not null,
+	fileEntryMetadataId LONG not null primary key,
 	companyId LONG,
 	DDMStorageId LONG,
 	DDMStructureId LONG,
 	fileEntryId LONG,
-	fileVersionId LONG,
-	primary key (fileEntryMetadataId, ctCollectionId)
+	fileVersionId LONG
 );
 
 create table DLFileEntryType (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	fileEntryTypeId LONG not null,
+	fileEntryTypeId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -371,25 +354,21 @@ create table DLFileEntryType (
 	name STRING null,
 	description STRING null,
 	scope INTEGER,
-	lastPublishDate DATE null,
-	primary key (fileEntryTypeId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table DLFileEntryTypes_DLFolders (
 	companyId LONG not null,
 	fileEntryTypeId LONG not null,
 	folderId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (fileEntryTypeId, folderId, ctCollectionId)
+	primary key (fileEntryTypeId, folderId)
 );
 
 create table DLFileShortcut (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	fileShortcutId LONG not null,
+	fileShortcutId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -405,15 +384,13 @@ create table DLFileShortcut (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (fileShortcutId, ctCollectionId)
+	statusDate DATE null
 );
 
 create table DLFileVersion (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileVersionId LONG not null,
+	fileVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -443,16 +420,14 @@ create table DLFileVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (fileVersionId, ctCollectionId)
+	statusDate DATE null
 );
 
 create table DLFolder (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	folderId LONG not null,
+	folderId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -473,16 +448,14 @@ create table DLFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (folderId, ctCollectionId)
+	statusDate DATE null
 );
 
 create table EmailAddress (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	emailAddressId LONG not null,
+	emailAddressId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -492,8 +465,7 @@ create table EmailAddress (
 	classPK LONG,
 	address VARCHAR(254) null,
 	listTypeId LONG,
-	primary_ BOOLEAN,
-	primary key (emailAddressId, ctCollectionId)
+	primary_ BOOLEAN
 );
 
 create table ExpandoColumn (
@@ -558,10 +530,9 @@ create table ExportImportConfiguration (
 
 create table Group_ (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	groupId LONG not null,
+	groupId LONG not null primary key,
 	companyId LONG,
 	creatorUserId LONG,
 	modifiedDate DATE null,
@@ -581,56 +552,46 @@ create table Group_ (
 	site BOOLEAN,
 	remoteStagingGroupCount INTEGER,
 	inheritContent BOOLEAN,
-	active_ BOOLEAN,
-	primary key (groupId, ctCollectionId)
+	active_ BOOLEAN
 );
 
 create table Groups_Orgs (
 	companyId LONG not null,
 	groupId LONG not null,
 	organizationId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (groupId, organizationId, ctCollectionId)
+	primary key (groupId, organizationId)
 );
 
 create table Groups_Roles (
 	companyId LONG not null,
 	groupId LONG not null,
 	roleId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (groupId, roleId, ctCollectionId)
+	primary key (groupId, roleId)
 );
 
 create table Groups_UserGroups (
 	companyId LONG not null,
 	groupId LONG not null,
 	userGroupId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (groupId, userGroupId, ctCollectionId)
+	primary key (groupId, userGroupId)
 );
 
 create table Image (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	imageId LONG not null,
+	imageId LONG not null primary key,
 	companyId LONG,
 	modifiedDate DATE null,
 	type_ VARCHAR(75) null,
 	height INTEGER,
 	width INTEGER,
-	size_ INTEGER,
-	primary key (imageId, ctCollectionId)
+	size_ INTEGER
 );
 
 create table Layout (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	plid LONG not null,
+	plid LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -669,8 +630,7 @@ create table Layout (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	primary key (plid, ctCollectionId)
+	statusDate DATE null
 );
 
 create table LayoutBranch (
@@ -689,9 +649,8 @@ create table LayoutBranch (
 
 create table LayoutFriendlyURL (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutFriendlyURLId LONG not null,
+	layoutFriendlyURLId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -702,15 +661,13 @@ create table LayoutFriendlyURL (
 	privateLayout BOOLEAN,
 	friendlyURL VARCHAR(255) null,
 	languageId VARCHAR(75) null,
-	lastPublishDate DATE null,
-	primary key (layoutFriendlyURLId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table LayoutPrototype (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutPrototypeId LONG not null,
+	layoutPrototypeId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -719,8 +676,7 @@ create table LayoutPrototype (
 	name TEXT null,
 	description TEXT null,
 	settings_ STRING null,
-	active_ BOOLEAN,
-	primary key (layoutPrototypeId, ctCollectionId)
+	active_ BOOLEAN
 );
 
 create table LayoutRevision (
@@ -757,8 +713,7 @@ create table LayoutRevision (
 
 create table LayoutSet (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	layoutSetId LONG not null,
+	layoutSetId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
@@ -771,8 +726,7 @@ create table LayoutSet (
 	css TEXT null,
 	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
-	layoutSetPrototypeLinkEnabled BOOLEAN,
-	primary key (layoutSetId, ctCollectionId)
+	layoutSetPrototypeLinkEnabled BOOLEAN
 );
 
 create table LayoutSetBranch (
@@ -863,10 +817,9 @@ create table OrgLabor (
 
 create table Organization_ (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	organizationId LONG not null,
+	organizationId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -881,8 +834,7 @@ create table Organization_ (
 	countryId LONG,
 	statusListTypeId LONG,
 	comments STRING null,
-	logoId LONG,
-	primary key (organizationId, ctCollectionId)
+	logoId LONG
 );
 
 create table PasswordPolicy (
@@ -943,10 +895,9 @@ create table PasswordTracker (
 
 create table Phone (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	phoneId LONG not null,
+	phoneId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -957,8 +908,7 @@ create table Phone (
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
 	listTypeId LONG,
-	primary_ BOOLEAN,
-	primary key (phoneId, ctCollectionId)
+	primary_ BOOLEAN
 );
 
 create table PluginSetting (
@@ -1016,28 +966,24 @@ create table PortletItem (
 
 create table PortletPreferenceValue (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	portletPreferenceValueId LONG not null,
+	portletPreferenceValueId LONG not null primary key,
 	companyId LONG,
 	portletPreferencesId LONG,
 	index_ INTEGER,
 	largeValue TEXT null,
 	name VARCHAR(255) null,
 	readOnly BOOLEAN,
-	smallValue VARCHAR(255) null,
-	primary key (portletPreferenceValueId, ctCollectionId)
+	smallValue VARCHAR(255) null
 );
 
 create table PortletPreferences (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	portletPreferencesId LONG not null,
+	portletPreferencesId LONG not null primary key,
 	companyId LONG,
 	ownerId LONG,
 	ownerType INTEGER,
 	plid LONG,
-	portletId VARCHAR(200) null,
-	primary key (portletPreferencesId, ctCollectionId)
+	portletId VARCHAR(200) null
 );
 
 create table RatingsEntry (
@@ -1101,10 +1047,9 @@ create table RecentLayoutSetBranch (
 
 create table Region (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
-	regionId LONG not null,
+	regionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -1115,19 +1060,16 @@ create table Region (
 	name VARCHAR(75) null,
 	position DOUBLE,
 	regionCode VARCHAR(75) null,
-	lastPublishDate DATE null,
-	primary key (regionId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table RegionLocalization (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	regionLocalizationId LONG not null,
+	regionLocalizationId LONG not null primary key,
 	companyId LONG,
 	regionId LONG,
 	languageId VARCHAR(75) null,
-	title VARCHAR(75) null,
-	primary key (regionLocalizationId, ctCollectionId)
+	title VARCHAR(75) null
 );
 
 create table Release_ (
@@ -1156,10 +1098,9 @@ create table RememberMeToken (
 
 create table Repository (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	repositoryId LONG not null,
+	repositoryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1172,15 +1113,13 @@ create table Repository (
 	portletId VARCHAR(200) null,
 	typeSettings TEXT null,
 	dlFolderId LONG,
-	lastPublishDate DATE null,
-	primary key (repositoryId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table RepositoryEntry (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	repositoryEntryId LONG not null,
+	repositoryEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1190,8 +1129,7 @@ create table RepositoryEntry (
 	repositoryId LONG,
 	mappedId VARCHAR(255) null,
 	manualCheckInRequired BOOLEAN,
-	lastPublishDate DATE null,
-	primary key (repositoryEntryId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table ResourceAction (
@@ -1204,8 +1142,7 @@ create table ResourceAction (
 
 create table ResourcePermission (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	resourcePermissionId LONG not null,
+	resourcePermissionId LONG not null primary key,
 	companyId LONG,
 	name VARCHAR(255) null,
 	scope INTEGER,
@@ -1214,16 +1151,14 @@ create table ResourcePermission (
 	roleId LONG,
 	ownerId LONG,
 	actionIds LONG,
-	viewActionId BOOLEAN,
-	primary key (resourcePermissionId, ctCollectionId)
+	viewActionId BOOLEAN
 );
 
 create table Role_ (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	roleId LONG not null,
+	roleId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -1235,8 +1170,7 @@ create table Role_ (
 	title STRING null,
 	description TEXT null,
 	type_ INTEGER,
-	subtype VARCHAR(75) null,
-	primary key (roleId, ctCollectionId)
+	subtype VARCHAR(75) null
 );
 
 create table ServiceComponent (
@@ -1379,8 +1313,7 @@ create table SocialRequest (
 
 create table SystemEvent (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	systemEventId LONG not null,
+	systemEventId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1393,15 +1326,13 @@ create table SystemEvent (
 	parentSystemEventId LONG,
 	systemEventSetKey LONG,
 	type_ INTEGER,
-	extraData TEXT null,
-	primary key (systemEventId, ctCollectionId)
+	extraData TEXT null
 );
 
 create table Team (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	teamId LONG not null,
+	teamId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -1410,8 +1341,7 @@ create table Team (
 	groupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	lastPublishDate DATE null,
-	primary key (teamId, ctCollectionId)
+	lastPublishDate DATE null
 );
 
 create table Ticket (
@@ -1441,10 +1371,9 @@ create table UserNotificationDelivery (
 
 create table User_ (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	userId LONG not null,
+	userId LONG not null primary key,
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -1483,16 +1412,14 @@ create table User_ (
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
 	type_ INTEGER,
-	status INTEGER,
-	primary key (userId, ctCollectionId)
+	status INTEGER
 );
 
 create table UserGroup (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	userGroupId LONG not null,
+	userGroupId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -1501,39 +1428,32 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(255) null,
 	description STRING null,
-	addedByLDAPImport BOOLEAN,
-	primary key (userGroupId, ctCollectionId)
+	addedByLDAPImport BOOLEAN
 );
 
 create table UserGroupGroupRole (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	userGroupGroupRoleId LONG not null,
+	userGroupGroupRoleId LONG not null primary key,
 	companyId LONG,
 	userGroupId LONG,
 	groupId LONG,
-	roleId LONG,
-	primary key (userGroupGroupRoleId, ctCollectionId)
+	roleId LONG
 );
 
 create table UserGroupRole (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	userGroupRoleId LONG not null,
+	userGroupRoleId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	groupId LONG,
-	roleId LONG,
-	primary key (userGroupRoleId, ctCollectionId)
+	roleId LONG
 );
 
 create table UserGroups_Teams (
 	companyId LONG not null,
 	teamId LONG not null,
 	userGroupId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (teamId, userGroupId, ctCollectionId)
+	primary key (teamId, userGroupId)
 );
 
 create table UserIdMapper (
@@ -1566,45 +1486,35 @@ create table Users_Groups (
 	companyId LONG not null,
 	groupId LONG not null,
 	userId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (groupId, userId, ctCollectionId)
+	primary key (groupId, userId)
 );
 
 create table Users_Orgs (
 	companyId LONG not null,
 	organizationId LONG not null,
 	userId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (organizationId, userId, ctCollectionId)
+	primary key (organizationId, userId)
 );
 
 create table Users_Roles (
 	companyId LONG not null,
 	roleId LONG not null,
 	userId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (roleId, userId, ctCollectionId)
+	primary key (roleId, userId)
 );
 
 create table Users_Teams (
 	companyId LONG not null,
 	teamId LONG not null,
 	userId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (teamId, userId, ctCollectionId)
+	primary key (teamId, userId)
 );
 
 create table Users_UserGroups (
 	companyId LONG not null,
 	userId LONG not null,
 	userGroupId LONG not null,
-	ctCollectionId LONG default 0 not null,
-	ctChangeType BOOLEAN,
-	primary key (userId, userGroupId, ctCollectionId)
+	primary key (userId, userGroupId)
 );
 
 create table UserTracker (
@@ -1630,14 +1540,12 @@ create table UserTrackerPath (
 
 create table VirtualHost (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	virtualHostId LONG not null,
+	virtualHostId LONG not null primary key,
 	companyId LONG,
 	layoutSetId LONG,
 	hostname VARCHAR(200) null,
 	defaultVirtualHost BOOLEAN,
-	languageId VARCHAR(75) null,
-	primary key (virtualHostId, ctCollectionId)
+	languageId VARCHAR(75) null
 );
 
 create table WebDAVProps (
@@ -1671,8 +1579,7 @@ create table Website (
 
 create table WorkflowDefinitionLink (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	workflowDefinitionLinkId LONG not null,
+	workflowDefinitionLinkId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1683,14 +1590,12 @@ create table WorkflowDefinitionLink (
 	classPK LONG,
 	typePK LONG,
 	workflowDefinitionName VARCHAR(75) null,
-	workflowDefinitionVersion INTEGER,
-	primary key (workflowDefinitionLinkId, ctCollectionId)
+	workflowDefinitionVersion INTEGER
 );
 
 create table WorkflowInstanceLink (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	workflowInstanceLinkId LONG not null,
+	workflowInstanceLinkId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1699,6 +1604,5 @@ create table WorkflowInstanceLink (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	workflowInstanceId LONG,
-	primary key (workflowInstanceLinkId, ctCollectionId)
+	workflowInstanceId LONG
 );

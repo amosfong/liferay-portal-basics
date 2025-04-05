@@ -5,7 +5,6 @@
 
 package com.liferay.layout.taglib.internal.helper;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -116,9 +115,6 @@ public class LayoutClassedModelUsagesHelper {
 			layoutURL = HttpComponentsUtil.setParameter(
 				layoutURL, "previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
-			layoutURL = HttpComponentsUtil.setParameter(
-				layoutURL, "previewType",
-				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 		}
 		else {
 			layoutURL = PortletURLBuilder.create(
@@ -131,8 +127,6 @@ public class LayoutClassedModelUsagesHelper {
 				"previewClassNameId", layoutClassedModelUsage.getClassNameId()
 			).setParameter(
 				"previewClassPK", layoutClassedModelUsage.getClassPK()
-			).setParameter(
-				"previewType", AssetRendererFactory.TYPE_LATEST
 			).buildString();
 		}
 

@@ -154,27 +154,22 @@ public class PersonalApplicationURLUtil {
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					group.getCtCollectionId())) {
+		Layout layout = LayoutLocalServiceUtil.addLayout(
+			null, userId, group.getGroupId(), privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, true,
+			friendlyURL, serviceContext);
 
-			Layout layout = LayoutLocalServiceUtil.addLayout(
-				null, userId, group.getGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
-				StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, true,
-				friendlyURL, serviceContext);
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+		layoutTypePortlet.setLayoutTemplateId(
+			userId, "1_column_dynamic", false);
 
-			layoutTypePortlet.setLayoutTemplateId(
-				userId, "1_column_dynamic", false);
-
-			return LayoutLocalServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
-		}
+		return LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
 	}
 
 	private static PersonalMenuConfigurationRegistry

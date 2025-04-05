@@ -79,8 +79,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		_checkDDMStructureDefinition();
 		_checkMimeTypes();
 		_updateClassNameId();
-		_updateFileEntryAssets();
-		_updateFolderAssets();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
 			updateStagedPortletNames();
@@ -346,79 +344,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 				_log.warn(
 					"Unable to fix file entries where class name ID is null",
 					exception);
-			}
-		}
-	}
-
-	private void _updateFileEntryAssets() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<DLFileEntry> dlFileEntries =
-				_dlFileEntryLocalService.getNoAssetFileEntries();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + dlFileEntries.size() +
-						" file entries with no asset");
-			}
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-				FileVersion fileVersion = new LiferayFileVersion(
-					dlFileEntry.getFileVersion());
-
-				try {
-					_dlAppHelperLocalService.updateAsset(
-						dlFileEntry.getUserId(), fileEntry, fileVersion,
-						new ServiceContext());
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to update asset for file entry ",
-								dlFileEntry.getFileEntryId(), ": ",
-								exception.getMessage()));
-					}
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Assets verified for file entries");
-			}
-		}
-	}
-
-	private void _updateFolderAssets() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<DLFolder> dlFolders =
-				_dlFolderLocalService.getNoAssetFolders();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + dlFolders.size() +
-						" folders with no asset");
-			}
-
-			for (DLFolder dlFolder : dlFolders) {
-				Folder folder = new LiferayFolder(dlFolder);
-
-				try {
-					_dlAppHelperLocalService.updateAsset(
-						dlFolder.getUserId(), folder, null, null, null);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to update asset for folder ",
-								dlFolder.getFolderId(), ": ",
-								exception.getMessage()));
-					}
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Assets verified for folders");
 			}
 		}
 	}

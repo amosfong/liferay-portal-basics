@@ -5,9 +5,6 @@
 
 package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,29 +87,6 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 	}
 
 	private <T> long _getEntryClassPK(T entry, String className, long classPK) {
-		AssetRendererFactory<T> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return classPK;
-		}
-
-		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(entry);
-
-			if (assetEntry != null) {
-				return assetEntry.getClassPK();
-			}
-
-			return 0;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
 		return classPK;
 	}
 

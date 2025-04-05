@@ -5,11 +5,6 @@
 
 package com.liferay.portal.search.web.internal.util;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -170,45 +165,9 @@ public class SearchUtil {
 					previousLayout.getName(themeDisplay.getLocale()));
 			}
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				className, classPK);
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (assetRendererFactory == null) {
-				return HttpComponentsUtil.addParameters(
-					viewContentURL.toString(), "p_l_back_url", currentURL,
-					"p_l_back_url_title",
-					previousLayout.getName(themeDisplay.getLocale()));
-			}
-
-			viewContentURL.setParameter(
-				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-			viewContentURL.setParameter("type", assetRendererFactory.getType());
-
-			if (!viewInContext) {
-				return HttpComponentsUtil.addParameters(
-					viewContentURL.toString(), "p_l_back_url", currentURL,
-					"p_l_back_url_title",
-					previousLayout.getName(themeDisplay.getLocale()));
-			}
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			String viewURL = assetRenderer.getURLViewInContext(
-				PortalUtil.getLiferayPortletRequest(renderRequest),
-				PortalUtil.getLiferayPortletResponse(renderResponse),
-				viewContentURL.toString());
-
-			if (Validator.isNull(viewURL)) {
-				viewURL = viewContentURL.toString();
-			}
-
 			return HttpComponentsUtil.addParameters(
-				viewURL, "p_l_back_url", currentURL, "p_l_back_url_title",
+				viewContentURL.toString(), "p_l_back_url", currentURL,
+				"p_l_back_url_title",
 				previousLayout.getName(themeDisplay.getLocale()));
 		}
 		catch (Exception exception) {

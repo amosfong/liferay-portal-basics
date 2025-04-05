@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.workflow;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -67,28 +66,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			AssetRenderer<Layout> assetRenderer = getAssetRenderer(classPK);
-
-			Layout layout = assetRenderer.getAssetObject();
-
-			String previewURL = _portal.getLayoutFullURL(
-				layout.fetchDraftLayout(), themeDisplay);
-
-			return HttpComponentsUtil.addParameter(
-				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
+		return StringPool.BLANK;
 	}
 
 	@Override

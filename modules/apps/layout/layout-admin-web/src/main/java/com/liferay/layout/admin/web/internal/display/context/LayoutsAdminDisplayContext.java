@@ -5,9 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -1576,24 +1573,6 @@ public class LayoutsAdminDisplayContext {
 		return _hasLayouts;
 	}
 
-	public boolean hasRequiredVocabularies() {
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		List<AssetVocabulary> assetVocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
-
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
-				assetVocabulary.isRequired(
-					classNameId, 0, themeDisplay.getScopeGroupId())) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public boolean isClearFaviconButtonEnabled() {
 		Layout selLayout = getSelLayout();
 
@@ -1764,31 +1743,6 @@ public class LayoutsAdminDisplayContext {
 				themeDisplay.getPermissionChecker(), selLayout)) {
 
 			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowCategorization() {
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		List<AssetVocabulary> assetVocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
-
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
-				assetVocabulary.isRequired(
-					classNameId, 0, themeDisplay.getScopeGroupId())) {
-
-				int assetVocabularyCategoriesCount =
-					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						assetVocabulary.getGroupId(),
-						assetVocabulary.getVocabularyId());
-
-				if (assetVocabularyCategoriesCount > 0) {
-					return true;
-				}
-			}
 		}
 
 		return false;

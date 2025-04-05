@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.internal.expando.helper.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.AddSearchKeywordsQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.PostProcessSearchQueryContributorHelper;
@@ -32,7 +31,7 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 			addSearchKeywordsQueryContributorHelper,
 			expandoQueryContributorHelper, indexerRegistry, indexSearcherHelper,
 			postProcessSearchQueryContributorHelper, preFilterContributorHelper,
-			searchableAssetClassNamesProvider, searchRequestBuilderFactory);
+			searchRequestBuilderFactory);
 	}
 
 	@Reference
@@ -56,10 +55,6 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 
 	@Reference
 	protected PreFilterContributorHelper preFilterContributorHelper;
-
-	@Reference
-	protected SearchableAssetClassNamesProvider
-		searchableAssetClassNamesProvider;
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;

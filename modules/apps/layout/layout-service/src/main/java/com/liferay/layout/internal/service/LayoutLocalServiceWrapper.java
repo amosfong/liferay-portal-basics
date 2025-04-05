@@ -5,8 +5,6 @@
 
 package com.liferay.layout.internal.service;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -159,22 +157,6 @@ public class LayoutLocalServiceWrapper
 		}
 	}
 
-	private void _copyAssetCategoryIdsAndAssetTagNames(
-			Layout sourceLayout, Layout targetLayout, long userId)
-		throws Exception {
-
-		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
-			return;
-		}
-
-		updateAsset(
-			userId, targetLayout,
-			_assetCategoryLocalService.getCategoryIds(
-				Layout.class.getName(), sourceLayout.getPlid()),
-			_assetTagLocalService.getTagNames(
-				Layout.class.getName(), sourceLayout.getPlid()));
-	}
-
 	private void _copyLayoutClassedModelUsages(
 		Layout sourceLayout, Layout targetLayout) {
 
@@ -265,16 +247,7 @@ public class LayoutLocalServiceWrapper
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long ctCollectionId = sourceLayout.getCtCollectionId();
-
-		if (ctCollectionId == 0) {
-			ctCollectionId = targetLayout.getCtCollectionId();
-		}
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
+		try {
 			CopyLayoutThreadLocal.setCopyLayout(true);
 
 			User user = _getUser(
@@ -889,12 +862,6 @@ public class LayoutLocalServiceWrapper
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
 	private CommentManager _commentManager;
 
 	@Reference
@@ -975,9 +942,6 @@ public class LayoutLocalServiceWrapper
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
-
-			_copyAssetCategoryIdsAndAssetTagNames(
-				_sourceLayout, _targetLayout, _user.getUserId());
 
 			_copyLayoutSEOEntry(
 				_sourceLayout, _targetLayout, _user.getUserId());

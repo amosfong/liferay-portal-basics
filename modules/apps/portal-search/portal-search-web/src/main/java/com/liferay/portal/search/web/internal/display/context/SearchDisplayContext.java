@@ -39,7 +39,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
-import com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet;
 import com.liferay.portal.search.web.internal.facet.util.SearchFacetRegistryUtil;
 import com.liferay.portal.search.web.internal.portlet.SearchPortletSearchResultPreferences;
 import com.liferay.portal.search.web.internal.search.request.SearchRequestImpl;
@@ -620,13 +619,6 @@ public class SearchDisplayContext {
 
 		for (int i = 0; i < (jsonArray.length() - 1); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (!Objects.equals(
-					AssetEntriesSearchFacet.class.getName(),
-					jsonObject.getString("id"))) {
-
-				continue;
-			}
 
 			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 

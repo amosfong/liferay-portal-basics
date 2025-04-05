@@ -5,9 +5,6 @@
 
 package com.liferay.portal.search.internal.suggestions.spi;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,7 +22,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.asset.AssetURLViewProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
@@ -174,63 +170,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 			searchHit.getScore()
 		);
 
-		String text = null;
-
-		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(entryClassName);
-
-			if (assetRendererFactory == null) {
-				return null;
-			}
-
-			long entryClassPK = document.getLong(Field.ENTRY_CLASS_PK);
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(entryClassPK);
-
-			if (assetRenderer != null) {
-				suggestionBuilder.attribute(
-					"assetSearchSummary",
-					assetRenderer.getSummary(
-						liferayPortletRequest, liferayPortletResponse));
-
-				long classNameId = GetterUtil.getLong(
-					document.getValue(Field.CLASS_NAME_ID));
-				long classPK = GetterUtil.getLong(
-					document.getValue(Field.CLASS_PK));
-
-				if ((classNameId > 0) && (classPK > 0)) {
-					ClassName className = _classNameLocalService.getClassName(
-						classNameId);
-
-					suggestionBuilder.attribute(
-						"assetURL",
-						_assetURLViewProvider.getAssetURLView(
-							assetRenderer, assetRendererFactory,
-							className.getClassName(), classPK,
-							liferayPortletRequest, liferayPortletResponse));
-				}
-				else {
-					suggestionBuilder.attribute(
-						"assetURL",
-						_assetURLViewProvider.getAssetURLView(
-							assetRenderer, assetRendererFactory, entryClassName,
-							entryClassPK, liferayPortletRequest,
-							liferayPortletResponse));
-				}
-
-				text = assetRenderer.getTitle(locale);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		if (text == null) {
-			text = _getText(searchHit.getDocument(), locale);
-		}
+		String text = _getText(searchHit.getDocument(), locale);
 
 		return suggestionBuilder.text(
 			text
@@ -295,9 +235,6 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicSuggestionsContributor.class);
-
-	@Reference
-	private AssetURLViewProvider _assetURLViewProvider;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

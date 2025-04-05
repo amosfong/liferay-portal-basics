@@ -5,12 +5,6 @@
 
 package com.liferay.portal.search.rest.internal.facet;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +37,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,23 +59,6 @@ public class FacetResponseProcessor {
 
 		return _toTermsMap(
 			companyId, facetConfigurations, locale, searchResponse, userId);
-	}
-
-	private String _getAssetCategoryDisplayName(
-		Locale locale, long assetCategoryId) {
-
-		if (!_hasViewPermissionToAssetCategory(assetCategoryId)) {
-			return null;
-		}
-
-		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
-			assetCategoryId);
-
-		if (assetCategory != null) {
-			return assetCategory.getTitle(locale);
-		}
-
-		return null;
 	}
 
 	private String _getDateRangeDisplayName(
@@ -108,20 +84,7 @@ public class FacetResponseProcessor {
 		long companyId, FacetConfiguration facetConfiguration, Locale locale,
 		String term, long userId) {
 
-		if (StringUtil.equals("category", facetConfiguration.getName()) ||
-			StringUtil.equals("vocabulary", facetConfiguration.getName())) {
-
-			if (term.contains("-")) {
-				String[] termParts = term.split("-");
-
-				return _getAssetCategoryDisplayName(
-					locale, GetterUtil.getLong(termParts[1]));
-			}
-
-			return _getAssetCategoryDisplayName(
-				locale, GetterUtil.getLong(term));
-		}
-		else if (StringUtil.equals(
+		if (StringUtil.equals(
 					"date-range", facetConfiguration.getName())) {
 
 			return _getDateRangeDisplayName(facetConfiguration, locale, term);
@@ -222,26 +185,7 @@ public class FacetResponseProcessor {
 	private String _getTypeDisplayName(
 		String className, long companyId, Locale locale) {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getTypeName(locale);
-		}
-
 		return null;
-	}
-
-	private boolean _hasViewPermissionToAssetCategory(long assetCategoryId) {
-		try {
-			return AssetCategoryPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), assetCategoryId,
-				ActionKeys.VIEW);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	private SearchResponse _searchFolder(
@@ -271,56 +215,6 @@ public class FacetResponseProcessor {
 		);
 
 		return _searcher.search(searchRequestBuilder.build());
-	}
-
-	private Collection<AssetCategoryTree> _toAssetCategoryTrees(
-		FacetConfiguration facetConfiguration, Locale locale,
-		List<TermCollector> termCollectors) {
-
-		Map<Long, AssetCategoryTree> assetCategoryTrees = new HashMap<>();
-
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
-
-			if ((facetConfiguration.getFrequencyThreshold() >
-					termCollector.getFrequency()) ||
-				(i >= facetConfiguration.getMaxTerms())) {
-
-				continue;
-			}
-
-			try {
-				String[] termParts = StringUtil.split(
-					termCollector.getTerm(), "-");
-
-				long assetCategoryId = GetterUtil.getLong(termParts[1]);
-
-				long assetVocabularyId = GetterUtil.getLong(termParts[0]);
-
-				AssetVocabulary assetVocabulary =
-					_assetVocabularyLocalService.getVocabulary(
-						assetVocabularyId);
-
-				AssetCategoryTree assetCategoryTree = assetCategoryTrees.get(
-					assetVocabulary.getVocabularyId());
-
-				if (assetCategoryTree == null) {
-					assetCategoryTree = new AssetCategoryTree(
-						assetVocabulary, locale);
-
-					assetCategoryTrees.put(
-						assetVocabularyId, assetCategoryTree);
-				}
-
-				assetCategoryTree.addAssetCategory(
-					assetCategoryId, termCollector.getFrequency());
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-		}
-
-		return assetCategoryTrees.values();
 	}
 
 	private JSONArray _toTermJSONArray(
@@ -397,30 +291,14 @@ public class FacetResponseProcessor {
 				continue;
 			}
 
-			if (StringUtil.equals("vocabulary", facetConfiguration.getName()) &&
-				StringUtil.equals(
-					facet.getFieldName(), "assetVocabularyCategoryIds")) {
 
-				Collection<AssetCategoryTree> assetCategoryTrees =
-					_toAssetCategoryTrees(
-						facetConfiguration, locale, termCollectors);
+			JSONArray termJSONArray = _toTermJSONArray(
+				companyId, facetConfiguration, locale, termCollectors,
+				userId);
 
-				if (!assetCategoryTrees.isEmpty()) {
-					termsMap.put(
-						facetConfiguration.getAggregationName(),
-						_toAssetCategoryTrees(
-							facetConfiguration, locale, termCollectors));
-				}
-			}
-			else {
-				JSONArray termJSONArray = _toTermJSONArray(
-					companyId, facetConfiguration, locale, termCollectors,
-					userId);
-
-				if (termJSONArray.length() > 0) {
-					termsMap.put(
-						facetConfiguration.getAggregationName(), termJSONArray);
-				}
+			if (termJSONArray.length() > 0) {
+				termsMap.put(
+					facetConfiguration.getAggregationName(), termJSONArray);
 			}
 		}
 
@@ -429,12 +307,6 @@ public class FacetResponseProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacetResponseProcessor.class);
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

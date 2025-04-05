@@ -5,8 +5,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -53,20 +51,9 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				jsonObject.getLong("classPK"));
 		}
 
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (assetEntry != null) {
-			return new Tuple(
-				assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-
 		return new Tuple(
 			fragmentEntryLink.getClassName(), fragmentEntryLink.getClassPK());
 	}
-
-	@Reference
-	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;

@@ -5,8 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
@@ -53,20 +51,8 @@ public class JournalArticleDDMFormFieldValueRenderer
 					return StringPool.BLANK;
 				}
 
-				try {
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-						className, classPK);
-
-					return assetEntry.getTitle(locale);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-
-					return LanguageUtil.format(
-						locale, "is-temporarily-unavailable", "content");
-				}
+				return LanguageUtil.format(
+					locale, "is-temporarily-unavailable", "content");
 			}
 
 			protected JSONObject createJSONObject(String json) {

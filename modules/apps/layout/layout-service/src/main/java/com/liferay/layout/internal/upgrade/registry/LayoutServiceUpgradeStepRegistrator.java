@@ -5,14 +5,9 @@
 
 package com.liferay.layout.internal.upgrade.registry;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.layout.internal.upgrade.v1_0_0.LayoutClassedModelUsageUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
-import com.liferay.layout.internal.upgrade.v1_2_1.LayoutAssetUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
@@ -44,11 +39,6 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "1.0.0",
-			new LayoutClassedModelUsageUpgradeProcess(_assetEntryLocalService),
-			new LayoutPermissionsUpgradeProcess());
-
 		registry.register("1.0.0", "1.0.1", new LayoutUpgradeProcess());
 
 		registry.register("1.0.1", "1.1.0", new UpgradeCompanyId());
@@ -56,13 +46,6 @@ public class LayoutServiceUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "1.2.0",
 			new CTModelUpgradeProcess("LayoutClassedModelUsage"));
-
-		registry.register(
-			"1.2.0", "1.2.1",
-			new LayoutAssetUpgradeProcess(
-				_assetCategoryLocalService, _assetEntryLocalService,
-				_assetTagLocalService, _groupLocalService,
-				_layoutLocalService));
 
 		registry.register(
 			"1.2.1", "1.2.2", new LayoutSEOUpgradeProcess(_layoutLocalService));
@@ -104,15 +87,6 @@ public class LayoutServiceUpgradeStepRegistrator
 					_companyLocalService, _portalPreferencesLocalService,
 					_releaseFeatureFlagManager));
 	}
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

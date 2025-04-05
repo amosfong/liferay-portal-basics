@@ -5,9 +5,6 @@
 
 package com.liferay.portal.search.internal.result;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -56,28 +53,7 @@ public class SummaryFactoryImpl implements SummaryFactory {
 	public Summary getSummary(String className, long classPK, Locale locale)
 		throws PortalException {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			classPK);
-
-		if (assetRenderer == null) {
-			return null;
-		}
-
-		Summary summary = new Summary(
-			assetRenderer.getTitle(locale),
-			assetRenderer.getSearchSummary(locale));
-
-		summary.setMaxContentLength(SUMMARY_MAX_CONTENT_LENGTH);
-
-		return summary;
+		return null;
 	}
 
 	@Reference

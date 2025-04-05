@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.struts;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.portlet.preferences.updater.PortletPreferencesUpdater;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -372,11 +371,6 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 
 		PortletPreferencesUpdater portletPreferencesUpdater =
 			_serviceTrackerMap.getService(className);
-
-		if (portletPreferencesUpdater == null) {
-			portletPreferencesUpdater = _serviceTrackerMap.getService(
-				AssetEntry.class.getName());
-		}
 
 		if (portletPreferencesUpdater != null) {
 			portletPreferencesUpdater.updatePortletPreferences(

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.configuration.module.configuration.internal.model.listener;
 
-import com.liferay.asset.kernel.util.NotifiedAssetEntryThreadLocal;
 import com.liferay.portal.configuration.module.configuration.internal.ConfigurationOverrideInstance;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -142,10 +141,7 @@ public class PortletPreferencesModelListener
 				Layout layout = _layoutLocalService.fetchLayout(
 					portletPreferences.getPlid());
 
-				if ((layout == null) ||
-					NotifiedAssetEntryThreadLocal.
-						isNotifiedAssetEntryIdsModified()) {
-
+				if (layout == null) {
 					return;
 				}
 

@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -205,14 +204,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 		}
 
-		// Asset
-
-		_updateAsset(
-			userId, ddmFormInstanceRecord, ddmFormInstanceRecordVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
-			serviceContext.getAssetPriority());
-
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
@@ -254,10 +245,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				deleteDDMFormInstanceRecordVersion(
 					ddmFormInstanceRecordVersion);
 		}
-
-		_assetEntryLocalService.deleteEntry(
-			DDMFormInstanceRecord.class.getName(),
-			ddmFormInstanceRecord.getFormInstanceRecordId());
 
 		return ddmFormInstanceRecord;
 	}
@@ -504,14 +491,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			_ddmFormInstanceRecordVersionPersistence.clearCache(
 				ddmFormInstanceRecordVersion);
 		}
-
-		// Asset
-
-		_updateAsset(
-			userId, ddmFormInstanceRecord, ddmFormInstanceRecordVersion,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
-			serviceContext.getAssetPriority());
 
 		if (_isKeepFormInstanceRecordVersionLabel(
 				ddmFormInstanceRecord.getFormInstanceRecordVersion(),
@@ -884,64 +863,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return true;
 	}
 
-	private void _updateAsset(
-			long userId, DDMFormInstanceRecord formInstanceRecord,
-			DDMFormInstanceRecordVersion formInstanceRecordVersion,
-			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
-			Double priority)
-		throws PortalException {
-
-		boolean addDraftAssetEntry = false;
-
-		if ((formInstanceRecordVersion != null) &&
-			!formInstanceRecordVersion.isApproved()) {
-
-			String version = formInstanceRecordVersion.getVersion();
-
-			if (!version.equals(_VERSION_DEFAULT)) {
-				int approvedRecordVersionsCount =
-					_ddmFormInstanceRecordVersionPersistence.countByF_S(
-						formInstanceRecord.getFormInstanceRecordId(),
-						WorkflowConstants.STATUS_APPROVED);
-
-				if (approvedRecordVersionsCount > 0) {
-					addDraftAssetEntry = true;
-				}
-			}
-		}
-
-		DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
-
-		String title = _language.format(
-			_getResourceBundle(locale), "form-record-for-form-x",
-			formInstance.getName(locale), false);
-
-		if (addDraftAssetEntry) {
-			_assetEntryLocalService.updateEntry(
-				userId, formInstanceRecord.getGroupId(),
-				formInstanceRecord.getCreateDate(),
-				formInstanceRecord.getModifiedDate(),
-				DDMFormInstanceRecord.class.getName(),
-				formInstanceRecordVersion.getFormInstanceRecordVersionId(),
-				formInstanceRecord.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, true, null, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, priority);
-		}
-		else {
-			_assetEntryLocalService.updateEntry(
-				userId, formInstanceRecord.getGroupId(),
-				formInstanceRecord.getCreateDate(),
-				formInstanceRecord.getModifiedDate(),
-				DDMFormInstanceRecord.class.getName(),
-				formInstanceRecord.getFormInstanceRecordId(),
-				formInstanceRecord.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, true, null, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, priority);
-		}
-	}
-
 	private void _updateDDMContent(
 			long groupId,
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
@@ -1028,9 +949,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordLocalServiceImpl.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

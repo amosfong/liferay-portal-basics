@@ -113,9 +113,6 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
-			serviceContext.setAssetCategoryIds(null);
-			serviceContext.setAssetTagNames(null);
-
 			user = _userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null,
 				user.isPasswordReset(), null, null, user.getScreenName(),

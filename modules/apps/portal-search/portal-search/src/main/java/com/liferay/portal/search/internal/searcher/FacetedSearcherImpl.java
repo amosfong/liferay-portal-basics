@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.internal.expando.helper.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.AddSearchKeywordsQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.PostProcessSearchQueryContributorHelper;
@@ -51,7 +50,6 @@ public class FacetedSearcherImpl
 		PostProcessSearchQueryContributorHelper
 			postProcessSearchQueryContributorHelper,
 		PreFilterContributorHelper preFilterContributorHelper,
-		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_addSearchKeywordsQueryContributorHelper =
@@ -62,7 +60,6 @@ public class FacetedSearcherImpl
 		_postProcessSearchQueryContributorHelper =
 			postProcessSearchQueryContributorHelper;
 		_preFilterContributorHelper = preFilterContributorHelper;
-		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
@@ -222,12 +219,7 @@ public class FacetedSearcherImpl
 		List<String> modelIndexerClassNames =
 			searchRequest.getModelIndexerClassNames();
 
-		if (ListUtil.isNotEmpty(modelIndexerClassNames)) {
-			return modelIndexerClassNames;
-		}
-
-		return ListUtil.fromArray(
-			_searchableAssetClassNamesProvider.getClassNames(companyId));
+		return modelIndexerClassNames;
 	}
 
 	private SearchRequest _getSearchRequest(SearchContext searchContext) {
@@ -268,8 +260,6 @@ public class FacetedSearcherImpl
 	private final PostProcessSearchQueryContributorHelper
 		_postProcessSearchQueryContributorHelper;
 	private final PreFilterContributorHelper _preFilterContributorHelper;
-	private final SearchableAssetClassNamesProvider
-		_searchableAssetClassNamesProvider;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

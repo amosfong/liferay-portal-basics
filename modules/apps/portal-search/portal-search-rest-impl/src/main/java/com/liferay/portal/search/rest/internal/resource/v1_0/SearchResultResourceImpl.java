@@ -5,9 +5,6 @@
 
 package com.liferay.portal.search.rest.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -142,31 +139,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	private Object _fetchObject(String entryClassName, Long entryClassPK) {
 		if (entryClassName.equals(Layout.class.getName())) {
 			return _layoutLocalService.fetchLayout(entryClassPK);
-		}
-
-		return null;
-	}
-
-	private AssetRenderer<?> _getAssetRenderer(
-		String entryClassName, Long entryClassPK) {
-
-		if ((entryClassName == null) || (entryClassPK == null)) {
-			return null;
-		}
-
-		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(entryClassName);
-
-			if (assetRendererFactory == null) {
-				return null;
-			}
-
-			return assetRendererFactory.getAssetRenderer(entryClassPK);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
 		}
 
 		return null;
@@ -456,7 +428,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setDescription(
-		AssetRenderer<?> assetRenderer, List<String> fields,
+		List<String> fields,
 		SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "description")) {
@@ -465,11 +437,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		if (summary != null) {
 			searchResult.setDescription(summary::getContent);
-		}
-		else {
-			searchResult.setDescription(
-				() -> assetRenderer.getSearchSummary(
-					contextAcceptLanguage.getPreferredLocale()));
 		}
 	}
 
@@ -567,7 +534,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setTitle(
-		AssetRenderer<?> assetRenderer, List<String> fields,
+		List<String> fields,
 		SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "title")) {
@@ -576,11 +543,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		if (summary != null) {
 			searchResult.setTitle(summary::getTitle);
-		}
-		else {
-			searchResult.setTitle(
-				() -> assetRenderer.getTitle(
-					contextAcceptLanguage.getPreferredLocale()));
 		}
 	}
 
@@ -621,37 +583,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			SearchResult searchResult = new SearchResult();
 
 			Document document = searchHit.getDocument();
-			boolean embedded = _isEmbedded();
-			String entryClassName = _getEntryClassName(document);
-			Long entryClassPK = _getEntryClassPK(document);
-
-			AssetRenderer<?> assetRenderer = null;
-
-			if (embedded ||
-				_isEmptyOrContains(fields, "description", "title")) {
-
-				assetRenderer = _getAssetRenderer(entryClassName, entryClassPK);
-			}
-
-			if (assetRenderer != null) {
-				com.liferay.portal.kernel.search.Document legacyDocument =
-					legacyDocuments.get(i);
-
-				if (!Objects.equals(
-						legacyDocument.getUID(), searchHit.getId())) {
-
-					legacyDocument = null;
-				}
-
-				Summary summary = _getSummary(entryClassName, legacyDocument);
-
-				_setDescription(assetRenderer, fields, searchResult, summary);
-
-				_setDTOFields(
-					embedded, entryClassName, entryClassPK, fields,
-					searchResult);
-				_setTitle(assetRenderer, fields, searchResult, summary);
-			}
 
 			_setDateCreated(document, fields, searchResult);
 			_setDateModified(document, fields, searchResult);

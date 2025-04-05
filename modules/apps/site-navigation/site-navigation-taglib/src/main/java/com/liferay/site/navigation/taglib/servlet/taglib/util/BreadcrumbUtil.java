@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
@@ -375,13 +374,6 @@ public class BreadcrumbUtil {
 
 		if (layoutDisplayPageObjectProvider != null) {
 			return layoutDisplayPageObjectProvider.getTitle(locale);
-		}
-
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (assetEntry != null) {
-			return assetEntry.getTitle(locale);
 		}
 
 		return StringPool.BLANK;

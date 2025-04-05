@@ -27,14 +27,11 @@ import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
-import com.liferay.portal.search.facet.category.CategoryFacetSearchContributor;
 import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
 import com.liferay.portal.search.facet.date.range.DateRangeFacetSearchContributor;
 import com.liferay.portal.search.facet.folder.FolderFacetSearchContributor;
 import com.liferay.portal.search.facet.nested.NestedFacetSearchContributor;
 import com.liferay.portal.search.facet.site.SiteFacetSearchContributor;
-import com.liferay.portal.search.facet.tag.TagFacetSearchContributor;
-import com.liferay.portal.search.facet.type.TypeFacetSearchContributor;
 import com.liferay.portal.search.facet.user.UserFacetSearchContributor;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
@@ -62,13 +59,7 @@ public class FacetRequestContributor {
 		for (FacetConfiguration facetConfiguration : facetConfigurations) {
 			_setProperties(facetConfiguration);
 
-			if (StringUtil.equals("category", facetConfiguration.getName()) ||
-				StringUtil.equals("vocabulary", facetConfiguration.getName())) {
-
-				_contributeCategoryFacet(
-					facetConfiguration, searchRequestBuilder);
-			}
-			else if (StringUtil.equals(
+			if (StringUtil.equals(
 						"custom", facetConfiguration.getName())) {
 
 				_contributeCustomFacet(
@@ -95,35 +86,10 @@ public class FacetRequestContributor {
 			else if (StringUtil.equals("site", facetConfiguration.getName())) {
 				_contributeSiteFacet(facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("tag", facetConfiguration.getName())) {
-				_contributeTagFacet(facetConfiguration, searchRequestBuilder);
-			}
-			else if (StringUtil.equals("type", facetConfiguration.getName())) {
-				_contributeTypeFacet(facetConfiguration, searchRequestBuilder);
-			}
 			else if (StringUtil.equals("user", facetConfiguration.getName())) {
 				_contributeUserFacet(facetConfiguration, searchRequestBuilder);
 			}
 		}
-	}
-
-	private void _contributeCategoryFacet(
-		FacetConfiguration facetConfiguration,
-		SearchRequestBuilder searchRequestBuilder) {
-
-		_categoryFacetSearchContributor.contribute(
-			searchRequestBuilder,
-			categoryFacetBuilder -> categoryFacetBuilder.aggregationName(
-				facetConfiguration.getAggregationName()
-			).frequencyThreshold(
-				facetConfiguration.getFrequencyThreshold()
-			).maxTerms(
-				facetConfiguration.getMaxTerms()
-			).selectedCategoryIds(
-				_toLongArray(facetConfiguration.getValues())
-			).vocabularyIds(
-				_getVocabularyIdsAttribute(facetConfiguration)
-			));
 	}
 
 	private void _contributeCustomFacet(
@@ -368,38 +334,6 @@ public class FacetRequestContributor {
 			));
 	}
 
-	private void _contributeTagFacet(
-		FacetConfiguration facetConfiguration,
-		SearchRequestBuilder searchRequestBuilder) {
-
-		_tagFacetSearchContributor.contribute(
-			searchRequestBuilder,
-			tagFacetBuilder -> tagFacetBuilder.aggregationName(
-				facetConfiguration.getAggregationName()
-			).frequencyThreshold(
-				facetConfiguration.getFrequencyThreshold()
-			).maxTerms(
-				facetConfiguration.getMaxTerms()
-			).selectedTagNames(
-				_toStringArray(facetConfiguration.getValues())
-			));
-	}
-
-	private void _contributeTypeFacet(
-		FacetConfiguration facetConfiguration,
-		SearchRequestBuilder searchRequestBuilder) {
-
-		_typeFacetSearchContributor.contribute(
-			searchRequestBuilder,
-			typeFacetBuilder -> typeFacetBuilder.aggregationName(
-				facetConfiguration.getAggregationName()
-			).frequencyThreshold(
-				facetConfiguration.getFrequencyThreshold()
-			).selectedEntryClassNames(
-				_toStringArray(facetConfiguration.getValues())
-			));
-	}
-
 	private void _contributeUserFacet(
 		FacetConfiguration facetConfiguration,
 		SearchRequestBuilder searchRequestBuilder) {
@@ -585,9 +519,6 @@ public class FacetRequestContributor {
 	private Aggregations _aggregations;
 
 	@Reference
-	private CategoryFacetSearchContributor _categoryFacetSearchContributor;
-
-	@Reference
 	private CustomFacetSearchContributor _customFacetSearchContributor;
 
 	@Reference
@@ -613,12 +544,6 @@ public class FacetRequestContributor {
 
 	@Reference
 	private SiteFacetSearchContributor _siteFacetSearchContributor;
-
-	@Reference
-	private TagFacetSearchContributor _tagFacetSearchContributor;
-
-	@Reference
-	private TypeFacetSearchContributor _typeFacetSearchContributor;
 
 	@Reference
 	private UserFacetSearchContributor _userFacetSearchContributor;

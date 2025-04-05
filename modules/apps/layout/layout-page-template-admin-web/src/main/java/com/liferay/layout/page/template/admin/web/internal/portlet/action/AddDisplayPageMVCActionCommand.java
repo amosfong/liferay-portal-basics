@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -141,12 +140,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 					"classNameId",
 					_language.get(
 						serviceContext.getLocale(), "invalid-content-type"));
-			}
-			else if (portalException instanceof NoSuchClassTypeException) {
-				errorJSONObject = JSONUtil.put(
-					"classTypeId",
-					_language.get(
-						serviceContext.getLocale(), "invalid-subtype"));
 			}
 			else {
 				errorJSONObject = JSONUtil.put(

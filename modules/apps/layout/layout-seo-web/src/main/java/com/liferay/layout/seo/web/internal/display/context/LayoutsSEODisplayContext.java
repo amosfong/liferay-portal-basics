@@ -5,10 +5,6 @@
 
 package com.liferay.layout.seo.web.internal.display.context;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
@@ -740,21 +736,7 @@ public class LayoutsSEODisplayContext {
 	}
 
 	private String _getSubtypeLabel() throws PortalException {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_getClassName());
-
-		if ((assetRendererFactory == null) || (_getClassTypeId() <= 0)) {
-			return StringPool.BLANK;
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(
-			_getClassTypeId(), _themeDisplay.getLocale());
-
-		return classType.getName();
+		return StringPool.BLANK;
 	}
 
 	private String _getTypeLabel() {

@@ -5,9 +5,6 @@
 
 package com.liferay.document.library.internal.workflow;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -49,31 +46,6 @@ public class DLFileEntryWorkflowHandler
 	extends BaseWorkflowHandler<DLFileEntry> {
 
 	@Override
-	public AssetRenderer<DLFileEntry> getAssetRenderer(long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<DLFileEntry> assetRendererFactory =
-			getAssetRendererFactory();
-
-		if (assetRendererFactory != null) {
-			DLFileVersion dlFileVersion =
-				_dlFileVersionLocalService.getFileVersion(classPK);
-
-			return assetRendererFactory.getAssetRenderer(
-				dlFileVersion.getFileEntryId(),
-				AssetRendererFactory.TYPE_LATEST);
-		}
-
-		return null;
-	}
-
-	@Override
-	public AssetRendererFactory<DLFileEntry> getAssetRendererFactory() {
-		return AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-			DLFileEntry.class);
-	}
-
-	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
@@ -81,16 +53,6 @@ public class DLFileEntryWorkflowHandler
 	@Override
 	public long getDiscussionClassPK(
 		Map<String, Serializable> workflowContext) {
-
-		try {
-			AssetRenderer<DLFileEntry> dlFileEntryAssetRenderer =
-				getAssetRenderer(super.getDiscussionClassPK(workflowContext));
-
-			return dlFileEntryAssetRenderer.getClassPK();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
 
 		return super.getDiscussionClassPK(workflowContext);
 	}

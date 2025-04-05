@@ -5,10 +5,6 @@
 
 package com.liferay.portal.search.web.internal.result.display.context;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-
 import java.io.Serializable;
 
 /**
@@ -16,18 +12,6 @@ import java.io.Serializable;
  * @author André de Oliveira
  */
 public class SearchResultContentDisplayContext implements Serializable {
-
-	public AssetEntry getAssetEntry() {
-		return _assetEntry;
-	}
-
-	public AssetRenderer<?> getAssetRenderer() {
-		return _assetRenderer;
-	}
-
-	public AssetRendererFactory<?> getAssetRendererFactory() {
-		return _assetRendererFactory;
-	}
 
 	public String getHeaderTitle() {
 		return _headerTitle;
@@ -51,20 +35,6 @@ public class SearchResultContentDisplayContext implements Serializable {
 
 	public boolean isVisible() {
 		return _visible;
-	}
-
-	public void setAssetEntry(AssetEntry assetEntry) {
-		_assetEntry = assetEntry;
-	}
-
-	public void setAssetRenderer(AssetRenderer<?> assetRenderer) {
-		_assetRenderer = assetRenderer;
-	}
-
-	public void setAssetRendererFactory(
-		AssetRendererFactory<?> assetRendererFactory) {
-
-		_assetRendererFactory = assetRendererFactory;
 	}
 
 	public void setHasEditPermission(boolean hasEditPermission) {
@@ -91,9 +61,6 @@ public class SearchResultContentDisplayContext implements Serializable {
 		_visible = visible;
 	}
 
-	private AssetEntry _assetEntry;
-	private AssetRenderer<?> _assetRenderer;
-	private AssetRendererFactory<?> _assetRendererFactory;
 	private boolean _hasEditPermission;
 	private String _headerTitle;
 	private String _iconEditTarget;

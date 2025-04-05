@@ -16,18 +16,6 @@ import javax.portlet.PortletURL;
  */
 public class SearchResultSummaryDisplayContext implements Serializable {
 
-	public long getAssetEntryUserId() {
-		return _assetEntryUserId;
-	}
-
-	public long getAssetRendererDownloadSize() {
-		return _assetRendererDownloadSize;
-	}
-
-	public String getAssetRendererURLDownload() {
-		return _assetRendererURLDownload;
-	}
-
 	public String getClassName() {
 		return _className;
 	}
@@ -56,14 +44,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		getDocumentFormFieldDisplayContexts() {
 
 		return _documentFormFieldDisplayContexts;
-	}
-
-	public String getFieldAssetCategoryIds() {
-		return _fieldAssetCategoryIds;
-	}
-
-	public String getFieldAssetTagNames() {
-		return _fieldAssetTagNames;
 	}
 
 	public List<SearchResultFieldDisplayContext> getFieldDisplayContexts() {
@@ -130,14 +110,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _viewURL;
 	}
 
-	public boolean isAssetCategoriesOrTagsVisible() {
-		return _assetCategoriesOrTagsVisible;
-	}
-
-	public boolean isAssetRendererURLDownloadVisible() {
-		return _assetRendererURLDownloadVisible;
-	}
-
 	public boolean isContentVisible() {
 		return _contentVisible;
 	}
@@ -202,30 +174,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _userPortraitVisible;
 	}
 
-	public void setAssetCategoriesOrTagsVisible(
-		boolean assetCategoriesOrTagsVisible) {
-
-		_assetCategoriesOrTagsVisible = assetCategoriesOrTagsVisible;
-	}
-
-	public void setAssetEntryUserId(long assetEntryUserId) {
-		_assetEntryUserId = assetEntryUserId;
-	}
-
-	public void setAssetRendererDownloadSize(long assetRendererDownloadSize) {
-		_assetRendererDownloadSize = assetRendererDownloadSize;
-	}
-
-	public void setAssetRendererURLDownload(String assetRendererURLDownload) {
-		_assetRendererURLDownload = assetRendererURLDownload;
-	}
-
-	public void setAssetRendererURLDownloadVisible(
-		boolean assetRendererURLDownloadVisible) {
-
-		_assetRendererURLDownloadVisible = assetRendererURLDownloadVisible;
-	}
-
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -279,14 +227,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 
 	public void setDocumentFormVisible(boolean documentFormVisible) {
 		_documentFormVisible = documentFormVisible;
-	}
-
-	public void setFieldAssetCategoryIds(String fieldAssetCategoryIds) {
-		_fieldAssetCategoryIds = fieldAssetCategoryIds;
-	}
-
-	public void setFieldAssetTagNames(String fieldAssetTagNames) {
-		_fieldAssetTagNames = fieldAssetTagNames;
 	}
 
 	public void setFieldDisplayContexts(
@@ -405,11 +345,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_viewURL = viewURL;
 	}
 
-	private boolean _assetCategoriesOrTagsVisible;
-	private long _assetEntryUserId;
-	private long _assetRendererDownloadSize;
-	private String _assetRendererURLDownload;
-	private boolean _assetRendererURLDownloadVisible;
 	private String _className;
 	private long _classPK;
 	private String _content;
@@ -423,8 +358,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private List<SearchResultFieldDisplayContext>
 		_documentFormFieldDisplayContexts;
 	private boolean _documentFormVisible;
-	private String _fieldAssetCategoryIds;
-	private String _fieldAssetTagNames;
 	private List<SearchResultFieldDisplayContext> _fieldDisplayContexts;
 	private boolean _fieldsVisible;
 	private String _highlightedTitle;

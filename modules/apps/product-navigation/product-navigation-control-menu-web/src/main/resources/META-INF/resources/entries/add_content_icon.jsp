@@ -42,30 +42,3 @@ String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationContro
 		small="<%= true %>"
 	/>
 </li>
-
-<%
-AssetRenderer<?> assetRenderer = null;
-
-String portletResourceNamespace = PortalUtil.getPortletNamespace(ParamUtil.getString(request, "portletResource"));
-
-String className = ParamUtil.getString(request, portletResourceNamespace + "className");
-long classPK = ParamUtil.getLong(request, portletResourceNamespace + "classPK");
-
-String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.ADD);
-
-if (Validator.isNotNull(className) && (classPK > 0)) {
-	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-}
-%>
-
-<c:if test="<%= (assetRenderer != null) && PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
-	<aui:script>
-		Liferay.once('updatedLayout', () => {
-			Liferay.Util.navigate(
-				'<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>'
-			);
-		});
-	</aui:script>
-</c:if>

@@ -32,8 +32,6 @@ public interface FragmentEntryProcessorContext {
 
 	public long getPreviewClassPK();
 
-	public int getPreviewType();
-
 	public long[] getSegmentsEntryIds();
 
 	public boolean isEditMode();

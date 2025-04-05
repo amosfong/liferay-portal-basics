@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;

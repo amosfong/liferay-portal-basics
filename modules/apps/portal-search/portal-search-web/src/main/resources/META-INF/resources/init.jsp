@@ -18,8 +18,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.petra.string.CharPool" %><%@
+<%@ page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
@@ -64,7 +63,6 @@ page import="com.liferay.portal.search.web.facet.SearchFacet" %><%@
 page import="com.liferay.portal.search.web.facet.util.comparator.SearchFacetComparator" %><%@
 page import="com.liferay.portal.search.web.internal.display.context.SearchDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.display.context.SearchDisplayContextFactoryUtil" %><%@
-page import="com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder" %><%@
 page import="com.liferay.portal.servlet.BrowserSnifferUtil" %><%@

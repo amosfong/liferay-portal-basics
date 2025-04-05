@@ -228,15 +228,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					Group group = _groupLocalService.getGroup(
 						folder.getGroupId());
 
-					try (SafeCloseable safeCloseable =
-							CTCollectionThreadLocal.
-								setCTCollectionIdWithSafeCloseable(
-									group.getCtCollectionId())) {
-
-						return localRepository.addFolder(
-							null, userId, parentFolderId, folderName,
-							StringPool.BLANK, serviceContext);
-					}
+					return localRepository.addFolder(
+						null, userId, parentFolderId, folderName,
+						StringPool.BLANK, serviceContext);
 				}
 			});
 	}
@@ -277,17 +271,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			new UnicodeProperties();
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					group.getCtCollectionId())) {
-
-			return _run(
-				() -> _repositoryLocalService.addRepository(
-					null, user.getUserId(), groupId, classNameId,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
-					StringPool.BLANK, portletId, typeSettingsUnicodeProperties,
-					true, serviceContext));
-		}
+		return _run(
+			() -> _repositoryLocalService.addRepository(
+				null, user.getUserId(), groupId, classNameId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
+				StringPool.BLANK, portletId, typeSettingsUnicodeProperties,
+				true, serviceContext));
 	}
 
 	@Override

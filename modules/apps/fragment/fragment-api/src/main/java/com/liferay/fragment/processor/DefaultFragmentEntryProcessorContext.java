@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.processor;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -69,11 +68,6 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
-	public int getPreviewType() {
-		return _previewType;
-	}
-
-	@Override
 	public long[] getSegmentsEntryIds() {
 		return _segmentsEntryIds;
 	}
@@ -126,10 +120,6 @@ public class DefaultFragmentEntryProcessorContext
 		_previewClassPK = previewClassPK;
 	}
 
-	public void setPreviewType(int previewType) {
-		_previewType = previewType;
-	}
-
 	public void setSegmentsEntryIds(long[] segmentsEntryIds) {
 		_segmentsEntryIds = segmentsEntryIds;
 	}
@@ -141,7 +131,6 @@ public class DefaultFragmentEntryProcessorContext
 	private final String _mode;
 	private long _previewClassNameId;
 	private long _previewClassPK;
-	private int _previewType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 	private long[] _segmentsEntryIds = new long[0];
 
 }

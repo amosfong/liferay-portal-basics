@@ -5,8 +5,6 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.exception.AssetCategoryException;
-import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
@@ -113,12 +111,6 @@ public class EditOrganizationMVCActionCommand
 					actionRequest, exception.getClass(), exception);
 
 				mvcPath = "/error.jsp";
-			}
-			else if (exception instanceof AssetCategoryException ||
-					 exception instanceof AssetTagException) {
-
-				SessionErrors.add(
-					actionRequest, exception.getClass(), exception);
 			}
 			else if (exception instanceof DuplicateOrganizationException ||
 					 exception instanceof NoSuchCountryException ||

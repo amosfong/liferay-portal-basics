@@ -7,14 +7,6 @@
 
 <c:choose>
 	<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
-		<c:if test="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() > 0 %>">
-			<liferay-ui:search-container-column-text>
-				<liferay-user:user-portrait
-					userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</c:if>
-
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
@@ -22,12 +14,6 @@
 				<a href="<%= searchResultSummaryDisplayContext.getViewURL() %>">
 					<strong><%= searchResultSummaryDisplayContext.getHighlightedTitle() %></strong>
 				</a>
-
-				<c:if test="<%= searchResultSummaryDisplayContext.isAssetRendererURLDownloadVisible() %>">
-					<aui:a href="<%= searchResultSummaryDisplayContext.getAssetRendererURLDownload() %>">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(searchResultSummaryDisplayContext.getTitle()) %>" key="download-x" />
-					</aui:a>
-				</c:if>
 			</div>
 
 			<span class="text-default">

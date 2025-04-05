@@ -5,8 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.workflow;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -36,26 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = WorkflowHandler.class)
 public class DDMFormInstanceRecordWorkflowHandler
 	extends BaseWorkflowHandler<DDMFormInstanceRecord> {
-
-	@Override
-	public AssetRenderer<DDMFormInstanceRecord> getAssetRenderer(long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<DDMFormInstanceRecord> assetRendererFactory =
-			getAssetRendererFactory();
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		DDMFormInstanceRecordVersion formInstanceRecordVersion =
-			_ddmFormInstanceRecordVersionLocalService.
-				getFormInstanceRecordVersion(classPK);
-
-		return assetRendererFactory.getAssetRenderer(
-			formInstanceRecordVersion.getFormInstanceRecordId(),
-			AssetRendererFactory.TYPE_LATEST);
-	}
 
 	@Override
 	public String getClassName() {

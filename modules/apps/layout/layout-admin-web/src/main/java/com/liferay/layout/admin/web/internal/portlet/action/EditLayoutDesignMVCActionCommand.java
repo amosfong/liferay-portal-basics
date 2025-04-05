@@ -5,8 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -107,14 +105,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
-
-			if (layout.fetchDraftLayout() == null) {
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					Layout.class.getName(), layout.getPlid());
-
-				serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
-				serviceContext.setAssetTagNames(assetEntry.getTagNames());
-			}
 
 			if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 				serviceContext.setAttribute(
@@ -229,9 +219,6 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditLayoutDesignMVCActionCommand.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

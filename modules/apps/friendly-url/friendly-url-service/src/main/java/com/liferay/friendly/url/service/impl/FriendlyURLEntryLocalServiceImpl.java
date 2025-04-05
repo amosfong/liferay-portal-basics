@@ -5,8 +5,6 @@
 
 package com.liferay.friendly.url.service.impl;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
@@ -99,9 +97,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		_validateAssetCategories(
-			group.getCompanyId(), urlTitleMap, serviceContext);
-
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			_friendlyURLEntryMappingPersistence.fetchByC_C(
 				classNameId, classPK);
@@ -126,8 +121,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		if ((friendlyURLEntry != null) &&
 			_containsAllURLTitles(existingUrlTitleMap, urlTitleMap)) {
-
-			_updateAssetEntry(friendlyURLEntry, serviceContext);
 
 			return friendlyURLEntry;
 		}
@@ -155,10 +148,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntry, classNameId,
 			_merge(urlTitleMap, existingUrlTitleMap));
-
-		// Asset
-
-		_updateAssetEntry(friendlyURLEntry, serviceContext);
 
 		return friendlyURLEntry;
 	}
@@ -213,13 +202,6 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 
-		// Asset
-
-		_deleteAssetEntry(
-			deletedFriendlyURLEntry.getCompanyId(),
-			FriendlyURLEntry.class.getName(),
-			deletedFriendlyURLEntry.getFriendlyURLEntryId());
-
 		return deletedFriendlyURLEntry;
 	}
 
@@ -257,13 +239,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
 			friendlyURLEntryPersistence.remove(friendlyURLEntry);
-
-			// Asset
-
-			_deleteAssetEntry(
-				friendlyURLEntry.getCompanyId(),
-				FriendlyURLEntry.class.getName(),
-				friendlyURLEntry.getFriendlyURLEntryId());
 		}
 
 		_friendlyURLEntryMappingPersistence.remove(friendlyURLEntryMapping);
@@ -295,12 +270,6 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 				friendlyURLEntryId);
 		}
-
-		// Asset
-
-		_deleteAssetEntry(
-			friendlyURLEntryLocalization.getCompanyId(),
-			FriendlyURLEntry.class.getName(), friendlyURLEntryId);
 	}
 
 	@Override
@@ -334,13 +303,6 @@ public class FriendlyURLEntryLocalServiceImpl
 					_friendlyURLEntryMappingPersistence.remove(
 						friendlyURLEntryMapping);
 				}
-
-				// Asset
-
-				_deleteAssetEntry(
-					friendlyURLEntry.getCompanyId(),
-					FriendlyURLEntry.class.getName(),
-					friendlyURLEntry.getFriendlyURLEntryId());
 			});
 
 		try {
@@ -562,9 +524,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(
 			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
 
-		_validateAssetCategories(
-			friendlyURLEntry.getCompanyId(), urlTitleMap, serviceContext);
-
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
@@ -573,10 +532,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntry, classNameId, urlTitleMap);
-
-		// Asset
-
-		_updateAssetEntry(friendlyURLEntry, serviceContext);
 
 		return friendlyURLEntry;
 	}
@@ -690,28 +645,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
-	private void _deleteAssetEntry(
-		long companyId, String className, long classPK) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11147")) {
-			return;
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			className, classPK);
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		try {
-			_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
-	}
-
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
@@ -808,31 +741,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		return sortedUrlTitleMap;
 	}
 
-	private void _updateAssetEntry(
-			FriendlyURLEntry friendlyURLEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		if ((serviceContext == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				friendlyURLEntry.getCompanyId(), "LPD-11147")) {
-
-			return;
-		}
-
-		_assetEntryLocalService.updateEntry(
-			serviceContext.getUserId(), friendlyURLEntry.getGroupId(),
-			friendlyURLEntry.getCreateDate(),
-			friendlyURLEntry.getModifiedDate(),
-			FriendlyURLEntry.class.getName(),
-			friendlyURLEntry.getFriendlyURLEntryId(),
-			friendlyURLEntry.getUuid(), 0,
-			GetterUtil.getLongValues(
-				serviceContext.getAttribute("friendlyURLAssetCategoryIds")),
-			new String[0], true, false, null, null, null, null,
-			ContentTypes.TEXT_PLAIN, null, null, null, null, null, 0, 0,
-			serviceContext.getAssetPriority());
-	}
-
 	private void _updateFriendlyURLEntryLocalizations(
 			FriendlyURLEntry friendlyURLEntry, long classNameId,
 			Map<String, String> urlTitleMap)
@@ -894,34 +802,6 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 	}
-
-	private void _validateAssetCategories(
-			long companyId, Map<String, String> urlTitleMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11147")) {
-			return;
-		}
-
-		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(
-			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));
-
-		if (ArrayUtil.isEmpty(friendlyURLAssetCategoryIds)) {
-			return;
-		}
-
-		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String value = entry.getValue();
-
-			if (value.contains(StringPool.SLASH)) {
-				throw new FriendlyURLCategoryException();
-			}
-		}
-	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

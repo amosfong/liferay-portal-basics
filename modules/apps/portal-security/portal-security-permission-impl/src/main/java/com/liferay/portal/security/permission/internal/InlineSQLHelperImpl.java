@@ -5,7 +5,6 @@
 
 package com.liferay.portal.security.permission.internal;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.Column;
@@ -760,11 +759,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (Validator.isNull(className)) {
 			throw new IllegalArgumentException("className is null");
-		}
-
-		if (Objects.equals(className, AssetTag.class.getName())) {
-			throw new IllegalArgumentException(
-				"AssetTag does not support inline permissions. See LPS-82433.");
 		}
 
 		if (Validator.isNull(classPKField)) {

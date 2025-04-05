@@ -5,7 +5,6 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -259,13 +258,6 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			if (layoutDisplayPageObjectProvider != null) {
 				return layoutDisplayPageObjectProvider.getTitle(
 					themeDisplay.getLocale());
-			}
-
-			AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY);
-
-			if (assetEntry != null) {
-				return assetEntry.getTitle(themeDisplay.getLanguageId());
 			}
 		}
 

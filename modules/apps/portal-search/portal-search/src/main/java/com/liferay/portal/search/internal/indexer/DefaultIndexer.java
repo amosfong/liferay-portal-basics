@@ -69,16 +69,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public void delete(T baseModel) throws SearchException {
-		if (baseModel instanceof CTModel<?>) {
-			CTModel<?> ctModel = (CTModel<?>)baseModel;
-
-			if ((ctModel.getCtCollectionId() == 0) &&
-				!CTCollectionThreadLocal.isProductionMode()) {
-
-				return;
-			}
-		}
-
 		_indexerWriter.delete(baseModel);
 	}
 

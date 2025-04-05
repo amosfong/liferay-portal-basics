@@ -5,8 +5,6 @@
 
 package com.liferay.layout.seo.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
@@ -144,12 +142,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			Layout.class.getName(), layout.getPlid());
-
-		serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
-		serviceContext.setAssetTagNames(assetEntry.getTagNames());
-
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 			serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
@@ -157,9 +149,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		return serviceContext;
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

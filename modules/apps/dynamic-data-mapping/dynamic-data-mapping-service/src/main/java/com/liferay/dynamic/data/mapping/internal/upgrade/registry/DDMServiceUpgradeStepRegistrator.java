@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.registry;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -125,7 +124,7 @@ public class DDMServiceUpgradeStepRegistrator
 			"0.0.3", "1.0.0", new UpgradeCompanyId(),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.
 				DynamicDataMappingUpgradeProcess(
-					_assetEntryLocalService, _classNameLocalService, _ddm,
+					_classNameLocalService, _ddm,
 					ddmFormJSONDeserializer, ddmFormXSDDeserializer,
 					ddmFormLayoutSerializer, ddmFormSerializer,
 					ddmFormValuesDeserializer, ddmFormValuesSerializer,
@@ -200,8 +199,6 @@ public class DDMServiceUpgradeStepRegistrator
 					_classNameLocalService, _counterLocalService,
 					_resourceActions, _resourceActionLocalService,
 					_resourcePermissionLocalService),
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
-				DDMFormInstanceRecordUpgradeProcess(_assetEntryLocalService),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
 				DDMFormInstanceRecordVersionUpgradeProcess(),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0.
@@ -618,9 +615,6 @@ public class DDMServiceUpgradeStepRegistrator
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

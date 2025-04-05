@@ -5,8 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -134,7 +132,6 @@ import java.util.regex.Pattern;
 public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 	public DynamicDataMappingUpgradeProcess(
-		AssetEntryLocalService assetEntryLocalService,
 		ClassNameLocalService classNameLocalService, DDM ddm,
 		DDMFormDeserializer ddmFormJSONDeserializer,
 		DDMFormDeserializer ddmFormXSDDeserializer,
@@ -153,7 +150,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		Store store) {
 
-		_assetEntryLocalService = assetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
 		_ddm = ddm;
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
@@ -1632,7 +1628,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private static final Pattern _invalidFieldNameCharsPattern =
 		Pattern.compile(_INVALID_FIELD_NAME_CHARS_REGEX);
 
-	private final AssetEntryLocalService _assetEntryLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDM _ddm;
 	private final DDMFormDeserializer _ddmFormJSONDeserializer;
@@ -2241,49 +2236,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		protected void addAssetEntry(
-				long entryId, long groupId, long companyId, long userId,
-				String userName, Timestamp createDate, Timestamp modifiedDate,
-				long classNameId, long classPK, String classUuid,
-				long classTypeId, boolean visible, Timestamp startDate,
-				Timestamp endDate, Timestamp publishDate,
-				Timestamp expirationDate, String mimeType, String title,
-				String description, String summary, String url,
-				String layoutUuid, int height, int width, double priority,
-				int viewCount)
-			throws Exception {
-
-			AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
-				entryId);
-
-			assetEntry.setGroupId(groupId);
-			assetEntry.setCompanyId(companyId);
-			assetEntry.setUserId(userId);
-			assetEntry.setUserName(userName);
-			assetEntry.setCreateDate(createDate);
-			assetEntry.setModifiedDate(modifiedDate);
-			assetEntry.setClassNameId(classNameId);
-			assetEntry.setClassPK(classPK);
-			assetEntry.setClassUuid(classUuid);
-			assetEntry.setClassTypeId(classTypeId);
-			assetEntry.setVisible(visible);
-			assetEntry.setStartDate(startDate);
-			assetEntry.setEndDate(endDate);
-			assetEntry.setPublishDate(publishDate);
-			assetEntry.setExpirationDate(expirationDate);
-			assetEntry.setMimeType(mimeType);
-			assetEntry.setTitle(title);
-			assetEntry.setDescription(description);
-			assetEntry.setSummary(summary);
-			assetEntry.setUrl(url);
-			assetEntry.setLayoutUuid(layoutUuid);
-			assetEntry.setHeight(height);
-			assetEntry.setWidth(width);
-			assetEntry.setPriority(priority);
-
-			_assetEntryLocalService.updateAssetEntry(assetEntry);
-		}
-
 		protected long addDDMDLFolder() throws Exception {
 			long ddmFolderId = getDLFolderId(
 				_groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "DDM");
@@ -2607,18 +2559,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 				_resourceLocalService.addModelResources(
 					dlFileEntry, serviceContext);
-
-				// Asset entry
-
-				addAssetEntry(
-					increment(), _groupId, _companyId, _userId, _userName,
-					_createDate, _createDate,
-					PortalUtil.getClassNameId(DLFileEntry.class), fileEntryId,
-					fileEntryUuid,
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-					false, null, null, null, null,
-					MimeTypesUtil.getContentType(fileName), fileName,
-					StringPool.BLANK, StringPool.BLANK, null, null, 0, 0, 0, 0);
 
 				// File
 

@@ -6,8 +6,6 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-import com.liferay.asset.kernel.exception.AssetCategoryException;
-import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -263,9 +261,7 @@ public class EditUserMVCActionCommand
 
 				mvcPath = "/error.jsp";
 			}
-			else if (exception instanceof AssetCategoryException ||
-					 exception instanceof AssetTagException ||
-					 exception instanceof CompanyMaxUsersException ||
+			else if (exception instanceof CompanyMaxUsersException ||
 					 exception instanceof ContactBirthdayException ||
 					 exception instanceof ContactNameException ||
 					 exception instanceof GroupFriendlyURLException ||
