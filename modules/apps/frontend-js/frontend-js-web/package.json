@@ -6,7 +6,6 @@
 		"@clayui/icon": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.122.0",
-		"@liferay/accessibility-settings-state-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"@liferay/js-api": "0.6.0",

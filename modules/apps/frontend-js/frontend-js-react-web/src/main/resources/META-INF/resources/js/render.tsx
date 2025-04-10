@@ -5,10 +5,6 @@
 
 import {Provider} from '@clayui/core';
 import {ClayIconSpriteContext} from '@clayui/icon';
-import {
-	CONSTANTS,
-	accessibilityMenuAtom,
-} from '@liferay/accessibility-settings-state-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import React, {useMemo} from 'react';
 import ReactDOM from 'react-dom';
@@ -144,19 +140,9 @@ type Props = {
 };
 
 function LiferayProvider({children, spritemap}: Props) {
-	const [accessibilityMenu] = useLiferayState(accessibilityMenuAtom);
-
 	const reducedMotion = useMemo(() => {
-		const reducedMotion =
-			accessibilityMenu[CONSTANTS.ACCESSIBILITY_SETTING_REDUCED_MOTION];
-
-		if (reducedMotion?.value) {
-			return 'always';
-		}
-		else {
-			return 'user';
-		}
-	}, [accessibilityMenu]);
+		return 'user';
+	});
 
 	return (
 		<Provider reducedMotion={reducedMotion} spritemap={spritemap}>

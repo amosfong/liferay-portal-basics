@@ -2,7 +2,6 @@
 	"dependencies": {
 		"@clayui/core": "3.123.0",
 		"@clayui/icon": "3.111.0",
-		"@liferay/accessibility-settings-state-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"classnames": "2.3.1",
 		"formik": "2.1.4",
