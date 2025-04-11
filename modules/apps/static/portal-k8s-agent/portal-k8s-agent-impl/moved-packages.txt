@@ -1,5 +1,0 @@
-com.fasterxml.*
-io.fabric8.*
-kotlin.*
-okhttp3.*
-okio.*
