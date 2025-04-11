@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Site Navigation Item Selector Web
-Bundle-SymbolicName: com.liferay.site.navigation.item.selector.web
-Bundle-Version: 4.0.60
-Web-ContextPath: /site-navigation-item-selector-web
