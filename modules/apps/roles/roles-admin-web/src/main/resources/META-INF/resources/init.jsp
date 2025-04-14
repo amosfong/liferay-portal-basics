@@ -23,9 +23,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.item.selector.ItemSelector" %><%@
-page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion" %><%@
 page import="com.liferay.organizations.search.OrganizationSearch" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

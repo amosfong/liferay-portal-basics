@@ -76,9 +76,6 @@ public class FragmentConfigurationField {
 		if (Objects.equals(_type, "colorPalette")) {
 			return _getColorPaletteDefaultValue();
 		}
-		else if (Objects.equals(_type, "itemSelector")) {
-			return _getItemSelectorDefaultValue();
-		}
 		else if (Objects.equals(_type, "text") && isLocalizable()) {
 			return _getTextDefaultValue();
 		}
@@ -141,29 +138,6 @@ public class FragmentConfigurationField {
 		).put(
 			"rgbValue", StringPool.BLANK
 		).toString();
-	}
-
-	private String _getItemSelectorDefaultValue() {
-		if (Validator.isNull(_defaultValue)) {
-			return _defaultValue;
-		}
-
-		try {
-			JSONObject defaultValueJSONObject =
-				JSONFactoryUtil.createJSONObject(_defaultValue);
-
-			if (defaultValueJSONObject.has("className") &&
-				defaultValueJSONObject.has("classPK")) {
-
-				return _defaultValue;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to parse default value JSON object", portalException);
-		}
-
-		return _defaultValue;
 	}
 
 	private String _getTextDefaultValue() {

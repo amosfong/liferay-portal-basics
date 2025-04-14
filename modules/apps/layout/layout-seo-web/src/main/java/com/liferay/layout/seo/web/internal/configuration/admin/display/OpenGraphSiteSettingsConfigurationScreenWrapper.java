@@ -9,7 +9,6 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext;
@@ -62,9 +61,6 @@ public class OpenGraphSiteSettingsConfigurationScreenWrapper
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;
@@ -157,7 +153,7 @@ public class OpenGraphSiteSettingsConfigurationScreenWrapper
 				OpenGraphSettingsDisplayContext.class.getName(),
 				new OpenGraphSettingsDisplayContext(
 					_dlAppService, _dlurlHelper, httpServletRequest,
-					_itemSelector, _layoutSEOSiteLocalService,
+					_layoutSEOSiteLocalService,
 					_portal.getLiferayPortletRequest(portletRequest),
 					_portal.getLiferayPortletResponse(portletResponse),
 					_openGraphConfiguration));

@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -45,12 +44,11 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
 		DisplayPageTypeContext displayPageTypeContext,
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		HttpServletRequest httpServletRequest,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		_displayPageTypeContext = displayPageTypeContext;
 		_httpServletRequest = httpServletRequest;
-		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
 		PortletResponse portletResponse =
@@ -287,7 +285,6 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	private Long _classTypeId;
 	private final DisplayPageTypeContext _displayPageTypeContext;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _originalTitle;

@@ -35,19 +35,6 @@
 			Layout rootLayout = siteNavigationSiteMapDisplayContext.getRootLayout();
 			%>
 
-			<liferay-frontend:resource-selector
-				inputLabel='<%= LanguageUtil.get(request, "root-layout") %>'
-				inputName="preferences--rootLayoutUuid--"
-				modalTitle='<%= LanguageUtil.get(request, "select-layout") %>'
-				resourceName="<%= Validator.isNotNull(rootLayout) ? rootLayout.getName(themeDisplay.getSiteDefaultLocale()) : StringPool.BLANK %>"
-				resourceNameKey="name"
-				resourceValue="<%= Validator.isNotNull(rootLayout) ? siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid() : StringPool.BLANK %>"
-				resourceValueKey="id"
-				selectEventName="selectLayout"
-				selectResourceURL="<%= siteNavigationSiteMapDisplayContext.getItemSelectorURL() %>"
-				showRemoveButton="<%= false %>"
-			/>
-
 			<aui:select name="preferences--displayDepth--">
 				<aui:option label="unlimited" value="0" />
 

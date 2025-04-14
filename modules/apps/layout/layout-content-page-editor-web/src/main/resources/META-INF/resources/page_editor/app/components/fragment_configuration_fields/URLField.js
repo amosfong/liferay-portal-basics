@@ -9,7 +9,6 @@ import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import isMappedToLayout from '../../utils/editable_value/isMappedToLayout';
 
@@ -85,19 +84,6 @@ export default function URLField({field, onValueSelect, value}) {
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>
-			)}
-			{source === SOURCE_OPTION_FROM_LAYOUT && (
-				<LayoutSelector
-					mappedLayout={value?.layout}
-					onLayoutSelect={(layout) => {
-						if (layout && !!Object.keys(layout).length) {
-							handleChange({layout});
-						}
-						else {
-							handleChange({});
-						}
-					}}
-				/>
 			)}
 		</>
 	);

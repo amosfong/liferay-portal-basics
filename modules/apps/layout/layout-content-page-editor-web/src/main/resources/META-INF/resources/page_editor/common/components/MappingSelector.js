@@ -24,11 +24,9 @@ import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoIte
 import isMappedToStructure from '../../app/utils/editable_value/isMappedToStructure';
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
-import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/itemSelectorValueToInfoItem';
 import loadCollectionFields from '../../app/utils/loadCollectionFields';
 import useCache from '../../app/utils/useCache';
 import usePageContents from '../../app/utils/usePageContents';
-import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
 import RepeatableOptionsSelector from './RepeatableOptionsSelector';
 
@@ -571,17 +569,6 @@ function MappingSelector({
 						</ClayForm.Group>
 					) : null}
 				</>
-			)}
-
-			{selectedSourceType === MAPPING_SOURCE_TYPES.content && (
-				<ItemSelector
-					className="mb-2"
-					itemSelectorURL={itemSelectorURL}
-					label={Liferay.Language.get('item')}
-					onItemSelect={onInfoItemSelect}
-					selectedItem={selectedItem}
-					transformValueCallback={itemSelectorValueToInfoItem}
-				/>
 			)}
 
 			{typeLabel && (

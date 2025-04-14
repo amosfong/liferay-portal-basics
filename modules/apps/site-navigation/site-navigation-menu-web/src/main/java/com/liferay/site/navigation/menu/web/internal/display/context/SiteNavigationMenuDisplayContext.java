@@ -5,9 +5,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -27,8 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -232,25 +227,6 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootMenuItemLevel;
 	}
 
-	public String getRootMenuItemSelectorURL() {
-		String eventName = getRootMenuItemEventName();
-
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				SiteNavigationMenuWebKeys.ITEM_SELECTOR);
-
-		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteNavigationMenuItemItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				eventName, itemSelectorCriterion));
-	}
-
 	public String getRootMenuItemType() {
 		if (_rootMenuItemType != null) {
 			return _rootMenuItemType;
@@ -374,25 +350,6 @@ public class SiteNavigationMenuDisplayContext {
 		_siteNavigationMenuId = _getSiteNavigationMenuId();
 
 		return _siteNavigationMenuId;
-	}
-
-	public String getSiteNavigationMenuItemSelectorURL() {
-		String eventName = getSiteNavigationMenuEventName();
-
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				SiteNavigationMenuWebKeys.ITEM_SELECTOR);
-
-		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteNavigationMenuItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				eventName, itemSelectorCriterion));
 	}
 
 	public String getSiteNavigationMenuName() {

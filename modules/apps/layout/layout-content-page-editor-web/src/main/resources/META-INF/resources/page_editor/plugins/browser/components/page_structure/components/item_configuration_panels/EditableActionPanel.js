@@ -33,7 +33,6 @@ import {updateIn} from '../../../../../../app/utils/updateIn';
 import useCache from '../../../../../../app/utils/useCache';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import DisplayPageSelector from '../../../../../../common/components/DisplayPageSelector';
-import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingSelector from '../../../../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../../../../prop_types/index';
 
@@ -352,16 +351,6 @@ function InteractionSelector({
 						</ClayButton>
 					</ClayForm.Group>
 				</>
-			)}
-
-			{interaction === INTERACTION_PAGE && (
-				<LayoutSelector
-					label={sub(Liferay.Language.get('x-page'), label)}
-					mappedLayout={page}
-					onLayoutSelect={(layout) => {
-						onConfigChange('page', layout);
-					}}
-				/>
 			)}
 
 			{interaction === INTERACTION_URL && (

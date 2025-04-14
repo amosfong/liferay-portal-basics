@@ -6,7 +6,6 @@
 package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -20,6 +19,7 @@ import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadHandler;
+import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,15 +47,14 @@ public class UploadStyleBookEntryPreviewMVCActionCommand
 
 		_uploadHandler.upload(
 			_styleBookEntryPreviewImageEditorUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
+			_defaultUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
 	private DLAppService _dlAppService;
 
-	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
+	@Reference(target = "(upload.response.handler.system.default=true)")
+	private UploadResponseHandler _defaultUploadResponseHandler;
 
 	@Reference(
 		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"

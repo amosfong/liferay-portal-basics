@@ -30,7 +30,6 @@ import {setIn} from '../../../../../../app/utils/setIn';
 import {useSaveFormConfig} from '../../../../../../app/utils/useSaveFormConfig';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import DisplayPageSelector from '../../../../../../common/components/DisplayPageSelector';
-import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
 import FormMappingOptions from './FormMappingOptions';
@@ -255,15 +254,6 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				onValueSelect={(_name, type) => onConfigChange({type}, true)}
 				value={type || EMBEDDED_OPTION}
 			/>
-
-			{type === LAYOUT_OPTION && (
-				<LayoutSelector
-					mappedLayout={layout}
-					onLayoutSelect={(selectedLayout) =>
-						onConfigChange({layout: selectedLayout})
-					}
-				/>
-			)}
 
 			{(!type || type === EMBEDDED_OPTION) && (
 				<>

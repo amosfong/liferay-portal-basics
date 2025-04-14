@@ -7,10 +7,6 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutUtilityPageThumbnailConfiguration;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
@@ -68,8 +64,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			layoutUtilityPageEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_itemSelector = (ItemSelector)renderRequest.getAttribute(
-			ItemSelector.class.getName());
 		_layout = LayoutLocalServiceUtil.fetchLayout(
 			layoutUtilityPageEntry.getPlid());
 		_layoutUtilityPageThumbnailConfiguration =
@@ -319,37 +313,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private String _getItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			UploadItemSelectorCriterion.builder(
-			).desiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType()
-			).extensions(
-				_layoutUtilityPageThumbnailConfiguration.thumbnailExtensions()
-			).maxFileSize(
-				UploadServletRequestConfigurationProviderUtil.getMaxSize()
-			).portletId(
-				LayoutAdminPortletKeys.GROUP_PAGES
-			).repositoryName(
-				LanguageUtil.get(_themeDisplay.getLocale(), "utility-pages")
-			).url(
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/layout_admin/upload_layout_utility_page_entry_preview"
-				).setParameter(
-					"layoutUtilityPageEntryId",
-					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
-				).buildString()
-			).build();
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "changePreview",
-				itemSelectorCriterion));
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer() {
 
@@ -490,7 +453,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData(
 				"action", "updateLayoutUtilityPageEntryPreview");
-			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"layoutUtilityPageEntryId",
 				String.valueOf(
@@ -633,7 +595,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 	private Boolean _deletePermission;
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final Layout _layout;
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
 	private final LayoutUtilityPageThumbnailConfiguration

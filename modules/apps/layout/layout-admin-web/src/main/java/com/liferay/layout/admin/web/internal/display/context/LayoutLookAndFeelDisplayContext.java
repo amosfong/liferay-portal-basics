@@ -7,11 +7,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
-import com.liferay.layout.admin.web.internal.item.selector.MasterLayoutPageTemplateEntryItemSelectorCriterion;
-import com.liferay.layout.admin.web.internal.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -54,36 +50,12 @@ public class LayoutLookAndFeelDisplayContext {
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getMasterLayoutConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"changeMasterLayoutURL",
-			() -> {
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						_httpServletRequest);
-
-				MasterLayoutPageTemplateEntryItemSelectorCriterion
-					masterLayoutPageTemplateEntryItemSelectorCriterion =
-						new MasterLayoutPageTemplateEntryItemSelectorCriterion();
-
-				masterLayoutPageTemplateEntryItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new UUIDItemSelectorReturnType());
-
-				return String.valueOf(
-					_itemSelector.getItemSelectorURL(
-						requestBackedPortletURLFactory,
-						_liferayPortletResponse.getNamespace() +
-							"selectMasterLayout",
-						masterLayoutPageTemplateEntryItemSelectorCriterion));
-			}
-		).put(
 			"editMasterLayoutURL",
 			() -> {
 				if (!hasMasterLayout()) {
@@ -152,30 +124,6 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getStyleBookConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"changeStyleBookURL",
-			() -> {
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						_httpServletRequest);
-
-				StyleBookEntryItemSelectorCriterion
-					styleBookEntryItemSelectorCriterion =
-						new StyleBookEntryItemSelectorCriterion();
-
-				styleBookEntryItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new UUIDItemSelectorReturnType());
-				styleBookEntryItemSelectorCriterion.setSelPlid(
-					_layoutsAdminDisplayContext.getSelPlid());
-
-				return String.valueOf(
-					_itemSelector.getItemSelectorURL(
-						requestBackedPortletURLFactory,
-						_liferayPortletResponse.getNamespace() +
-							"selectStyleBook",
-						styleBookEntryItemSelectorCriterion));
-			}
-		).put(
 			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
 		).put(
 			"styleBookEntryId",
@@ -329,7 +277,6 @@ public class LayoutLookAndFeelDisplayContext {
 	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasMasterLayout;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _masterLayoutName;

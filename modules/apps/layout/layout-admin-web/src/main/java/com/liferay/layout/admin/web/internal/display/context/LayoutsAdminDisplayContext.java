@@ -13,10 +13,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.frontend.taglib.servlet.taglib.constants.ScreenNavigationWebKeys;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
@@ -29,7 +25,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
-import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -124,13 +119,12 @@ import javax.servlet.jsp.JspException;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		ItemSelector itemSelector, LayoutActionsHelper layoutActionsHelper,
+		LayoutActionsHelper layoutActionsHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_itemSelector = itemSelector;
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutLocalService = layoutLocalService;
 		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
@@ -503,8 +497,6 @@ public class LayoutsAdminDisplayContext {
 			"isReadOnly", isReadOnly()
 		).put(
 			"title", HtmlUtil.escape(getFaviconTitle())
-		).put(
-			"url", getFileEntryItemSelectorURL()
 		).build();
 	}
 
@@ -539,19 +531,6 @@ public class LayoutsAdminDisplayContext {
 
 		return themeDisplay.getPathThemeImages() + "/" +
 			PropsUtil.get(PropsKeys.THEME_SHORTCUT_ICON);
-	}
-
-	public String getFileEntryItemSelectorURL() {
-		FileItemSelectorCriterion itemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				getSelectFaviconEventName(), itemSelectorCriterion));
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -1185,21 +1164,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return selectLayoutPageTemplateEntryURL.toString();
-	}
-
-	public String getSelectThemeURL() {
-		LayoutThemeItemSelectorCriterion layoutThemeItemSelectorCriterion =
-			new LayoutThemeItemSelectorCriterion();
-
-		layoutThemeItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.singletonList(new UUIDItemSelectorReturnType()));
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(
-					_liferayPortletRequest),
-				_liferayPortletResponse.getNamespace() + "selectTheme",
-				layoutThemeItemSelectorCriterion));
 	}
 
 	public Group getSelGroup() {
@@ -2249,7 +2213,6 @@ public class LayoutsAdminDisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasLayouts;
-	private final ItemSelector _itemSelector;
 	private String _keywords;
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutLocalService _layoutLocalService;

@@ -14,9 +14,6 @@ import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
-import com.liferay.layout.list.retriever.ListObjectReference;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -721,10 +718,6 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private ListObjectReferenceFactoryRegistry
-		_listObjectReferenceFactoryRegistry;
 
 	@Reference
 	private Portal _portal;

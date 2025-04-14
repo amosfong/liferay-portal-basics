@@ -6,7 +6,6 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadHandler;
+import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,15 +48,14 @@ public class UploadLayoutPageTemplateEntryPreviewMVCActionCommand
 
 		_uploadHandler.upload(
 			_layoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
+			_defaultUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
 	private DLAppService _dlAppService;
 
-	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
+	@Reference(target = "(upload.response.handler.system.default=true)")
+	private UploadResponseHandler _defaultUploadResponseHandler;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"

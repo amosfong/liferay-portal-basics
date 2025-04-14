@@ -7,12 +7,9 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
-import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -130,8 +127,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									_themeDisplay.getURLCurrent()
 								).buildString());
 							dropdownItem.putData(
-								"itemSelectorURL", _getItemSelectorURL());
-							dropdownItem.putData(
 								"layoutPageTemplateCollectionId",
 								String.valueOf(
 									_layoutPageTemplateCollection.
@@ -172,8 +167,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "moveLayoutPageTemplateCollection");
-							dropdownItem.putData(
-								"itemSelectorURL", _getItemSelectorURL());
 							dropdownItem.putData(
 								"layoutPageTemplateCollectionId",
 								String.valueOf(
@@ -309,38 +302,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		).buildString();
 	}
 
-	private String _getItemSelectorURL() {
-		if (_itemSelectorURL != null) {
-			return _itemSelectorURL;
-		}
-
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
-
-		LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
-			layoutPageTemplateCollectionTreeNodeItemSelectorCriterion =
-				new LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion();
-
-		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-			setLayoutPageTemplateCollectionIds(
-				new long[] {
-					_layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId()
-				});
-
-		_itemSelectorURL = PortletURLBuilder.create(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				"selectFolder",
-				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion)
-		).buildString();
-
-		return _itemSelectorURL;
-	}
-
 	private String _getPermissionsLayoutPageTemplateCollectionURL()
 		throws Exception {
 
@@ -382,7 +343,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private String _itemSelectorURL;
 	private final LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private final RenderResponse _renderResponse;
 	private final String _tabs1;

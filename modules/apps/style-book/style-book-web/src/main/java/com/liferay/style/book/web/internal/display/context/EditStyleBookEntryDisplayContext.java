@@ -10,12 +10,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.item.selector.LayoutPageTemplateEntryItemSelectorReturnType;
-import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryModifiedDateComparator;
@@ -87,8 +82,6 @@ public class EditStyleBookEntryDisplayContext {
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
-		_itemSelector = (ItemSelector)renderRequest.getAttribute(
-			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -178,19 +171,10 @@ public class EditStyleBookEntryDisplayContext {
 		).buildString();
 	}
 
-	private String _getFragmentCollectionItemSelectorURL() {
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "selectPreviewItem"));
-	}
-
 	private JSONObject _getFragmentCollectionOptionJSONObject() {
 		int fragmentCollectionsCount = _getFragmentCollectionsCount();
 
 		return JSONUtil.put(
-			"itemSelectorURL", _getFragmentCollectionItemSelectorURL()
-		).put(
 			"recentLayouts",
 			() -> {
 				List<FragmentCollection> fragmentCollections =
@@ -261,30 +245,6 @@ public class EditStyleBookEntryDisplayContext {
 					WorkflowConstants.STATUS_APPROVED);
 
 		return JSONUtil.put(
-			"itemSelectorURL",
-			() -> {
-				LayoutPageTemplateEntryItemSelectorCriterion
-					layoutPageTemplateEntryItemSelectorCriterion =
-						new LayoutPageTemplateEntryItemSelectorCriterion();
-
-				layoutPageTemplateEntryItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new LayoutPageTemplateEntryItemSelectorReturnType());
-				layoutPageTemplateEntryItemSelectorCriterion.setGroupId(
-					_getPreviewItemsGroupId());
-				layoutPageTemplateEntryItemSelectorCriterion.setLayoutTypes(
-					layoutTypes);
-
-				PortletURL entryItemSelectorURL =
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest),
-						_renderResponse.getNamespace() + "selectPreviewItem",
-						layoutPageTemplateEntryItemSelectorCriterion);
-
-				return entryItemSelectorURL.toString();
-			}
-		).put(
 			"recentLayouts",
 			() -> JSONUtil.putAll(
 				(JSONObject[])TransformUtil.transformToArray(
@@ -313,27 +273,6 @@ public class EditStyleBookEntryDisplayContext {
 			_getPreviewItemsGroupId());
 
 		return JSONUtil.put(
-			"itemSelectorURL",
-			() -> {
-				LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-					new LayoutItemSelectorCriterion();
-
-				layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new LayoutItemSelectorReturnType());
-
-				Group group = _themeDisplay.getScopeGroup();
-
-				layoutItemSelectorCriterion.setShowPrivatePages(
-					group.isPrivateLayoutsEnabled());
-
-				return String.valueOf(
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest),
-						_renderResponse.getNamespace() + "selectPreviewItem",
-						layoutItemSelectorCriterion));
-			}
-		).put(
 			"recentLayouts",
 			() -> {
 				List<Layout> layouts =
@@ -535,7 +474,6 @@ public class EditStyleBookEntryDisplayContext {
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private Long _previewItemsGroupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

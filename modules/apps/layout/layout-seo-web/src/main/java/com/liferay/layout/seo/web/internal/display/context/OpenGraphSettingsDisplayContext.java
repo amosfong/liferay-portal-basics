@@ -7,11 +7,6 @@ package com.liferay.layout.seo.web.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
@@ -36,7 +31,7 @@ public class OpenGraphSettingsDisplayContext {
 
 	public OpenGraphSettingsDisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		HttpServletRequest httpServletRequest,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -45,29 +40,12 @@ public class OpenGraphSettingsDisplayContext {
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
 		_httpServletRequest = httpServletRequest;
-		_itemSelector = itemSelector;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
 		_liferayPortletResponse = liferayPortletResponse;
 		_openGraphConfiguration = openGraphConfiguration;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public String getItemSelectorURL() {
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType(),
-			new URLItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() +
-					"openGraphImageSelectedItem",
-				imageItemSelectorCriterion));
 	}
 
 	public LayoutSEOSite getLayoutSEOSite() {
@@ -146,7 +124,6 @@ public class OpenGraphSettingsDisplayContext {
 	private final DLAppService _dlAppService;
 	private final DLURLHelper _dlurlHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final OpenGraphConfiguration _openGraphConfiguration;

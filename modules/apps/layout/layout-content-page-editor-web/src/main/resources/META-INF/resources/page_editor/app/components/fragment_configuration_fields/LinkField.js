@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
-import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
@@ -157,20 +156,6 @@ export default function LinkField({field, onValueSelect, value}) {
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>
-			)}
-
-			{source === SOURCE_OPTION_FROM_LAYOUT && (
-				<LayoutSelector
-					mappedLayout={nextValue?.layout}
-					onLayoutSelect={(layout) => {
-						if (layout && !!Object.keys(layout).length) {
-							handleChange({layout});
-						}
-						else {
-							handleChange({});
-						}
-					}}
-				/>
 			)}
 
 			{source === SOURCE_OPTION_FROM_CONTENT_FIELD && (

@@ -11,8 +11,6 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
-import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
 import com.liferay.layout.util.LayoutsTree;
@@ -57,12 +55,6 @@ public class ServletContextUtil {
 		return _layoutClassedModelUsagesHelperSnapshot.get();
 	}
 
-	public static LayoutListPermissionProviderRegistry
-		getLayoutListPermissionProviderRegistry() {
-
-		return _layoutListPermissionProviderRegistrySnapshot.get();
-	}
-
 	public static LayoutsTree getLayoutsTree() {
 		return _layoutsTreeSnapshot.get();
 	}
@@ -73,12 +65,6 @@ public class ServletContextUtil {
 
 	public static LayoutStructureRulesHelper getLayoutStructureRulesHelper() {
 		return _layoutStructureRulesHelperSnapshot.get();
-	}
-
-	public static ListObjectReferenceFactoryRegistry
-		getListObjectReferenceFactoryRegistry() {
-
-		return _listObjectReferenceFactoryRegistrySnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
@@ -103,10 +89,6 @@ public class ServletContextUtil {
 	private static final Snapshot<LayoutClassedModelUsagesHelper>
 		_layoutClassedModelUsagesHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutClassedModelUsagesHelper.class);
-	private static final Snapshot<LayoutListPermissionProviderRegistry>
-		_layoutListPermissionProviderRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class,
-			LayoutListPermissionProviderRegistry.class);
 	private static final Snapshot<LayoutsTree> _layoutsTreeSnapshot =
 		new Snapshot<>(ServletContextUtil.class, LayoutsTree.class);
 	private static final Snapshot<LayoutStructureProvider>
@@ -115,9 +97,6 @@ public class ServletContextUtil {
 	private static final Snapshot<LayoutStructureRulesHelper>
 		_layoutStructureRulesHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutStructureRulesHelper.class);
-	private static final Snapshot<ListObjectReferenceFactoryRegistry>
-		_listObjectReferenceFactoryRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, ListObjectReferenceFactoryRegistry.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,

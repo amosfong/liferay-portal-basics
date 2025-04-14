@@ -75,18 +75,3 @@ if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
 
 	<liferay-ui:message arguments="<%= mnhc.getType() %>" key="an-organization-of-type-x-cannot-have-children" />
 </liferay-ui:error>
-
-<div>
-	<react:component
-		module="{ParentOrganization} from users-admin-web"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"label", (parentOrganization != null) ? parentOrganization.getName() : ""
-			).put(
-				"parentOrganizationId", (parentOrganization != null) ? parentOrganization.getOrganizationId() : ""
-			).put(
-				"selectOrganizationRenderURL", userDisplayContext.getOrganizationItemSelectorURL(false)
-			).build()
-		%>'
-	/>
-</div>

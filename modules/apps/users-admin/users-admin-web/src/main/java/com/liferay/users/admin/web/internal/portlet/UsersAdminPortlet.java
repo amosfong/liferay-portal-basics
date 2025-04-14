@@ -5,7 +5,6 @@
 
 package com.liferay.users.admin.web.internal.portlet;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -52,16 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 public class UsersAdminPortlet extends MVCPortlet {
 
 	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(ItemSelector.class.getName(), itemSelector);
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Override
 	protected boolean callActionMethod(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
@@ -72,8 +61,5 @@ public class UsersAdminPortlet extends MVCPortlet {
 			return super.callActionMethod(actionRequest, actionResponse);
 		}
 	}
-
-	@Reference
-	protected ItemSelector itemSelector;
 
 }

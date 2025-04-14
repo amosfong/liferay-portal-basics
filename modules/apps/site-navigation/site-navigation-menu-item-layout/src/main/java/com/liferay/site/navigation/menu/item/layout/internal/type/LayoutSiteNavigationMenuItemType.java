@@ -8,9 +8,6 @@ package com.liferay.site.navigation.menu.item.layout.internal.type;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -148,28 +145,6 @@ public class LayoutSiteNavigationMenuItemType
 	@Override
 	public String getIcon() {
 		return "page";
-	}
-
-	@Override
-	public String getItemSelectorURL(HttpServletRequest httpServletRequest) {
-		RenderResponse renderResponse =
-			(RenderResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowBreadcrumb(false);
-		layoutItemSelectorCriterion.setMultiSelection(true);
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectItem",
-				layoutItemSelectorCriterion)
-		).buildString();
 	}
 
 	@Override
@@ -449,11 +424,6 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isItemSelector() {
-		return true;
-	}
-
-	@Override
 	public boolean isMultiSelection() {
 		return true;
 	}
@@ -488,9 +458,6 @@ public class LayoutSiteNavigationMenuItemType
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
-			_itemSelector);
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.USE_CUSTOM_NAME,
 			_isUseCustomName(siteNavigationMenuItem));
@@ -627,9 +594,6 @@ public class LayoutSiteNavigationMenuItemType
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSiteNavigationMenuItemType.class);
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

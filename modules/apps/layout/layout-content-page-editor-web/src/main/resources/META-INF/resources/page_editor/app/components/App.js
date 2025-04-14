@@ -32,7 +32,6 @@ import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag_and_drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
-import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreviewWrapper from './DragPreviewWrapper';
 import FocusManager from './FocusManager';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
@@ -60,8 +59,6 @@ export default function App({state}) {
 								<DisplayPagePreviewItemContextProvider>
 									<WidgetsContextProvider>
 										<AppHooks />
-
-										<DisplayPagePreviewItemSelector dark />
 
 										<DragPreviewWrapper />
 

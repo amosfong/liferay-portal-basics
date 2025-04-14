@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
@@ -44,19 +43,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class StyleBookPortlet extends MVCPortlet {
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			StyleBookWebKeys.ITEM_SELECTOR, _itemSelector);
-
-		super.doDispatch(renderRequest, renderResponse);
-	}
-
-	@Reference
-	private ItemSelector _itemSelector;
-
 }

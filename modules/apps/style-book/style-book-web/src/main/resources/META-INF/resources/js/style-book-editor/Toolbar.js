@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
-import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
 import Undo from './Undo';
 import UndoHistory from './UndoHistory';
@@ -30,18 +29,6 @@ export default React.memo(function Toolbar() {
 	return (
 		<div className="management-bar navbar style-book-editor__toolbar">
 			<ClayLayout.ContainerFluid>
-				<ul className="navbar-nav start">
-					{previewLayout?.url && (
-						<li className="nav-item">
-							<span className="font-weight-bold">
-								{`${Liferay.Language.get('preview')}`}
-							</span>
-
-							<PreviewSelector />
-						</li>
-					)}
-				</ul>
-
 				<ul className="end navbar-nav">
 					<li className="mr-2 nav-item">
 						<DraftStatus />

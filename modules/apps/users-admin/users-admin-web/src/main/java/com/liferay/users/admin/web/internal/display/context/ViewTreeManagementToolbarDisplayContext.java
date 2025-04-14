@@ -14,8 +14,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,7 +45,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.item.selector.UserOrganizationItemSelectorCriterion;
 import com.liferay.users.admin.web.internal.search.OrganizationUserChecker;
 import com.liferay.users.admin.web.internal.util.comparator.OrganizationUserNameComparator;
 
@@ -271,8 +268,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 								"organizationId",
 								String.valueOf(
 									_organization.getOrganizationId()));
-							dropdownItem.putData(
-								"selectUsersURL", _getSelectUsersURL());
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "assign-users"));
@@ -552,27 +547,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 		}
 
 		return navigationDropdownitems;
-	}
-
-	private String _getSelectUsersURL() {
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				ItemSelector.class.getName());
-
-		UserOrganizationItemSelectorCriterion
-			userOrganizationItemSelectorCriterion =
-				new UserOrganizationItemSelectorCriterion();
-
-		userOrganizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-		userOrganizationItemSelectorCriterion.setOrganizationId(
-			_organization.getOrganizationId());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "selectUsers",
-				userOrganizationItemSelectorCriterion));
 	}
 
 	private final String _displayStyle;

@@ -36,7 +36,6 @@ import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
 import {isLayoutDataItemDeleted} from '../../../../../../../app/utils/isLayoutDataItemDeleted';
 import useCache from '../../../../../../../app/utils/useCache';
-import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
 import {CommonStyles} from '../CommonStyles';
 import {FlexOptions} from '../FlexOptions';
 import {EmptyCollectionOptions} from './EmptyCollectionOptions';
@@ -294,29 +293,6 @@ export function CollectionGeneralPanel({item}) {
 					showCollapseIcon
 				>
 					<ClayPanel.Body>
-						{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-							<>
-								<CollectionSelector
-									collectionItem={collection}
-									itemSelectorURL={
-										config.collectionSelectorURL
-									}
-									label={Liferay.Language.get('collection')}
-									onBeforeCollectionSelect={
-										onBeforeCollectionSelect
-									}
-									onCollectionSelect={handleCollectionSelect}
-									optionsMenuItems={optionsMenuItems}
-								/>
-
-								{collection?.classPK && (
-									<VariationsPopover
-										classPK={collection.classPK}
-									/>
-								)}
-							</>
-						)}
-
 						{collection && (
 							<>
 								{selectedViewportSize ===

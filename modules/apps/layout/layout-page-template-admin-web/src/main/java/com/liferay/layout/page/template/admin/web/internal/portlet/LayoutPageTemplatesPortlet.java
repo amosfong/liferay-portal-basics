@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
@@ -138,8 +137,6 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebConfiguration.class.getName(),
 			_layoutPageTemplateAdminWebConfiguration);
-		renderRequest.setAttribute(
-			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		if ((scopeGroup != null) && scopeGroup.isCompany()) {
 			renderResponse.setTitle(
@@ -152,9 +149,6 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesPortlet.class);
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

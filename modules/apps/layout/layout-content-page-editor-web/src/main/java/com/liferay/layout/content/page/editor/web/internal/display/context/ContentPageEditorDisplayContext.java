@@ -14,15 +14,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -36,7 +27,6 @@ import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUt
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.converter.PaddingConverter;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -93,8 +83,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -140,7 +128,7 @@ public class ContentPageEditorDisplayContext {
 		FragmentEntryLocalService fragmentEntryLocalService,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
-		ItemSelector itemSelector, JSONFactory jsonFactory, Language language,
+		JSONFactory jsonFactory, Language language,
 		LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
@@ -162,7 +150,6 @@ public class ContentPageEditorDisplayContext {
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_fragmentEntryLocalService = fragmentEntryLocalService;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
-		_itemSelector = itemSelector;
 		_jsonFactory = jsonFactory;
 		this.language = language;
 		_layoutLocalService = layoutLocalService;
@@ -194,9 +181,6 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
-				"actionableInfoItemSelectorURL",
-				_getActionableInfoItemSelectorURL()
-			).put(
 				"addFragmentCompositionURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/add_fragment_composition")
@@ -439,16 +423,8 @@ public class ContentPageEditorDisplayContext {
 				"getUsersURL",
 				_getResourceURL("/layout_content_page_editor/get_users")
 			).put(
-				"imageSelectorURL", _getItemSelectorURL()
-			).put(
 				"imagesPath",
 				portal.getPathContext(httpServletRequest) + "/images"
-			).put(
-				"infoFieldItemSelectorURL", _getInfoFieldItemSelectorURL()
-			).put(
-				"infoItemSelectorURL", _getInfoItemSelectorURL()
-			).put(
-				"infoListSelectorURL", _getInfoListSelectorURL()
 			).put(
 				"isConversionDraft", _isConversionDraft()
 			).put(
@@ -464,8 +440,6 @@ public class ContentPageEditorDisplayContext {
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
 					portletRequest, "layoutConversionWarningMessages")
-			).put(
-				"layoutItemSelectorURL", _getLayoutItemSelectorURL()
 			).put(
 				"layoutType", String.valueOf(_getLayoutType())
 			).put(
@@ -554,9 +528,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(
-				"siteNavigationMenuItemSelectorURL",
-				_getSiteNavigationMenuItemSelectorURL()
-			).put(
 				"styleBookEnabled",
 				() -> {
 					Layout layout = themeDisplay.getLayout();
@@ -638,8 +609,6 @@ public class ContentPageEditorDisplayContext {
 				"updateRuleURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_rule")
-			).put(
-				"videoItemSelectorURL", _getVideoItemSelectorURL()
 			).put(
 				"workflowEnabled", isWorkflowEnabled()
 			).build()
@@ -896,10 +865,6 @@ public class ContentPageEditorDisplayContext {
 	protected final RenderResponse renderResponse;
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
-
-	private String _getActionableInfoItemSelectorURL() {
-		return StringPool.BLANK;
-	}
 
 	private Map<String, Object> _getAvailableLanguages() {
 		Map<String, Object> availableLanguages = new LinkedHashMap<>();
@@ -1224,42 +1189,6 @@ public class ContentPageEditorDisplayContext {
 		return fragmentEntryLinksMap;
 	}
 
-	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
-		if (_imageItemSelectorCriterion != null) {
-			return _imageItemSelectorCriterion;
-		}
-
-		ItemSelectorCriterion itemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
-		_imageItemSelectorCriterion = itemSelectorCriterion;
-
-		return _imageItemSelectorCriterion;
-	}
-
-	private String _getInfoFieldItemSelectorURL() {
-		return StringPool.BLANK;
-	}
-
-	private String _getInfoItemSelectorURL() {
-		return StringPool.BLANK;
-	}
-
-	private String _getInfoListSelectorURL() {
-		return StringPool.BLANK;
-	}
-
-	private String _getItemSelectorURL() {
-		return StringPool.BLANK;
-	}
-
-	private String _getLayoutItemSelectorURL() {
-		return StringPool.BLANK;
-	}
-
 	private LayoutStructure _getLayoutStructure() throws Exception {
 		if (_layoutStructure != null) {
 			return _layoutStructure;
@@ -1516,20 +1445,6 @@ public class ContentPageEditorDisplayContext {
 		return _restrictedItemIds;
 	}
 
-	private String _getSiteNavigationMenuItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteNavigationMenuItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new SiteNavigationMenuItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectSiteNavigationMenu",
-				itemSelectorCriterion));
-	}
-
 	private List<Map<String, Object>> _getStyleBooks() {
 		ArrayList<Map<String, Object>> styleBooks = new ArrayList<>();
 
@@ -1567,36 +1482,6 @@ public class ContentPageEditorDisplayContext {
 			"primary", "success", "danger", "warning", "info", "dark",
 			"gray-dark", "secondary", "light", "lighter", "white"
 		};
-	}
-
-	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
-		if (_urlItemSelectorCriterion != null) {
-			return _urlItemSelectorCriterion;
-		}
-
-		ItemSelectorCriterion itemSelectorCriterion =
-			new URLItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		_urlItemSelectorCriterion = itemSelectorCriterion;
-
-		return _urlItemSelectorCriterion;
-	}
-
-	private String _getVideoItemSelectorURL() {
-		VideoItemSelectorCriterion videoItemSelectorCriterion =
-			new VideoItemSelectorCriterion();
-
-		videoItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new VideoEmbeddableHTMLItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectVideo",
-				videoItemSelectorCriterion));
 	}
 
 	private boolean _hasPermissions(String actionId) {
@@ -1666,8 +1551,6 @@ public class ContentPageEditorDisplayContext {
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private Long _groupId;
-	private ItemSelectorCriterion _imageItemSelectorCriterion;
-	private final ItemSelector _itemSelector;
 	private final JSONFactory _jsonFactory;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryService
@@ -1685,7 +1568,6 @@ public class ContentPageEditorDisplayContext {
 	private List<Map<String, Object>> _sidebarPanels;
 	private final Staging _staging;
 	private final StyleBookEntryLocalService _styleBookEntryLocalService;
-	private ItemSelectorCriterion _urlItemSelectorCriterion;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

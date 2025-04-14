@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -33,10 +32,9 @@ public class EditCollectionConfigurationDisplayContext {
 
 	public EditCollectionConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ItemSelector itemSelector, RenderResponse renderResponse) {
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_itemSelector = itemSelector;
 		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -189,7 +187,6 @@ public class EditCollectionConfigurationDisplayContext {
 	private String _collectionLabel;
 	private final HttpServletRequest _httpServletRequest;
 	private String _itemId;
-	private final ItemSelector _itemSelector;
 	private Long _plid;
 	private String _redirect;
 	private final RenderResponse _renderResponse;

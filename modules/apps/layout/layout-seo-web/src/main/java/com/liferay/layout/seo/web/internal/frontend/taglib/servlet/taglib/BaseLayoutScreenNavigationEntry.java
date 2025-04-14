@@ -10,7 +10,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -97,7 +96,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 			LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
 			new LayoutsSEODisplayContext(
 				ddmStorageEngineManager, dlAppService, dlurlHelper,
-				itemSelector, layoutLocalService,
+				layoutLocalService,
 				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
 				layoutSEOSiteLocalService,
@@ -123,9 +122,6 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected DLURLHelper dlurlHelper;
-
-	@Reference
-	protected ItemSelector itemSelector;
 
 	@Reference
 	protected JSPRenderer jspRenderer;

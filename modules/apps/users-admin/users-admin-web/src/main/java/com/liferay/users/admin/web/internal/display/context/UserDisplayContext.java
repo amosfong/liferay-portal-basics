@@ -5,10 +5,6 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
@@ -42,8 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
-import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,26 +86,6 @@ public class UserDisplayContext {
 		return null;
 	}
 
-	public String getGroupItemSelectorURL() {
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				ItemSelector.class.getName());
-
-		SiteItemSelectorCriterion siteItemSelectorCriterion =
-			new SiteItemSelectorCriterion();
-
-		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new GroupItemSelectorReturnType());
-		siteItemSelectorCriterion.setIncludeCompany(false);
-		siteItemSelectorCriterion.setIncludeRecentSites(false);
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() + "selectGroup",
-				siteItemSelectorCriterion));
-	}
-
 	public List<Group> getGroups() throws PortalException {
 		if (_selUser == null) {
 			return Collections.emptyList();
@@ -142,29 +116,6 @@ public class UserDisplayContext {
 
 		return UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUser(
 			_selUser.getUserId());
-	}
-
-	public String getOrganizationItemSelectorURL(boolean multiSelection)
-		throws PortalException {
-
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				ItemSelector.class.getName());
-
-		OrganizationItemSelectorCriterion organizationItemSelectorCriterion =
-			new OrganizationItemSelectorCriterion();
-
-		organizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-		organizationItemSelectorCriterion.setMultiSelection(multiSelection);
-		organizationItemSelectorCriterion.setSelectedOrganizationIds(
-			_getSelectedOrganizationIds());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() + "selectOrganization",
-				organizationItemSelectorCriterion));
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
@@ -249,26 +200,6 @@ public class UserDisplayContext {
 	public List<UserGroupRole> getSiteRoles() throws PortalException {
 		return ListUtil.filter(
 			_getUserGroupRoles(), UserGroupRole::hasSiteRole);
-	}
-
-	public String getUserGroupItemSelectorURL() {
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				ItemSelector.class.getName());
-
-		UserGroupItemSelectorCriterion userGroupItemSelectorCriterion =
-			new UserGroupItemSelectorCriterion();
-
-		userGroupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-		userGroupItemSelectorCriterion.setFilterManageableUserGroups(
-			_initDisplayContext.isFilterManageableUserGroups());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() + "selectUserGroup",
-				userGroupItemSelectorCriterion));
 	}
 
 	public List<UserGroup> getUserGroups() {

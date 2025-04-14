@@ -7,10 +7,6 @@ package com.liferay.style.book.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -45,8 +41,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_itemSelector = (ItemSelector)renderRequest.getAttribute(
-			StyleBookWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -240,36 +234,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private String _getItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			UploadItemSelectorCriterion.builder(
-			).desiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType()
-			).extensions(
-				new String[] {".bmp", ".jpeg", ".jpg", ".png", ".tiff"}
-			).maxFileSize(
-				UploadServletRequestConfigurationProviderUtil.getMaxSize()
-			).portletId(
-				StyleBookPortletKeys.STYLE_BOOK
-			).repositoryName(
-				LanguageUtil.get(_httpServletRequest, "style-book")
-			).url(
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/style_book/upload_style_book_entry_preview"
-				).setParameter(
-					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-				).buildString()
-			).build();
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "changePreview",
-				itemSelectorCriterion));
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer() {
 
@@ -346,7 +310,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "updateStyleBookEntryPreview");
-			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"styleBookEntryId",
 				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
@@ -357,7 +320,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;

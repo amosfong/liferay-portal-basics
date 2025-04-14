@@ -8,10 +8,6 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
@@ -64,8 +60,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_itemSelector = (ItemSelector)renderRequest.getAttribute(
-			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 		_layout = LayoutLocalServiceUtil.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -372,36 +366,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 		};
 	}
 
-	private String _getItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			UploadItemSelectorCriterion.builder(
-			).desiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType()
-			).maxFileSize(
-				UploadServletRequestConfigurationProviderUtil.getMaxSize()
-			).portletId(
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
-			).repositoryName(
-				LanguageUtil.get(_themeDisplay.getLocale(), "master-page")
-			).url(
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/layout_page_template_admin" +
-						"/upload_layout_page_template_entry_preview"
-				).setParameter(
-					"layoutPageTemplateEntryId",
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-				).buildString()
-			).build();
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "changePreview",
-				itemSelectorCriterion));
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaulBlanktMasterLayoutActionUnsafeConsumer(
 			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry) {
@@ -550,7 +514,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "updateMasterLayoutPreview");
-			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
@@ -575,7 +538,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final Layout _layout;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;

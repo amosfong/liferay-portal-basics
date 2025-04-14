@@ -7,7 +7,6 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,11 +58,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	public DisplayPageTypeSiteNavigationMenuItemType(
 		DisplayPageTypeContext displayPageTypeContext,
-		ItemSelector itemSelector, JSPRenderer jspRenderer, Portal portal,
+		JSPRenderer jspRenderer, Portal portal,
 		ServletContext servletContext) {
 
 		_displayPageTypeContext = displayPageTypeContext;
-		_itemSelector = itemSelector;
 		_jspRenderer = jspRenderer;
 		_portal = portal;
 		_servletContext = servletContext;
@@ -145,19 +143,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	@Override
 	public String getIcon() {
 		return "page";
-	}
-
-	@Override
-	public String getItemSelectorURL(HttpServletRequest httpServletRequest) {
-		RenderResponse renderResponse =
-			(RenderResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				renderResponse.getNamespace() + "selectItem")
-		).buildString();
 	}
 
 	@Override
@@ -340,11 +325,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isItemSelector() {
-		return true;
-	}
-
-	@Override
 	public boolean isMultiSelection() {
 		return false;
 	}
@@ -359,7 +339,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		httpServletRequest.setAttribute(
 			DisplayPageTypeSiteNavigationMenuTypeDisplayContext.class.getName(),
 			new DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
-				_displayPageTypeContext, httpServletRequest, _itemSelector,
+				_displayPageTypeContext, httpServletRequest,
 				siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
@@ -371,7 +351,6 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		DisplayPageTypeSiteNavigationMenuItemType.class);
 
 	private final DisplayPageTypeContext _displayPageTypeContext;
-	private final ItemSelector _itemSelector;
 	private final JSPRenderer _jspRenderer;
 	private final Portal _portal;
 	private final ServletContext _servletContext;

@@ -49,39 +49,6 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 	<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>" />
 </div>
 
-<%
-String eventName = liferayPortletResponse.getNamespace() + "selectLayout";
-
-ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR);
-
-LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
-
-layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-layoutItemSelectorCriterion.setShowBreadcrumb(false);
-
-PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, layoutItemSelectorCriterion);
-
-if (selLayout != null) {
-	itemSelectorURL.setParameter("layoutUuid", selLayout.getUuid());
-}
-%>
-
-<clay:button
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"eventName", eventName
-		).put(
-			"itemSelectorURL", itemSelectorURL.toString()
-		).build()
-	%>'
-	cssClass="mb-4"
-	displayType="secondary"
-	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
-	label="choose"
-	propsTransformer="{ChooseLayoutButtonPropsTransformer} from site-navigation-menu-item-layout"
-	small="<%= true %>"
-/>
-
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
 	module="{EditLayout} from site-navigation-menu-item-layout"

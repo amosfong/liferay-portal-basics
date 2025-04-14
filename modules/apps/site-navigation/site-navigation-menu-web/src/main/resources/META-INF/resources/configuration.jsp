@@ -224,17 +224,11 @@ SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDis
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"itemSelectorNamespace", PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR)
-		).put(
 			"portletResource", HtmlUtil.escapeJS(portletResource)
 		).put(
 			"rootMenuItemEventName", siteNavigationMenuDisplayContext.getRootMenuItemEventName()
 		).put(
-			"rootMenuItemSelectorURL", siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL()
-		).put(
 			"siteNavigationMenuEventName", siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName()
-		).put(
-			"siteNavigationMenuItemSelectorURL", siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL()
 		).build()
 	%>'
 	module="{NavigationMenuConfiguration} from site-navigation-menu-web"

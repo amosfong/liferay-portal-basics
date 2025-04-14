@@ -9,7 +9,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
@@ -74,7 +73,7 @@ public class ContentPageLayoutEditorDisplayContext
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest,
-		ItemSelector itemSelector, JSONFactory jsonFactory, Language language,
+		JSONFactory jsonFactory, Language language,
 		LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LayoutSetLocalService layoutSetLocalService,
@@ -98,7 +97,7 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentCollectionManager, fragmentEntryLinkManager,
 			fragmentEntryLinkLocalService, fragmentEntryLocalService,
 			frontendTokenDefinitionRegistry, httpServletRequest,
-			itemSelector, jsonFactory, language, layoutLocalService,
+			jsonFactory, language, layoutLocalService,
 			layoutLockManager, layoutPageTemplateEntryLocalService,
 			layoutPageTemplateEntryService, layoutPermission,
 			layoutSetLocalService, pageEditorConfiguration, portal,

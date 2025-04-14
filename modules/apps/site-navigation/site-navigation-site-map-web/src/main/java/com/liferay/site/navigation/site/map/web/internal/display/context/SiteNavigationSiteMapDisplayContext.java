@@ -5,9 +5,6 @@
 
 package com.liferay.site.navigation.site.map.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -47,9 +44,6 @@ public class SiteNavigationSiteMapDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
-
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			ItemSelector.class.getName());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -129,23 +123,6 @@ public class SiteNavigationSiteMapDisplayContext {
 		}
 
 		return _displayStyleGroupKey;
-	}
-
-	public String getItemSelectorURL() {
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowBreadcrumb(false);
-		layoutItemSelectorCriterion.setMultiSelection(false);
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "selectLayout",
-				layoutItemSelectorCriterion)
-		).buildString();
 	}
 
 	public Layout getRootLayout() {
@@ -344,7 +321,6 @@ public class SiteNavigationSiteMapDisplayContext {
 	private String _displayStyleGroupKey;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _includeRootInTree;
-	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;

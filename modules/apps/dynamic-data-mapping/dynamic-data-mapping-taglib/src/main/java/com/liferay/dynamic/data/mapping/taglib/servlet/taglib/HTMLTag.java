@@ -13,9 +13,6 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseHTMLTag;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -189,22 +186,7 @@ public class HTMLTag extends BaseHTMLTag {
 	private String _getLayoutSelectorURL() {
 		String layoutSelectorURL = getLayoutSelectorURL();
 
-		if (Validator.isNotNull(layoutSelectorURL)) {
-			return layoutSelectorURL;
-		}
-
-		ItemSelector itemSelector = ServletContextUtil.getItemSelector();
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new UUIDItemSelectorReturnType());
-
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(getRequest()),
-				"selectLayout", layoutItemSelectorCriterion));
+		return layoutSelectorURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HTMLTag.class);

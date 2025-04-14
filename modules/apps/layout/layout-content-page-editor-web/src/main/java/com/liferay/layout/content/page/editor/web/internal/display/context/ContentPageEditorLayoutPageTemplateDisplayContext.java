@@ -9,8 +9,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
@@ -67,7 +65,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		FragmentEntryLocalService fragmentEntryLocalService,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
-		ItemSelector itemSelector, JSONFactory jsonFactory, Language language,
+		JSONFactory jsonFactory, Language language,
 		LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LayoutSetLocalService layoutSetLocalService,
@@ -87,7 +85,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			fragmentCollectionManager, fragmentEntryLinkManager,
 			fragmentEntryLinkLocalService, fragmentEntryLocalService,
 			frontendTokenDefinitionRegistry, httpServletRequest,
-			itemSelector, jsonFactory, language, layoutLocalService,
+			jsonFactory, language, layoutLocalService,
 			layoutLockManager, layoutPageTemplateEntryLocalService,
 			layoutPageTemplateEntryService, layoutPermission,
 			layoutSetLocalService, pageEditorConfiguration, portal,
@@ -95,7 +93,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			stagingGroupHelper, styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 
-		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}
 
@@ -236,7 +233,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		).build();
 	}
 
-	private final ItemSelector _itemSelector;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;
 

@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
@@ -54,7 +53,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_itemSelector, layoutActionsHelper, _layoutLocalService,
+				layoutActionsHelper, _layoutLocalService,
 				_layoutSetPrototypeHelper,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
@@ -80,9 +79,6 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 						layout.getLayoutId(), layout.isPrivateLayout());
 				}));
 	}
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

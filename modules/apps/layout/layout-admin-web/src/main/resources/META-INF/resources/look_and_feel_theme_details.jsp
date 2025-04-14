@@ -163,8 +163,6 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 				).put(
 					"lookAndFeelDetailURL", lookAndFeelDetailURL
 				).put(
-					"selectThemeURL", layoutsAdminDisplayContext.getSelectThemeURL()
-				).put(
 					"themeContainerId", liferayPortletResponse.getNamespace() + "currentThemeContainer"
 				).build()
 			%>'

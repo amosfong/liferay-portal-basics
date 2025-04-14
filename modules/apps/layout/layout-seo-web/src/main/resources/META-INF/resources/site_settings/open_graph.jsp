@@ -88,13 +88,3 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 		</div>
 	</div>
 </div>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"uploadOpenGraphImageURL", openGraphSettingsDisplayContext.getItemSelectorURL()
-		).build()
-	%>'
-	module="{openGraphSettings} from layout-seo-web"
-	servletContext="<%= application %>"
-/>

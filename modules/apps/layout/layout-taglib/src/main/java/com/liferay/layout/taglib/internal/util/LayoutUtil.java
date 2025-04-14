@@ -5,8 +5,6 @@
 
 package com.liferay.layout.taglib.internal.util;
 
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,42 +42,6 @@ public class LayoutUtil {
 			String itemSelectorReturnType, Layout layout,
 			ThemeDisplay themeDisplay)
 		throws Exception {
-
-		if (Objects.equals(
-				LayoutItemSelectorReturnType.class.getName(),
-				itemSelectorReturnType)) {
-
-			return JSONUtil.put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name", layout.getName(themeDisplay.getLocale())
-			).put(
-				"plid", layout.getPlid()
-			).put(
-				"previewURL",
-				() -> {
-					String layoutURL = HttpComponentsUtil.addParameter(
-						PortalUtil.getLayoutFullURL(layout, themeDisplay),
-						"p_l_mode", Constants.PREVIEW);
-
-					return HttpComponentsUtil.addParameter(
-						layoutURL, "p_p_auth",
-						AuthTokenUtil.getToken(httpServletRequest));
-				}
-			).put(
-				"private", layout.isPrivateLayout()
-			).put(
-				"url", PortalUtil.getLayoutFullURL(layout, themeDisplay)
-			).put(
-				"uuid", layout.getUuid()
-			).toString();
-		}
-		else if (Objects.equals(
-					UUIDItemSelectorReturnType.class.getName(),
-					itemSelectorReturnType)) {
-
-			return layout.getUuid();
-		}
 
 		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
 	}

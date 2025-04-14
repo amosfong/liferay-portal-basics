@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.portlet;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutUtilityPageThumbnailConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
@@ -183,8 +182,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				ItemSelector.class.getName(), _itemSelector);
-			renderRequest.setAttribute(
 				LayoutUtilityPageThumbnailConfiguration.class.getName(),
 				_layoutUtilityPageThumbnailConfiguration);
 
@@ -196,7 +193,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
-					_itemSelector, layoutActionsHelper, _layoutLocalService,
+					layoutActionsHelper, _layoutLocalService,
 					_layoutSetPrototypeHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse));
@@ -270,9 +267,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupProvider _groupProvider;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

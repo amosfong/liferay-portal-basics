@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
@@ -68,7 +67,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_itemSelector, layoutActionsHelper, _layoutLocalService,
+				layoutActionsHelper, _layoutLocalService,
 				_layoutSetPrototypeHelper,
 				_portal.getLiferayPortletRequest(resourceRequest),
 				_portal.getLiferayPortletResponse(resourceResponse));
@@ -86,9 +85,6 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 				layoutActionDropdownItemsProvider.getActionDropdownItems(
 					layout, false)));
 	}
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

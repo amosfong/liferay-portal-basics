@@ -9,7 +9,6 @@ import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -86,8 +85,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		httpServletRequest.setAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 		httpServletRequest.setAttribute(
-			SiteAdministrationWebKeys.ITEM_SELECTOR, _itemSelector);
-		httpServletRequest.setAttribute(
 			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER,
 			_recentGroupManager);
 
@@ -119,9 +116,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

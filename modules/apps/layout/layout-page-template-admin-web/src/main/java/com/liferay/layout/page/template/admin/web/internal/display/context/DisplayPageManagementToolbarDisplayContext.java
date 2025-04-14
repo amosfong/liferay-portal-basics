@@ -10,15 +10,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringBundler;
@@ -85,8 +82,6 @@ public class DisplayPageManagementToolbarDisplayContext
 								).setRedirect(
 									_themeDisplay.getURLCurrent()
 								).buildString());
-							dropdownItem.putData(
-								"itemSelectorURL", _getItemSelectorURL());
 							dropdownItem.setIcon("copy");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -121,8 +116,6 @@ public class DisplayPageManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "moveSelectedEntries");
-							dropdownItem.putData(
-								"itemSelectorURL", _getItemSelectorURL());
 							dropdownItem.putData(
 								"moveSelectedEntriesURL",
 								PortletURLBuilder.createActionURL(
@@ -357,34 +350,7 @@ public class DisplayPageManagementToolbarDisplayContext
 		).buildString();
 	}
 
-	private String _getItemSelectorURL() {
-		if (_itemSelectorURL != null) {
-			return _itemSelectorURL;
-		}
-
-		ItemSelector itemSelector =
-			(ItemSelector)httpServletRequest.getAttribute(
-				LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
-
-		LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
-			layoutPageTemplateCollectionTreeNodeItemSelectorCriterion =
-				new LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion();
-
-		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-
-		_itemSelectorURL = String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(
-					liferayPortletRequest),
-				liferayPortletResponse.getNamespace() + "selectFolder",
-				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion));
-
-		return _itemSelectorURL;
-	}
-
 	private final DisplayPageDisplayContext _displayPageDisplayContext;
-	private String _itemSelectorURL;
 	private final ThemeDisplay _themeDisplay;
 
 }

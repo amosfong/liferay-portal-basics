@@ -183,16 +183,6 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						</div>
 
 						<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
-
-						<liferay-frontend:component
-							context='<%=
-								HashMapBuilder.<String, Object>put(
-									"uploadOpenGraphImageURL", layoutsSEODisplayContext.getItemSelectorURL()
-								).build()
-							%>'
-							module="{openGraph} from layout-seo-web"
-							servletContext="<%= application %>"
-						/>
 					</c:otherwise>
 				</c:choose>
 			</clay:sheet-section>

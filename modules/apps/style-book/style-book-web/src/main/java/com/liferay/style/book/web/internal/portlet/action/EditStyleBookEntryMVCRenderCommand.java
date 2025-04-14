@@ -6,7 +6,6 @@
 package com.liferay.style.book.web.internal.portlet.action;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.site.provider.GroupURLProvider;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
@@ -36,7 +35,6 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			FrontendTokenDefinitionRegistry.class.getName(),
 			_frontendTokenDefinitionRegistry);
-		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
 			GroupURLProvider.class.getName(), _groupURLProvider);
 
@@ -48,8 +46,5 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 }

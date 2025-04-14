@@ -13,11 +13,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -82,7 +77,7 @@ public class LayoutsSEODisplayContext {
 	public LayoutsSEODisplayContext(
 		DDMStorageEngineManager ddmStorageEngineManager,
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
-		ItemSelector itemSelector, LayoutLocalService layoutLocalService,
+		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
@@ -93,7 +88,6 @@ public class LayoutsSEODisplayContext {
 		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
-		_itemSelector = itemSelector;
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
@@ -273,22 +267,6 @@ public class LayoutsSEODisplayContext {
 		}
 
 		return selLayoutSEOEntry.getGroupId();
-	}
-
-	public String getItemSelectorURL() {
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType(),
-			new URLItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() +
-					"openGraphImageSelectedItem",
-				imageItemSelectorCriterion));
 	}
 
 	public Long getLayoutId() {
@@ -753,7 +731,6 @@ public class LayoutsSEODisplayContext {
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private Long _layoutId;
 	private final LayoutLocalService _layoutLocalService;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;

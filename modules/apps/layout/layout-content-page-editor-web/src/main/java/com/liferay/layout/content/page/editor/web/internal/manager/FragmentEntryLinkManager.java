@@ -20,7 +20,6 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -629,9 +628,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSONFactory _jsonFactory;

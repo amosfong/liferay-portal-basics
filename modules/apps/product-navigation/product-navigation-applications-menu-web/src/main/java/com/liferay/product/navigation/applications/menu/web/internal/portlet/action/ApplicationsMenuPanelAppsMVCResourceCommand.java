@@ -10,8 +10,6 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
 import com.liferay.product.navigation.applications.menu.web.internal.util.ApplicationsMenuUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.site.provider.GroupURLProvider;
 
@@ -308,29 +305,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			}
 		}
 
-		if (max < 0) {
-			sitesJSONObject.put(
-				"viewAllURL",
-				_getViewAllURL(resourceRequest, resourceResponse));
-		}
-
 		return sitesJSONObject;
-	}
-
-	private String _getViewAllURL(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		SiteItemSelectorCriterion siteItemSelectorCriterion =
-			new SiteItemSelectorCriterion();
-
-		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(resourceRequest),
-				resourceResponse.getNamespace() + "selectSite",
-				siteItemSelectorCriterion));
 	}
 
 	private boolean _isApplicationMenuApp(
@@ -362,9 +337,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSONFactory _jsonFactory;

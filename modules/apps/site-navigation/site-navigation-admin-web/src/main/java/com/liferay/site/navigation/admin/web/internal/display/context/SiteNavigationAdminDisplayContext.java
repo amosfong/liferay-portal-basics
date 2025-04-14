@@ -375,16 +375,6 @@ public class SiteNavigationAdminDisplayContext {
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
 
-		if (siteNavigationMenuItemType.isItemSelector()) {
-			String itemSelectorURL =
-				siteNavigationMenuItemType.getItemSelectorURL(
-					_httpServletRequest);
-
-			if (Validator.isNotNull(itemSelectorURL)) {
-				return itemSelectorURL;
-			}
-		}
-
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
@@ -484,28 +474,13 @@ public class SiteNavigationAdminDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"addItemURL",
 				() -> {
-					if (!siteNavigationMenuItemType.isItemSelector()) {
-						return null;
-					}
-
-					RenderRequest renderRequest =
-						(RenderRequest)_httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_REQUEST);
-					RenderResponse renderResponse =
-						(RenderResponse)_httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-					return String.valueOf(
-						siteNavigationMenuItemType.getAddURL(
-							renderRequest, renderResponse));
+					return null;
 				}
 			).put(
 				"addTitle",
 				siteNavigationMenuItemType.getAddTitle(themeDisplay.getLocale())
 			).put(
 				"href", _getAddURL(siteNavigationMenuItemType)
-			).put(
-				"itemSelector", siteNavigationMenuItemType.isItemSelector()
 			).put(
 				"multiSelection", siteNavigationMenuItemType.isMultiSelection()
 			).put(

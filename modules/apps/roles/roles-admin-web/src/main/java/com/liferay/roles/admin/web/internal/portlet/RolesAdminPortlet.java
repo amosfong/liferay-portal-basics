@@ -10,7 +10,6 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -604,8 +603,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 			RolesAdminWebKeys.CURRENT_ROLE_TYPE,
 			_roleTypeContributorProvider.getRoleTypeContributor(type));
 		portletRequest.setAttribute(
-			RolesAdminWebKeys.ITEM_SELECTOR, _itemSelector);
-		portletRequest.setAttribute(
 			RolesAdminWebKeys.ROLE_TYPES,
 			_roleTypeContributorProvider.getRoleTypeContributors());
 
@@ -740,9 +737,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Localization _localization;

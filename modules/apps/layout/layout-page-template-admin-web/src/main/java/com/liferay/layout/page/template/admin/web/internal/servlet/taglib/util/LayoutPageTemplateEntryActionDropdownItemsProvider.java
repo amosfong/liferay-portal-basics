@@ -7,18 +7,12 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -72,8 +66,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
-			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 		_layoutPageTemplateAdminWebConfiguration =
 			(LayoutPageTemplateAdminWebConfiguration)
 				_httpServletRequest.getAttribute(
@@ -390,38 +382,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private String _getItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			UploadItemSelectorCriterion.builder(
-			).desiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType()
-			).extensions(
-				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions()
-			).maxFileSize(
-				UploadServletRequestConfigurationProviderUtil.getMaxSize()
-			).portletId(
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
-			).repositoryName(
-				LanguageUtil.get(_themeDisplay.getLocale(), "page-template")
-			).url(
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/layout_page_template_admin" +
-						"/upload_layout_page_template_entry_preview"
-				).setParameter(
-					"layoutPageTemplateEntryId",
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-				).buildString()
-			).build();
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_renderResponse.getNamespace() + "changePreview",
-				itemSelectorCriterion));
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMoveLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
 
@@ -429,21 +389,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			(RenderResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		LayoutPageTemplateCollectionItemSelectorCriterion
-			layoutPageTemplateCollectionItemSelectorCriterion =
-				new LayoutPageTemplateCollectionItemSelectorCriterion();
-
-		layoutPageTemplateCollectionItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			renderResponse.getNamespace() + "selectItem",
-			layoutPageTemplateCollectionItemSelectorCriterion);
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "moveLayoutPageTemplateEntry");
-			dropdownItem.putData("itemSelectorURL", itemSelectorURL.toString());
 			dropdownItem.putData(
 				"moveLayoutPageTemplateEntryURL",
 				PortletURLBuilder.createActionURL(
@@ -539,7 +486,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData(
 				"action", "updateLayoutPageTemplateEntryPreview");
-			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
@@ -637,7 +583,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final Layout _layout;
 	private final LayoutPageTemplateAdminWebConfiguration
 		_layoutPageTemplateAdminWebConfiguration;

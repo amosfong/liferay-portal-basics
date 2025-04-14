@@ -5,15 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.editor.configuration;
 
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -52,13 +44,6 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
-			getFileItemSelectorCriterion(), getLayoutItemSelectorURL());
-		PortletURL imageSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
-			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
-
 		jsonObject.put(
 			"allowedContent",
 			StringBundler.concat(
@@ -69,13 +54,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		).put(
 			"autoParagraph", false
 		).put(
-			"documentBrowseLinkUrl", itemSelectorURL.toString()
-		).put(
 			"extraPlugins", getExtraPluginsLists()
-		).put(
-			"filebrowserImageBrowseLinkUrl", imageSelectorURL.toString()
-		).put(
-			"filebrowserImageBrowseUrl", imageSelectorURL.toString()
 		).put(
 			"removePlugins", getRemovePluginsLists()
 		).put(
@@ -90,52 +69,12 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	protected String getExtraPluginsLists() {
 		return "autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
 			"ae_placeholder,ae_selectionregion,ae_tableresize," +
-				"ae_tabletools,ae_uicore,itemselector,media,adaptivemedia";
-	}
-
-	protected ItemSelectorCriterion getFileItemSelectorCriterion() {
-		ItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
-		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new DownloadURLItemSelectorReturnType());
-
-		return fileItemSelectorCriterion;
-	}
-
-	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new DownloadURLItemSelectorReturnType());
-
-		return itemSelectorCriterion;
-	}
-
-	protected ItemSelectorCriterion getLayoutItemSelectorURL() {
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		return layoutItemSelectorCriterion;
+				"ae_tabletools,ae_uicore,media,adaptivemedia";
 	}
 
 	protected String getRemovePluginsLists() {
 		return "contextmenu,elementspath,floatingspace,image,liststyle," +
 			"magicline,resize,tabletools,toolbar,ae_embed";
-	}
-
-	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
-		ItemSelectorCriterion itemSelectorCriterion =
-			new URLItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		return itemSelectorCriterion;
 	}
 
 	private String _getAllowedContentLists() {
@@ -316,9 +255,6 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;
 
 	private static final int _CKEDITOR_STYLE_INLINE = 2;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

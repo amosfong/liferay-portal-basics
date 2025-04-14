@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.action;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -66,8 +65,6 @@ public class SiteNavigationMenuConfigurationAction
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		httpServletRequest.setAttribute(
-			SiteNavigationMenuWebKeys.ITEM_SELECTOR, _itemSelector);
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY,
 			_siteNavigationMenuItemTypeRegistry);
@@ -198,9 +195,6 @@ public class SiteNavigationMenuConfigurationAction
 		portletPreferences.reset(
 			"siteNavigationMenuGroupExternalReferenceCode");
 	}
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;

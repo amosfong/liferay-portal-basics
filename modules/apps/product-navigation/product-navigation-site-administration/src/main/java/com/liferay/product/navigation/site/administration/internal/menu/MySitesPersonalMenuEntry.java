@@ -5,9 +5,6 @@
 
 package com.liferay.product.navigation.site.administration.internal.menu;
 
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -23,7 +20,6 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.taglib.aui.AUIUtil;
 
@@ -63,22 +59,10 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 		String eventName = namespace + "selectSite";
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			eventName, itemSelectorCriterion);
-
 		return JSONUtil.put(
 			"selectEventName", eventName
 		).put(
 			"title", _language.get(httpServletRequest, "select-site")
-		).put(
-			"url", itemSelectorURL.toString()
 		);
 	}
 
@@ -135,9 +119,6 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

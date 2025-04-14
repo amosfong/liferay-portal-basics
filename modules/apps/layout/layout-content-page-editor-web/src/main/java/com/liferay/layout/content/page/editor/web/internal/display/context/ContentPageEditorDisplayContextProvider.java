@@ -9,7 +9,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
@@ -80,7 +79,7 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_frontendTokenDefinitionRegistry, _groupLocalService,
-				httpServletRequest, _itemSelector, _jsonFactory,
+				httpServletRequest, _jsonFactory,
 				_language, _layoutLocalService, _layoutLockManager,
 				_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateEntryService,
@@ -98,7 +97,7 @@ public class ContentPageEditorDisplayContextProvider {
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_frontendTokenDefinitionRegistry, httpServletRequest,
-				_itemSelector, _jsonFactory, _language, _layoutLocalService,
+				_jsonFactory, _language, _layoutLocalService,
 				_layoutLockManager, _layoutSetLocalService,
 				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateEntryService, _layoutPermission,
@@ -129,7 +128,7 @@ public class ContentPageEditorDisplayContextProvider {
 			_fragmentCollectionManager, _fragmentEntryLinkManager,
 			_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 			_frontendTokenDefinitionRegistry, httpServletRequest,
-			_itemSelector, _jsonFactory, _language, _layoutLocalService,
+			_jsonFactory, _language, _layoutLocalService,
 			_layoutLockManager, _layoutSetLocalService,
 			_layoutPageTemplateEntryLocalService,
 			_layoutPageTemplateEntryService, _layoutPermission,
@@ -181,9 +180,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSONFactory _jsonFactory;

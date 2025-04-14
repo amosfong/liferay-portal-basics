@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.taglib.internal.servlet;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
@@ -15,16 +14,10 @@ import javax.servlet.ServletContext;
  */
 public class ServletContextUtil {
 
-	public static ItemSelector getItemSelector() {
-		return _itemSelectorSnapshot.get();
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
 
-	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
-		new Snapshot<>(ServletContextUtil.class, ItemSelector.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,
