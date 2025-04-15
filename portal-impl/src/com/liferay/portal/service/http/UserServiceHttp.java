@@ -347,9 +347,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			boolean sendEmail,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -364,8 +361,7 @@ public class UserServiceHttp {
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites, announcementsDelivers,
-				sendEmail, serviceContext);
+				emailAddresses, phones, websites, sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -462,9 +458,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			boolean sendEmail,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -480,7 +473,7 @@ public class UserServiceHttp {
 				suffixListTypeId, male, birthdayMonth, birthdayDay,
 				birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
 				userGroupIds, addresses, emailAddresses, phones, websites,
-				announcementsDelivers, sendEmail, serviceContext);
+				sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -613,9 +606,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			boolean sendEmail,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -631,8 +621,7 @@ public class UserServiceHttp {
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites, announcementsDelivers,
-				sendEmail, serviceContext);
+				emailAddresses, phones, websites, sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -730,9 +719,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			boolean sendEmail,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -749,7 +735,7 @@ public class UserServiceHttp {
 				suffixListTypeId, male, birthdayMonth, birthdayDay,
 				birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
 				userGroupIds, addresses, emailAddresses, phones, websites,
-				announcementsDelivers, sendEmail, serviceContext);
+				sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -3304,9 +3290,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -3324,8 +3307,7 @@ public class UserServiceHttp {
 				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 				jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupRoles, userGroupIds,
-				addresses, emailAddresses, phones, websites,
-				announcementsDelivers, serviceContext);
+				addresses, emailAddresses, phones, websites, serviceContext);
 
 			Object returnObj = null;
 
@@ -3376,9 +3358,6 @@ public class UserServiceHttp {
 				emailAddresses,
 			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -3397,7 +3376,7 @@ public class UserServiceHttp {
 				birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
 				jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 				userGroupIds, addresses, emailAddresses, phones, websites,
-				announcementsDelivers, serviceContext);
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -3591,8 +3570,7 @@ public class UserServiceHttp {
 		int.class, int.class, int.class, String.class, long[].class,
 		long[].class, long[].class, long[].class, java.util.List.class,
 		java.util.List.class, java.util.List.class, java.util.List.class,
-		java.util.List.class, boolean.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
+		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addUserParameterTypes8 = new Class[] {
 		long.class, boolean.class, String.class, String.class, boolean.class,
@@ -3609,7 +3587,7 @@ public class UserServiceHttp {
 		long.class, long.class, boolean.class, int.class, int.class, int.class,
 		String.class, long[].class, long[].class, long[].class, long[].class,
 		java.util.List.class, java.util.List.class, java.util.List.class,
-		java.util.List.class, java.util.List.class, boolean.class,
+		java.util.List.class, boolean.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addUserGroupUsersParameterTypes10 =
@@ -3632,7 +3610,7 @@ public class UserServiceHttp {
 			boolean.class, int.class, int.class, int.class, String.class,
 			long[].class, long[].class, long[].class, long[].class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
-			java.util.List.class, java.util.List.class, boolean.class,
+			java.util.List.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addUserWithWorkflowParameterTypes13 =
@@ -3653,8 +3631,7 @@ public class UserServiceHttp {
 			long.class, long.class, boolean.class, int.class, int.class,
 			int.class, String.class, long[].class, long[].class, long[].class,
 			long[].class, java.util.List.class, java.util.List.class,
-			java.util.List.class, java.util.List.class, java.util.List.class,
-			boolean.class,
+			java.util.List.class, java.util.List.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deletePortraitParameterTypes15 =
@@ -3849,7 +3826,7 @@ public class UserServiceHttp {
 		String.class, String.class, String.class, String.class, String.class,
 		long[].class, long[].class, long[].class, java.util.List.class,
 		long[].class, java.util.List.class, java.util.List.class,
-		java.util.List.class, java.util.List.class, java.util.List.class,
+		java.util.List.class, java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _updateUserParameterTypes78 = new Class[] {
@@ -3862,7 +3839,6 @@ public class UserServiceHttp {
 		String.class, long[].class, long[].class, long[].class,
 		java.util.List.class, long[].class, java.util.List.class,
 		java.util.List.class, java.util.List.class, java.util.List.class,
-		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _updateUserParameterTypes79 = new Class[] {

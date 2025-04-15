@@ -1291,17 +1291,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	 * Returns all the users who have not had any announcements of the type
-	 * delivered, excluding the default user.
-	 *
-	 * @param type the type of announcement
-	 * @return the users who have not had any annoucements of the type delivered
-	 */
-	public static List<User> getNoAnnouncementsDeliveries(String type) {
-		return getService().getNoAnnouncementsDeliveries(type);
-	}
-
-	/**
 	 * Returns all the users who do not belong to any groups, excluding the
 	 * default user.
 	 *

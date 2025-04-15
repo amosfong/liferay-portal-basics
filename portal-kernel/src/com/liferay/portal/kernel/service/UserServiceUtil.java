@@ -221,7 +221,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification about
 	 their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -242,8 +241,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -253,7 +250,7 @@ public class UserServiceUtil {
 			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, sendEmail, serviceContext);
+			sendEmail, serviceContext);
 	}
 
 	/**
@@ -368,7 +365,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification
 	 about their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -396,8 +392,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -407,7 +401,7 @@ public class UserServiceUtil {
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, sendEmail, serviceContext);
+			phones, websites, sendEmail, serviceContext);
 	}
 
 	/**
@@ -523,7 +517,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification about
 	 their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -544,8 +537,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -555,7 +546,7 @@ public class UserServiceUtil {
 			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, sendEmail, serviceContext);
+			sendEmail, serviceContext);
 	}
 
 	/**
@@ -670,7 +661,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification
 	 about their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -699,8 +689,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -710,7 +698,7 @@ public class UserServiceUtil {
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, sendEmail, serviceContext);
+			phones, websites, sendEmail, serviceContext);
 	}
 
 	/**
@@ -1651,7 +1639,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set the UUID (with the <code>uuid</code>
 	 attribute), asset category IDs, asset tag names, and expando
@@ -1676,8 +1663,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1690,7 +1675,7 @@ public class UserServiceUtil {
 			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 			twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
-			websites, announcementsDelivers, serviceContext);
+			websites, serviceContext);
 	}
 
 	/**
@@ -1739,7 +1724,6 @@ public class UserServiceUtil {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set the UUID (with the
 	 <code>uuid</code> attribute), asset category IDs, asset tag
@@ -1773,8 +1757,6 @@ public class UserServiceUtil {
 			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
 			List<com.liferay.portal.kernel.model.Phone> phones,
 			List<com.liferay.portal.kernel.model.Website> websites,
-			List<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1787,7 +1769,7 @@ public class UserServiceUtil {
 			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 			twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
-			websites, announcementsDelivers, serviceContext);
+			websites, serviceContext);
 	}
 
 	/**

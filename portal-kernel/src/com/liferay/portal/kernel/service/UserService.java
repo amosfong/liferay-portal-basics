@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -208,7 +207,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification about
 	 their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -226,9 +224,8 @@ public interface UserService extends BaseService {
 			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -335,7 +332,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification
 	 about their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -360,9 +356,8 @@ public interface UserService extends BaseService {
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -467,7 +462,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification about
 	 their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -485,9 +479,8 @@ public interface UserService extends BaseService {
 			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -594,7 +587,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param sendEmail whether to send the user an email notification
 	 about their new account
 	 * @param serviceContext the service context to be applied (optionally
@@ -620,9 +612,8 @@ public interface UserService extends BaseService {
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -1380,7 +1371,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set the UUID (with the <code>uuid</code>
 	 attribute), asset category IDs, asset tag names, and expando
@@ -1402,7 +1392,6 @@ public interface UserService extends BaseService {
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -1452,7 +1441,6 @@ public interface UserService extends BaseService {
 	 * @param emailAddresses the user's email addresses
 	 * @param phones the user's phone numbers
 	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set the UUID (with the
 	 <code>uuid</code> attribute), asset category IDs, asset tag
@@ -1483,7 +1471,6 @@ public interface UserService extends BaseService {
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException;
 
