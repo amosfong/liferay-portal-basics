@@ -51,7 +51,8 @@ public class GetFormFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		try {
 			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, JSONFactoryUtil.createJSONArray());
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get form fields", exception);

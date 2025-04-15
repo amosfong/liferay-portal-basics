@@ -15,7 +15,6 @@ Object[] objArray = (Object[])row.getObject();
 String target = (String)objArray[3];
 long[] groupIdsArray = (long[])objArray[7];
 List<String> groupNames = (List<String>)objArray[8];
-String portletId = (String)objArray[9];
 %>
 
 <aui:input name='<%= "groupIds" + HtmlUtil.escapeAttribute(target) %>' type="hidden" value="<%= StringUtil.merge(groupIdsArray) %>" />

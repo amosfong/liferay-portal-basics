@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -34,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -109,9 +105,8 @@ public class FragmentRendererControllerImpl
 					"Unable to render content of fragment entry ",
 					fragmentEntryLink.getFragmentEntryId(),
 					" with fragment entry link ",
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					" and PLID ", fragmentEntryLink.getPlid(), ": ",
-					throwable.getMessage()),
+					fragmentEntryLink.getFragmentEntryLinkId(), " and PLID ",
+					fragmentEntryLink.getPlid(), ": ", throwable.getMessage()),
 				exception);
 
 			SessionErrors.add(

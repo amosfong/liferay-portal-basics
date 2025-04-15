@@ -115,11 +115,8 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if (themeDisplay == null) {
-			return;
-		}
-
-		if (interaction.equals(
+		if ((themeDisplay == null) ||
+			interaction.equals(
 				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
 
 			return;

@@ -51,11 +51,11 @@ public class UploadLayoutPageTemplateEntryPreviewMVCActionCommand
 			_defaultUploadResponseHandler, actionRequest, actionResponse);
 	}
 
-	@Reference
-	private DLAppService _dlAppService;
-
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"

@@ -11,7 +11,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
@@ -116,12 +114,10 @@ public class GetFragmentEntryLinksMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		jsonObject =
-			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-				defaultFragmentRendererContext, fragmentEntryLink,
-				_portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse),
-				layoutStructure);
+		jsonObject = _fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+			defaultFragmentRendererContext, fragmentEntryLink,
+			_portal.getHttpServletRequest(resourceRequest),
+			_portal.getHttpServletResponse(resourceResponse), layoutStructure);
 
 		if (SessionErrors.contains(
 				httpServletRequest, "fragmentEntryContentInvalid")) {

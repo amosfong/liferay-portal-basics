@@ -18,7 +18,6 @@ public interface FragmentEntryInputTemplateNodeContextHelper {
 
 	public InputTemplateNode toInputTemplateNode(
 		String defaultInputLabel, FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
-		Locale locale);
+		HttpServletRequest httpServletRequest, Locale locale);
 
 }

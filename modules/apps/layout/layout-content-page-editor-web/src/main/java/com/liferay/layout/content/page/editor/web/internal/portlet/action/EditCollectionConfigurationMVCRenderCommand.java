@@ -39,8 +39,7 @@ public class EditCollectionConfigurationMVCRenderCommand
 		renderRequest.setAttribute(
 			EditCollectionConfigurationDisplayContext.class.getName(),
 			new EditCollectionConfigurationDisplayContext(
-				_portal.getHttpServletRequest(renderRequest),
-				renderResponse));
+				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		LiferayRenderRequest liferayRenderRequest =
 			(LiferayRenderRequest)renderRequest;

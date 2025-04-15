@@ -5,8 +5,6 @@
 
 package com.liferay.document.library.internal.upgrade.v3_2_2;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

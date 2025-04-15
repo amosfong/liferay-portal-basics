@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.renderer.react.internal.renderer;
 
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;

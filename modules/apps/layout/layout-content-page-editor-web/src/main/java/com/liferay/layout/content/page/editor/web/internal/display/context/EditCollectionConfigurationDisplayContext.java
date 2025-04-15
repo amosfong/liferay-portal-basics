@@ -11,8 +11,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,8 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class EditCollectionConfigurationDisplayContext {
 
 	public EditCollectionConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
@@ -139,7 +136,7 @@ public class EditCollectionConfigurationDisplayContext {
 		return _type;
 	}
 
-	private String _getCollectionItemTypeLabel() {		
+	private String _getCollectionItemTypeLabel() {
 		return null;
 	}
 

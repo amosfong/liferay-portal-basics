@@ -31,10 +31,6 @@
 				/>
 			</div>
 
-			<%
-			Layout rootLayout = siteNavigationSiteMapDisplayContext.getRootLayout();
-			%>
-
 			<aui:select name="preferences--displayDepth--">
 				<aui:option label="unlimited" value="0" />
 

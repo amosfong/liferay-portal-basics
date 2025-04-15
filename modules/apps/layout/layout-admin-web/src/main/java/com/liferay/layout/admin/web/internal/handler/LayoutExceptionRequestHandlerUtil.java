@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.handler;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTRequiredModelException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
@@ -123,9 +122,7 @@ public class LayoutExceptionRequestHandlerUtil {
 
 		String errorMessage = null;
 
-		if (portalException instanceof
-					DuplicateFriendlyURLEntryException) {
-
+		if (portalException instanceof DuplicateFriendlyURLEntryException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"the-friendly-url-is-already-in-use.-please-enter-a-unique-" +

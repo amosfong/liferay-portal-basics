@@ -10,19 +10,13 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
-import com.liferay.layout.constants.LayoutWebKeys;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;;
+import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.util.CollectionPaginationUtil;
-import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -33,36 +27,28 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -174,8 +160,7 @@ public class LayoutStructureRenderer {
 
 		colTag.doStartTag();
 
-		_renderLayoutStructure(
-			columnLayoutStructureItem.getChildrenItemIds());
+		_renderLayoutStructure(columnLayoutStructureItem.getChildrenItemIds());
 
 		colTag.doEndTag();
 	}
@@ -410,8 +395,7 @@ public class LayoutStructureRenderer {
 				jspWriter.write("id=\"main-content\" role=\"main\">");
 			}
 
-			_renderLayoutStructure(
-				layoutStructureItem.getChildrenItemIds());
+			_renderLayoutStructure(layoutStructureItem.getChildrenItemIds());
 
 			if (Objects.equals(
 					_renderLayoutStructureDisplayContext.getLayoutMode(),
@@ -500,8 +484,7 @@ public class LayoutStructureRenderer {
 			LayoutStructureItem layoutStructureItem =
 				_layoutStructure.getLayoutStructureItem(childrenItemIds.get(i));
 
-			_renderLayoutStructure(
-				layoutStructureItem.getChildrenItemIds());
+			_renderLayoutStructure(layoutStructureItem.getChildrenItemIds());
 
 			jspWriter.write("</div>");
 		}
@@ -601,8 +584,7 @@ public class LayoutStructureRenderer {
 		}
 	}
 
-	private void _renderLayoutStructure(
-			List<String> childrenItemIds)
+	private void _renderLayoutStructure(List<String> childrenItemIds)
 		throws Exception {
 
 		Set<String> hiddenItemIds =
@@ -643,8 +625,7 @@ public class LayoutStructureRenderer {
 			else if (layoutStructureItem instanceof
 						DropZoneLayoutStructureItem) {
 
-				_renderDropZoneLayoutStructureItem(
-					layoutStructureItem);
+				_renderDropZoneLayoutStructureItem(layoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						FormStepContainerStyledLayoutStructureItem) {

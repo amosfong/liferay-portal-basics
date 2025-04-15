@@ -12,52 +12,16 @@ import com.liferay.fragment.input.template.parser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.layout.constants.LayoutWebKeys;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.math.BigDecimal;
-
-import java.text.DateFormat;
-
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,8 +52,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				locale));
 
 		String inputLabel = _getInputLabel(
-			defaultInputLabel, fragmentEntryLink.getEditableValues(),
-			locale);
+			defaultInputLabel, fragmentEntryLink.getEditableValues(), locale);
 
 		boolean localizable = false;
 		String name = "name";
@@ -115,7 +78,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			readOnly, required, inputShowHelpText, inputShowLabel, "type",
 			StringPool.BLANK);
 	}
-
 
 	private String _getInputLabel(
 		String defaultInputLabel, String editableValues, Locale locale) {

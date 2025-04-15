@@ -8,11 +8,9 @@ package com.liferay.fragment.entry.processor.helper;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Eudaldo Alonso

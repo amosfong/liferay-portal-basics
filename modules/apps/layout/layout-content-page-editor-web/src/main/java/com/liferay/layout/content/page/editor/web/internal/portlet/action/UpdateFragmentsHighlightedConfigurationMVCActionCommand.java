@@ -111,8 +111,9 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		FragmentEntry fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
-			groupId, fragmentEntryKey);
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
 
 		if (fragmentEntry != null) {
 			return _getFragmentUniqueKey(fragmentEntryKey, groupId);

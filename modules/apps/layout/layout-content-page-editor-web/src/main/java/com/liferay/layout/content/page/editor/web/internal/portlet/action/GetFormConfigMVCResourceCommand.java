@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -44,9 +43,9 @@ public class GetFormConfigMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference
-	private Portal _portal;
+	private JSONFactory _jsonFactory;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private Portal _portal;
 
 }

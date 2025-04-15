@@ -111,8 +111,7 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 	private static final JSONObject _defaultInputFragmentEntryKeysJSONObject =
 		JSONUtil.put(
 			FORM_INPUT_SUBMIT_BUTTON,
-			JSONUtil.put("key", "INPUTS-submit-button")
-		);
+			JSONUtil.put("key", "INPUTS-submit-button"));
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

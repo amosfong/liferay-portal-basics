@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -36,8 +34,7 @@ public class OpenGraphImageProvider {
 		DLAppLocalService dlAppLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlurlHelper,
-		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
-		Portal portal) {
+		LayoutSEOSiteLocalService layoutSEOSiteLocalService, Portal portal) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_dlurlHelper = dlurlHelper;
@@ -50,8 +47,8 @@ public class OpenGraphImageProvider {
 	}
 
 	public OpenGraphImage getOpenGraphImage(
-		Layout layout,
-		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
+		Layout layout, LayoutSEOEntry layoutSEOEntry,
+		ThemeDisplay themeDisplay) {
 
 		return _getFileEntryOpenGraphImage(
 			layout, layoutSEOEntry, themeDisplay);
@@ -78,8 +75,8 @@ public class OpenGraphImageProvider {
 	}
 
 	private OpenGraphImage _getFileEntryOpenGraphImage(
-		Layout layout,
-		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
+		Layout layout, LayoutSEOEntry layoutSEOEntry,
+		ThemeDisplay themeDisplay) {
 
 		try {
 			long openGraphImageFileEntryId = _getOpenGraphImageFileEntryId(
@@ -108,8 +105,7 @@ public class OpenGraphImageProvider {
 				@Override
 				public String getAlt() {
 					return _getImageAltTagValue(
-						layout, layoutSEOEntry,
-						themeDisplay.getLocale());
+						layout, layoutSEOEntry, themeDisplay.getLocale());
 				}
 
 				@Override
@@ -139,8 +135,7 @@ public class OpenGraphImageProvider {
 	}
 
 	private String _getImageAltTagValue(
-		Layout layout,
-		LayoutSEOEntry layoutSEOEntry, Locale locale) {
+		Layout layout, LayoutSEOEntry layoutSEOEntry, Locale locale) {
 
 		if ((layoutSEOEntry != null) &&
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
@@ -162,8 +157,8 @@ public class OpenGraphImageProvider {
 	}
 
 	private OpenGraphImage _getMappedOpenGraphImage(
-		Layout layout,
-		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
+		Layout layout, LayoutSEOEntry layoutSEOEntry,
+		ThemeDisplay themeDisplay) {
 
 		return null;
 	}

@@ -124,15 +124,15 @@ public class DDMServiceUpgradeStepRegistrator
 			"0.0.3", "1.0.0", new UpgradeCompanyId(),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.
 				DynamicDataMappingUpgradeProcess(
-					_classNameLocalService, _ddm,
-					ddmFormJSONDeserializer, ddmFormXSDDeserializer,
-					ddmFormLayoutSerializer, ddmFormSerializer,
-					ddmFormValuesDeserializer, ddmFormValuesSerializer,
-					_dlFileEntryLocalService, _dlFileVersionLocalService,
-					_dlFolderLocalService, _expandoRowLocalService,
-					_expandoTableLocalService, _expandoValueLocalService,
-					_resourceActions, _resourceLocalService,
-					_resourcePermissionLocalService, _store),
+					_classNameLocalService, _ddm, ddmFormJSONDeserializer,
+					ddmFormXSDDeserializer, ddmFormLayoutSerializer,
+					ddmFormSerializer, ddmFormValuesDeserializer,
+					ddmFormValuesSerializer, _dlFileEntryLocalService,
+					_dlFileVersionLocalService, _dlFolderLocalService,
+					_expandoRowLocalService, _expandoTableLocalService,
+					_expandoValueLocalService, _resourceActions,
+					_resourceLocalService, _resourcePermissionLocalService,
+					_store),
 			new UpgradeLastPublishDate());
 
 		registry.register(

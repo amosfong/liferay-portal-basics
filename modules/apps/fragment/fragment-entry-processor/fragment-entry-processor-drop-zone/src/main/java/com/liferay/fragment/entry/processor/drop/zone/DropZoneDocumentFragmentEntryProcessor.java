@@ -193,7 +193,6 @@ public class DropZoneDocumentFragmentEntryProcessor
 
 			element.replaceWith(dropZoneElement);
 		}
-
 	}
 
 	@Reference

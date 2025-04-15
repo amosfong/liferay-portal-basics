@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -103,7 +102,6 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
@@ -127,9 +125,8 @@ public class ContentPageEditorDisplayContext {
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentEntryLocalService fragmentEntryLocalService,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
-		HttpServletRequest httpServletRequest,
-		JSONFactory jsonFactory, Language language,
-		LayoutLocalService layoutLocalService,
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Language language, LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateEntryService layoutPageTemplateEntryService,

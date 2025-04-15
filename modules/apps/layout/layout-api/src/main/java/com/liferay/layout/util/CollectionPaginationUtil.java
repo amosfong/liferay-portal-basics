@@ -5,7 +5,6 @@
 
 package com.liferay.layout.util;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Objects;

@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

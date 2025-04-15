@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -134,8 +133,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getInputJSONObject(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
-		Locale locale) {
+		HttpServletRequest httpServletRequest, Locale locale) {
 
 		InputTemplateNode inputTemplateNode =
 			_fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(

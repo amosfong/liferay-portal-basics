@@ -25,27 +25,22 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,9 +59,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentEntryLocalService fragmentEntryLocalService,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
-		HttpServletRequest httpServletRequest,
-		JSONFactory jsonFactory, Language language,
-		LayoutLocalService layoutLocalService,
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Language language, LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LayoutSetLocalService layoutSetLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
@@ -84,12 +78,11 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			contentPageEditorSidebarPanels, contentManager,
 			fragmentCollectionManager, fragmentEntryLinkManager,
 			fragmentEntryLinkLocalService, fragmentEntryLocalService,
-			frontendTokenDefinitionRegistry, httpServletRequest,
-			jsonFactory, language, layoutLocalService,
-			layoutLockManager, layoutPageTemplateEntryLocalService,
-			layoutPageTemplateEntryService, layoutPermission,
-			layoutSetLocalService, pageEditorConfiguration, portal,
-			portletRequest, portletURLFactory, renderResponse, staging,
+			frontendTokenDefinitionRegistry, httpServletRequest, jsonFactory,
+			language, layoutLocalService, layoutLockManager,
+			layoutPageTemplateEntryLocalService, layoutPageTemplateEntryService,
+			layoutPermission, layoutSetLocalService, pageEditorConfiguration,
+			portal, portletRequest, portletURLFactory, renderResponse, staging,
 			stagingGroupHelper, styleBookEntryLocalService, userLocalService,
 			workflowDefinitionLinkLocalService);
 
@@ -146,8 +139,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				layoutPageTemplateEntry.getClassTypeId();
 
 		if (!mappingFieldsJSONObject.has(key)) {
-			mappingFieldsJSONObject.put(
-				key, JSONFactoryUtil.createJSONArray());
+			mappingFieldsJSONObject.put(key, JSONFactoryUtil.createJSONArray());
 		}
 
 		return mappingFieldsJSONObject;

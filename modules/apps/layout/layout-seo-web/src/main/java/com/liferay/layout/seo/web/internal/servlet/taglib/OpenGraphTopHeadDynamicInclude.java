@@ -194,8 +194,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					themeDisplay.getLocale());
 			}
 			else {
-				description = layout.getDescription(
-					themeDisplay.getLocale());
+				description = layout.getDescription(themeDisplay.getLocale());
 			}
 
 			ListMergeable<String> pageDescriptionListMergeable =

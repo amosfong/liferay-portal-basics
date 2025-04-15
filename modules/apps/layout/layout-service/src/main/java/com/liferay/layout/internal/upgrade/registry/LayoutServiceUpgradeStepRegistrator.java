@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.upgrade.registry;
 
-import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
 import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;

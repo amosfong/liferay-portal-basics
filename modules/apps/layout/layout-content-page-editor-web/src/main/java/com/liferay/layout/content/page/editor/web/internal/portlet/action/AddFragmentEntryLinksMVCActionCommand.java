@@ -129,7 +129,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 			String fragmentEntryKey = ParamUtil.getString(
 				actionRequest, "fragmentEntryKey");
-			
+
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 			FragmentComposition fragmentComposition =
