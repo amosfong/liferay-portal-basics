@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
-import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -346,29 +345,14 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 				DLFileEntryTable.INSTANCE
 			).from(
 				DLFileEntryTable.INSTANCE
-			).innerJoinON(
-				RatingsEntryTable.INSTANCE,
-				RatingsEntryTable.INSTANCE.classNameId.eq(
-					_classNameLocalService.getClassNameId(
-						DLFileEntry.class.getName())
-				).and(
-					RatingsEntryTable.INSTANCE.classPK.eq(
-						DLFileEntryTable.INSTANCE.fileEntryId)
-				)
 			).where(
 				DLFileEntryTable.INSTANCE.groupId.eq(
 					groupId
-				).and(
-					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
-				).and(
-					RatingsEntryTable.INSTANCE.score.gte(score)
 				).and(
 					InlineSQLHelperUtil.getPermissionWherePredicate(
 						DLFileEntry.class,
 						DLFileEntryTable.INSTANCE.fileEntryId)
 				)
-			).orderBy(
-				RatingsEntryTable.INSTANCE.modifiedDate.descending()
 			).limit(
 				start, end
 			));
@@ -477,22 +461,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 				DLFileEntryTable.INSTANCE.fileEntryId
 			).from(
 				DLFileEntryTable.INSTANCE
-			).innerJoinON(
-				RatingsEntryTable.INSTANCE,
-				RatingsEntryTable.INSTANCE.classNameId.eq(
-					_classNameLocalService.getClassNameId(
-						DLFileEntry.class.getName())
-				).and(
-					RatingsEntryTable.INSTANCE.classPK.eq(
-						DLFileEntryTable.INSTANCE.fileEntryId)
-				)
 			).where(
 				DLFileEntryTable.INSTANCE.groupId.eq(
 					groupId
-				).and(
-					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
-				).and(
-					RatingsEntryTable.INSTANCE.score.gte(score)
 				).and(
 					InlineSQLHelperUtil.getPermissionWherePredicate(
 						DLFileEntry.class,

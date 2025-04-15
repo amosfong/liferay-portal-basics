@@ -36,9 +36,6 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.runSQL("DROP_TABLE_IF_EXISTS(ClusterGroup)"));
 
 		upgradeVersionTreeMap.put(
-			new Version(7, 0, 0), new UpgradeRatingsStats());
-
-		upgradeVersionTreeMap.put(
 			new Version(7, 1, 0),
 			new CTModelUpgradeProcess(
 				"Layout",
@@ -76,9 +73,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 8, 0), new UpgradeExpandoMVCCVersion());
 
 		upgradeVersionTreeMap.put(
-			new Version(8, 9, 0), new UpgradeRatingsMVCCVersion());
-
-		upgradeVersionTreeMap.put(
 			new Version(8, 10, 0),
 			UpgradeProcessFactory.runSQL(
 				"delete from ResourceAction where name in ('136', '150', " +
@@ -88,10 +82,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 11, 0),
 			new CTModelUpgradeProcess(
 				"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 12, 0),
-			new CTModelUpgradeProcess("RatingsEntry", "RatingsStats"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 13, 0),

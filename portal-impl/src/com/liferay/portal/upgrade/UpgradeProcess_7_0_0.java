@@ -35,7 +35,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePostgreSQL;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepository;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
@@ -57,21 +56,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	@Override
 	public int getThreshold() {
 		return ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER;
-	}
-
-	public class RatingsEntryVerifiableUUIDModel
-		implements VerifiableUUIDModel {
-
-		@Override
-		public String getPrimaryKeyColumnName() {
-			return "entryId";
-		}
-
-		@Override
-		public String getTableName() {
-			return "RatingsEntry";
-		}
-
 	}
 
 	public class TeamVerifiableUUIDModel implements VerifiableUUIDModel {
@@ -122,7 +106,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradePortletDisplayTemplatePreferences());
 		upgrade(new UpgradePortletId());
 		upgrade(new UpgradePostgreSQL());
-		upgrade(new UpgradeRatings());
 		upgrade(new UpgradeRelease());
 		upgrade(new UpgradeRepository());
 		upgrade(new UpgradeRepositoryEntry());
@@ -143,7 +126,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	protected void populateUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
-				new RatingsEntryVerifiableUUIDModel(),
 				new TeamVerifiableUUIDModel());
 		}
 	}

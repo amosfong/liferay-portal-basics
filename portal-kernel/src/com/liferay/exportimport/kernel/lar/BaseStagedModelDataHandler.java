@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.ratings.kernel.model.RatingsEntry;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +92,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
 
 			exportComments(portletDataContext, stagedModel);
-			exportRatings(portletDataContext, stagedModel);
 
 			if (countStagedModel(portletDataContext, stagedModel)) {
 				manifestSummary.incrementModelAdditionCount(
@@ -366,7 +363,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			doImportStagedModel(portletDataContext, stagedModel);
 
 			importComments(portletDataContext, stagedModel);
-			importRatings(portletDataContext, stagedModel);
 
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
@@ -562,36 +558,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 	}
 
-	protected void exportRatings(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		if (!MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.PORTLET_DATA_ALL) &&
-			!MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.RATINGS)) {
-
-			return;
-		}
-
-		List<RatingsEntry> ratingsEntries =
-			RatingsEntryLocalServiceUtil.getEntries(
-				ExportImportClassedModelUtil.getClassName(stagedModel),
-				ExportImportClassedModelUtil.getClassPK(stagedModel));
-
-		if (ratingsEntries.isEmpty()) {
-			return;
-		}
-
-		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, ratingsEntry,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
-		}
-	}
-
 	protected int getProcessFlag() {
 
 		// Ordered by precedence
@@ -671,32 +637,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext, referenceElement);
 	}
 
-	protected void importRatings(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof ResourcedModel) {
-			ResourcedModel resourcedModel = (ResourcedModel)stagedModel;
-
-			if (!resourcedModel.isResourceMain()) {
-				return;
-			}
-		}
-
-		if (!MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.PORTLET_DATA_ALL) &&
-			!MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.RATINGS)) {
-
-			return;
-		}
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, stagedModel, RatingsEntry.class);
-	}
-
 	protected void importReferenceStagedModels(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -728,8 +668,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		for (Element referenceElement : referenceElements) {
 			String className = referenceElement.attributeValue("class-name");
 
-			if (className.equals(RatingsEntry.class.getName()) ||
-				className.equals(stagedModelClassName) ||
+			if (className.equals(stagedModelClassName) ||
 				ArrayUtil.contains(
 					getSkipImportReferenceStagedModelNames(), className,
 					false)) {

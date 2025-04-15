@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderServiceBaseImpl;
-import com.liferay.ratings.kernel.model.RatingsEntryTable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -229,28 +228,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 				DLFolderTable.INSTANCE
 			).from(
 				DLFolderTable.INSTANCE
-			).innerJoinON(
-				RatingsEntryTable.INSTANCE,
-				RatingsEntryTable.INSTANCE.classNameId.eq(
-					_classNameLocalService.getClassNameId(
-						DLFolder.class.getName())
-				).and(
-					RatingsEntryTable.INSTANCE.classPK.eq(
-						DLFolderTable.INSTANCE.folderId)
-				)
 			).where(
 				DLFolderTable.INSTANCE.groupId.eq(
 					groupId
 				).and(
-					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
-				).and(
-					RatingsEntryTable.INSTANCE.score.gte(score)
-				).and(
 					InlineSQLHelperUtil.getPermissionWherePredicate(
 						DLFolder.class, DLFolderTable.INSTANCE.folderId)
 				)
-			).orderBy(
-				RatingsEntryTable.INSTANCE.modifiedDate.descending()
 			).limit(
 				start, end
 			));
@@ -504,22 +488,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 				DLFolderTable.INSTANCE.folderId
 			).from(
 				DLFolderTable.INSTANCE
-			).innerJoinON(
-				RatingsEntryTable.INSTANCE,
-				RatingsEntryTable.INSTANCE.classNameId.eq(
-					_classNameLocalService.getClassNameId(
-						DLFolder.class.getName())
-				).and(
-					RatingsEntryTable.INSTANCE.classPK.eq(
-						DLFolderTable.INSTANCE.folderId)
-				)
 			).where(
 				DLFolderTable.INSTANCE.groupId.eq(
 					groupId
-				).and(
-					RatingsEntryTable.INSTANCE.userId.eq(getUserId())
-				).and(
-					RatingsEntryTable.INSTANCE.score.gte(score)
 				).and(
 					InlineSQLHelperUtil.getPermissionWherePredicate(
 						DLFolder.class, DLFolderTable.INSTANCE.folderId)

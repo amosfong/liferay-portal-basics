@@ -130,31 +130,31 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 		addSearchResult(
 			root, groupId, scopeGroupId, entryClassName, entryClassPK, title,
-			link, updated, summary, new String[0], 0, score, format);
+			link, updated, summary, new String[0], score, format);
 	}
 
 	protected void addSearchResult(
 		Element root, long groupId, long scopeGroupId, String entryClassName,
 		long entryClassPK, String title, String link, Date updated,
-		String summary, String[] tags, double ratings, double score,
+		String summary, String[] tags, double score,
 		String format) {
 
 		if (format.equals("rss")) {
 			addSearchResultRSS(
 				root, groupId, scopeGroupId, entryClassName, entryClassPK,
-				title, link, updated, summary, tags, ratings, score);
+				title, link, updated, summary, tags, score);
 		}
 		else {
 			addSearchResultAtom(
 				root, groupId, scopeGroupId, entryClassName, entryClassPK,
-				title, link, updated, summary, tags, ratings, score);
+				title, link, updated, summary, tags, score);
 		}
 	}
 
 	protected void addSearchResultAtom(
 		Element root, long groupId, long scopeGroupId, String entryClassName,
 		long entryClassPK, String title, String link, Date updated,
-		String summary, String[] tags, double ratings, double score) {
+		String summary, String[] tags, double score) {
 
 		// entry
 
@@ -218,11 +218,6 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 			entry, "tags", OpenSearchUtil.DEFAULT_NAMESPACE,
 			StringUtil.merge(tags));
 
-		// ratings
-
-		OpenSearchUtil.addElement(
-			entry, "ratings", OpenSearchUtil.DEFAULT_NAMESPACE, ratings);
-
 		// relevance:score
 
 		OpenSearchUtil.addElement(
@@ -232,7 +227,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 	protected void addSearchResultRSS(
 		Element root, long groupId, long scopeGroupId, String entryClassName,
 		long entryClassPK, String title, String link, Date updated,
-		String summary, String[] tags, double ratings, double score) {
+		String summary, String[] tags, double score) {
 
 		// item
 
@@ -280,11 +275,6 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 		OpenSearchUtil.addElement(
 			item, "tags", OpenSearchUtil.NO_NAMESPACE, StringUtil.merge(tags));
-
-		// ratings
-
-		OpenSearchUtil.addElement(
-			item, "ratings", OpenSearchUtil.NO_NAMESPACE, ratings);
 
 		// relevance:score
 

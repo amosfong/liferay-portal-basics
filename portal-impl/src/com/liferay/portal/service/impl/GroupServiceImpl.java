@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
-import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 
 import java.io.Serializable;
 
@@ -1112,10 +1111,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				oldGroup.getTypeSettingsProperties();
 
 			group = groupLocalService.updateGroup(groupId, typeSettings);
-
-			RatingsDataTransformerUtil.transformGroupRatingsData(
-				groupId, oldTypeSettingsUnicodeProperties,
-				group.getTypeSettingsProperties());
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, null, oldTypeSettingsUnicodeProperties);

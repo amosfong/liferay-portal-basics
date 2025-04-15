@@ -6,8 +6,6 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.ratings.kernel.model.RatingsEntry;
-import com.liferay.ratings.kernel.model.RatingsStats;
 
 import java.util.List;
 
@@ -24,10 +22,6 @@ public interface DiscussionComment extends Comment {
 	public int getDescendantCommentsCount();
 
 	public DiscussionComment getParentComment() throws PortalException;
-
-	public RatingsEntry getRatingsEntry();
-
-	public RatingsStats getRatingsStats();
 
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator();
 

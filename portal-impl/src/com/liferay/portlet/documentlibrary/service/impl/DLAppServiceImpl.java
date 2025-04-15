@@ -78,8 +78,6 @@ import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLPortletResourcePermissionUtil;
-import com.liferay.ratings.kernel.model.RatingsEntry;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -3253,17 +3251,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			latestFileVersion.getExpirationDate(),
 			latestFileVersion.getReviewDate(), serviceContext);
 
-		for (RatingsEntry ratingsEntry :
-				_ratingsEntryLocalService.getEntries(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId())) {
-
-			_ratingsEntryLocalService.updateEntry(
-				ratingsEntry.getUserId(), DLFileEntryConstants.getClassName(),
-				targetFileEntry.getFileEntryId(), ratingsEntry.getScore(),
-				serviceContext);
-		}
-
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
@@ -3336,17 +3323,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			_dlAppHelperLocalService.addFolder(
 				getUserId(), targetFolder, serviceContext);
-
-			for (RatingsEntry ratingsEntry :
-					_ratingsEntryLocalService.getEntries(
-						DLFolderConstants.getClassName(),
-						sourceFolder.getFolderId())) {
-
-				_ratingsEntryLocalService.updateEntry(
-					ratingsEntry.getUserId(), DLFolderConstants.getClassName(),
-					targetFolder.getFolderId(), ratingsEntry.getScore(),
-					serviceContext);
-			}
 
 			copyFolderDependencies(
 				sourceFolder, targetFolder, fromRepository, toRepository,
@@ -3481,18 +3457,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				_dlAppHelperLocalService.addFolder(
 					getUserId(), newFolder, serviceContext);
-
-				for (RatingsEntry ratingsEntry :
-						_ratingsEntryLocalService.getEntries(
-							DLFolderConstants.getClassName(),
-							currentFolder.getFolderId())) {
-
-					_ratingsEntryLocalService.updateEntry(
-						ratingsEntry.getUserId(),
-						DLFolderConstants.getClassName(),
-						newFolder.getFolderId(), ratingsEntry.getScore(),
-						serviceContext);
-				}
 
 				copyFolderDependencies(
 					currentFolder, newFolder, fromRepository, toRepository,
@@ -3687,9 +3651,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;
-
-	@BeanReference(type = RatingsEntryLocalService.class)
-	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;

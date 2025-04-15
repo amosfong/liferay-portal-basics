@@ -32,7 +32,6 @@ import com.liferay.portal.upgrade.v7_2_x.util.PasswordPolicyTable;
 import com.liferay.portal.upgrade.v7_2_x.util.PasswordTrackerTable;
 import com.liferay.portal.upgrade.v7_2_x.util.PhoneTable;
 import com.liferay.portal.upgrade.v7_2_x.util.PortletItemTable;
-import com.liferay.portal.upgrade.v7_2_x.util.RatingsEntryTable;
 import com.liferay.portal.upgrade.v7_2_x.util.ReleaseTable;
 import com.liferay.portal.upgrade.v7_2_x.util.RepositoryEntryTable;
 import com.liferay.portal.upgrade.v7_2_x.util.RepositoryTable;
@@ -71,7 +70,7 @@ public class UpgradeSQLServerDatetime
 		LayoutSetTable.class, LayoutTable.class, MembershipRequestTable.class,
 		OrganizationTable.class, PasswordPolicyTable.class,
 		PasswordTrackerTable.class, PhoneTable.class, PortletItemTable.class,
-		RatingsEntryTable.class, ReleaseTable.class, RepositoryEntryTable.class,
+		ReleaseTable.class, RepositoryEntryTable.class,
 		RepositoryTable.class, RoleTable.class, SystemEventTable.class,
 		TeamTable.class, TicketTable.class, UserGroupTable.class,
 		UserTable.class, UserTrackerPathTable.class, UserTrackerTable.class,

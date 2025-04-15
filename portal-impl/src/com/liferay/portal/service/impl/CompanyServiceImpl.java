@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 
 import java.io.InputStream;
 
@@ -368,9 +367,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		updateDisplay(company.getCompanyId(), languageId, timeZoneId);
 
 		updatePreferences(company.getCompanyId(), unicodeProperties);
-
-		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			companyId, oldCompanyPortletPreferences, unicodeProperties);
 
 		UsersAdminUtil.updateAddresses(
 			Company.class.getName(), company.getCompanyId(), addresses);

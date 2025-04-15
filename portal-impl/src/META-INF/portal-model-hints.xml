@@ -1569,29 +1569,4 @@
 	<model name="com.liferay.portal.kernel.workflow.WorkflowTask">
 		<field name="dueDate" type="Date" />
 	</model>
-	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
-		<field name="mvccVersion" type="long" />
-		<field name="uuid" type="String" />
-		<field name="entryId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="score" type="double" />
-	</model>
-	<model name="com.liferay.ratings.kernel.model.RatingsStats">
-		<field name="mvccVersion" type="long" />
-		<field name="statsId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="totalEntries" type="int" />
-		<field name="totalScore" type="double" />
-		<field name="averageScore" type="double" />
-	</model>
 </model-hints>

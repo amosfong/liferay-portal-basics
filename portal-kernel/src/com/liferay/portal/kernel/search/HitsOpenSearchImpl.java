@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.ratings.kernel.model.RatingsStats;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -161,28 +159,16 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 					tags = assetTagNamesField.getValues();
 				}
 
-				double ratings = 0.0;
-
 				String entryClassName = result.get(Field.ENTRY_CLASS_NAME);
 				long entryClassPK = GetterUtil.getLong(
 					result.get(Field.ENTRY_CLASS_PK));
-
-				if (Validator.isNotNull(entryClassName) && (entryClassPK > 0)) {
-					RatingsStats stats =
-						RatingsStatsLocalServiceUtil.fetchStats(
-							entryClassName, entryClassPK);
-
-					if (stats != null) {
-						ratings = stats.getTotalScore();
-					}
-				}
 
 				double score = results.score(i);
 
 				addSearchResult(
 					root, resultGroupId, resultScopeGroupId, entryClassName,
 					entryClassPK, summary.getTitle(), url, modifiedDate,
-					summary.getContent(), tags, ratings, score, format);
+					summary.getContent(), tags, score, format);
 			}
 
 			if (_log.isDebugEnabled()) {

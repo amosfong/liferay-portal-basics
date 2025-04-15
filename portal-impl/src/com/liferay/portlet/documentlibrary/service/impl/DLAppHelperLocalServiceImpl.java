@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.io.Serializable;
 
@@ -442,11 +441,6 @@ public class DLAppHelperLocalServiceImpl
 		// File shortcuts
 
 		_dlFileShortcutLocalService.deleteFileShortcuts(fileEntryId);
-
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			DLFileEntryConstants.getClassName(), fileEntryId);
 	}
 
 	@BeanReference(type = DLAppService.class)
@@ -463,9 +457,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@BeanReference(type = DLFileVersionPersistence.class)
 	private DLFileVersionPersistence _dlFileVersionPersistence;
-
-	@BeanReference(type = RatingsStatsLocalService.class)
-	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	/**
 	 * @see com.liferay.document.library.sync.constants.DLSyncConstants

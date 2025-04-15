@@ -311,11 +311,4 @@
 	<bean class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryModelArgumentsResolver" id="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryModelArgumentsResolver" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsModelArgumentsResolver" id="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsModelArgumentsResolver" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" />
 </beans>

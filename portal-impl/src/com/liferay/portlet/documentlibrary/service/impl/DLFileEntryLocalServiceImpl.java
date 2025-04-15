@@ -155,7 +155,6 @@ import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.io.File;
 import java.io.InputStream;
@@ -792,11 +791,6 @@ public class DLFileEntryLocalServiceImpl
 		// Expando
 
 		_expandoRowLocalService.deleteRows(dlFileEntry.getFileEntryId());
-
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 
 		// View count
 
@@ -4140,9 +4134,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;
-
-	@BeanReference(type = RatingsStatsLocalService.class)
-	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;

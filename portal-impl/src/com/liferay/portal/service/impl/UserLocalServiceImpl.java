@@ -190,7 +190,6 @@ import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -2043,11 +2042,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		_portletPreferencesLocalService.deletePortletPreferencesByOwnerId(
 			user.getUserId());
-
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			User.class.getName(), user.getUserId());
 
 		// Ticket
 
@@ -7171,9 +7165,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = PortletPreferencesLocalService.class)
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@BeanReference(type = RatingsStatsLocalService.class)
-	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@BeanReference(type = RecentLayoutBranchLocalService.class)
 	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;

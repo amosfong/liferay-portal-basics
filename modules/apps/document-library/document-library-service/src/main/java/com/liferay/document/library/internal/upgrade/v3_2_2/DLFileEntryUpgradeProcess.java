@@ -29,13 +29,6 @@ public class DLFileEntryUpgradeProcess extends UpgradeProcess {
 				"delete from DLFileShortcut where not exists (select * from ",
 				"DLFileEntry where fileEntryId = ",
 				"DLFileShortcut.toFileEntryId)"));
-
-		_delete(DLFileEntry.class, "AssetEntry", "DLFileEntry", "fileEntryId");
-		_delete(
-			DLFileEntry.class, "RatingsEntry", "DLFileEntry", "fileEntryId");
-		_delete(
-			DLFileEntry.class, "RatingsStats", "DLFileEntry", "fileEntryId");
-		_delete(DLFolder.class, "AssetEntry", "DLFolder", "folderId");
 	}
 
 	private void _delete(

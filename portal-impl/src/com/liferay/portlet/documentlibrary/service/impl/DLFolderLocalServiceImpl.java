@@ -86,7 +86,6 @@ import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.io.Serializable;
 
@@ -1249,11 +1248,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		_expandoRowLocalService.deleteRows(dlFolder.getFolderId());
 
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			DLFolder.class.getName(), dlFolder.getFolderId());
-
 		// Folder
 
 		dlFolderPersistence.remove(dlFolder);
@@ -1472,9 +1466,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
-
-	@BeanReference(type = RatingsStatsLocalService.class)
-	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@BeanReference(type = RepositoryLocalService.class)
 	private RepositoryLocalService _repositoryLocalService;
