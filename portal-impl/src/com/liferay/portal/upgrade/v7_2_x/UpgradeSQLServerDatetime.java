@@ -8,8 +8,6 @@ package com.liferay.portal.upgrade.v7_2_x;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.upgrade.v7_2_x.util.AccountTable;
 import com.liferay.portal.upgrade.v7_2_x.util.AddressTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AnnouncementsEntryTable;
-import com.liferay.portal.upgrade.v7_2_x.util.AnnouncementsFlagTable;
 import com.liferay.portal.upgrade.v7_2_x.util.ContactTable;
 import com.liferay.portal.upgrade.v7_2_x.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v7_2_x.util.DLFileEntryTypeTable;
@@ -62,8 +60,8 @@ public class UpgradeSQLServerDatetime
 	}
 
 	private static final Class<?>[] _TABLE_CLASSES = {
-		AccountTable.class, AddressTable.class, AnnouncementsEntryTable.class,
-		AnnouncementsFlagTable.class, ContactTable.class, DLFileEntryTable.class,
+		AccountTable.class, AddressTable.class,
+		ContactTable.class, DLFileEntryTable.class,
 		DLFileEntryTypeTable.class, DLFileShortcutTable.class,
 		DLFileVersionTable.class, DLFolderTable.class, EmailAddressTable.class,
 		ExpandoRowTable.class, ExportImportConfigurationTable.class,

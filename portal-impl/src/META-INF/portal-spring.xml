@@ -7,19 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService" />
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryService" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryModelArgumentsResolver" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence" />
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService" />
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsEntryService" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryModelArgumentsResolver" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder" />
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" />
-	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagService" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagModelArgumentsResolver" />
-	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" id="com.liferay.document.library.kernel.service.DLAppService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />

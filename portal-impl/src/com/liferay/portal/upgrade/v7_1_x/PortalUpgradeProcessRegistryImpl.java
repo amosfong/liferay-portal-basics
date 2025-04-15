@@ -65,12 +65,6 @@ public class PortalUpgradeProcessRegistryImpl
 				"UserGroup", "name", "VARCHAR(255) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(2, 0, 5), new UpgradeAnnouncementsPortletId());
-
-		upgradeVersionTreeMap.put(
-			new Version(2, 0, 6), new UpgradeAnnouncementsPortletPreferences());
-
-		upgradeVersionTreeMap.put(
 			new Version(2, 0, 7),
 			new UpgradeCalendarTimeFormatPortletPreferences());
 

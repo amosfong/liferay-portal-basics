@@ -5,8 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-import com.liferay.announcements.kernel.service.AnnouncementsDeliveryService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -452,7 +450,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  emailAddresses the user's email addresses
 	 * @param  phones the user's phone numbers
 	 * @param  websites the user's websites
-	 * @param  announcementsDelivers the announcements deliveries
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the service context to be applied (optionally
@@ -472,7 +469,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -487,7 +483,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites, announcementsDelivers,
+				emailAddresses, phones, websites,
 				sendEmail, serviceContext);
 		}
 		finally {
@@ -618,7 +614,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      emailAddresses the user's email addresses
 	 * @param      phones the user's phone numbers
 	 * @param      websites the user's websites
-	 * @param      announcementsDelivers the announcements deliveries
 	 * @param      sendEmail whether to send the user an email notification
 	 *             about their new account
 	 * @param      serviceContext the service context to be applied (optionally
@@ -645,7 +640,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
 			List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -660,7 +654,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites, announcementsDelivers,
+				emailAddresses, phones, websites,
 				sendEmail, serviceContext);
 		}
 		finally {
@@ -824,7 +818,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  emailAddresses the user's email addresses
 	 * @param  phones the user's phone numbers
 	 * @param  websites the user's websites
-	 * @param  announcementsDelivers the announcements deliveries
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the service context to be applied (optionally
@@ -844,7 +837,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -876,9 +868,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			UsersAdminUtil.updateWebsites(
 				Contact.class.getName(), user.getContactId(), websites);
-
-			updateAnnouncementsDeliveries(
-				user.getUserId(), announcementsDelivers);
 
 			if (indexingEnabled) {
 				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -1037,7 +1026,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      emailAddresses the user's email addresses
 	 * @param      phones the user's phone numbers
 	 * @param      websites the user's websites
-	 * @param      announcementsDelivers the announcements deliveries
 	 * @param      sendEmail whether to send the user an email notification
 	 *             about their new account
 	 * @param      serviceContext the service context to be applied (optionally
@@ -1065,7 +1053,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
 			List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1097,9 +1084,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			UsersAdminUtil.updateWebsites(
 				Contact.class.getName(), user.getContactId(), websites);
-
-			updateAnnouncementsDeliveries(
-				user.getUserId(), announcementsDelivers);
 
 			if (indexingEnabled) {
 				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2579,7 +2563,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  emailAddresses the user's email addresses
 	 * @param  phones the user's phone numbers
 	 * @param  websites the user's websites
-	 * @param  announcementsDelivers the announcements deliveries
 	 * @param  serviceContext the service context to be applied (optionally
 	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
 	 *         attribute), asset category IDs, asset tag names, and expando
@@ -2602,7 +2585,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2629,11 +2611,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		if (websites != null) {
 			UsersAdminUtil.updateWebsites(
 				Contact.class.getName(), user.getContactId(), websites);
-		}
-
-		if (announcementsDelivers != null) {
-			updateAnnouncementsDeliveries(
-				user.getUserId(), announcementsDelivers);
 		}
 
 		long curUserId = getUserId();
@@ -2938,7 +2915,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      emailAddresses the user's email addresses
 	 * @param      phones the user's phone numbers
 	 * @param      websites the user's websites
-	 * @param      announcementsDelivers the announcements deliveries
 	 * @param      serviceContext the service context to be applied (optionally
 	 *             <code>null</code>). Can set the UUID (with the
 	 *             <code>uuid</code> attribute), asset category IDs, asset tag
@@ -2970,7 +2946,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2997,11 +2972,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		if (websites != null) {
 			UsersAdminUtil.updateWebsites(
 				Contact.class.getName(), user.getContactId(), websites);
-		}
-
-		if (announcementsDelivers != null) {
-			updateAnnouncementsDeliveries(
-				user.getUserId(), announcementsDelivers);
 		}
 
 		long curUserId = getUserId();
@@ -3338,7 +3308,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 			twitterSn, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, null, null, null, null, null,
+			userGroupRoles, userGroupIds, null, null, null, null,
 			serviceContext);
 	}
 
@@ -3413,7 +3383,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, null, null,
-			null, null, null, serviceContext);
+			null, null, serviceContext);
 	}
 
 	protected void checkAddUserPermission(
@@ -3826,19 +3796,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
-	protected void updateAnnouncementsDeliveries(
-			long userId, List<AnnouncementsDelivery> announcementsDeliveries)
-		throws PortalException {
-
-		for (AnnouncementsDelivery announcementsDelivery :
-				announcementsDeliveries) {
-
-			_announcementsDeliveryService.updateDelivery(
-				userId, announcementsDelivery.getType(),
-				announcementsDelivery.isEmail(), announcementsDelivery.isSms());
-		}
-	}
-
 	protected void validateEmailAddress(User user, String emailAddress)
 		throws PortalException {
 
@@ -3972,9 +3929,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserServiceImpl.class);
-
-	@BeanReference(type = AnnouncementsDeliveryService.class)
-	private AnnouncementsDeliveryService _announcementsDeliveryService;
 
 	@BeanReference(type = CompanyPersistence.class)
 	private CompanyPersistence _companyPersistence;

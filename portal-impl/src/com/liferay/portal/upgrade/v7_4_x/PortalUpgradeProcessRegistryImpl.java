@@ -307,11 +307,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new CTModelUpgradeProcess("Address", "Phone"));
 
 		upgradeVersionTreeMap.put(
-			new Version(26, 3, 0),
-			new CTModelUpgradeProcess(
-				"AnnouncementsEntry", "AnnouncementsFlag"));
-
-		upgradeVersionTreeMap.put(
 			new Version(26, 4, 0),
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
@@ -375,10 +370,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(29, 2, 2),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.headless.builder.impl"}, null));
-
-		upgradeVersionTreeMap.put(
-			new Version(29, 3, 0),
-			new CTModelUpgradeProcess("AnnouncementsDelivery"));
 
 		upgradeVersionTreeMap.put(
 			new Version(30, 0, 0),

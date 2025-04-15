@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
@@ -2020,10 +2019,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		_userIdMapperLocalService.deleteUserIdMappers(user.getUserId());
 
-		// Announcements
-
-		_announcementsDeliveryLocalService.deleteDeliveries(user.getUserId());
-
 		// Expando
 
 		_expandoRowLocalService.deleteRows(user.getUserId());
@@ -2459,18 +2454,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				"usersRoles", roleId
 			).build(),
 			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the users who have not had any announcements of the type
-	 * delivered, excluding the default user.
-	 *
-	 * @param  type the type of announcement
-	 * @return the users who have not had any annoucements of the type delivered
-	 */
-	@Override
-	public List<User> getNoAnnouncementsDeliveries(String type) {
-		return userFinder.findByNoAnnouncementsDeliveries(type);
 	}
 
 	/**
@@ -5364,10 +5347,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userPersistence.setUserGroups(userId, userGroupIds);
 		}
 
-		// Announcements
-
-		_announcementsDeliveryLocalService.getUserDeliveries(user.getUserId());
-
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
@@ -7134,10 +7113,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static final Snapshot<UserFileUploadsSettings>
 		_userFileUploadsSettingsSnapshot = new Snapshot<>(
 			UserLocalServiceImpl.class, UserFileUploadsSettings.class);
-
-	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
-	private AnnouncementsDeliveryLocalService
-		_announcementsDeliveryLocalService;
 
 	private BatchProcessor<User> _batchProcessor;
 

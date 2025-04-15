@@ -5,7 +5,6 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -420,7 +419,7 @@ public class EditUserMVCActionCommand
 			male, birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
 			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), jobTitle, null, null,
-			null, null, null, null, null, null, null, null, serviceContext);
+			null, null, null, null, null, null, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;
@@ -510,7 +509,7 @@ public class EditUserMVCActionCommand
 			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
 			organizationIds, null, null, new ArrayList<Address>(),
 			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
-			new ArrayList<Website>(), new ArrayList<AnnouncementsDelivery>(),
+			new ArrayList<Website>(),
 			sendEmail, serviceContext);
 
 		byte[] portraitBytes = null;
