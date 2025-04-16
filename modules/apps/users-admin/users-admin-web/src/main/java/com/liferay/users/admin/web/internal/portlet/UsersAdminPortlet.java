@@ -6,7 +6,6 @@
 package com.liferay.users.admin.web.internal.portlet;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -49,17 +48,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class UsersAdminPortlet extends MVCPortlet {
-
-	@Override
-	protected boolean callActionMethod(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
-
-			return super.callActionMethod(actionRequest, actionResponse);
-		}
-	}
-
 }

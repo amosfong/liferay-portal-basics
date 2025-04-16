@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.handler;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
-import com.liferay.portal.kernel.change.tracking.CTRequiredModelException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -54,24 +53,6 @@ public class LayoutExceptionRequestHandlerUtil {
 		else if (exception instanceof PortalException) {
 			_handlePortalException(
 				actionRequest, actionResponse, (PortalException)exception);
-		}
-		else if (exception.getCause() instanceof CTRequiredModelException) {
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
-
-			JSONObject jsonObject = JSONUtil.put(
-				"errorMessage",
-				LanguageUtil.get(
-					PortalUtil.getLocale(actionRequest),
-					"item-cannot-be-deleted-because-it-is-being-modified-in-" +
-						"one-or-more-publications"));
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-
-			return;
 		}
 
 		throw exception;

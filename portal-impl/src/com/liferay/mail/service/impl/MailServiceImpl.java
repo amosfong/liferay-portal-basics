@@ -11,7 +11,6 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +46,6 @@ import javax.naming.InitialContext;
 /**
  * @author Brian Wing Shun Chan
  */
-@CTAware
 public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Clusterable

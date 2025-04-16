@@ -127,12 +127,7 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		String destinationName = jobDataMap.getString(
 			SchedulerEngine.DESTINATION_NAME);
 
-		if (destinationName.equals("liferay/ct_collection_scheduled_publish")) {
-			_getCompanyId(
-				companyIds, jobName, "CTCollection", "ctCollectionId",
-				message.getLong("ctCollectionId"));
-		}
-		else if (destinationName.equals("liferay/dispatch/executor")) {
+		if (destinationName.equals("liferay/dispatch/executor")) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				(String)message.getPayload());
 

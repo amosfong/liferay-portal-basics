@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
@@ -35,13 +34,6 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(6, 0, 3),
 			UpgradeProcessFactory.runSQL("DROP_TABLE_IF_EXISTS(ClusterGroup)"));
 
-		upgradeVersionTreeMap.put(
-			new Version(7, 1, 0),
-			new CTModelUpgradeProcess(
-				"Layout",
-				"LayoutFriendlyURL", "PortletPreferences",
-				"ResourcePermission"));
-
 		upgradeVersionTreeMap.put(new Version(8, 0, 0), new UpgradeSchema());
 
 		upgradeVersionTreeMap.put(
@@ -49,22 +41,6 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 4, 0), new UpgradeUserGroupRole());
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 5, 0),
-			new CTModelUpgradeProcess(
-				"Group_", "Groups_Orgs", "Groups_Roles", "Groups_UserGroups",
-				"Image", "LayoutSet", "Organization_", "Role_", "Team", "User_",
-				"UserGroup", "UserGroupGroupRole", "UserGroupRole",
-				"UserGroups_Teams", "Users_Groups", "Users_Orgs", "Users_Roles",
-				"Users_Teams", "Users_UserGroups", "VirtualHost"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 6, 0),
-			new CTModelUpgradeProcess(
-				"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
-				"DLFileEntryTypes_DLFolders", "DLFileShortcut", "DLFileVersion",
-				"DLFolder"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 7, 0), new UpgradeSocialMVCCVersion());
@@ -77,27 +53,6 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.runSQL(
 				"delete from ResourceAction where name in ('136', '150', " +
 					"'151', '152', '153', '157', '158')"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 11, 0),
-			new CTModelUpgradeProcess(
-				"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 13, 0),
-			new CTModelUpgradeProcess(
-				"WorkflowDefinitionLink", "WorkflowInstanceLink"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 14, 0),
-			new CTModelUpgradeProcess(
-				"SocialActivity", "SocialActivityAchievement",
-				"SocialActivityCounter", "SocialActivityLimit",
-				"SocialActivitySet", "SocialActivitySetting", "SocialRelation",
-				"SocialRequest"));
-
-		upgradeVersionTreeMap.put(
-			new Version(8, 15, 0), new CTModelUpgradeProcess("SystemEvent"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 16, 0), new UpgradeDLFileEntryType());

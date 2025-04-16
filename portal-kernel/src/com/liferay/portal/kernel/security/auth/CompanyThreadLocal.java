@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -174,17 +173,10 @@ public class CompanyThreadLocal {
 		}
 
 		_clearUserThreadLocals();
-
-		CTCollectionThreadLocal.removeCTCollectionId();
-	}
-
-	public static SafeCloseable setCompanyIdWithSafeCloseable(Long companyId) {
-		return setCompanyIdWithSafeCloseable(
-			companyId, CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION);
 	}
 
 	public static SafeCloseable setCompanyIdWithSafeCloseable(
-		Long companyId, Long ctCollectionId) {
+		Long companyId) {
 
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
 
@@ -215,10 +207,6 @@ public class CompanyThreadLocal {
 
 			_clearUserThreadLocals();
 		}
-
-		safeCloseables.add(
-			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-				ctCollectionId));
 
 		return () -> {
 			if (safeCloseables.size() > 1) {

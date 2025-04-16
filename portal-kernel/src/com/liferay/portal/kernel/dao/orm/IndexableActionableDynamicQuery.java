@@ -7,10 +7,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -113,27 +110,6 @@ public class IndexableActionableDynamicQuery
 		_documents.clear();
 
 		sendStatusMessage();
-	}
-
-	@Override
-	protected void performAction(Object object) throws PortalException {
-		long ctCollectionId = 0;
-
-		if (object instanceof CTModel) {
-			CTModel<?> ctModel = (CTModel<?>)object;
-
-			ctCollectionId = ctModel.getCtCollectionId();
-		}
-
-		try (SafeCloseable safeCloseable1 =
-				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-					CTSQLModeThreadLocal.CTSQLMode.DEFAULT);
-			SafeCloseable safeCloseable2 =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
-			super.performAction(object);
-		}
 	}
 
 	protected void sendStatusMessage() {

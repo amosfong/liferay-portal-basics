@@ -17,7 +17,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.image.ImageToolUtil;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,14 +101,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		long maxFileSize = UploadImageUtil.getMaxFileSize(actionRequest);
 
-		long ctCollectionId = ParamUtil.getLong(
-			actionRequest, "ctCollectionId",
-			CTCollectionThreadLocal.getCTCollectionId());
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
+		try {
 			UploadPortletRequest uploadPortletRequest =
 				_portal.getUploadPortletRequest(actionRequest);
 

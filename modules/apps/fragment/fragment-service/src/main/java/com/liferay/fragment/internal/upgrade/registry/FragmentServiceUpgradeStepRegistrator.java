@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -124,20 +123,6 @@ public class FragmentServiceUpgradeStepRegistrator
 			FragmentEntryVersionTable.create(),
 			new com.liferay.fragment.internal.upgrade.v2_6_0.
 				FragmentEntryVersionUpgradeProcess());
-
-		registry.register(
-			"2.6.0", "2.7.0",
-			new CTModelUpgradeProcess(
-				"FragmentCollection", "FragmentComposition", "FragmentEntry",
-				"FragmentEntryLink", "FragmentEntryVersion"),
-			new MVCCVersionUpgradeProcess() {
-
-				@Override
-				protected String[] getTableNames() {
-					return new String[] {"FragmentEntryVersion"};
-				}
-
-			});
 
 		registry.register("2.7.0", "2.7.1", new DummyUpgradeStep());
 

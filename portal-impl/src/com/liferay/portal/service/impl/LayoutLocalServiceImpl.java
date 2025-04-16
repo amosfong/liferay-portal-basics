@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.defaultpermissions.util.PortalDefaultPermissionsUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -4224,7 +4223,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
-		catch (CTTransactionException | PortalException exception) {
+		catch (PortalException exception) {
 			throw exception;
 		}
 		catch (Exception exception) {

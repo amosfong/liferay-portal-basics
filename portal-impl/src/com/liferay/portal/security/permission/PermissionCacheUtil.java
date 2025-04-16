@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.index.IndexEncoder;
 import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -143,10 +142,6 @@ public class PermissionCacheUtil {
 		long groupId, String name, String primKey, long[] roleIds,
 		String actionId) {
 
-		if (!CTCollectionThreadLocal.isProductionMode()) {
-			return null;
-		}
-
 		PermissionKey permissionKey = new PermissionKey(
 			groupId, name, primKey, roleIds, actionId);
 
@@ -154,10 +149,6 @@ public class PermissionCacheUtil {
 	}
 
 	public static UserBag getUserBag(long userId) {
-		if (!CTCollectionThreadLocal.isProductionMode()) {
-			return null;
-		}
-
 		return _userBagPortalCache.get(userId);
 	}
 
@@ -204,10 +195,6 @@ public class PermissionCacheUtil {
 		long groupId, String name, String primKey, long[] roleIds,
 		String actionId, Boolean value) {
 
-		if (!CTCollectionThreadLocal.isProductionMode()) {
-			return;
-		}
-
 		PermissionKey permissionKey = new PermissionKey(
 			groupId, name, primKey, roleIds, actionId);
 
@@ -216,10 +203,8 @@ public class PermissionCacheUtil {
 	}
 
 	public static void putUserBag(long userId, UserBag userBag) {
-		if (CTCollectionThreadLocal.isProductionMode()) {
-			PortalCacheHelperUtil.putWithoutReplicator(
-				_userBagPortalCache, userId, userBag);
-		}
+		PortalCacheHelperUtil.putWithoutReplicator(
+			_userBagPortalCache, userId, userBag);
 	}
 
 	public static void putUserGroupRoleIds(

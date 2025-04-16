@@ -21,7 +21,6 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResourceFactory;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResourceFactory;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.CTContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
@@ -109,7 +108,6 @@ public class VulcanFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(CacheContainerResponseFilter.class);
-		featureContext.register(CTContainerRequestFilter.class);
 		featureContext.register(DateParamConverterProvider.class);
 		featureContext.register(DocumentFileExtensionExceptionMapper.class);
 		featureContext.register(DocumentFileNameExceptionMapper.class);

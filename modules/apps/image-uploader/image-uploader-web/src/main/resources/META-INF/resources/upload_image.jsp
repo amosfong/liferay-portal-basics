@@ -9,7 +9,6 @@
 
 <%
 int aspectRatio = ParamUtil.getInteger(request, "aspectRatio");
-long ctCollectionId = ParamUtil.getLong(request, "ctCollectionId", CTCollectionThreadLocal.getCTCollectionId());
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
 long maxFileSize = UploadImageUtil.getMaxFileSize(renderRequest);
 boolean preserveRatio = ParamUtil.getBoolean(request, "preserveRatio");
@@ -20,7 +19,6 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/image_uploader/upload_image" var="previewURL">
 	<portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
-	<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
 </liferay-portlet:resourceURL>
 
 <c:choose>
@@ -59,7 +57,6 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 	<c:otherwise>
 		<portlet:actionURL name="/image_uploader/upload_image" var="uploadImageURL">
 			<portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
-			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
@@ -160,7 +157,6 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 			<portlet:actionURL name="/image_uploader/upload_image" var="addTempImageURL">
 				<portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
-				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
 				<portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />
 				<portlet:param name="preserveRatio" value="<%= String.valueOf(preserveRatio) %>" />
 			</portlet:actionURL>

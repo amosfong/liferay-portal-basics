@@ -10,7 +10,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
@@ -51,7 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.lock.model.Lock",
 	service = AopService.class
 )
-@CTAware
 public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override

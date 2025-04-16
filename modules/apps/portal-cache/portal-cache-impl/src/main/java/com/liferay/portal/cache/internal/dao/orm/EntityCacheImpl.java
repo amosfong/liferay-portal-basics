@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -132,17 +130,10 @@ public class EntityCacheImpl
 			mvcc = true;
 		}
 
-		if (CTModel.class.isAssignableFrom(clazz)) {
-			portalCache = new CTAwarePortalCache(
-				_multiVMPool, groupKey, mvcc,
-				DBPartition.isPartitionedModel(clazz));
-		}
-		else {
-			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					_multiVMPool.getPortalCache(
-						groupKey, mvcc, DBPartition.isPartitionedModel(clazz));
-		}
+		portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_multiVMPool.getPortalCache(
+					groupKey, mvcc, DBPartition.isPartitionedModel(clazz));
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -246,17 +237,9 @@ public class EntityCacheImpl
 		PortalCache<Serializable, Serializable> portalCache =
 			_portalCaches.remove(className);
 
-		if (portalCache instanceof CTAwarePortalCache) {
-			CTAwarePortalCache ctAwarePortalCache =
-				(CTAwarePortalCache)portalCache;
+		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-			ctAwarePortalCache.destroy();
-		}
-		else {
-			String groupKey = _GROUP_KEY_PREFIX.concat(className);
-
-			_multiVMPool.removePortalCache(groupKey);
-		}
+		_multiVMPool.removePortalCache(groupKey);
 	}
 
 	@Override
@@ -317,9 +300,7 @@ public class EntityCacheImpl
 	}
 
 	private boolean _isLocalCacheEnabled() {
-		if ((_localCache == null) ||
-			!CTCollectionThreadLocal.isProductionMode()) {
-
+		if (_localCache == null) {
 			return false;
 		}
 

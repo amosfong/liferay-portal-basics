@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -41,10 +40,6 @@ public class LayoutServiceUpgradeStepRegistrator
 		registry.register("1.0.0", "1.0.1", new LayoutUpgradeProcess());
 
 		registry.register("1.0.1", "1.1.0", new UpgradeCompanyId());
-
-		registry.register(
-			"1.1.0", "1.2.0",
-			new CTModelUpgradeProcess("LayoutClassedModelUsage"));
 
 		registry.register(
 			"1.2.1", "1.2.2", new LayoutSEOUpgradeProcess(_layoutLocalService));

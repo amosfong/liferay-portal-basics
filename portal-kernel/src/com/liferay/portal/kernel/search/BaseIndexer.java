@@ -11,7 +11,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -99,16 +97,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	public void delete(T object) throws SearchException {
 		if (object == null) {
 			return;
-		}
-
-		if (object instanceof CTModel<?>) {
-			CTModel<?> ctModel = (CTModel<?>)object;
-
-			if ((ctModel.getCtCollectionId() == 0) &&
-				!CTCollectionThreadLocal.isProductionMode()) {
-
-				return;
-			}
 		}
 
 		try {

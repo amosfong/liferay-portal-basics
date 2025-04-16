@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -318,27 +317,8 @@ public class DDMServiceUpgradeStepRegistrator
 		registry.register("3.2.8", "3.2.9", new DummyUpgradeStep());
 
 		registry.register(
-			"3.2.9", "3.3.0",
-			new CTModelUpgradeProcess(
-				"DDMStructure", "DDMStructureVersion", "DDMTemplate",
-				"DDMTemplateVersion"));
-
-		registry.register(
-			"3.3.0", "3.4.0",
-			new CTModelUpgradeProcess("DDMStructureLink", "DDMTemplateLink"));
-
-		registry.register(
 			"3.4.0", "3.5.0", DDMFormInstanceReportTable.create());
-
-		registry.register(
-			"3.5.0", "3.6.0",
-			new CTModelUpgradeProcess(
-				"DDMContent", "DDMDataProviderInstance",
-				"DDMDataProviderInstanceLink", "DDMFormInstance",
-				"DDMFormInstanceRecord", "DDMFormInstanceRecordVersion",
-				"DDMFormInstanceReport", "DDMFormInstanceVersion",
-				"DDMStorageLink", "DDMStructureLayout"));
-
+		
 		registry.register(
 			"3.6.0", "3.7.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_0.

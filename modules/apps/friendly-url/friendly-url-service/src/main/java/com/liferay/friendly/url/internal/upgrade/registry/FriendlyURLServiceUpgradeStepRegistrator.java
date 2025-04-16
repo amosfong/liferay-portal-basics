@@ -12,7 +12,6 @@ import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgrade
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -35,12 +34,6 @@ public class FriendlyURLServiceUpgradeStepRegistrator
 				new Class<?>[] {FriendlyURLEntryTable.class}));
 
 		registry.register("2.0.0", "3.0.0", new UpgradeCompanyId());
-
-		registry.register(
-			"3.0.0", "3.1.0",
-			new CTModelUpgradeProcess(
-				"FriendlyURLEntry", "FriendlyURLEntryLocalization",
-				"FriendlyURLEntryMapping"));
 
 		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
 

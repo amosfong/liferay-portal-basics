@@ -715,7 +715,7 @@ public class LayoutServiceContextHelperImpl
 			CompanyThreadLocal.setCompanyId(_originalCompanyId);
 			PermissionThreadLocal.setPermissionChecker(
 				_originalPermissionChecker);
-			PrincipalThreadLocal.setName(_originalName, false);
+			PrincipalThreadLocal.setName(_originalName);
 			ServiceContextThreadLocal.pushServiceContext(
 				_originalServiceContext);
 
@@ -827,7 +827,7 @@ public class LayoutServiceContextHelperImpl
 
 			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
-			PrincipalThreadLocal.setName(_user.getUserId(), false);
+			PrincipalThreadLocal.setName(_user.getUserId());
 
 			ServiceContext serviceContext = new ServiceContext();
 

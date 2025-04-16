@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,15 +39,7 @@ public class PrincipalThreadLocal {
 		setName(String.valueOf(name));
 	}
 
-	public static void setName(long name, boolean resetCTCollectionId) {
-		setName(String.valueOf(name), resetCTCollectionId);
-	}
-
 	public static void setName(String name) {
-		setName(name, true);
-	}
-
-	public static void setName(String name, boolean resetCTCollectionId) {
 		if (Objects.equals(_name.get(), name)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skip setName " + name);
@@ -62,10 +53,6 @@ public class PrincipalThreadLocal {
 		}
 
 		_name.set(name);
-
-		if (resetCTCollectionId) {
-			CTCollectionThreadLocal.removeCTCollectionId();
-		}
 	}
 
 	public static void setPassword(String password) {

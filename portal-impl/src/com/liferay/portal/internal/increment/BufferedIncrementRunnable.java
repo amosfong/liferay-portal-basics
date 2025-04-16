@@ -8,7 +8,6 @@ package com.liferay.portal.internal.increment;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,9 +57,7 @@ public class BufferedIncrementRunnable implements Runnable {
 					throwable);
 			}
 
-			if (_bufferedIncrementConfiguration.isStandbyEnabled() &&
-				CTCollectionThreadLocal.isProductionMode()) {
-
+			if (_bufferedIncrementConfiguration.isStandbyEnabled()) {
 				int queueLength = _queueLengthTracker.decrementAndGet();
 
 				long standbyTime =

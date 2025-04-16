@@ -23,7 +23,6 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.change.tracking.CTCollectionPreviewThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -768,19 +767,6 @@ public class PortalImpl implements Portal {
 				url = HttpComponentsUtil.setParameter(
 					url, "refererPlid", themeDisplay.getRefererPlid());
 			}
-		}
-
-		long previewCTCollectionId =
-			CTCollectionPreviewThreadLocal.getCTCollectionId();
-
-		if (previewCTCollectionId > -1) {
-			url = HttpComponentsUtil.setParameter(
-				url, "previewCTCollectionId", previewCTCollectionId);
-		}
-
-		if (CTCollectionPreviewThreadLocal.isIndicatorEnabled()) {
-			url = HttpComponentsUtil.setParameter(
-				url, "previewCTIndicator", true);
 		}
 
 		return url;

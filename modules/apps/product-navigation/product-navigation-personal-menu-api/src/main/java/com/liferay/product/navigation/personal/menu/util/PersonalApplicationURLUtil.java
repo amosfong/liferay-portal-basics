@@ -7,7 +7,6 @@ package com.liferay.product.navigation.personal.menu.util;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

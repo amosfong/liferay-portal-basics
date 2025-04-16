@@ -22,7 +22,6 @@ import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDa
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -660,9 +659,6 @@ public class SitesImpl implements Sites {
 			}
 
 			applyLayoutPrototype(layoutPrototype, layout, true);
-		}
-		catch (CTTransactionException ctTransactionException) {
-			throw ctTransactionException;
 		}
 		catch (Exception exception) {
 			_log.error(exception);

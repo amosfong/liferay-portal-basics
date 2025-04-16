@@ -7,7 +7,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,7 +29,6 @@ import java.util.function.Supplier;
 /**
  * @author Brian Wing Shun Chan
  */
-@CTAware
 public class ClassNameLocalServiceImpl
 	extends ClassNameLocalServiceBaseImpl implements CacheRegistryItem {
 

@@ -11,7 +11,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
@@ -128,11 +127,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		if (_mvccEnabled) {
 			bootstrapServiceRegistryBuilder.applyIntegrator(
-				new CTModelIntegrator());
-			bootstrapServiceRegistryBuilder.applyIntegrator(
 				MVCCEventListenerIntegrator.INSTANCE);
-
-			setEntityInterceptor(new CTSQLInterceptor());
 		}
 
 		setMetadataSources(

@@ -7,7 +7,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -38,7 +37,6 @@ import java.util.Map;
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
-@CTAware
 public class UserNotificationEventLocalServiceImpl
 	extends UserNotificationEventLocalServiceBaseImpl {
 

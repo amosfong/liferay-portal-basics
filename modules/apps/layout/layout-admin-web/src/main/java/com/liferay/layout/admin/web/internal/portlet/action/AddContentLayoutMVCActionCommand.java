@@ -11,7 +11,6 @@ import com.liferay.layout.admin.web.internal.security.permission.resource.Layout
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
-import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -161,19 +160,6 @@ public class AddContentLayoutMVCActionCommand
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
 				JSONUtil.put("redirectURL", redirectURL));
-		}
-		catch (CTTransactionException ctTransactionException) {
-			hideDefaultErrorMessage(actionRequest);
-
-			LiferayPortletResponse liferayPortletResponse =
-				portal.getLiferayPortletResponse(actionResponse);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"redirectURL", liferayPortletResponse.createRenderURL()));
-
-			throw ctTransactionException;
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, "layoutNameInvalid");

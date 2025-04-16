@@ -6,9 +6,7 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
-import com.liferay.portal.kernel.internal.service.persistence.change.tracking.CTTableMapper;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -72,22 +70,11 @@ public class TableMapperFactory {
 			Class<L> leftModelClass = leftPersistence.getModelClass();
 			Class<R> rightModelClass = rightPersistence.getModelClass();
 
-			if (CTModel.class.isAssignableFrom(leftModelClass) &&
-				CTModel.class.isAssignableFrom(rightModelClass)) {
-
-				tableMapper = new CTTableMapper<>(
-					tableName, companyColumnName, leftColumnName,
-					rightColumnName, leftModelClass, rightModelClass,
-					leftPersistence, rightPersistence,
-					_cachelessMappingTableNames.contains(tableName));
-			}
-			else {
-				tableMapper = new TableMapperImpl<>(
-					tableName, companyColumnName, leftColumnName,
-					rightColumnName, leftModelClass, rightModelClass,
-					leftPersistence, rightPersistence,
-					_cachelessMappingTableNames.contains(tableName));
-			}
+			tableMapper = new TableMapperImpl<>(
+				tableName, companyColumnName, leftColumnName,
+				rightColumnName, leftModelClass, rightModelClass,
+				leftPersistence, rightPersistence,
+				_cachelessMappingTableNames.contains(tableName));
 
 			_tableMappers.put(tableMapperKey, tableMapper);
 		}

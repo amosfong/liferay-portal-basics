@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DLValidatorImpl;
-import com.liferay.portal.upgrade.v6_2_0.util.DummyCTStoreFactoryImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -346,16 +344,12 @@ public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		ServiceRegistration<?> ctStoreFactoryServiceRegistration =
-			bundleContext.registerService(
-				CTStoreFactory.class, new DummyCTStoreFactoryImpl(), null);
 		ServiceRegistration<?> dlValidatorServiceRegistration =
 			bundleContext.registerService(
 				DLValidator.class, new DLValidatorImpl(), null);
 
 		updateAttachments();
 
-		ctStoreFactoryServiceRegistration.unregister();
 		dlValidatorServiceRegistration.unregister();
 	}
 

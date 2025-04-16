@@ -7,7 +7,6 @@ package com.liferay.site.navigation.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuItemTable;
@@ -45,11 +44,6 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 				}
 
 			});
-
-		registry.register(
-			"2.1.0", "2.2.0",
-			new CTModelUpgradeProcess(
-				"SiteNavigationMenu", "SiteNavigationMenuItem"));
 
 		registry.register(
 			"2.2.0", "2.3.0", new SiteNavigationMenuItemUpgradeProcess());

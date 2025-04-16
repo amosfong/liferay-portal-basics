@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -113,10 +112,6 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(new Version(13, 0, 0), new UpgradeAccount());
 
 		upgradeVersionTreeMap.put(new Version(13, 0, 1), new UpgradeLayout());
-
-		upgradeVersionTreeMap.put(
-			new Version(13, 3, 0),
-			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
 		upgradeVersionTreeMap.put(
 			new Version(13, 3, 1),
@@ -253,19 +248,12 @@ public class PortalUpgradeProcessRegistryImpl
 				"Role_", "description", "TEXT null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(25, 1, 0), new CTModelUpgradeProcess("EmailAddress"));
-
-		upgradeVersionTreeMap.put(
 			new Version(25, 1, 1),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.questions.web"}, null));
 
 		upgradeVersionTreeMap.put(
 			new Version(25, 1, 2), new DummyUpgradeProcess());
-
-		upgradeVersionTreeMap.put(
-			new Version(25, 2, 0),
-			new CTModelUpgradeProcess("LayoutPrototype"));
 
 		upgradeVersionTreeMap.put(
 			new Version(25, 3, 0),
@@ -303,10 +291,6 @@ public class PortalUpgradeProcessRegistryImpl
 				"indexNameNext VARCHAR(75)"));
 
 		upgradeVersionTreeMap.put(
-			new Version(26, 2, 0),
-			new CTModelUpgradeProcess("Address", "Phone"));
-
-		upgradeVersionTreeMap.put(
 			new Version(26, 4, 0),
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
@@ -340,12 +324,6 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(29, 0, 0), new UpgradeListTypeCompanyId());
-
-		upgradeVersionTreeMap.put(
-			new Version(29, 1, 0),
-			new CTModelUpgradeProcess(
-				"Country", "CountryLocalization", "Region",
-				"RegionLocalization"));
 
 		upgradeVersionTreeMap.put(
 			new Version(29, 1, 1), new DummyUpgradeProcess());

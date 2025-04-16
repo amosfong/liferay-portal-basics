@@ -11,7 +11,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -574,20 +572,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					roleIdActionIdsMap, selResource);
 			}
 
-			long ctCollectionId = 0;
-
-			if (_serviceTrackerMap.containsKey(selResource)) {
-				ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
-			}
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollectionId)) {
-
-				_resourcePermissionService.setIndividualResourcePermissions(
-					resourceGroupId, themeDisplay.getCompanyId(), selResource,
-					resourcePrimKey, roleIdActionIdsMap);
-			}
+			_resourcePermissionService.setIndividualResourcePermissions(
+				resourceGroupId, themeDisplay.getCompanyId(), selResource,
+				resourcePrimKey, roleIdActionIdsMap);
 
 			if (permissionPropagator != null) {
 				permissionPropagator.propagateRolePermissions(
@@ -619,25 +606,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 					"x-permissions-were-updated-successfully",
 					resourcePrimKeys.length));
 		}
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class, null,
-			(serviceReference, emitter) -> {
-				CTService<?> ctService = bundleContext.getService(
-					serviceReference);
-
-				Class<?> modelClass = ctService.getModelClass();
-
-				emitter.emit(modelClass.getName());
-			});
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -1168,8 +1136,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
-
-	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends LiferayPortletConfigWrapper {

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -41,7 +40,6 @@ import java.io.Serializable;
 /**
  * @author Daniel Kocsis
  */
-@CTAware
 public class ExportImportLocalServiceImpl
 	extends ExportImportLocalServiceBaseImpl {
 

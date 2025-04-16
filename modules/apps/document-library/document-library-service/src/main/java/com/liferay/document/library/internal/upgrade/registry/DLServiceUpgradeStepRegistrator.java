@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -75,18 +74,6 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"2.0.0", "3.0.0",
 			new ViewCountUpgradeProcess(
 				"DLFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
-
-		registry.register(
-			"3.0.1", "3.1.0",
-			new MVCCVersionUpgradeProcess() {
-
-				@Override
-				protected String[] getTableNames() {
-					return new String[] {"DLFileVersionPreview"};
-				}
-
-			},
-			new CTModelUpgradeProcess("DLFileVersionPreview"));
 
 		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
 
