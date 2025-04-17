@@ -162,21 +162,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Sharepoint Document Workspace Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.sharepoint.SharepointDocumentWorkspaceServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>Sharepoint Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.sharepoint.SharepointServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>Sharepoint Web Services Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.sharepoint.SharepointWebServicesServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Sitemap Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.SitemapServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -899,30 +884,6 @@
 	<servlet-mapping>
 		<servlet-name>Sitemap Servlet</servlet-name>
 		<url-pattern>/sitemap.xml</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Document Workspace Servlet</servlet-name>
-		<url-pattern>/sharepoint/_vti_bin/dws.asmx</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Servlet</servlet-name>
-		<url-pattern>/_vti_inf.html</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Servlet</servlet-name>
-		<url-pattern>/_vti_bin/shtml.dll/_vti_rpc</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Servlet</servlet-name>
-		<url-pattern>/sharepoint/_vti_bin/_vti_aut/author.dll</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Servlet</servlet-name>
-		<url-pattern>/sharepoint/_vti_bin/owssvr.dll</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Sharepoint Web Services Servlet</servlet-name>
-		<url-pattern>/_vti_bin/webs.asmx</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>
