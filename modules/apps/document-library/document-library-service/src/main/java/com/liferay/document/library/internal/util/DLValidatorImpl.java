@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +65,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 		name = _replaceDLNameBlacklist(name);
 
-		return _replaceDLWebDAVSubstitutionChar(name);
+		return name;
 	}
 
 	@Override
@@ -189,11 +188,6 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileName(String fileName) throws FileNameException {
 		if (!isValidName(fileName)) {
 			throw new FileNameException("Invalid file name " + fileName);
-		}
-
-		if (!DLWebDAVUtil.isRepresentableTitle(fileName)) {
-			throw new FileNameException(
-				"Unrepresentable WebDAV title for file name " + fileName);
 		}
 	}
 
@@ -393,12 +387,6 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		return title;
-	}
-
-	private String _replaceDLWebDAVSubstitutionChar(String title) {
-		return StringUtil.replace(
-			title, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR,
-			StringPool.UNDERLINE);
 	}
 
 	private volatile DLConfiguration _dlConfiguration;

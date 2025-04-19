@@ -1694,14 +1694,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setUserNotificationHandlerClasses(
 			userNotificationHandlerClasses);
 
-		portletModel.setWebDAVStorageToken(
-			GetterUtil.getString(
-				portletElement.elementText("webdav-storage-token"),
-				portletModel.getWebDAVStorageToken()));
-		portletModel.setWebDAVStorageClass(
-			GetterUtil.getString(
-				portletElement.elementText("webdav-storage-class"),
-				portletModel.getWebDAVStorageClass()));
 		portletModel.setXmlRpcMethodClass(
 			GetterUtil.getString(
 				portletElement.elementText("xml-rpc-method-class"),

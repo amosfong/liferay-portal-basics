@@ -46,10 +46,6 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 		</portlet:resourceURL>
 
 		<aui:input name="url" type="resource" value="<%= getTemplateURL %>" />
-
-		<c:if test="<%= Validator.isNotNull(editDDMTemplateDisplayContext.getRefererWebDAVToken()) %>">
-			<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, editDDMTemplateDisplayContext.getRefererWebDAVToken()) %>" />
-		</c:if>
 	</c:if>
 
 	<aui:input name="description" />

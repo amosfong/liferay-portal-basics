@@ -739,23 +739,6 @@ public class DDMTemplateWrapper
 	}
 
 	/**
-	 * Returns the WebDAV URL to access the template.
-	 *
-	 * @param themeDisplay the theme display needed to build the URL. It can
-	 set HTTPS access, the server name, the server port, the path
-	 context, and the scope group.
-	 * @param webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
-	@Override
-	public String getWebDavURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
-		String webDAVToken) {
-
-		return model.getWebDavURL(themeDisplay, webDAVToken);
-	}
-
-	/**
 	 * Returns <code>true</code> if this ddm template is cacheable.
 	 *
 	 * @return <code>true</code> if this ddm template is cacheable; <code>false</code> otherwise

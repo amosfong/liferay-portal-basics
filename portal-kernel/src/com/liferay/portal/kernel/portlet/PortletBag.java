@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.propagator.PermissionPropag
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 
@@ -171,15 +170,6 @@ public interface PortletBag extends Cloneable {
 		getUserNotificationDefinitionInstances();
 
 	public List<UserNotificationHandler> getUserNotificationHandlerInstances();
-
-	public WebDAVStorage getWebDAVStorageInstance();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getWebDAVStorageInstance()}
-	 */
-	@Deprecated
-	public List<WebDAVStorage> getWebDAVStorageInstances();
 
 	public List<WorkflowHandler<?>> getWorkflowHandlerInstances();
 

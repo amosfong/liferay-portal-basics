@@ -1505,18 +1505,6 @@
 		<field name="defaultVirtualHost" type="boolean" />
 		<field name="languageId" type="String" />
 	</model>
-	<model name="com.liferay.portal.kernel.model.WebDAVProps">
-		<field name="mvccVersion" type="long" />
-		<field name="webDavPropsId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="props" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-	</model>
 	<model name="com.liferay.portal.kernel.model.Website">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

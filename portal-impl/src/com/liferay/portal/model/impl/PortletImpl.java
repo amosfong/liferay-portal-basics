@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xmlrpc.Method;
@@ -156,8 +155,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String portletConfigurationListenerClass,
 		String portletLayoutListenerClass, String popMessageListenerClass,
 		String userNotificationDefinitions,
-		List<String> userNotificationHandlerClasses, String webDAVStorageToken,
-		String webDAVStorageClass, String xmlRpcMethodClass,
+		List<String> userNotificationHandlerClasses, String xmlRpcMethodClass,
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
 		String controlPanelEntryClass,
 		List<String> customAttributesDisplayClasses,
@@ -233,8 +231,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_popMessageListenerClass = popMessageListenerClass;
 		_userNotificationDefinitions = userNotificationDefinitions;
 		_userNotificationHandlerClasses = userNotificationHandlerClasses;
-		_webDAVStorageToken = webDAVStorageToken;
-		_webDAVStorageClass = webDAVStorageClass;
 		_xmlRpcMethodClass = xmlRpcMethodClass;
 		_controlPanelEntryCategory = controlPanelEntryCategory;
 		_controlPanelEntryWeight = controlPanelEntryWeight;
@@ -397,8 +393,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getTemplateHandlerClass(), getPortletConfigurationListenerClass(),
 			getPortletLayoutListenerClass(), getPopMessageListenerClass(),
 			getUserNotificationDefinitions(),
-			getUserNotificationHandlerClasses(), getWebDAVStorageToken(),
-			getWebDAVStorageClass(), getXmlRpcMethodClass(),
+			getUserNotificationHandlerClasses(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(),
 			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
@@ -2019,42 +2014,6 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public String getVirtualPath() {
 		return _virtualPath;
-	}
-
-	/**
-	 * Returns the name of the WebDAV storage class of the portlet.
-	 *
-	 * @return the name of the WebDAV storage class of the portlet
-	 */
-	@Override
-	public String getWebDAVStorageClass() {
-		return _webDAVStorageClass;
-	}
-
-	/**
-	 * Returns the name of the WebDAV storage instance of the portlet.
-	 *
-	 * @return the name of the WebDAV storage instance of the portlet
-	 */
-	@Override
-	public WebDAVStorage getWebDAVStorageInstance() {
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		if (portletBag == null) {
-			return null;
-		}
-
-		return portletBag.getWebDAVStorageInstance();
-	}
-
-	/**
-	 * Returns the name of the WebDAV storage token of the portlet.
-	 *
-	 * @return the name of the WebDAV storage token of the portlet
-	 */
-	@Override
-	public String getWebDAVStorageToken() {
-		return _webDAVStorageToken;
 	}
 
 	/**
@@ -3974,28 +3933,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the name of the WebDAV storage class of the portlet.
-	 *
-	 * @param webDAVStorageClass the name of the WebDAV storage class of the
-	 *        portlet
-	 */
-	@Override
-	public void setWebDAVStorageClass(String webDAVStorageClass) {
-		_webDAVStorageClass = webDAVStorageClass;
-	}
-
-	/**
-	 * Sets the name of the WebDAV storage token of the portlet.
-	 *
-	 * @param webDAVStorageToken the name of the WebDAV storage token of the
-	 *        portlet
-	 */
-	@Override
-	public void setWebDAVStorageToken(String webDAVStorageToken) {
-		_webDAVStorageToken = webDAVStorageToken;
-	}
-
-	/**
 	 * Sets the window states of the portlet.
 	 *
 	 * @param windowStates the window states of the portlet
@@ -4650,16 +4587,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The virtual path of the portlet.
 	 */
 	private String _virtualPath;
-
-	/**
-	 * The name of the WebDAV storage class of the portlet.
-	 */
-	private String _webDAVStorageClass;
-
-	/**
-	 * The name of the WebDAV storage token of the portlet.
-	 */
-	private String _webDAVStorageToken;
 
 	/**
 	 * The window states of the portlet.

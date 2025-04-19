@@ -110,7 +110,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.PortalInstances;
@@ -1264,21 +1263,6 @@ public class WebServerServlet extends HttpServlet {
 		throws Exception {
 
 		List<WebServerEntry> webServerEntries = new ArrayList<>();
-
-		List<Group> groups = WebDAVUtil.getGroups(user);
-
-		for (Group group : groups) {
-			if (_isDirectoryIndexingEnabled(group)) {
-				String name = HttpComponentsUtil.fixPath(
-					group.getFriendlyURL());
-
-				WebServerEntry webServerEntry = new WebServerEntry(
-					path, name + StringPool.SLASH, null, null,
-					group.getDescription(), 0);
-
-				webServerEntries.add(webServerEntry);
-			}
-		}
 
 		sendHTML(httpServletResponse, path, webServerEntries);
 	}

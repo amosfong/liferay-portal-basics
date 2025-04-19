@@ -127,22 +127,6 @@ public class EditDDMTemplateDisplayContext {
 		).build();
 	}
 
-	public String getRefererWebDAVToken() {
-		if (_refererWebDAVToken != null) {
-			return _refererWebDAVToken;
-		}
-
-		PortletConfig portletConfig =
-			(PortletConfig)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		_refererWebDAVToken = ParamUtil.getString(
-			httpServletRequest, "refererWebDAVToken",
-			portletConfig.getInitParameter("refererWebDAVToken"));
-
-		return _refererWebDAVToken;
-	}
-
 	public String getSmallImageSource() {
 		if (Validator.isNotNull(_smallImageSource)) {
 			return _smallImageSource;
@@ -372,7 +356,6 @@ public class EditDDMTemplateDisplayContext {
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private String _refererWebDAVToken;
 	private String _script;
 	private Boolean _smallImage;
 	private String _smallImageSource;

@@ -35,7 +35,7 @@ public interface ContentSecurityPolicyConfiguration {
 	public String policy();
 
 	@Meta.AD(
-		deflt = "/api/,/combo,/documents/,/image/,/layouttpl/,/o/,/webdav/",
+		deflt = "/api/,/combo,/documents/,/image/,/layouttpl/,/o/",
 		description = "content-security-policy-excluded-paths-help",
 		name = "excluded-paths", required = false
 	)

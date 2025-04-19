@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconComparator;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portlet.ActionRequestFactory;
@@ -998,15 +997,6 @@ public class PortletContainerImpl implements PortletContainer {
 		portletDisplay.setPortletName(portletConfig.getPortletName());
 		portletDisplay.setResourcePK(portletPrimaryKey);
 		portletDisplay.setRootPortletId(portlet.getRootPortletId());
-
-		WebDAVStorage webDAVStorage = portlet.getWebDAVStorageInstance();
-
-		if (webDAVStorage != null) {
-			portletDisplay.setWebDAVEnabled(true);
-		}
-		else {
-			portletDisplay.setWebDAVEnabled(false);
-		}
 
 		LiferayResourceRequest liferayResourceRequest = null;
 

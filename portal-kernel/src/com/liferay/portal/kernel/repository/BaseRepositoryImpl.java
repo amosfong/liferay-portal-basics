@@ -424,13 +424,6 @@ public abstract class BaseRepositoryImpl
 			long fileEntryId, ServiceContext serviceContext)
 		throws NoSuchRepositoryEntryException {
 
-		boolean webDAVCheckInMode = GetterUtil.getBoolean(
-			serviceContext.getAttribute(DL.WEBDAV_CHECK_IN_MODE));
-
-		if (webDAVCheckInMode) {
-			return;
-		}
-
 		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
 			fileEntryId);
 

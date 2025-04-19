@@ -66,18 +66,4 @@ public interface DLURLHelper {
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
 
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
-		throws PortalException;
-
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired)
-		throws PortalException;
-
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired, boolean officeExtensionRequired)
-		throws PortalException;
-
 }

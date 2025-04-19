@@ -1155,28 +1155,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public String getVirtualPath();
 
 	/**
-	 * Returns the name of the WebDAV storage class of the portlet.
-	 *
-	 * @return the name of the WebDAV storage class of the portlet
-	 */
-	public String getWebDAVStorageClass();
-
-	/**
-	 * Returns the name of the WebDAV storage instance of the portlet.
-	 *
-	 * @return the name of the WebDAV storage instance of the portlet
-	 */
-	public com.liferay.portal.kernel.webdav.WebDAVStorage
-		getWebDAVStorageInstance();
-
-	/**
-	 * Returns the name of the WebDAV storage token of the portlet.
-	 *
-	 * @return the name of the WebDAV storage token of the portlet
-	 */
-	public String getWebDAVStorageToken();
-
-	/**
 	 * Returns the window states of the portlet.
 	 *
 	 * @return window states of the portlet
@@ -2420,22 +2398,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @param virtualPath the virtual path of the portlet
 	 */
 	public void setVirtualPath(String virtualPath);
-
-	/**
-	 * Sets the name of the WebDAV storage class of the portlet.
-	 *
-	 * @param webDAVStorageClass the name of the WebDAV storage class of the
-	 portlet
-	 */
-	public void setWebDAVStorageClass(String webDAVStorageClass);
-
-	/**
-	 * Sets the name of the WebDAV storage token of the portlet.
-	 *
-	 * @param webDAVStorageToken the name of the WebDAV storage token of the
-	 portlet
-	 */
-	public void setWebDAVStorageToken(String webDAVStorageToken);
 
 	/**
 	 * Sets the window states of the portlet.

@@ -126,19 +126,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 			java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	 * Returns the WebDAV URL to access the structure.
-	 *
-	 * @param themeDisplay the theme display needed to build the URL. It can
-	 set HTTPS access, the server name, the server port, the path
-	 context, and the scope group.
-	 * @param webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
-	public String getWebDavURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
-		String webDAVToken);
-
 	public boolean hasField(String fieldName);
 
 	public boolean hasFieldByFieldReference(String fieldReference);

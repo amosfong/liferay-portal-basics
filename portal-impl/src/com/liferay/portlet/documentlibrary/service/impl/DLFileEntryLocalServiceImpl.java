@@ -91,7 +91,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -118,11 +117,9 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.WebDAVPropsLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -425,12 +422,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		boolean webDAVCheckInMode = GetterUtil.getBoolean(
-			serviceContext.getAttribute(DL.WEBDAV_CHECK_IN_MODE));
-
 		boolean manualCheckInRequired = dlFileEntry.isManualCheckInRequired();
 
-		if (!webDAVCheckInMode && manualCheckInRequired) {
+		if (manualCheckInRequired) {
 			dlFileEntry.setManualCheckInRequired(false);
 
 			dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
@@ -755,16 +749,6 @@ public class DLFileEntryLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, dlFileEntry.getFileEntryId());
-
-		// WebDAVProps
-
-		WebDAVProps webDAVProps = _webDAVPropsPersistence.fetchByC_C(
-			_classNameLocalService.getClassNameId(DLFileEntry.class),
-			dlFileEntry.getFileEntryId());
-
-		if (webDAVProps != null) {
-			_webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
-		}
 
 		// File entry metadata
 
@@ -4152,12 +4136,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = UserPersistence.class)
 	private UserPersistence _userPersistence;
-
-	@BeanReference(type = WebDAVPropsLocalService.class)
-	private WebDAVPropsLocalService _webDAVPropsLocalService;
-
-	@BeanReference(type = WebDAVPropsPersistence.class)
-	private WebDAVPropsPersistence _webDAVPropsPersistence;
 
 	@BeanReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

@@ -103,8 +103,6 @@ public interface DDMTemplate extends StagedGroupedModel {
 
 	public String getVersionUserName();
 
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken);
-
 	public boolean isCacheable();
 
 	public boolean isSmallImage();

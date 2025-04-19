@@ -769,8 +769,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	public boolean isCommandAdd() {
 		if (Objects.equals(_command, Constants.ADD) ||
 			Objects.equals(_command, Constants.ADD_DYNAMIC) ||
-			Objects.equals(_command, Constants.ADD_MULTIPLE) ||
-			Objects.equals(_command, Constants.ADD_WEBDAV)) {
+			Objects.equals(_command, Constants.ADD_MULTIPLE)) {
 
 			return true;
 		}
@@ -787,8 +786,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public boolean isCommandUpdate() {
 		if (Objects.equals(_command, Constants.UPDATE) ||
-			Objects.equals(_command, Constants.UPDATE_AND_CHECKIN) ||
-			Objects.equals(_command, Constants.UPDATE_WEBDAV)) {
+			Objects.equals(_command, Constants.UPDATE_AND_CHECKIN)) {
 
 			return true;
 		}

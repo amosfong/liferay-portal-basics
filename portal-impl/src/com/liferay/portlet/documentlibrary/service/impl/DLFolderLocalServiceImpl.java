@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
@@ -66,11 +65,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.WebDAVPropsLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.trash.helper.TrashHelper;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
@@ -1203,16 +1200,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
 
-		// WebDAVProps
-
-		WebDAVProps webDAVProps = _webDAVPropsPersistence.fetchByC_C(
-			_classNameLocalService.getClassNameId(DLFolder.class),
-			dlFolder.getFolderId());
-
-		if (webDAVProps != null) {
-			_webDAVPropsLocalService.deleteWebDAVProps(webDAVProps);
-		}
-
 		// File entries
 
 		_dlFileEntryLocalService.deleteFileEntries(
@@ -1475,12 +1462,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@BeanReference(type = UserPersistence.class)
 	private UserPersistence _userPersistence;
-
-	@BeanReference(type = WebDAVPropsLocalService.class)
-	private WebDAVPropsLocalService _webDAVPropsLocalService;
-
-	@BeanReference(type = WebDAVPropsPersistence.class)
-	private WebDAVPropsPersistence _webDAVPropsPersistence;
 
 	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
 	private WorkflowDefinitionLinkLocalService

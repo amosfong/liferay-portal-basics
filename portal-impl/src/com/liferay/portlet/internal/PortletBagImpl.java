@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
@@ -113,8 +112,6 @@ public class PortletBagImpl implements PortletBag {
 			PortletBagImpl.class, TemplateHandler.class, _filterString, true);
 		_urlEncoderSnapshot = new Snapshot<>(
 			PortletBagImpl.class, URLEncoder.class, _filterString, true);
-		_webDAVStorageSnapshot = new Snapshot<>(
-			PortletBagImpl.class, WebDAVStorage.class, _filterString, true);
 	}
 
 	@Override
@@ -399,21 +396,6 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public WebDAVStorage getWebDAVStorageInstance() {
-		return _webDAVStorageSnapshot.get();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getWebDAVStorageInstance()}
-	 */
-	@Deprecated
-	@Override
-	public List<WebDAVStorage> getWebDAVStorageInstances() {
-		return _getList(WebDAVStorage.class);
-	}
-
-	@Override
 	public List<WorkflowHandler<?>> getWorkflowHandlerInstances() {
 		return _getList(WorkflowHandler.class);
 	}
@@ -482,7 +464,6 @@ public class PortletBagImpl implements PortletBag {
 	private final ServletContext _servletContext;
 	private final Snapshot<TemplateHandler> _templateHandlerSnapshot;
 	private final Snapshot<URLEncoder> _urlEncoderSnapshot;
-	private final Snapshot<WebDAVStorage> _webDAVStorageSnapshot;
 
 	@SuppressWarnings("deprecation")
 	private static class PermissionPropagatorServiceTrackerCustomizer

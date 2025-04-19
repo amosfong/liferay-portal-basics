@@ -297,9 +297,6 @@
 	<bean class="com.liferay.portal.service.impl.VirtualHostLocalServiceImpl" id="com.liferay.portal.kernel.service.VirtualHostLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.VirtualHostModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.VirtualHostModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.VirtualHostPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.VirtualHostPersistence" />
-	<bean class="com.liferay.portal.service.impl.WebDAVPropsLocalServiceImpl" id="com.liferay.portal.kernel.service.WebDAVPropsLocalService" />
-	<bean class="com.liferay.portal.service.persistence.impl.WebDAVPropsModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WebDAVPropsModelArgumentsResolver" />
-	<bean class="com.liferay.portal.service.persistence.impl.WebDAVPropsPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence" />
 	<bean class="com.liferay.portal.service.impl.WebsiteLocalServiceImpl" id="com.liferay.portal.kernel.service.WebsiteLocalService" />
 	<bean class="com.liferay.portal.service.impl.WebsiteServiceImpl" id="com.liferay.portal.kernel.service.WebsiteService" />
 	<bean class="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" />

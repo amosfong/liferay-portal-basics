@@ -204,7 +204,6 @@ portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
 portletDisplay.setPortletPreferences(setupPortletPreferences);
-portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 %>
 
 <%@ include file="/html/portal/header_portlet-ext.jsp" %>

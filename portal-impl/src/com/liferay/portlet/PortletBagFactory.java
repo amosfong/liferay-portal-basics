@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -154,8 +153,6 @@ public class PortletBagFactory {
 
 		_registerUserNotificationHandlerInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerWebDAVStorageInstances(bundleContext, portlet);
 
 		_registerXmlRpcMethodInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
@@ -727,24 +724,6 @@ public class PortletBagFactory {
 					userNotificationHandlerInstance, properties);
 
 			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
-	private void _registerWebDAVStorageInstances(
-			BundleContext bundleContext, Portlet portlet)
-		throws Exception {
-
-		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
-			WebDAVStorage webDAVStorageInstance = _newInstance(
-				WebDAVStorage.class, portlet.getWebDAVStorageClass());
-
-			bundleContext.registerService(
-				WebDAVStorage.class, webDAVStorageInstance,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"javax.portlet.name", portlet.getPortletId()
-				).put(
-					"webdav.storage.token", portlet.getWebDAVStorageToken()
-				).build());
 		}
 	}
 

@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -274,96 +273,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		return getThumbnailSrc(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay);
-	}
-
-	@Override
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
-		throws PortalException {
-
-		return getWebDavURL(themeDisplay, folder, fileEntry, false);
-	}
-
-	@Override
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired)
-		throws PortalException {
-
-		return getWebDavURL(
-			themeDisplay, folder, fileEntry, manualCheckInRequired, false);
-	}
-
-	@Override
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired, boolean openDocumentUrl)
-		throws PortalException {
-
-		StringBundler webDavURLSB = new StringBundler(7);
-
-		boolean secure = false;
-
-		if (themeDisplay.isSecure() ||
-			PropsValues.WEBDAV_SERVLET_HTTPS_REQUIRED) {
-
-			secure = true;
-		}
-
-		webDavURLSB.append(
-			_portal.getPortalURL(
-				themeDisplay.getServerName(), themeDisplay.getServerPort(),
-				secure));
-		webDavURLSB.append(themeDisplay.getPathContext());
-		webDavURLSB.append("/webdav");
-
-		if (manualCheckInRequired) {
-			webDavURLSB.append(DL.MANUAL_CHECK_IN_REQUIRED_PATH);
-		}
-
-		Group group = null;
-
-		if (fileEntry != null) {
-			group = _groupLocalService.getGroup(fileEntry.getGroupId());
-		}
-		else {
-			group = themeDisplay.getScopeGroup();
-		}
-
-		webDavURLSB.append(group.getFriendlyURL());
-		webDavURLSB.append("/document_library");
-
-		StringBuilder sb = new StringBuilder();
-
-		if ((folder != null) &&
-			(folder.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			Folder curFolder = folder;
-
-			while (true) {
-				sb.insert(0, URLCodec.encodeURL(curFolder.getName(), true));
-				sb.insert(0, StringPool.SLASH);
-
-				if (curFolder.getParentFolderId() ==
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-					break;
-				}
-
-				curFolder = _dlAppLocalService.getFolder(
-					curFolder.getParentFolderId());
-			}
-		}
-
-		if (fileEntry != null) {
-			sb.append(StringPool.SLASH);
-			sb.append(DLWebDAVUtil.escapeURLTitle(fileEntry.getFileName()));
-		}
-
-		webDavURLSB.append(sb.toString());
-
-		return webDavURLSB.toString();
 	}
 
 	@Activate

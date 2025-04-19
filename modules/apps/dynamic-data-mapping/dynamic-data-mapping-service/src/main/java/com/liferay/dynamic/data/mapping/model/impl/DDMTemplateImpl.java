@@ -108,46 +108,6 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 			getTemplateId(), getVersion());
 	}
 
-	/**
-	 * Returns the WebDAV URL to access the template.
-	 *
-	 * @param  themeDisplay the theme display needed to build the URL. It can
-	 *         set HTTPS access, the server name, the server port, the path
-	 *         context, and the scope group.
-	 * @param  webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
-	@Override
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
-		StringBundler sb = new StringBundler(8);
-
-		boolean secure = false;
-
-		if (themeDisplay.isSecure() ||
-			PropsValues.WEBDAV_SERVLET_HTTPS_REQUIRED) {
-
-			secure = true;
-		}
-
-		sb.append(
-			PortalUtil.getPortalURL(
-				themeDisplay.getServerName(), themeDisplay.getServerPort(),
-				secure));
-		sb.append(themeDisplay.getPathContext());
-		sb.append("/webdav");
-
-		Group group = themeDisplay.getScopeGroup();
-
-		sb.append(group.getFriendlyURL());
-
-		sb.append(StringPool.SLASH);
-		sb.append(webDAVToken);
-		sb.append("/Templates/");
-		sb.append(getTemplateId());
-
-		return sb.toString();
-	}
-
 	@Override
 	public void setResourceClassName(String resourceClassName) {
 		_resourceClassName = resourceClassName;

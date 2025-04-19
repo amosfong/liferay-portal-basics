@@ -181,11 +181,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>WebDAV Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.webdav.WebDAVServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Widget Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.WidgetServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -912,10 +907,6 @@
 	<servlet-mapping>
 		<servlet-name>Tunnel Servlet</servlet-name>
 		<url-pattern>/api/liferay/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>WebDAV Servlet</servlet-name>
-		<url-pattern>/webdav/*</url-pattern>
 	</servlet-mapping>
 	<jsp-config>
 		<taglib>

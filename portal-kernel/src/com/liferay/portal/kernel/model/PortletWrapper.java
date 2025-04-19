@@ -1690,38 +1690,6 @@ public class PortletWrapper
 	}
 
 	/**
-	 * Returns the name of the WebDAV storage class of the portlet.
-	 *
-	 * @return the name of the WebDAV storage class of the portlet
-	 */
-	@Override
-	public String getWebDAVStorageClass() {
-		return model.getWebDAVStorageClass();
-	}
-
-	/**
-	 * Returns the name of the WebDAV storage instance of the portlet.
-	 *
-	 * @return the name of the WebDAV storage instance of the portlet
-	 */
-	@Override
-	public com.liferay.portal.kernel.webdav.WebDAVStorage
-		getWebDAVStorageInstance() {
-
-		return model.getWebDAVStorageInstance();
-	}
-
-	/**
-	 * Returns the name of the WebDAV storage token of the portlet.
-	 *
-	 * @return the name of the WebDAV storage token of the portlet
-	 */
-	@Override
-	public String getWebDAVStorageToken() {
-		return model.getWebDAVStorageToken();
-	}
-
-	/**
 	 * Returns the window states of the portlet.
 	 *
 	 * @return window states of the portlet
@@ -3534,28 +3502,6 @@ public class PortletWrapper
 	@Override
 	public void setVirtualPath(String virtualPath) {
 		model.setVirtualPath(virtualPath);
-	}
-
-	/**
-	 * Sets the name of the WebDAV storage class of the portlet.
-	 *
-	 * @param webDAVStorageClass the name of the WebDAV storage class of the
-	 portlet
-	 */
-	@Override
-	public void setWebDAVStorageClass(String webDAVStorageClass) {
-		model.setWebDAVStorageClass(webDAVStorageClass);
-	}
-
-	/**
-	 * Sets the name of the WebDAV storage token of the portlet.
-	 *
-	 * @param webDAVStorageToken the name of the WebDAV storage token of the
-	 portlet
-	 */
-	@Override
-	public void setWebDAVStorageToken(String webDAVStorageToken) {
-		model.setWebDAVStorageToken(webDAVStorageToken);
 	}
 
 	/**

@@ -404,7 +404,7 @@ public abstract class UpgradeProcess
 			"usergroupgrouprole", "usergrouprole", "usergroups_teams",
 			"useridmapper", "usernotificationevent", "users_groups",
 			"users_orgs", "users_roles", "users_teams", "users_usergroups",
-			"usertracker", "usertrackerpath", "virtualhost", "webdavprops",
+			"usertracker", "usertrackerpath", "virtualhost",
 			"website", "wikinode", "wikipage", "wikipageresource",
 			"workflowdefinitionlink", "workflowinstancelink"));
 	private static final Map

@@ -290,18 +290,6 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>WebDAV Servlet Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.secure.SecureFilter</filter-class>
-		<init-param>
-			<param-name>digest_auth</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>portal_property_prefix</param-name>
-			<param-value>webdav.servlet.</param-value>
-		</init-param>
-	</filter>
-	<filter>
 		<filter-name>XML-RPC Servlet Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter</filter-class>
 		<init-param>
@@ -770,13 +758,6 @@
 	<filter-mapping>
 		<filter-name>Tunnel Servlet Filter</filter-name>
 		<url-pattern>/api/liferay/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>WebDAV Servlet Filter</filter-name>
-		<url-pattern>/webdav/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>REQUEST</dispatcher>

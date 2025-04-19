@@ -386,46 +386,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return getName(locale);
 	}
 
-	/**
-	 * Returns the WebDAV URL to access the structure.
-	 *
-	 * @param  themeDisplay the theme display needed to build the URL. It can
-	 *         set HTTPS access, the server name, the server port, the path
-	 *         context, and the scope group.
-	 * @param  webDAVToken the WebDAV token for the URL
-	 * @return the WebDAV URL
-	 */
-	@Override
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
-		StringBundler sb = new StringBundler(8);
-
-		boolean secure = false;
-
-		if (themeDisplay.isSecure() ||
-			PropsValues.WEBDAV_SERVLET_HTTPS_REQUIRED) {
-
-			secure = true;
-		}
-
-		sb.append(
-			PortalUtil.getPortalURL(
-				themeDisplay.getServerName(), themeDisplay.getServerPort(),
-				secure));
-		sb.append(themeDisplay.getPathContext());
-		sb.append("/webdav");
-
-		Group group = themeDisplay.getScopeGroup();
-
-		sb.append(group.getFriendlyURL());
-
-		sb.append(StringPool.SLASH);
-		sb.append(webDAVToken);
-		sb.append("/Structures/");
-		sb.append(getStructureId());
-
-		return sb.toString();
-	}
-
 	@Override
 	public boolean hasField(String fieldName) {
 		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap();

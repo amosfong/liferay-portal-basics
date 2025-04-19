@@ -305,11 +305,6 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
-		return _ddmTemplate.getWebDavURL(themeDisplay, webDAVToken);
-	}
-
-	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, getTemplateId());
 

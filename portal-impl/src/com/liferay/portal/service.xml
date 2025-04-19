@@ -3039,31 +3039,6 @@
 			<finder-column name="defaultVirtualHost" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="WebDAVProps" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="webDavPropsId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
-		<column name="props" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="C_C" return-type="WebDAVProps" unique="true">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-	</entity>
 	<entity external-reference-code="company" local-service="true" name="Website" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

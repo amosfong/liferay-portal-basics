@@ -124,7 +124,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_urlPrint = master.getURLPrint();
 		_urlRefresh = master.getURLRefresh();
 		_urlStaging = master.getURLStaging();
-		_webDAVEnabled = master.isWebDAVEnabled();
 	}
 
 	public void copyTo(PortletDisplay slave) {
@@ -192,7 +191,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		slave.setURLPrint(_urlPrint);
 		slave.setURLRefresh(_urlRefresh);
 		slave.setURLStaging(_urlStaging);
-		slave.setWebDAVEnabled(_webDAVEnabled);
 
 		slave._title = _title;
 	}
@@ -537,10 +535,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _statePopUp;
 	}
 
-	public boolean isWebDAVEnabled() {
-		return _webDAVEnabled;
-	}
-
 	public void recycle() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Recycling instance " + hashCode());
@@ -605,7 +599,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_urlPortletCss = StringPool.BLANK;
 		_urlPrint = StringPool.BLANK;
 		_urlRefresh = StringPool.BLANK;
-		_webDAVEnabled = false;
 	}
 
 	public void setActive(boolean active) {
@@ -898,10 +891,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_urlStaging = urlStaging;
 	}
 
-	public void setWebDAVEnabled(boolean webDAVEnabled) {
-		_webDAVEnabled = webDAVEnabled;
-	}
-
 	public void writeContent(Writer writer) throws IOException {
 		_contentSB.writeTo(writer);
 	}
@@ -978,6 +967,5 @@ public class PortletDisplay implements Cloneable, Serializable {
 	private String _urlPrint = StringPool.BLANK;
 	private String _urlRefresh = StringPool.BLANK;
 	private String _urlStaging = StringPool.BLANK;
-	private boolean _webDAVEnabled;
 
 }

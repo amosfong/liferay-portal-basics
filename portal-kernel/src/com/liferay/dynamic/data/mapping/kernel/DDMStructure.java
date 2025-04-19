@@ -152,8 +152,6 @@ public interface DDMStructure extends StagedGroupedModel {
 	@Override
 	public String getUuid();
 
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken);
-
 	public boolean hasField(String fieldName);
 
 	public boolean isFieldRepeatable(String fieldName) throws PortalException;

@@ -125,32 +125,6 @@ public class DLURLHelperUtil {
 		return getDLURLHelper().getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
-	public static String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
-		throws PortalException {
-
-		return getDLURLHelper().getWebDavURL(themeDisplay, folder, fileEntry);
-	}
-
-	public static String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired)
-		throws PortalException {
-
-		return getDLURLHelper().getWebDavURL(
-			themeDisplay, folder, fileEntry, manualCheckInRequired);
-	}
-
-	public static String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired, boolean officeExtensionRequired)
-		throws PortalException {
-
-		return getDLURLHelper().getWebDavURL(
-			themeDisplay, folder, fileEntry, manualCheckInRequired,
-			officeExtensionRequired);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

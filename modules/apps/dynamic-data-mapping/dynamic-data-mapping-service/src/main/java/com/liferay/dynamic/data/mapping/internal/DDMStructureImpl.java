@@ -370,11 +370,6 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
-	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
-		return _ddmStructure.getWebDavURL(themeDisplay, webDAVToken);
-	}
-
-	@Override
 	public boolean hasField(String fieldName) {
 		return _ddmStructure.hasField(fieldName);
 	}
