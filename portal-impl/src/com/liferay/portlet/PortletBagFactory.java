@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PropsValues;
@@ -152,9 +151,6 @@ public class PortletBagFactory {
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerUserNotificationHandlerInstances(
-			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerXmlRpcMethodInstances(
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerControlPanelEntryInstances(
@@ -742,24 +738,6 @@ public class PortletBagFactory {
 			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(
 					WorkflowHandler.class, workflowHandlerInstance, properties);
-
-			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
-	private void _registerXmlRpcMethodInstances(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
-			Method xmlRpcMethodInstance = _newInstance(
-				Method.class, portlet.getXmlRpcMethodClass());
-
-			ServiceRegistration<?> serviceRegistration =
-				bundleContext.registerService(
-					Method.class, xmlRpcMethodInstance, properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}

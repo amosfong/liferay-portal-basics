@@ -1179,20 +1179,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 		getWorkflowHandlerInstances();
 
 	/**
-	 * Returns the name of the XML-RPC method class of the portlet.
-	 *
-	 * @return the name of the XML-RPC method class of the portlet
-	 */
-	public String getXmlRpcMethodClass();
-
-	/**
-	 * Returns the name of the XML-RPC method instance of the portlet.
-	 *
-	 * @return the name of the XML-RPC method instance of the portlet
-	 */
-	public com.liferay.portal.kernel.xmlrpc.Method getXmlRpcMethodInstance();
-
-	/**
 	 * Returns <code>true</code> if the user has the permission to add the
 	 * portlet to a layout.
 	 *
@@ -2416,14 +2402,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 */
 	public void setWorkflowHandlerClasses(
 		java.util.List<String> workflowHandlerClasses);
-
-	/**
-	 * Sets the name of the XML-RPC method class of the portlet.
-	 *
-	 * @param xmlRpcMethodClass the name of the XML-RPC method class of the
-	 portlet
-	 */
-	public void setXmlRpcMethodClass(String xmlRpcMethodClass);
 
 	public void unsetReady();
 

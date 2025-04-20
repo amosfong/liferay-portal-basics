@@ -1694,11 +1694,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setUserNotificationHandlerClasses(
 			userNotificationHandlerClasses);
 
-		portletModel.setXmlRpcMethodClass(
-			GetterUtil.getString(
-				portletElement.elementText("xml-rpc-method-class"),
-				portletModel.getXmlRpcMethodClass()));
-
 		Set<ApplicationType> applicationTypes = new HashSet<>();
 
 		for (Element applicationTypeElement :

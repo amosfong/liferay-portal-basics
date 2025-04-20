@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.PortalSessionListener;
-import com.liferay.portal.servlet.filters.healthcheckdatasource.HealthCheckDataSourceFilter;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.web.internal.session.replication.SessionReplicationFilter;
 import com.liferay.shielded.container.Ordered;
@@ -125,16 +124,6 @@ public class PortalWebShieldedContainerInitializer
 
 			dynamic.addMappingForUrlPatterns(
 				EnumSet.of(DispatcherType.REQUEST), false, "/*");
-		}
-
-		if (PropsValues.HEALTH_CHECK_DATA_SOURCE_ENABLED) {
-			FilterRegistration.Dynamic dynamic = servletContext.addFilter(
-				HealthCheckDataSourceFilter.class.getName(),
-				new HealthCheckDataSourceFilter());
-
-			dynamic.addMappingForUrlPatterns(
-				EnumSet.of(DispatcherType.REQUEST), false,
-				"/health_check/data_source");
 		}
 
 		DocumentBuilderFactory documentBuilderFactory =

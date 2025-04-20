@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.xmlrpc.Method;
 
 import java.util.List;
 import java.util.Locale;
@@ -172,15 +171,6 @@ public interface PortletBag extends Cloneable {
 	public List<UserNotificationHandler> getUserNotificationHandlerInstances();
 
 	public List<WorkflowHandler<?>> getWorkflowHandlerInstances();
-
-	public Method getXmlRpcMethodInstance();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getXmlRpcMethodInstance()}
-	 */
-	@Deprecated
-	public List<Method> getXmlRpcMethodInstances();
 
 	public void setPortletInstance(Portlet portletInstance);
 

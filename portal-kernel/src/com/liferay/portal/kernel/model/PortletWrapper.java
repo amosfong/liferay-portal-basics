@@ -1724,26 +1724,6 @@ public class PortletWrapper
 	}
 
 	/**
-	 * Returns the name of the XML-RPC method class of the portlet.
-	 *
-	 * @return the name of the XML-RPC method class of the portlet
-	 */
-	@Override
-	public String getXmlRpcMethodClass() {
-		return model.getXmlRpcMethodClass();
-	}
-
-	/**
-	 * Returns the name of the XML-RPC method instance of the portlet.
-	 *
-	 * @return the name of the XML-RPC method instance of the portlet
-	 */
-	@Override
-	public com.liferay.portal.kernel.xmlrpc.Method getXmlRpcMethodInstance() {
-		return model.getXmlRpcMethodInstance();
-	}
-
-	/**
 	 * Returns <code>true</code> if the user has the permission to add the
 	 * portlet to a layout.
 	 *
@@ -3528,17 +3508,6 @@ public class PortletWrapper
 		java.util.List<String> workflowHandlerClasses) {
 
 		model.setWorkflowHandlerClasses(workflowHandlerClasses);
-	}
-
-	/**
-	 * Sets the name of the XML-RPC method class of the portlet.
-	 *
-	 * @param xmlRpcMethodClass the name of the XML-RPC method class of the
-	 portlet
-	 */
-	@Override
-	public void setXmlRpcMethodClass(String xmlRpcMethodClass) {
-		model.setXmlRpcMethodClass(xmlRpcMethodClass);
 	}
 
 	@Override

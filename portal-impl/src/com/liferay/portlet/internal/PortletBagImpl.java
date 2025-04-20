@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.Dictionary;
@@ -87,8 +86,6 @@ public class PortletBagImpl implements PortletBag {
 			true);
 		_controlPanelEntrySnapshot = new Snapshot<>(
 			PortletBagImpl.class, ControlPanelEntry.class, _filterString, true);
-		_methodSnapshot = new Snapshot<>(
-			PortletBagImpl.class, Method.class, _filterString, true);
 		_messageListenerSnapshot = new Snapshot<>(
 			PortletBagImpl.class, MessageListener.class, _filterString, true);
 		_openSearchSnapshot = new Snapshot<>(
@@ -401,21 +398,6 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public Method getXmlRpcMethodInstance() {
-		return _methodSnapshot.get();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getXmlRpcMethodInstance()}
-	 */
-	@Deprecated
-	@Override
-	public List<Method> getXmlRpcMethodInstances() {
-		return _getList(Method.class);
-	}
-
-	@Override
 	public void setPortletInstance(Portlet portletInstance) {
 		_portletInstance = portletInstance;
 	}
@@ -445,7 +427,6 @@ public class PortletBagImpl implements PortletBag {
 	private final String _filterString;
 	private final FriendlyURLMapperTracker _friendlyURLMapperTracker;
 	private final Snapshot<MessageListener> _messageListenerSnapshot;
-	private final Snapshot<Method> _methodSnapshot;
 	private final Snapshot<OpenSearch> _openSearchSnapshot;
 	private final Snapshot<PermissionPropagator> _permissionPropagatorSnapshot;
 	private final Snapshot<PortletConfigurationListener>

@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -155,7 +154,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String portletConfigurationListenerClass,
 		String portletLayoutListenerClass, String popMessageListenerClass,
 		String userNotificationDefinitions,
-		List<String> userNotificationHandlerClasses, String xmlRpcMethodClass,
+		List<String> userNotificationHandlerClasses,
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
 		String controlPanelEntryClass,
 		List<String> customAttributesDisplayClasses,
@@ -231,7 +230,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_popMessageListenerClass = popMessageListenerClass;
 		_userNotificationDefinitions = userNotificationDefinitions;
 		_userNotificationHandlerClasses = userNotificationHandlerClasses;
-		_xmlRpcMethodClass = xmlRpcMethodClass;
 		_controlPanelEntryCategory = controlPanelEntryCategory;
 		_controlPanelEntryWeight = controlPanelEntryWeight;
 		_controlPanelEntryClass = controlPanelEntryClass;
@@ -393,7 +391,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getTemplateHandlerClass(), getPortletConfigurationListenerClass(),
 			getPortletLayoutListenerClass(), getPopMessageListenerClass(),
 			getUserNotificationDefinitions(),
-			getUserNotificationHandlerClasses(), getXmlRpcMethodClass(),
+			getUserNotificationHandlerClasses(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(),
 			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
@@ -2052,28 +2050,6 @@ public class PortletImpl extends PortletBaseImpl {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getWorkflowHandlerInstances();
-	}
-
-	/**
-	 * Returns the name of the XML-RPC method class of the portlet.
-	 *
-	 * @return the name of the XML-RPC method class of the portlet
-	 */
-	@Override
-	public String getXmlRpcMethodClass() {
-		return _xmlRpcMethodClass;
-	}
-
-	/**
-	 * Returns the name of the XML-RPC method instance of the portlet.
-	 *
-	 * @return the name of the XML-RPC method instance of the portlet
-	 */
-	@Override
-	public Method getXmlRpcMethodInstance() {
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getXmlRpcMethodInstance();
 	}
 
 	/**
@@ -3954,17 +3930,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_workflowHandlerClasses = workflowHandlerClasses;
 	}
 
-	/**
-	 * Sets the name of the XML-RPC method class of the portlet.
-	 *
-	 * @param xmlRpcMethodClass the name of the XML-RPC method class of the
-	 *        portlet
-	 */
-	@Override
-	public void setXmlRpcMethodClass(String xmlRpcMethodClass) {
-		_xmlRpcMethodClass = xmlRpcMethodClass;
-	}
-
 	@Override
 	public void unsetReady() {
 		Readiness readiness = _readinessMap.remove(getRootPortletId());
@@ -4598,11 +4563,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * with the portlet.
 	 */
 	private List<String> _workflowHandlerClasses;
-
-	/**
-	 * The name of the XML-RPC method class of the portlet.
-	 */
-	private String _xmlRpcMethodClass;
 
 	private static class Readiness {
 

@@ -117,23 +117,8 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Google Gadget Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.GoogleGadgetServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>I18n Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.I18nServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>JSON Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.JSONServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>JSON Web Service Redirect Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.jsonwebservice.JSONWebServiceRedirectServlet</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -147,11 +132,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Netvibes Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.NetvibesServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Portal Delegator Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortalDelegatorServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -159,11 +139,6 @@
 	<servlet>
 		<servlet-name>Robots Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.RobotsServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>Sitemap Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.SitemapServlet</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -178,16 +153,6 @@
 			<param-name>last_modified</param-name>
 			<param-value>true</param-value>
 		</init-param>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>Widget Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.WidgetServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
-		<servlet-name>XML-RPC Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.xmlrpc.XmlRpcServlet</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -223,10 +188,6 @@
 	<servlet-mapping>
 		<servlet-name>Friendly URL Servlet - Public</servlet-name>
 		<url-pattern>/web/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Google Gadget Servlet</servlet-name>
-		<url-pattern>/google_gadget/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
@@ -865,10 +826,6 @@
 		<url-pattern>/language/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Netvibes Servlet</servlet-name>
-		<url-pattern>/netvibes/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>Portal Delegator Servlet</servlet-name>
 		<url-pattern>/delegate/*</url-pattern>
 	</servlet-mapping>
@@ -877,32 +834,12 @@
 		<url-pattern>/robots.txt</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Sitemap Servlet</servlet-name>
-		<url-pattern>/sitemap.xml</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>
 		<url-pattern>/documents/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>
 		<url-pattern>/image/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Widget Servlet</servlet-name>
-		<url-pattern>/widget/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>XML-RPC Servlet</servlet-name>
-		<url-pattern>/xmlrpc/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>JSON Servlet</servlet-name>
-		<url-pattern>/api/json/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>JSON Web Service Redirect Servlet</servlet-name>
-		<url-pattern>/api/jsonws/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Tunnel Servlet</servlet-name>
