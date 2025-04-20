@@ -140,7 +140,6 @@ import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
-import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -5021,11 +5020,6 @@ public class PortalImpl implements Portal {
 
 			currentHttpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
-		}
-
-		if (ServerDetector.isWebLogic()) {
-			currentHttpServletRequest = new NonSerializableObjectRequestWrapper(
-				currentHttpServletRequest);
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;

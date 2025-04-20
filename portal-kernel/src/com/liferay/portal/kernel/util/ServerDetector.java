@@ -63,22 +63,6 @@ public class ServerDetector {
 		return false;
 	}
 
-	public static boolean isWebLogic() {
-		if (_serverType == ServerType.WEBLOGIC) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isWebSphere() {
-		if (_serverType == ServerType.WEBSPHERE) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isWildfly() {
 		if (_serverType == ServerType.WILDFLY) {
 			return true;

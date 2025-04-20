@@ -323,29 +323,6 @@ public class PortalClassPathUtil {
 			_log.debug("Decoded path " + path);
 		}
 
-		if (ServerDetector.isWebLogic() && protocol.equals("zip")) {
-			path = "file:".concat(path);
-		}
-
-		if ((ServerDetector.isJBoss() || ServerDetector.isWildfly()) &&
-			(protocol.equals("vfs") || protocol.equals("vfsfile") ||
-			 protocol.equals("vfszip"))) {
-
-			int pos = path.indexOf(".jar/");
-
-			if (pos != -1) {
-				String jarFilePath = path.substring(0, pos + 4);
-
-				File jarFile = new File(jarFilePath);
-
-				if (jarFile.isFile()) {
-					path = jarFilePath + '!' + path.substring(pos + 4);
-				}
-			}
-
-			path = "file:".concat(path);
-		}
-
 		File dir = null;
 
 		int pos = -1;

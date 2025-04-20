@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
-import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -88,8 +87,6 @@ public class InvokerFilter implements Filter {
 
 			return;
 		}
-
-		httpServletRequest = handleNonSerializableRequest(httpServletRequest);
 
 		httpServletResponse =
 			HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
@@ -254,20 +251,6 @@ public class InvokerFilter implements Filter {
 		}
 
 		return false;
-	}
-
-	protected HttpServletRequest handleNonSerializableRequest(
-		HttpServletRequest httpServletRequest) {
-
-		if (ServerDetector.isWebLogic() &&
-			!NonSerializableObjectRequestWrapper.isWrapped(
-				httpServletRequest)) {
-
-			httpServletRequest = new NonSerializableObjectRequestWrapper(
-				httpServletRequest);
-		}
-
-		return httpServletRequest;
 	}
 
 	protected HttpServletResponse secureResponseHeaders(

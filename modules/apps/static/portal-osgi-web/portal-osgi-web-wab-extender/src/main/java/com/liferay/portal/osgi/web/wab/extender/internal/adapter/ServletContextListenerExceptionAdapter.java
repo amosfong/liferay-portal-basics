@@ -29,72 +29,12 @@ public class ServletContextListenerExceptionAdapter
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
-			ServletContext servletContext =
-				servletContextEvent.getServletContext();
-
-			Thread thread = new Thread(
-				"Context destroyed thread for ".concat(
-					servletContext.getServletContextName())) {
-
-				@Override
-				public void run() {
-					_destroyContext();
-				}
-
-			};
-
-			thread.setDaemon(true);
-
-			thread.start();
-
-			try {
-				thread.join();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-		else {
-			_destroyContext();
-		}
+		_destroyContext();
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
-			ServletContext servletContext =
-				servletContextEvent.getServletContext();
-
-			Thread thread = new Thread(
-				"Context initialized thread for ".concat(
-					servletContext.getServletContextName())) {
-
-				@Override
-				public void run() {
-					_initializeContext();
-				}
-
-			};
-
-			thread.setDaemon(true);
-
-			thread.start();
-
-			try {
-				thread.join();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-		else {
-			_initializeContext();
-		}
+		_initializeContext();
 	}
 
 	public Exception getException() {

@@ -88,16 +88,6 @@ public class PortletAutoDeployer
 
 		StringBundler sb = new StringBundler(9);
 
-		if (ServerDetector.isWebSphere()) {
-			sb.append("<context-param>");
-			sb.append("<param-name>");
-			sb.append("com.ibm.websphere.portletcontainer.");
-			sb.append("PortletDeploymentEnabled");
-			sb.append("</param-name>");
-			sb.append("<param-value>false</param-value>");
-			sb.append("</context-param>");
-		}
-
 		File portletXML = new File(
 			srcFile + "/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
 		File webXML = new File(srcFile + "/WEB-INF/web.xml");

@@ -10,9 +10,7 @@
 <%
 String jSecurityCheck = "j_security_check";
 
-if (!ServerDetector.isWebSphere()) {
-	jSecurityCheck = themeDisplay.getPathMain() + "/portal/" + jSecurityCheck;
-}
+jSecurityCheck = themeDisplay.getPathMain() + "/portal/" + jSecurityCheck;
 
 String jUserName = (String)session.getAttribute("j_username");
 String jPassword = (String)session.getAttribute("j_password");

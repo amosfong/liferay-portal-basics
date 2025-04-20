@@ -41,31 +41,6 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		if (ServerDetector.isWebLogic()) {
-
-			// This optimization cannot be applied to WebLogic because WebLogic
-			// relies on the WriterOutputStream bridging logic insde
-			// getOutputStream().
-
-			// WebLogic's weblogic.servlet.internal.DelegateChunkWriter#
-			// getWriter() always builds its writer on top of
-			// HttpServletResponse#getOutputStream() rather than relying on
-			// the HttpServletResponse#getWriter().
-
-			// In order to avoid the potential heavy
-			// BufferCacheServletResponse#getBufferSize() call, we
-			// preadapt JspWriter to ServletOutputStream using
-			// JspWriter#getBufferSize() rather than the
-			// HttpServletResponse#getBufferSize().
-
-			return new PipingServletResponse(
-				httpServletResponse,
-				new ServletOutputStreamAdapter(
-					new WriterOutputStream(
-						jspWriter, httpServletResponse.getCharacterEncoding(),
-						jspWriter.getBufferSize(), true)));
-		}
-
 		if (!(pageContext instanceof PageContextWrapper) ||
 			(jspWriter instanceof BodyContent)) {
 
@@ -73,15 +48,6 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			// pushed body
 
 			return new PipingServletResponse(httpServletResponse, jspWriter);
-		}
-
-		if (!ServerDetector.isTomcat()) {
-			try {
-				jspWriter.flush();
-			}
-			catch (IOException ioException) {
-				ReflectionUtil.throwException(ioException);
-			}
 		}
 
 		return httpServletResponse;

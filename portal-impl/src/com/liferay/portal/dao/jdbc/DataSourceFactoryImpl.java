@@ -276,10 +276,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			Class.forName(driverClassName);
 		}
 		catch (ClassNotFoundException classNotFoundException) {
-			if (!ServerDetector.isTomcat()) {
-				throw classNotFoundException;
-			}
-
 			String url = PropsUtil.get(
 				PropsKeys.SETUP_DATABASE_JAR_URL, new Filter(driverClassName));
 			String name = PropsUtil.get(

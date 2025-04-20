@@ -285,14 +285,7 @@ public class PropsUtil {
 	private static String _getDefaultLiferayHome() {
 		String defaultLiferayHome = null;
 
-		if (ServerDetector.isJBoss()) {
-			defaultLiferayHome = SystemProperties.get("jboss.home.dir") + "/..";
-		}
-		else if (ServerDetector.isWebLogic()) {
-			defaultLiferayHome =
-				SystemProperties.get("env.DOMAIN_HOME") + "/..";
-		}
-		else if (ServerDetector.isTomcat()) {
+		if (ServerDetector.isTomcat()) {
 			defaultLiferayHome = SystemProperties.get("catalina.base") + "/..";
 		}
 		else {
