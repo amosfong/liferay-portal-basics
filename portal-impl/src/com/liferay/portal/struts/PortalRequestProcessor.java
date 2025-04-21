@@ -105,7 +105,6 @@ public class PortalRequestProcessor {
 		_publicPaths.add(_PATH_PORTAL_API_JSONWS);
 		_publicPaths.add(_PATH_PORTAL_J_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_LAYOUT);
-		_publicPaths.add(_PATH_PORTAL_LICENSE);
 		_publicPaths.add(_PATH_PORTAL_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_RENDER_PORTLET);
 		_publicPaths.add(_PATH_PORTAL_TCK);
@@ -545,9 +544,7 @@ public class PortalRequestProcessor {
 		// Setup wizard
 
 		if (PropsValues.SETUP_WIZARD_ENABLED) {
-			if (!path.equals(_PATH_PORTAL_LICENSE) &&
-				!path.equals(_PATH_PORTAL_STATUS)) {
-
+			if (!path.equals(_PATH_PORTAL_STATUS)) {
 				return _PATH_PORTAL_SETUP_WIZARD;
 			}
 		}
@@ -808,8 +805,6 @@ public class PortalRequestProcessor {
 		"/portal/json_service";
 
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
-
-	private static final String _PATH_PORTAL_LICENSE = "/portal/license";
 
 	private static final String _PATH_PORTAL_LOGIN = "/portal/login";
 

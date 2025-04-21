@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -140,8 +139,6 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			if (lpkgBundle != null) {
 				return Collections.emptyList();
 			}
-
-			_deployLicense(lpkgFile);
 
 			List<Bundle> bundles = new ArrayList<>();
 
@@ -356,52 +353,6 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		_installOverrideJars(bundleContext, jarFiles);
 
 		_installOverrideWars(bundleContext, warFiles);
-	}
-
-	private void _deployLicense(File file) {
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				String zipEntryName = zipEntry.getName();
-
-				if (!zipEntryName.endsWith(".xml")) {
-					continue;
-				}
-
-				try (InputStream inputStream = zipFile.getInputStream(
-						zipEntry)) {
-
-					String content = StreamUtil.toString(inputStream);
-
-					Document document = SAXReaderUtil.read(content);
-
-					Element rootElement = document.getRootElement();
-
-					String rootElementName = rootElement.getName();
-
-					if (!rootElementName.equals("license") &&
-						!rootElementName.equals("licenses")) {
-
-						continue;
-					}
-
-					JSONObject jsonObject = JSONUtil.put("licenseXML", content);
-
-					LicenseManagerUtil.registerLicense(jsonObject);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to register license", exception);
-		}
 	}
 
 	private Path _getDeploymentDirPath() throws Exception {

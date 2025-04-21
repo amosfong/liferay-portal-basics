@@ -32,12 +32,6 @@
 		<put name="selectable" value="true" />
 	</definition>
 
-	<definition extends="portal" name="portal.license">
-		<put name="pop_up" value="true" />
-		<put name="title" value="license" />
-		<put name="content" value="/portal/license.jsp" />
-	</definition>
-
 	<definition extends="portal" name="portal.login_disabled">
 		<put name="title" value="sign-in-disabled" />
 		<put name="content" value="/portal/login_disabled.jsp" />
