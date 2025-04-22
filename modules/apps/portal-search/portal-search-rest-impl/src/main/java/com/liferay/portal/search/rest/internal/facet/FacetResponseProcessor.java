@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,7 +36,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -84,9 +81,7 @@ public class FacetResponseProcessor {
 		long companyId, FacetConfiguration facetConfiguration, Locale locale,
 		String term, long userId) {
 
-		if (StringUtil.equals(
-					"date-range", facetConfiguration.getName())) {
-
+		if (StringUtil.equals("date-range", facetConfiguration.getName())) {
 			return _getDateRangeDisplayName(facetConfiguration, locale, term);
 		}
 		else if (StringUtil.equals("folder", facetConfiguration.getName())) {
@@ -291,10 +286,8 @@ public class FacetResponseProcessor {
 				continue;
 			}
 
-
 			JSONArray termJSONArray = _toTermJSONArray(
-				companyId, facetConfiguration, locale, termCollectors,
-				userId);
+				companyId, facetConfiguration, locale, termCollectors, userId);
 
 			if (termJSONArray.length() > 0) {
 				termsMap.put(

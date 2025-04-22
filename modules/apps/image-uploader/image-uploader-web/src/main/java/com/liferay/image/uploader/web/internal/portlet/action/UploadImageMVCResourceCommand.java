@@ -8,7 +8,6 @@ package com.liferay.image.uploader.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
 import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.log.Log;

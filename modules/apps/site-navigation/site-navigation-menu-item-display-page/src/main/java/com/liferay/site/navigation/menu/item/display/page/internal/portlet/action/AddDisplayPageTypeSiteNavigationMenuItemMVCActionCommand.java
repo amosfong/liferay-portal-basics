@@ -112,8 +112,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					actionRequest, "siteNavigationMenuItemsAdded",
 					_language.format(
 						themeDisplay.getLocale(), "x-x-was-added-to-this-menu",
-						Arrays.asList(
-							1, themeDisplay.getLocale())));
+						Arrays.asList(1, themeDisplay.getLocale())));
 			}
 			catch (SiteNavigationMenuItemNameException
 						siteNavigationMenuItemNameException) {

@@ -59,9 +59,7 @@ public class FacetRequestContributor {
 		for (FacetConfiguration facetConfiguration : facetConfigurations) {
 			_setProperties(facetConfiguration);
 
-			if (StringUtil.equals(
-						"custom", facetConfiguration.getName())) {
-
+			if (StringUtil.equals("custom", facetConfiguration.getName())) {
 				_contributeCustomFacet(
 					facetConfiguration, searchRequestBuilder);
 			}

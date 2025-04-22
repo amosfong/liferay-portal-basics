@@ -71,7 +71,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -428,8 +427,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setDescription(
-		List<String> fields,
-		SearchResult searchResult, Summary summary) {
+		List<String> fields, SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "description")) {
 			return;
@@ -534,8 +532,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setTitle(
-		List<String> fields,
-		SearchResult searchResult, Summary summary) {
+		List<String> fields, SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "title")) {
 			return;
@@ -577,9 +574,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
-		for (int i = 0; i < searchHitsList.size(); i++) {
-			SearchHit searchHit = searchHitsList.get(i);
-
+		for (SearchHit searchHit : searchHitsList) {
 			SearchResult searchResult = new SearchResult();
 
 			Document document = searchHit.getDocument();

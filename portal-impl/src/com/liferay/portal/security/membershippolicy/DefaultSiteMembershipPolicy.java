@@ -94,7 +94,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 	@Override
 	public void verifyPolicy(
-			Group group, Group oldGroup, 
+			Group group, Group oldGroup,
 			Map<String, Serializable> oldExpandoAttributes,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {

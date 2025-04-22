@@ -169,8 +169,8 @@ public class OrganizationScreenNavigationEntry
 		public OrganizationScreenNavigationEntry build() {
 			return new OrganizationScreenNavigationEntry(
 				_jspRenderer, _organizationService, _entryKey, _categoryKey,
-				_jspPath, _mvcActionCommandName, _showControls,
-				_showTitle, _visibleBiFunction);
+				_jspPath, _mvcActionCommandName, _showControls, _showTitle,
+				_visibleBiFunction);
 		}
 
 		public Builder categoryKey(String categoryKey) {
@@ -256,9 +256,8 @@ public class OrganizationScreenNavigationEntry
 
 	private OrganizationScreenNavigationEntry(
 		JSPRenderer jspRenderer, OrganizationService organizationService,
-		String entryKey, String categoryKey,
-		String jspPath, String mvcActionCommandName, boolean showControls,
-		boolean showTitle,
+		String entryKey, String categoryKey, String jspPath,
+		String mvcActionCommandName, boolean showControls, boolean showTitle,
 		BiFunction<User, Organization, Boolean> visibleBiFunction) {
 
 		_jspRenderer = jspRenderer;

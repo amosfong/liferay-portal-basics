@@ -46,9 +46,6 @@ public interface UserFinder {
 			<com.liferay.portal.kernel.model.User> orderByComparator);
 
 	public java.util.List<com.liferay.portal.kernel.model.User>
-		findByNoAnnouncementsDeliveries(String type);
-
-	public java.util.List<com.liferay.portal.kernel.model.User>
 		findByNoGroups();
 
 	public java.util.List<com.liferay.portal.kernel.model.User>

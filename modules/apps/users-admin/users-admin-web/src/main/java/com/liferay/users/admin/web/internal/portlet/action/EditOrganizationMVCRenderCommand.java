@@ -5,14 +5,8 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 

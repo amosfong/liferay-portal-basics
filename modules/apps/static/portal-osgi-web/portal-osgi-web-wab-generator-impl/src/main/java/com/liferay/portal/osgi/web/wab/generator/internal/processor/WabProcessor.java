@@ -1706,8 +1706,7 @@ public class WabProcessor {
 			"//portlet-layout-listener-class", "//portlet-url-class",
 			"//social-activity-interpreter-class",
 			"//social-request-interpreter-class", "//url-encoder-class",
-			"//workflow-handler",
-			"//xml-rpc-method-class"
+			"//workflow-handler", "//xml-rpc-method-class"
 		},
 		"|");
 

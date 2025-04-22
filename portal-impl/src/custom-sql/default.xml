@@ -4,6 +4,4 @@
 	<sql file="custom-sql/portal.xml" />
 	<sql file="custom-sql/documentlibrary.xml" />
 	<sql file="custom-sql/exportimport.xml" />
-	<sql file="custom-sql/messageboards.xml" />
-	<sql file="custom-sql/social.xml" />
 </custom-sql>

@@ -50,11 +50,11 @@ public class UploadStyleBookEntryPreviewMVCActionCommand
 			_defaultUploadResponseHandler, actionRequest, actionResponse);
 	}
 
-	@Reference
-	private DLAppService _dlAppService;
-
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"

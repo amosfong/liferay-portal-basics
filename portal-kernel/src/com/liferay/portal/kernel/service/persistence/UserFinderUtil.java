@@ -75,12 +75,6 @@ public class UserFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.User>
-		findByNoAnnouncementsDeliveries(String type) {
-
-		return getFinder().findByNoAnnouncementsDeliveries(type);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.User>
 		findByNoGroups() {
 
 		return getFinder().findByNoGroups();

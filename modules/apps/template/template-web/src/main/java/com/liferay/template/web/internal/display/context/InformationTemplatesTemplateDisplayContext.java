@@ -36,7 +36,6 @@ public class InformationTemplatesTemplateDisplayContext
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
-
 	}
 
 	public List<DropdownItem> getTemplateEntryActionDropdownItems(
@@ -117,7 +116,7 @@ public class InformationTemplatesTemplateDisplayContext
 	public String getTemplateTypeLabel(TemplateEntry templateEntry) {
 		String defaultValue = ResourceActionsUtil.getModelResource(
 			themeDisplay.getLocale(), templateEntry.getInfoItemClassName());
-		
+
 		return defaultValue;
 	}
 

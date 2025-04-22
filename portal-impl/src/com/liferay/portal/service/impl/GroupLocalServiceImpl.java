@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
@@ -4830,7 +4829,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Remote publishing
 
 			String groupName =
-				DestinationNames.LAYOUTS_REMOTE_PUBLISHER + "/" + group.getGroupId();
+				DestinationNames.LAYOUTS_REMOTE_PUBLISHER + "/" +
+					group.getGroupId();
 
 			SchedulerEngineHelperUtil.delete(groupName, StorageType.PERSISTED);
 
@@ -4855,7 +4855,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				// Publish to live
 
 				groupName =
-					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" + liveGroupId;
+					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" +
+						liveGroupId;
 
 				SchedulerEngineHelperUtil.delete(
 					groupName, StorageType.PERSISTED);
@@ -4863,7 +4864,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				// Copy from live
 
 				groupName =
-					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" + stagingGroupId;
+					DestinationNames.LAYOUTS_LOCAL_PUBLISHER + "/" +
+						stagingGroupId;
 
 				SchedulerEngineHelperUtil.delete(
 					groupName, StorageType.PERSISTED);

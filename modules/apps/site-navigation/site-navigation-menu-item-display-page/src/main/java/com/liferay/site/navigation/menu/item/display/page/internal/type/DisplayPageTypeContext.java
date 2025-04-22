@@ -7,11 +7,6 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.Locale;
 
@@ -20,9 +15,7 @@ import java.util.Locale;
  */
 public class DisplayPageTypeContext {
 
-	public DisplayPageTypeContext(
-		String className) {
-
+	public DisplayPageTypeContext(String className) {
 		_className = className;
 	}
 

@@ -62,9 +62,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String COUNT_BY_USER =
 		UserFinder.class.getName() + ".countByUser";
 
-	public static final String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
-		UserFinder.class.getName() + ".findByNoAnnouncementsDeliveries";
-
 	public static final String FIND_BY_NO_GROUPS =
 		UserFinder.class.getName() + ".findByNoGroups";
 
@@ -135,9 +132,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String JOIN_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersUserGroups";
 
-	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
-		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
-
 	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION =
 		UserFinder.class.getName() + ".joinBySocialMutualRelation";
 
@@ -149,6 +143,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialRelationType";
+
+	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
+		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
 
 	@Override
 	public int countByKeywords(
@@ -485,33 +482,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			companyId, firstNames, middleNames, lastNames, screenNames,
 			emailAddresses, status, params, andOperator, start, end,
 			orderByComparator);
-	}
-
-	@Override
-	public List<User> findByNoAnnouncementsDeliveries(String type) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("User_", UserImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(type);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override

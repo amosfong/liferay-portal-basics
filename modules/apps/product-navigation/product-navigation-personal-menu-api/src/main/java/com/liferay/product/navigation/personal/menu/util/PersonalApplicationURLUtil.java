@@ -5,7 +5,6 @@
 
 package com.liferay.product.navigation.personal.menu.util;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -167,8 +166,8 @@ public class PersonalApplicationURLUtil {
 			userId, "1_column_dynamic", false);
 
 		return LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	private static PersonalMenuConfigurationRegistry

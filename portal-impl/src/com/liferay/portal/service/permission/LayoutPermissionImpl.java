@@ -674,7 +674,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		Group group = layout.getGroup();
 
 		if (!checkViewableGroup && group.isUserGroup() &&
-				 actionId.equals(ActionKeys.VIEW)) {
+			actionId.equals(ActionKeys.VIEW)) {
 
 			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
 				return true;

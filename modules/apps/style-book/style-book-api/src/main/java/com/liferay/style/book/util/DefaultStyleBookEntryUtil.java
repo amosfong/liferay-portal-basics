@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.util;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;

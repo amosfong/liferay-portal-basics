@@ -5,7 +5,6 @@
 
 package com.liferay.portal.dao.orm.hibernate.event;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -41,9 +40,8 @@ public class MVCCSynchronizerPostUpdateEventListener
 
 			Serializable primaryKeyObj = baseModel.getPrimaryKeyObj();
 
-			Serializable localCacheResult =
-				EntityCacheUtil.getLocalCacheResult(
-					modelClass, primaryKeyObj);
+			Serializable localCacheResult = EntityCacheUtil.getLocalCacheResult(
+				modelClass, primaryKeyObj);
 
 			if (localCacheResult instanceof MVCCModel) {
 				MVCCModel localCacheMVCCModel = (MVCCModel)localCacheResult;
@@ -61,8 +59,7 @@ public class MVCCSynchronizerPostUpdateEventListener
 			Serializable entityCacheResult = portalCache.get(primaryKeyObj);
 
 			if (entityCacheResult instanceof MVCCModel) {
-				MVCCModel entityCacheMVCCModel =
-					(MVCCModel)entityCacheResult;
+				MVCCModel entityCacheMVCCModel = (MVCCModel)entityCacheResult;
 
 				entityCacheMVCCModel.setMvccVersion(mvccVersion);
 			}

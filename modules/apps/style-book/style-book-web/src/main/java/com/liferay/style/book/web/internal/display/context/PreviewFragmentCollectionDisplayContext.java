@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.ArrayList;
 import java.util.List;

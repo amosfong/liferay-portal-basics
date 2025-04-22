@@ -509,8 +509,7 @@ public class EditUserMVCActionCommand
 			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, null,
 			organizationIds, null, null, new ArrayList<Address>(),
 			new ArrayList<EmailAddress>(), new ArrayList<Phone>(),
-			new ArrayList<Website>(),
-			sendEmail, serviceContext);
+			new ArrayList<Website>(), sendEmail, serviceContext);
 
 		byte[] portraitBytes = null;
 

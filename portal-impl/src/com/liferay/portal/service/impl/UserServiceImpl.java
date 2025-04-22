@@ -467,8 +467,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -482,8 +482,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites,
-				sendEmail, serviceContext);
+				emailAddresses, phones, websites, sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -638,8 +637,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -653,8 +652,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, roleIds, userGroupIds, addresses,
-				emailAddresses, phones, websites,
-				sendEmail, serviceContext);
+				emailAddresses, phones, websites, sendEmail, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
@@ -835,8 +833,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean indexingEnabled = true;
@@ -1051,8 +1049,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites,
-			boolean sendEmail, ServiceContext serviceContext)
+			List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean indexingEnabled = true;

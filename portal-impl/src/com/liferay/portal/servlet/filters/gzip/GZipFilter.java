@@ -34,9 +34,7 @@ public class GZipFilter extends BasePortalFilter {
 
 		boolean filterEnabled = false;
 
-		if (super.isFilterEnabled() &&
-			ServerDetector.isTomcat()) {
-
+		if (super.isFilterEnabled() && ServerDetector.isTomcat()) {
 			filterEnabled = true;
 		}
 

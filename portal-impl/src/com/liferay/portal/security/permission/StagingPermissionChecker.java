@@ -53,8 +53,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
-		return _permissionChecker.getRoleIds(
-			userId, groupId);
+		return _permissionChecker.getRoleIds(userId, groupId);
 	}
 
 	@Override
@@ -169,26 +168,22 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
-		return _permissionChecker.isContentReviewer(
-			companyId, groupId);
+		return _permissionChecker.isContentReviewer(companyId, groupId);
 	}
 
 	@Override
 	public boolean isGroupAdmin(long groupId) {
-		return _permissionChecker.isGroupAdmin(
-			groupId);
+		return _permissionChecker.isGroupAdmin(groupId);
 	}
 
 	@Override
 	public boolean isGroupMember(long groupId) {
-		return _permissionChecker.isGroupMember(
-			groupId);
+		return _permissionChecker.isGroupMember(groupId);
 	}
 
 	@Override
 	public boolean isGroupOwner(long groupId) {
-		return _permissionChecker.isGroupOwner(
-			groupId);
+		return _permissionChecker.isGroupOwner(groupId);
 	}
 
 	@Override

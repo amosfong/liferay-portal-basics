@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -38,8 +37,6 @@ import com.liferay.template.web.internal.util.TemplateDDMTemplateUtil;
 import java.util.Collection;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletRequest;
 

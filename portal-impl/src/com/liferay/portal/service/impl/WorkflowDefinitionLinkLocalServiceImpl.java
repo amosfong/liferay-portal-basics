@@ -169,9 +169,9 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		if (workflowDefinitionLink == null) {
 			throw new NoSuchWorkflowDefinitionLinkException(
 				StringBundler.concat(
-					"No workflow exists with the key {groupId=",
-					groupId, ", companyId=",
-					companyId, ", and className=", className, "}"));
+					"No workflow exists with the key {groupId=", groupId,
+					", companyId=", companyId, ", and className=", className,
+					"}"));
 		}
 
 		return workflowDefinitionLink;
@@ -360,9 +360,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink = addWorkflowDefinitionLink(
-				userId, companyId, groupId,
-				className, classPK, typePK, workflowDefinitionName,
-				workflowDefinitionVersion);
+				userId, companyId, groupId, className, classPK, typePK,
+				workflowDefinitionName, workflowDefinitionVersion);
 		}
 
 		workflowDefinitionLink.setGroupId(groupId);
